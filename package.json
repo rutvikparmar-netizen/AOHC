@@ -5,7 +5,8 @@
   "description": "Art of Healing Cancer — interventional oncology treatments, specialists, webinars and patient education.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
+    "build:turbopack": "next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
