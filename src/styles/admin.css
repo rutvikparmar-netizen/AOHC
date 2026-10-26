@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* ============================================================================
+   ADMIN CONSOLE STYLES
+   ----------------------------------------------------------------------------
+   A separate entry point from the public site's `globals.css`, imported by the
+   `(admin)` root layout only. The console loads none of the public site's
+   utilities and the public site loads none of these — which is the practical
+   benefit of the two being separate root layouts.
+
+   The palette is the same, deliberately: the console is used by the same
+   people who answer the enquiries, and a second visual language to learn adds
+   nothing. What differs is density. This is a working tool, so rows are
+   tighter and type is smaller than anywhere on the public site.
+   ========================================================================== */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-surface-subtle);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* A table of patient enquiries. Dense, scannable, and horizontally
+     scrollable rather than wrapped — a wrapped phone number is unreadable. */
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .admin-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--color-surface-muted);
+    padding: 0.625rem 0.875rem;
+    text-align: left;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .admin-table td {
+    padding: 0.75rem 0.875rem;
+    border-top: 1px solid var(--color-border);
+    vertical-align: top;
+  }
+
+  .admin-table tbody tr:hover {
+    background-color: var(--color-surface-subtle);
+  }
+
+  .admin-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-xs);
+  }
+}

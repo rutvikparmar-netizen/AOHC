@@ -1,0 +1,509 @@
+@import 'tailwindcss';
+@import './tokens.css';
+@import './fonts.css';
+
+/* ============================================================================
+   BASE LAYER
+   Global element defaults only. Anything component-shaped belongs in a
+   component, not here.
+   ========================================================================== */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-border);
+  }
+
+  html {
+    /* Anchor targets clear the sticky header instead of hiding behind it. */
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+    -webkit-text-size-adjust: 100%;
+
+    /**
+     * Smooth scrolling for in-page jumps.
+     *
+     * NOT a JavaScript scroll-hijacking library. Those override the wheel and
+     * trackpad, which breaks the momentum people expect from their own
+     * device and is a common cause of motion sickness on long pages. This is
+     * the native behaviour: anchor links and `scrollTo` ease, and a manual
+     * wheel or swipe is untouched.
+     *
+     * The reduced-motion block at the foot of this file resets it to `auto`.
+     */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Nothing may cause a horizontal scrollbar at 320px. */
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+    color: var(--color-text);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* A visible, consistent focus ring on every keyboard-reachable thing.
+     :focus-visible keeps it off mouse clicks without harming keyboard users. */
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button,
+  [role='button'],
+  a {
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-teal-100);
+    color: var(--color-brand-teal-900);
+  }
+
+  /* Scroll lock for any open modal dialog. Doing it in CSS means no effect
+     hook has to mutate `document.body`, and it can never leak a locked page
+     if a component unmounts while open. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  dialog {
+    max-width: none;
+    max-height: none;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  dialog::backdrop {
+    background-color: rgba(4, 25, 30, 0.55);
+    backdrop-filter: blur(2px);
+  }
+
+  /* The navigation drawer slides in from the edge it is anchored to, rather
+     than appearing. `showModal()` has no transition of its own, so this is a
+     one-shot animation on open; the global reduced-motion rule collapses it. */
+  dialog.drawer[open] {
+    animation: drawer-in var(--duration-base) var(--ease-out-settle);
+  }
+
+  dialog.drawer[open]::backdrop {
+    animation: drawer-backdrop var(--duration-base) linear;
+  }
+
+  @keyframes drawer-in {
+    from {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes drawer-backdrop {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+/* ============================================================================
+   REUSABLE UTILITIES
+   Only patterns needed in many places.
+   ========================================================================== */
+@layer utilities {
+  /* Skip-to-content link: hidden until focused. */
+  .sr-only-focusable {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .sr-only-focusable:focus-visible {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: var(--z-toast);
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    overflow: visible;
+    clip-path: none;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-radius: var(--radius-button);
+    box-shadow: var(--shadow-dropdown);
+    font-weight: 600;
+  }
+
+  .bg-gradient-brand {
+    background-image: var(--gradient-brand);
+  }
+
+  .bg-gradient-brand-soft {
+    background-image: var(--gradient-brand-soft);
+  }
+
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
+  }
+
+  .text-gradient-brand {
+    background-image: var(--gradient-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* ========================================================================
+     SCROLL REVEAL
+     Driven entirely by two data attributes, so the `<Reveal>` client component
+     only ever toggles `data-revealed` — it never swaps class strings, which
+     keeps the animation out of React's render path.
+
+     `--reveal-delay` staggers siblings. It is set inline by the caller
+     (`delay={index * 70}`) rather than with an `:nth-child` chain, so a grid
+     of any length staggers correctly.
+
+     ⚠️  NO-JS SAFETY: these rules hide content until the observer fires. The
+     `<noscript>` block in the site layout overrides all of it, so a reader
+     without JavaScript — or a crawler that runs CSS but not JS — sees a
+     complete static page rather than a blank one. The reduced-motion block at
+     the foot of this file collapses the transition to nothing, so the content
+     still appears; it simply does not move.
+     ====================================================================== */
+  [data-reveal] {
+    opacity: 0;
+    transition:
+      opacity var(--duration-reveal) var(--ease-out-soft),
+      transform var(--duration-reveal) var(--ease-out-settle);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Hinted only while still off-screen; the hint is dropped on reveal so a
+     long page does not hold dozens of permanent compositor layers. */
+  [data-reveal]:not([data-revealed]) {
+    will-change: opacity, transform;
+  }
+
+  [data-reveal='up'] {
+    transform: translate3d(0, 2rem, 0);
+  }
+  [data-reveal='left'] {
+    transform: translate3d(-2rem, 0, 0);
+  }
+  [data-reveal='right'] {
+    transform: translate3d(2rem, 0, 0);
+  }
+  /* Card entrance from the design-system motion spec: scale 0.92 + 16px rise,
+     settling on a back-out overshoot rather than stopping dead. */
+  [data-reveal='scale'] {
+    transform: scale(0.92) translate3d(0, 1rem, 0);
+  }
+
+  [data-reveal='scale'],
+  [data-reveal='tilt'] {
+    transition-timing-function: var(--ease-back-out);
+  }
+
+  /* 3D entrance: the card lies back in space and rises to flat. The
+     perspective is declared on the element itself rather than a parent, so a
+     card can tilt wherever it is used without its container having to know. */
+  [data-reveal='tilt'] {
+    transform: perspective(1400px) translate3d(0, 2.5rem, -7rem) rotateX(14deg);
+  }
+
+  /* ========================================================================
+     3D SCROLL DECK
+     The process cards pin one below the next and the ones already passed
+     recede into the page, so the stack reads as depth rather than as cards
+     simply overlapping.
+
+     THE RECEDE IS PROGRESSIVE ENHANCEMENT. It runs on `animation-timeline:
+     view()`, which is a scroll-driven animation handled entirely by the
+     compositor — no scroll listener, nothing on the main thread. Browsers
+     without it (Firefox and Safari at the time of writing) get the plain
+     sticky stack, which is the same layout minus the depth. Nothing breaks
+     and nothing is missing; it is simply flatter.
+     ====================================================================== */
+  .deck {
+    perspective: 1400px;
+    perspective-origin: 50% 0%;
+  }
+
+  .deck-card {
+    transform-origin: 50% 0%;
+    backface-visibility: hidden;
+  }
+
+  @supports (animation-timeline: view()) {
+    .deck-card {
+      animation: deck-recede linear both;
+      animation-timeline: view();
+      /* Starts once the card has pinned and run most of its length, so the
+         card is readable before it begins to fall back. */
+      animation-range: exit-crossing 0% exit-crossing 100%;
+    }
+  }
+
+  @keyframes deck-recede {
+    to {
+      transform: translate3d(0, -1rem, -10rem) rotateX(7deg) scale(0.96);
+      opacity: 0.45;
+    }
+  }
+
+  [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* A rule that draws itself in as the section arrives. Used under section
+     eyebrows — cheap, and it signals "this is a new chapter" without motion
+     that competes with the text. */
+  .rule-draw {
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform var(--duration-slow) var(--ease-out-settle);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-revealed] .rule-draw,
+  .rule-draw[data-revealed] {
+    transform: scaleX(1);
+  }
+
+  /* ========================================================================
+     MARQUEE
+     A strip that runs continuously. The track holds its contents twice and
+     travels exactly half its own width, so the second copy arrives where the
+     first began and the reset is invisible.
+
+     Movement stops on hover and on focus-within — the latter is not optional,
+     because a link scrolling out from under a keyboard user mid-tab is worse
+     than no animation at all.
+     ====================================================================== */
+  .marquee {
+    overflow: hidden;
+    /* Fade the edges rather than slicing a name in half at the boundary. */
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 5%,
+      #000 95%,
+      transparent
+    );
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-run 45s linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-run {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /* ========================================================================
+     TRAVEL ARCS
+     The dashes crawl along each arc toward India, so the connectors read as
+     traffic with a direction rather than as static lines. The path data
+     itself is rewritten every frame by the globe's render loop; this only
+     animates the dash phase along whatever path is currently there.
+
+     The reduced-motion block at the foot of this file collapses the duration,
+     which leaves the dashes still and the connectors fully drawn — the
+     information survives, the movement does not.
+     ====================================================================== */
+  .arc-flow {
+    stroke-dasharray: 2 8;
+    animation: arc-flow 1.6s linear infinite;
+  }
+
+  @keyframes arc-flow {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  /* Clamp copy to N lines so cards in a grid stay aligned. */
+  .line-clamp-2-safe {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .line-clamp-3-safe {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  /* Shared card hover: a small lift plus a deeper shadow. Declared once so
+     treatment, specialist and article cards move by exactly the same amount. */
+  .card-lift {
+    transition:
+      transform var(--duration-base) var(--ease-out-soft),
+      box-shadow var(--duration-base) var(--ease-out-soft),
+      border-color var(--duration-base) var(--ease-out-soft);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-0.25rem);
+  }
+
+  /* Edge-to-edge horizontal scroller for mobile rails. */
+  .scroll-rail {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-rail > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+
+  /* ========================================================================
+     LONG-FORM PROSE
+     Treatment bodies, articles and stories are stored as plain text with
+     blank lines between paragraphs and rendered as a list of <p> elements —
+     never through `dangerouslySetInnerHTML`. These rules style that output.
+     ====================================================================== */
+  .prose-body > p {
+    margin-block: 0 1.15em;
+    color: var(--color-neutral-700);
+    font-size: var(--text-lg);
+    line-height: 1.75;
+  }
+
+  .prose-body > p:last-child {
+    margin-block-end: 0;
+  }
+
+  .prose-body a {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   One global opt-out. Individual components must not re-implement this.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /**
+   * The rules above collapse DURATION, which is not enough on its own here.
+   *
+   * A scroll-driven animation has no duration to collapse — its progress is
+   * tied to scroll position, so `deck-recede` would still apply its full
+   * transform instantly and the deck would read as broken rather than calm.
+   * The whole effect is therefore switched off, and the transform reset, for
+   * anyone who has asked for less motion.
+   */
+  .deck-card {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  [data-reveal] {
+    transform: none !important;
+  }
+
+  /**
+   * Collapsing the duration is not enough here either. A marquee with a
+   * 0.01ms duration would snap straight to its end transform and sit there
+   * showing the duplicate half. Stopping it outright leaves the strip exactly
+   * as it renders on the server: the same names, standing still.
+   */
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================================================
+   PRINT
+   A patient printing a treatment page to take to an appointment is a real and
+   common act on a site like this one. Drop the chrome, keep the content.
+   ========================================================================== */
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

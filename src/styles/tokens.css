@@ -1,0 +1,416 @@
+/* ============================================================================
+   ART OF HEALING CANCER — DESIGN TOKENS
+   ----------------------------------------------------------------------------
+   THE single source of truth for colour, radius, shadow, spacing, type and
+   motion. Tailwind v4 reads this `@theme` block and generates matching
+   utilities, so `--color-primary` here IS `bg-primary` / `text-primary` in JSX.
+
+   RULES
+   1. Never write a raw hex value inside a component. Add a token here instead.
+   2. Components reach for the SEMANTIC tokens (primary, surface, text,
+      border) rather than the raw ramps (brand-teal-500). The ramps exist so
+      the semantic layer has somewhere to point.
+   3. Rebranding = editing the ramps in this file. Nothing else should change.
+
+   Palette sampled from the AOHC logo: a clinical teal (#0e9caf) over a deep
+   teal ink (#0b3a43), with a warm grey (#564f52) as the quiet second voice.
+   Calm and clinical on purpose — the people reading these pages are frightened,
+   and a high-contrast marketing palette reads as a sales pitch.
+   ========================================================================== */
+
+@theme static {
+  /* --------------------------------------------------------------------
+     TYPEFACE — Inter for UI and body, Fraunces for display headings.
+     Both injected by next/font in the route-group layouts.
+     ------------------------------------------------------------------ */
+  /**
+   * Lexend for everything that is read; Mackinac for display headings.
+   *
+   * Lexend is injected by next/font in the layout, so it is self-hosted and
+   * subsetted with no third-party request.
+   *
+   * `'P22 Mackinac Pro'` is FIRST in the display stack but is a commercial
+   * face that may not be present — see `styles/fonts.css`. When its files are
+   * absent the stack falls through to Fraunces, which next/font does load, so
+   * headings always render in something appropriate.
+   */
+  --font-sans: var(--font-lexend), ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'P22 Mackinac Pro', var(--font-fraunces), Georgia,
+    'Times New Roman', serif;
+
+  /* ====================================================================
+     1. BRAND RAMPS (raw scales — prefer the semantic layer below)
+     ================================================================== */
+
+  /* Clinical teal — the primary brand colour, from the logo mark. */
+  --color-brand-teal-50: #ecfbfd;
+  --color-brand-teal-100: #d0f4f8;
+  --color-brand-teal-200: #a3e8f0;
+  --color-brand-teal-300: #6ed7e3;
+  --color-brand-teal-400: #35bed0;
+  --color-brand-teal-500: #0e9caf;
+  --color-brand-teal-600: #0b8291;
+  --color-brand-teal-700: #0e6875;
+  --color-brand-teal-800: #11545f;
+  --color-brand-teal-900: #0b3a43;
+  --color-brand-teal-950: #04191e;
+
+  /* Warm grey — the logo's second colour. Used for quiet surfaces and the
+     secondary button, never for a call to action. */
+  --color-brand-warm-50: #f7f5f6;
+  --color-brand-warm-100: #eeeaec;
+  --color-brand-warm-200: #ded7d9;
+  --color-brand-warm-300: #c3b9bc;
+  --color-brand-warm-400: #9c8f93;
+  --color-brand-warm-500: #7b6f73;
+  --color-brand-warm-600: #645a5d;
+  --color-brand-warm-700: #564f52;
+  --color-brand-warm-800: #423d40;
+  --color-brand-warm-900: #332f31;
+  --color-brand-warm-950: #1c1a1b;
+
+  /* Cool neutrals, tinted towards the teal so greys never read as blue-black.
+     Never pure black. */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f4f9fa;
+  --color-neutral-100: #eef6f8;
+  --color-neutral-200: #dfeaec;
+  --color-neutral-300: #c7d8db;
+  --color-neutral-400: #97adb1;
+  --color-neutral-500: #67716f;
+  --color-neutral-600: #4e5a5c;
+  --color-neutral-700: #3b4648;
+  --color-neutral-800: #2a3335;
+  --color-neutral-900: #1b2224;
+  --color-neutral-950: #0e1314;
+
+  /* ====================================================================
+     2. SEMANTIC LAYER — what components actually use
+     ================================================================== */
+
+  --color-primary: var(--color-brand-teal-500);
+  --color-primary-dark: var(--color-brand-teal-600);
+  --color-primary-light: var(--color-brand-teal-400);
+  --color-primary-subtle: var(--color-brand-teal-50);
+
+  --color-secondary: var(--color-brand-warm-700);
+  --color-secondary-dark: var(--color-brand-warm-800);
+  --color-secondary-light: var(--color-brand-warm-500);
+  --color-secondary-subtle: var(--color-brand-warm-50);
+
+  /**
+   * TERRACOTTA — the one warm accent, reserved for the primary call to
+   * action and small highlights. Its job is that a patient scanning the page
+   * can always find the next step; spending it on decoration spends that
+   * away.
+   *
+   * `--color-accent` is a BACKGROUND colour: white text on it measures
+   * 4.54:1, which passes. As TEXT on the warm page it is only 4.25:1 and
+   * fails, so accent text must use `--color-accent-dark` (5.80:1). On deep
+   * teal, terracotta is 3.98:1 — dark surfaces use `brand-teal-300` (10.7:1)
+   * for highlights instead.
+   */
+  /**
+   * THE LOGO'S OWN TEAL, one shade down.
+   *
+   * The mark is #0E9CAF. White text on that measures 3.29:1 — a fail — so the
+   * accent used as a button background is `brand-teal-600` (#0B8291), which
+   * reaches 4.55:1 with white on it. The difference is barely perceptible
+   * and it is the difference between legible and not.
+   *
+   * `--color-accent-dark` (#0E6875) is for accent TEXT on the warm page:
+   * 6.01:1. Never set accent text to the raw #0E9CAF — it is 3.1:1 on white.
+   *
+   * On deep teal surfaces, highlights use `brand-teal-300` (10.7:1); the
+   * accent family is too close in hue to read against them.
+   */
+  --color-accent: var(--color-brand-teal-600);
+  --color-accent-dark: var(--color-brand-teal-700);
+  --color-accent-light: var(--color-brand-teal-300);
+  --color-accent-subtle: var(--color-brand-teal-50);
+
+  /* Warm off-white page, white cards. The contrast between the two is what
+     makes a card read as raised without needing a heavy shadow. */
+  --color-background: #faf7f2;
+  --color-surface: var(--color-neutral-0);
+  --color-surface-subtle: #f4efe7;
+  --color-surface-muted: #ece5da;
+  --color-surface-inverted: var(--color-brand-teal-900);
+
+  --color-text: var(--color-brand-teal-900);
+  /**
+   * Both re-measured against #FAF7F2, not white.
+   *
+   * Warm off-white is slightly darker than white, so greys that passed on a
+   * white page quietly stop passing when the background changes — the old
+   * `neutral-400` subtle token measured 4.17:1 here, a fail.
+   */
+  --color-text-muted: #5c6b6d; /* 5.26:1 on #FAF7F2, 5.62:1 on white */
+  --color-text-subtle: #64706f; /* 4.82:1 on #FAF7F2 */
+  --color-text-inverted: var(--color-neutral-0);
+
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-300);
+  --color-border-brand: var(--color-brand-teal-200);
+
+  --color-ring: var(--color-brand-teal-500);
+
+  --color-success: #0e8a7e;
+  --color-success-subtle: #e3f5f2;
+  --color-warning: #b26a12;
+  --color-warning-subtle: #fdf2e2;
+  --color-danger: #c2453f;
+  --color-danger-subtle: #fdeeed;
+  --color-info: var(--color-brand-teal-600);
+  --color-info-subtle: var(--color-brand-teal-50);
+
+  /**
+   * Clinical red, reserved for one job: the risks and side-effects block on a
+   * treatment page, and nothing else. It is NOT a generic error colour — if it
+   * appeared on form validation too, the risk panel would stop reading as a
+   * distinct kind of information.
+   */
+  --color-clinical: #c2453f;
+  --color-clinical-subtle: #fdeeed;
+
+  /* ====================================================================
+     3. LAYOUT
+     ================================================================== */
+  /**
+   * ONE LAYOUT SYSTEM. Three values decide the whole page's rhythm, and
+   * every section reads them rather than setting its own.
+   *
+   *   --container-site    1340px   the content column
+   *   --gutter            15 / 40  left and right, mobile / desktop
+   *   --spacing-section   30 / 80  top and bottom, mobile / desktop
+   *
+   * The two responsive ones are redefined under a media query below, because
+   * Tailwind's `@theme` block cannot hold one. Change the numbers there and
+   * the entire page re-spaces — there are no per-section overrides to hunt.
+   */
+  --container-site: 83.75rem; /* 1340px — page chrome */
+  --container-content: 64rem; /* 1024px — composed sections */
+  --container-prose: 44rem; /* 704px — ~70 char measure for long reads */
+
+  --gutter: 1rem; /* 16px on mobile — on the 8px grid */
+  --spacing-section: 4rem; /* 64px on mobile */
+  --spacing-topbar: 2.25rem;
+  --spacing-header: 4.75rem;
+  --spacing-header-mobile: 4rem;
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.125rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-pill: 999px;
+  --radius-button: 0.625rem;
+  --radius-input: 0.625rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.25rem;
+  --radius-badge: 999px;
+
+  /* Shadows are teal-tinted rather than neutral black, so a lifted card still
+     belongs to the palette. */
+  --shadow-xs: 0 1px 2px rgba(6, 42, 49, 0.06);
+  --shadow-sm: 0 1px 3px rgba(6, 42, 49, 0.08);
+  --shadow-card: 0 2px 12px rgba(6, 42, 49, 0.07);
+  --shadow-card-hover: 0 12px 32px rgba(6, 42, 49, 0.12);
+  --shadow-header: 0 1px 0 rgba(6, 42, 49, 0.07);
+  --shadow-dropdown: 0 10px 30px rgba(6, 42, 49, 0.14);
+  --shadow-modal: 0 24px 60px rgba(6, 42, 49, 0.22);
+  --shadow-glow-brand: 0 0 0 4px rgba(14, 156, 175, 0.16);
+
+  /* ====================================================================
+     4. TYPE SCALE
+     ================================================================== */
+  /**
+   * NOTHING BELOW 14px. `--text-2xs` and `--text-xs` both resolve to
+   * 0.875rem rather than the 11px and 12px they used to be. They survive as
+   * separate names so existing markup keeps working, but they no longer
+   * shrink anything — to make a label quieter, change its COLOUR or WEIGHT.
+   *
+   * This audience includes a lot of people reading on a phone with ageing
+   * eyesight, and 12px legal text is where they give up.
+   */
+  --text-2xs: 0.875rem;
+  --text-2xs--line-height: 1.5;
+  --text-2xs--letter-spacing: 0.04em;
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.55;
+  --text-sm: 0.9375rem; /* 15px */
+  --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem; /* 17px */
+  --text-base--line-height: 1.65;
+  --text-lg: 1.1875rem; /* 19px */
+  --text-lg--line-height: 1.65;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.55;
+
+  --text-h6: 1rem;
+  --text-h6--line-height: 1.4;
+  --text-h6--font-weight: 700;
+  --text-h5: 1.125rem;
+  --text-h5--line-height: 1.35;
+  --text-h5--font-weight: 700;
+  --text-h4: 1.3125rem;
+  --text-h4--line-height: 1.3;
+  --text-h4--font-weight: 700;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--font-weight: 700;
+  /* H2 30px mobile → 40px desktop; H1 38px → 60px, stepped up in the
+     media query further down this file. */
+  --text-h2: 1.875rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--font-weight: 700;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h1: 2.375rem;
+  --text-h1--line-height: 1.1;
+  --text-h1--font-weight: 700;
+  --text-h1--letter-spacing: -0.02em;
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.05;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.025em;
+  --text-display-sm: 2.75rem;
+  --text-display-sm--line-height: 1.1;
+  --text-display-sm--font-weight: 700;
+  --text-display-sm--letter-spacing: -0.02em;
+  --text-stat: 2.25rem;
+  --text-stat--line-height: 1;
+  --text-stat--font-weight: 700;
+  --text-stat--letter-spacing: -0.02em;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--font-weight: 700;
+  --text-eyebrow--letter-spacing: 0.12em;
+
+  /* ====================================================================
+     5. MOTION
+     Short and understated. A page about cancer treatment that bounces and
+     slides reads as a product launch.
+     ================================================================== */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  /* CSS equivalent of GSAP's back.out(1.4) — a slight overshoot on arrival.
+     Used for card entrances so they settle rather than stop dead. */
+  --ease-back-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 360ms;
+  --duration-reveal: 620ms;
+
+  --animate-fade-in: fade-in var(--duration-slow) var(--ease-out-soft) both;
+  --animate-slide-up: slide-up var(--duration-slow) var(--ease-out-settle) both;
+  --animate-menu-in: menu-in var(--duration-base) var(--ease-out-soft) both;
+
+  /* ====================================================================
+     6. GRADIENTS
+     ================================================================== */
+  --gradient-brand: linear-gradient(
+    120deg,
+    var(--color-brand-teal-600) 0%,
+    var(--color-brand-teal-400) 100%
+  );
+  --gradient-brand-soft: linear-gradient(
+    140deg,
+    var(--color-brand-teal-50) 0%,
+    var(--color-neutral-0) 100%
+  );
+  --gradient-hero: linear-gradient(
+    160deg,
+    var(--color-brand-teal-950) 0%,
+    var(--color-brand-teal-900) 45%,
+    var(--color-brand-teal-800) 100%
+  );
+
+  /* ====================================================================
+     7. Z-INDEX — one ladder, so nothing is guessed in a component
+     ================================================================== */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-header: 30;
+  --z-dropdown: 40;
+  --z-drawer: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}
+
+/* Responsive display sizes. Declared outside `@theme` because Tailwind's theme
+   block does not take media queries — these redefine the variables the scale
+   above already generated utilities for. */
+/**
+ * The desktop half of the layout system. 768px is the switch point: below it
+ * the phone values apply, above it the desktop ones.
+ *
+ * `--spacing-section` is the single vertical rhythm for every section on the
+ * page. 80px is the chosen desktop figure — the brief fixed the horizontal
+ * gutter at 40px and asked only that the vertical be consistent, so change
+ * this one number to retune the whole page.
+ */
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 2.5rem; /* 40px */
+    --spacing-section: 6rem; /* 96px */
+
+    --text-h1: 3.75rem; /* 60px */
+    --text-h2: 2.5rem; /* 40px */
+  }
+}
+
+/**
+ * NO H1 OVERRIDE HERE. H1 reaches its final 60px at the 768px breakpoint and
+ * stays there — a third step at 1024px used to shrink it back to 56px, which
+ * is the kind of contradiction that only shows up on a laptop.
+ */
+@media (min-width: 64rem) {
+  :root {
+    --text-display: 4.25rem;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -0.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/**
+ * Long-form measure. ~65 characters, applied as a token rather than per
+ * section so no paragraph on the page can run wider than a comfortable line.
+ */
+:root {
+  --measure: 65ch;
+}

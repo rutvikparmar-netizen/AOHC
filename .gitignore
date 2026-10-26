@@ -1,0 +1,53 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env*.local
+
+# Local credential scratch files.
+#
+# `/auth` holds a GitHub personal access token in plain text. It is ignored so
+# it can never be swept up by `git add -A` — a token in a public repo is
+# scraped and used within minutes of being pushed.
+#
+# THE LEADING SLASH IS ESSENTIAL. Written as bare `auth`, the pattern matches
+# every path segment of that name at any depth, which silently excluded
+# `src/lib/auth/`, `src/app/api/auth/` and `src/components/auth/` — the entire
+# authentication system — from the commit. The slash anchors it to the repo
+# root, where the credential file actually is.
+/auth
+/auth.txt
+*.token
+
+# typescript
+*.tsbuildinfo
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# vercel
+.vercel

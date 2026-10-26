@@ -1,0 +1,61 @@
+/* ============================================================================
+   P22 MACKINAC PRO — SELF-HOSTED
+   ----------------------------------------------------------------------------
+   Mackinac is a COMMERCIAL typeface (P22 / International House of Fonts). It is
+   not on Google Fonts and cannot be fetched automatically, so these rules point
+   at files that must be licensed and dropped into `public/fonts/` by hand.
+
+   DROP IN THESE FOUR FILES AND THE SITE PICKS THEM UP WITH NO CODE CHANGE:
+
+     public/fonts/P22Mackinac-Book.woff2        (400)
+     public/fonts/P22Mackinac-Medium.woff2      (500)
+     public/fonts/P22Mackinac-Bold.woff2        (700)
+     public/fonts/P22Mackinac-ExtraBold.woff2   (800)
+
+   If your licence gives you .otf or .ttf instead, convert to .woff2 first —
+   it is roughly half the size over the wire and every browser in use supports
+   it. If you licensed it through Adobe Fonts rather than as files, delete this
+   file and add the kit's <link> to the layout head instead; the token in
+   `tokens.css` already names the family, so nothing else changes.
+
+   UNTIL THOSE FILES EXIST, `--font-display` falls through to Fraunces, which
+   is loaded from Google Fonts in the layout. Fraunces is a reasonable
+   stand-in — a contemporary serif with similar warmth and a high contrast
+   axis — but it is NOT Mackinac, and the headings will shift slightly when the
+   real files land. That is expected.
+
+   `font-display: swap` means text renders immediately in the fallback and
+   re-renders when the face arrives, rather than leaving headings invisible.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'P22 Mackinac Pro';
+  src: url('/fonts/P22Mackinac-Book.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P22 Mackinac Pro';
+  src: url('/fonts/P22Mackinac-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P22 Mackinac Pro';
+  src: url('/fonts/P22Mackinac-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P22 Mackinac Pro';
+  src: url('/fonts/P22Mackinac-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}

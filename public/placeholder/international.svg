@@ -1,0 +1,20 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="International patients">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b3a43"/>
+      <stop offset="0.55" stop-color="#0e6875"/>
+      <stop offset="1" stop-color="#0e9caf"/>
+    </linearGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#ffffff" fill-opacity="0.10"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <rect width="1200" height="800" fill="url(#dots)"/>
+  <g fill="none" stroke="#6ed7e3" stroke-opacity="0.45" stroke-width="3">
+    <circle cx="600" cy="336" r="128"/>
+    <circle cx="600" cy="336" r="200" stroke-opacity="0.22"/>
+  </g>
+  <text x="50%" y="576" text-anchor="middle" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="56" font-weight="700" fill="#ffffff" fill-opacity="0.92">International patients</text>
+  <text x="50%" y="632" text-anchor="middle" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" letter-spacing="3" fill="#6ed7e3" fill-opacity="0.85">PHOTOGRAPHY PENDING</text>
+</svg>
