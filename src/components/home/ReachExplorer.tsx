@@ -166,29 +166,22 @@ export function ReachExplorer() {
           </p>
         </div>
 
-        {/* ── What it takes, and the way in ─────────────────────────────
-            The caveat used to be the tail of the globe hint, in the
-            panel's quietest style. It is the most consequential sentence
-            here — whether this practice can take someone on at all — and
-            it now has its own ground, its own icon and a readable size,
-            directly above the button it qualifies. */}
-        <div className="border-t border-white/10 bg-brand-teal-950/40 p-6 sm:p-8">
-          <p className="flex gap-3 text-sm leading-relaxed text-brand-teal-100">
-            <Icon name="info" className="mt-0.5 size-4 shrink-0 text-brand-teal-300" />
-            <span>
-              Whether we can take on a new patient depends on clinical
-              assessment, the services their care needs and whether travel is
-              realistic for them.
-            </span>
-          </p>
-
+        {/* ── The way in ───────────────────────────────────────────────
+            This band held the acceptance caveat — whether a new patient
+            can be taken on at all — which was removed on request. The
+            same ground is covered a section further down, in "Care
+            Coordination Across Borders": availability of consultations,
+            assessments and travel assistance must be confirmed with the
+            team before anything is arranged. The band is now just the way
+            in, so it is sized for a button rather than a paragraph. */}
+        <div className="border-t border-white/10 bg-brand-teal-950/40 px-6 py-6 sm:px-8">
           {/* Full width on a phone: the label is long enough to wrap inside
               a shrink-to-fit pill, which looked like a mistake. */}
           <Button
             href={routes.internationalEnquiry}
             variant="accent"
             icon="arrow-right"
-            className="mt-5 w-full rounded-(--radius-pill) sm:w-fit"
+            className="w-full rounded-(--radius-pill) sm:w-fit"
           >
             International Patient Enquiry
           </Button>
