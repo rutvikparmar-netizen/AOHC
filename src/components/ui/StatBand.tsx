@@ -4,8 +4,11 @@ import { Container } from '@/components/ui/Container'
 /**
  * Headline figures.
  *
- * ⚠️  THIS COMPONENT RENDERS NOTHING UNTIL EVERY FIGURE HAS A CITED SOURCE,
- * and that gate is the point of it.
+ * ⚠️  THIS BAND USED TO REFUSE TO RENDER UNTIL EVERY FIGURE HAD A CITED
+ * SOURCE. THE GATE WAS REMOVED ON THE SITE OWNER'S INSTRUCTION, TWICE
+ * GIVEN, AND THE FIGURES ARE STILL UNCITED. The reasoning the gate
+ * encoded is left below because it has not stopped being true — it is now
+ * a decision the owner has taken rather than one the code enforces.
  *
  * AOHC publishes four outcome percentages — tumour shrinkage, side effects,
  * adherence, two-year disease-free — and not one has a stated basis. They are
@@ -17,8 +20,9 @@ import { Container } from '@/components/ui/Container'
  * note underneath. That is worse than either option — it publishes the claim
  * AND admits it is unsupported, in front of patients.
  *
- * So: fill `basis` (and optionally `sourceHref`) on all of them and the band
- * appears. Leave any blank and it stays hidden. No flag to flip.
+ * So: filling `basis` (and optionally `sourceHref`) on a figure prints the
+ * source under it, and the sooner that happens the better. An empty `basis`
+ * now prints nothing rather than hiding the whole band.
  */
 export function StatBand({
   items,
@@ -27,8 +31,7 @@ export function StatBand({
   items: StatItem[]
   footnote?: string
 }) {
-  const everyFigureCited = items.length > 0 && items.every((item) => item.basis)
-  if (!everyFigureCited) return null
+  if (items.length === 0) return null
 
   /**
    * THE LAYOUT IS THE ONE THAT WAS ASKED FOR: a pale teal band, the figures
@@ -57,8 +60,9 @@ export function StatBand({
               <p className="mx-auto mt-4 max-w-[22ch] text-sm leading-relaxed text-text-muted sm:text-base">
                 {item.label}
               </p>
-              {/* The basis is part of the figure, not a footnote to it. */}
-              {item.sourceHref ? (
+              {/* The basis is part of the figure, not a footnote to it —
+                  and nothing at all while there is no basis to print. */}
+              {!item.basis ? null : item.sourceHref ? (
                 <a
                   href={item.sourceHref}
                   target="_blank"

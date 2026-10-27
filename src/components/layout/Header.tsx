@@ -36,7 +36,20 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
     <header
       className={
         overlay
-          ? 'absolute inset-x-0 top-0 z-(--z-header)'
+          ? /**
+             * ⚠️  NO POSITIONING IN OVERLAY MODE. `StickyHeaderShell`
+             * positions this, and it used to be `absolute inset-x-0 top-0`
+             * from when it lived inside the hero card.
+             *
+             * Absolute inside the shell took it out of the shell's flow,
+             * which left the shell nothing to be the height of — so the
+             * frosted background painted across a zero-height box and the
+             * bar looked transparent no matter what colour it was given.
+             * The text and logo still recoloured correctly, because the
+             * cascade does not care about positioning, which made it look
+             * like a colour bug rather than a layout one.
+             */
+            ''
           : // Sticky on its own. Wrap it in `StickyHeaderShell` as well to
             // get the compact-on-scroll behaviour, which the data-header-*
             // hooks below are there for.
@@ -80,7 +93,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           into from the shell. */}
       <Container
         data-header-row
-        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16"
+        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 xl:gap-6"
       >
         <Link href={routes.home} className="shrink-0" aria-label={`${site.name} — home`}>
           {/* The lockup is reversed out over the hero with a filter and
@@ -108,7 +121,12 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
             a flex item, so it has no margins to collect the free space.
             The result was a menu button packed against the logo on every
             screen narrower than 1280px instead of out at the edge. */}
-        <nav aria-label="Main" className="hidden xl:block">
+        {/* `shrink-0`, because the nav was being squeezed below its content
+            width at exactly the breakpoint that reveals it: every label
+            long enough to break did, and "About Us", "International
+            Patients" and "Contact Us" each sat on two lines. A nav item is
+            a single phrase and should never wrap. */}
+        <nav aria-label="Main" className="hidden shrink-0 xl:block">
           <ul className="flex items-center gap-0.5">
             {primaryNav.map((group) => {
               const hasChildren = group.links.length > 0
@@ -117,7 +135,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                 <li key={group.label} className="group relative">
                   <Link
                     href={group.href ?? '#'}
-                    className={`inline-flex min-h-11 items-center gap-1 rounded-(--radius-button) px-3 text-sm font-semibold transition-colors ${
+                    className={`inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-(--radius-button) px-2.5 text-sm font-semibold transition-colors ${
                       overlay
                         ? 'text-white/85 hover:text-white group-data-[scrolled]/header:text-text group-data-[scrolled]/header:hover:text-primary-dark'
                         : 'text-text hover:text-primary-dark'

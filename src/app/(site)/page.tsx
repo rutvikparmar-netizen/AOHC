@@ -18,6 +18,7 @@ import { ReachSection } from '@/components/home/ReachSection'
 import { StoryGrid } from '@/components/home/StoryGrid'
 import { ProcessPanels } from '@/components/home/ProcessPanels'
 import { BlogSection } from '@/components/home/BlogSection'
+import { FaqSection } from '@/components/home/FaqSection'
 import { Reveal } from '@/components/motion/Reveal'
 import { Cta } from '@/components/home/Cta'
 
@@ -401,6 +402,17 @@ export default function HomePage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* ── Questions ─────────────────────────────────────────────────
+          Immediately before the form, because most of these are things
+          someone would otherwise type into the message box and then wait
+          to have answered. */}
+      <FaqSection
+        eyebrow={home.faqs.eyebrow}
+        title={home.faqs.title}
+        intro={home.faqs.intro}
+        items={home.faqs.items}
+      />
 
       {/* ── Contact ───────────────────────────────────────────────────
           Details sticky on desktop. The form IS the call to action, so no

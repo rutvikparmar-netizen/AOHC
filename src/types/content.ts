@@ -1,4 +1,5 @@
 import type { ImageAsset, NavLink, Slug } from './common'
+import type { FaqItem } from './treatment'
 
 /**
  * Editorial content for composed pages.
@@ -61,7 +62,15 @@ export interface ProcessStep {
 export interface StatItem {
   value: string
   label: string
-  /** The study, audit or dataset. `StatBand` stays hidden while any is blank. */
+  /**
+   * The study, audit or dataset behind the figure, printed beneath it.
+   *
+   * `StatBand` used to hide the entire band while any of these was blank.
+   * That gate was removed on the site owner's instruction; an empty string
+   * now simply prints nothing. These are outcome claims about cancer
+   * treatment, so filling this in is still the right thing to do — see the
+   * note at the top of `StatBand`.
+   */
   basis: string
   /** Optional link to the source, rendered with the basis. */
   sourceHref?: string
@@ -322,6 +331,14 @@ export interface HomeContent {
   news: {
     title: string
     items: NewsItem[]
+  }
+
+  /** The question block above the enquiry form. */
+  faqs: {
+    eyebrow: string
+    title: string
+    intro: string
+    items: FaqItem[]
   }
 
   /** The reading section at the foot of the home page. */

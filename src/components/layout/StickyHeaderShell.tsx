@@ -72,11 +72,41 @@ export function StickyHeaderShell({ children }: { children: React.ReactNode }) {
         aria-hidden
         className="pointer-events-none -mb-24 h-24 w-full"
       />
+      {/**
+       * TWO ELEMENTS: the outer one is the group and the positioning, the
+       * inner one is the paint.
+       *
+       * The bar's own background was written as `data-[scrolled]:bg-...`
+       * on this element and did not take effect, while the
+       * `group-data-[scrolled]/header:` rules on the logo and the links —
+       * which drive everything else about this state — worked. Rather than
+       * keep two mechanisms where one of them is unreliable, the painted
+       * bar is now a child of the group and uses the same variant as the
+       * rest of the header.
+       *
+       * ⚠️  SOLID, NOT TRANSLUCENT, AND NOT BY PREFERENCE. Written as
+       * `bg-surface/95` with a `backdrop-blur-xl` behind it, the bar did
+       * not paint at all: a named-group variant combined with an opacity
+       * modifier — `group-data-[scrolled]/header:bg-surface/95` — produced
+       * no rule, while the same variant without the `/95` does. Both
+       * slashes in one class appear to be one too many for the parser.
+       *
+       * Opaque white is also the better answer here regardless. The bar
+       * passes over photographs, a dark globe panel and a white form, and
+       * anything translucent lets the busier of those read through enough
+       * to make the menu hard to follow.
+       *
+       * If a frosted bar is wanted later, set the colour and the blur in
+       * CSS rather than reaching for the opacity modifier again — and
+       * check it paints before trusting it.
+       */}
       <div
         ref={shellRef}
-        className="group/header fixed inset-x-0 top-0 z-(--z-header) transition-[background-color,box-shadow] duration-300 ease-(--ease-out-soft) data-[scrolled]:bg-surface/85 data-[scrolled]:shadow-(--shadow-header) data-[scrolled]:backdrop-blur-xl"
+        className="group/header fixed inset-x-0 top-0 z-(--z-header)"
       >
-        {children}
+        <div className="transition-[background-color,box-shadow] duration-300 ease-(--ease-out-soft) group-data-[scrolled]/header:bg-surface group-data-[scrolled]/header:shadow-(--shadow-header)">
+          {children}
+        </div>
       </div>
     </>
   )

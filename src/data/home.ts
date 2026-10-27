@@ -1079,6 +1079,75 @@ export const home: HomeContent = {
   },
 
   /**
+   * FREQUENTLY ASKED QUESTIONS.
+   *
+   * ⚠️  NOT ONE OF THESE ANSWERS IS NEW INFORMATION. Every one restates
+   * something the site already says somewhere else, which is the only
+   * defensible way to write an FAQ for a clinic without access to the
+   * practice's own operating detail. Where the answer came from:
+   *
+   *   location      the reach panel — HCAH Transition Care Centre, Gurugram
+   *   international `international.body`, on confirming availability first
+   *   next steps    `contact.afterSubmit.steps`, near-verbatim
+   *   records       the enquiry form's own note about not attaching scans
+   *   second op.    `complexJourney.outro`, verbatim on what a consultation
+   *                 cannot guarantee
+   *   no phone      `src/lib/site.ts`, where the absence is a decision
+   *   not advice    the disclaimer beside the enquiry form
+   *
+   * ⚠️  NOTHING HERE MAY STATE A RESPONSE TIME. The note on
+   * `contact.afterSubmit` is explicit that any implied turnaround is an
+   * operational commitment nobody has made, so "replies with the next
+   * steps" stays unqualified until someone commits to a number.
+   *
+   * These also feed a `FAQPage` JSON-LD node, so an answer that drifts from
+   * the page drifts in Google's rich result too — edit both or neither.
+   */
+  faqs: {
+    eyebrow: 'Questions people ask first',
+    title: 'Before you get in touch',
+    intro:
+      'The things most often asked by people writing to us for the first time, answered as plainly as we can.',
+    items: [
+      {
+        question: 'Where does treatment actually take place?',
+        answer:
+          'At the HCAH Transition Care Centre in Gurugram, Haryana, in the Delhi capital region. All treatment takes place there.',
+      },
+      {
+        question: 'Do you accept patients from outside India?',
+        answer:
+          'Yes. Patients and enquiries reach us from across Europe, the Middle East, Africa, Asia and the Americas. The availability of remote consultations, in-person assessments, travel assistance and other services has to be confirmed with the team before any arrangements are made.',
+      },
+      {
+        question: 'What happens after I send an enquiry?',
+        answer:
+          'Your enquiry reaches the care team and you receive a reference number. The team reviews what you have sent and replies with the next steps. If a review is appropriate, you are sent a secure channel for your records.',
+      },
+      {
+        question: 'Should I attach my scans and reports to the first message?',
+        answer:
+          'No — please do not send scans or reports through the enquiry form. If a review is needed, the team will tell you how to share them securely and exactly which documents are wanted.',
+      },
+      {
+        question: 'Can I ask for a second opinion if treatment has stopped working?',
+        answer:
+          'Yes, and that is one of the most common reasons people write. A consultation cannot guarantee that another treatment will be available or effective; the purpose is to support a clearer understanding of the available choices.',
+      },
+      {
+        question: 'Is there a phone number I can call?',
+        answer:
+          'No. Enquiries are taken by email, by WhatsApp and through the form on this page. The WhatsApp number is for messages and is not answered by voice.',
+      },
+      {
+        question: 'Is the information on this site medical advice?',
+        answer:
+          'No. Everything here is general education. It cannot account for your diagnosis, your history or your current treatment, and it is not a substitute for a conversation with your treating oncologist.',
+      },
+    ],
+  },
+
+  /**
    * KNOWLEDGE — REAL ARTICLES, READ FROM THE LIVE SITE ON 2026-10-27.
    *
    * Titles and URLs are verbatim from artofhealingcancer.com/blogs. Each

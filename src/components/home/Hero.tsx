@@ -164,10 +164,17 @@ export function Hero({
    * the phone convention and what the reference does.
    *
    * The bottom padding stays: that is the gap before the chips, not a frame.
-   * From `lg` the inset frame returns.
+   * From `lg` the side inset returns — but NOT the top one.
+   *
+   * ⚠️  NOTHING ABOVE THE CARD, AT ANY WIDTH. The header is fixed to the top
+   * of the viewport and transparent until you scroll, which only works if
+   * the thing underneath it is the dark card. With `p-(--gutter)` on this
+   * section at `lg`, the card started 40px down and the header's white
+   * wordmark and white nav sat on the warm page above it — unreadable, and
+   * clipped by the top edge of the card.
    */
   return (
-    <section className="bg-background pb-(--gutter) lg:p-(--gutter)">
+    <section className="bg-background pb-(--gutter) lg:px-(--gutter) lg:pb-(--gutter)">
       {/**
        * `svh` RATHER THAN `vh` ON PHONES. `vh` resolves against the viewport
        * with the browser's address bar retracted, so a `100vh` card is taller
@@ -176,7 +183,10 @@ export function Hero({
        * visible with the chrome showing — and the `max()` floor stops the
        * card collapsing on a short screen or a landscape phone.
        */}
-      <div className="relative isolate flex min-h-[max(30rem,80svh)] flex-col overflow-hidden rounded-b-(--radius-3xl) bg-brand-teal-950 lg:min-h-[860px] lg:rounded-(--radius-3xl)">
+      {/* Bottom corners only, at every width: the card now meets the top of
+          the window, and a rounded corner there would show the page behind
+          it through the gap. */}
+      <div className="relative isolate flex min-h-[max(30rem,80svh)] flex-col overflow-hidden rounded-b-(--radius-3xl) bg-brand-teal-950 lg:min-h-[860px]">
         <HeroVideo src="/hero.mp4" poster="/images/hero-poster.jpg" />
 
         {/* Lighter than before on the right — the reference lets its image
