@@ -139,7 +139,18 @@ export function RatingBadge({
           <a
             href={storiesHref}
             aria-label="Watch our patients' stories"
-            className="flex -space-x-4 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:-space-x-3"
+            /**
+             * `ms-auto` PUSHES THE STACK TO THE FAR EDGE. On a phone the
+             * badge is `w-full` while its contents are not, so the slack —
+             * 39px at 390, 79px at 430 — collected after the faces and read
+             * as the badge being half empty. The auto margin hands that
+             * space to the gap in the middle instead, which is where a
+             * score on one side and faces on the other want it.
+             *
+             * It does nothing from `sm`, where the badge is `w-max` and
+             * there is no free space to distribute.
+             */
+            className="flex -space-x-4 ms-auto rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:-space-x-3"
           >
             {/* The thumbnails are 16:9 title cards with the patient on the
                 right, so each circle zooms in on that side — otherwise the
