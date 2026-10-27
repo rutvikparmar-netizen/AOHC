@@ -154,8 +154,18 @@ export function Hero({
   /** Accreditation and affiliation chips. See the note where they render. */
   trust?: { icon: string; label: string; href?: string }[];
 }) {
+  /**
+   * FULL BLEED ON PHONES. The card used to sit in a 16px frame on all four
+   * sides, which on a 390px screen spends 32px of an already narrow column on
+   * margin and makes the hero read as a widget on a page rather than as the
+   * top of the page. Edge to edge, with only the bottom corners rounded, is
+   * the phone convention and what the reference does.
+   *
+   * The bottom padding stays: that is the gap before the chips, not a frame.
+   * From `lg` the inset frame returns.
+   */
   return (
-    <section className="bg-background p-(--gutter)">
+    <section className="bg-background pb-(--gutter) lg:p-(--gutter)">
       {/**
        * `svh` RATHER THAN `vh` ON PHONES. `vh` resolves against the viewport
        * with the browser's address bar retracted, so a `100vh` card is taller
@@ -164,7 +174,7 @@ export function Hero({
        * visible with the chrome showing — and the `max()` floor stops the
        * card collapsing on a short screen or a landscape phone.
        */}
-      <div className="relative isolate flex min-h-[max(30rem,80svh)] flex-col overflow-hidden rounded-(--radius-3xl) bg-brand-teal-950 lg:min-h-[860px]">
+      <div className="relative isolate flex min-h-[max(30rem,80svh)] flex-col overflow-hidden rounded-b-(--radius-3xl) bg-brand-teal-950 lg:min-h-[860px] lg:rounded-(--radius-3xl)">
         <HeroVideo src="/hero.mp4" poster="/images/hero-poster.jpg" />
 
         {/* Lighter than before on the right — the reference lets its image
@@ -257,8 +267,11 @@ export function Hero({
         </Container>
       </div>
 
-      {/* ── Below the card, phones only ───────────────────────────────── */}
-      <div className="lg:hidden">
+      {/* ── Below the card, phones only ─────────────────────────────────
+          This block carries its own gutter now that the section has none,
+          so the badge and the accreditations stay inset from the screen
+          edge while the card behind them runs full width. */}
+      <div className="px-(--gutter) lg:hidden">
         {cancerTypes.length > 0 ? (
           <nav aria-label="Cancer types" className="mt-8">
             {/**
