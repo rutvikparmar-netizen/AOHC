@@ -49,43 +49,75 @@ export function ReachExplorer() {
         />
       </div>
 
-      <div className="rounded-(--radius-2xl) border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8">
-        {/* The centre is NAMED here rather than described. The section
+      {/**
+       * THREE BANDS, NOT ONE STACK: where care happens, where people come
+       * from, and what it takes to be accepted.
+       *
+       * Everything used to sit at roughly one weight inside a single padded
+       * box — a small bold title, a small body, a small uppercase label, a
+       * wall of fourteen pills, and the panel's most consequential sentence
+       * set in its very quietest style. Nothing outranked the pills, so the
+       * pills were all the eye got. Dividing the card gives each idea its
+       * own ground and lets the pills be the middle of something rather
+       * than the whole of it.
+       */}
+      <div className="overflow-hidden rounded-(--radius-2xl) border border-white/15 bg-white/5 backdrop-blur-md">
+        {/* ── Where care happens ───────────────────────────────────────
+            The centre is NAMED here rather than described. The section
             heading and its intro already say care happens in India; saying
-            it a third time in the panel left the one concrete fact — which
-            building, and where — as an afterthought on the second line. */}
-        <p className="flex items-center gap-2.5 text-base font-bold text-white">
-          <Icon name="map-pin" className="size-5 text-brand-teal-300" />
-          HCAH Transition Care Centre
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-brand-teal-100">
-          Gurugram, Haryana, in the Delhi capital region. All treatment takes
-          place here.
-        </p>
+            it a third time left the one concrete fact — which building,
+            and where — as an afterthought on a second line. The icon sits
+            in a tinted disc, which is how every other list on this site
+            marks a row. */}
+        <div className="flex items-start gap-4 p-6 sm:p-8">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-teal-300/15 text-brand-teal-300">
+            <Icon name="map-pin" className="size-5" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-h5 text-white">HCAH Transition Care Centre</p>
+            <p className="mt-1.5 text-sm leading-relaxed text-brand-teal-100">
+              Gurugram, Haryana, in the Delhi capital region. All treatment
+              takes place here.
+            </p>
+          </div>
+        </div>
 
-        <div className="mt-7 border-t border-white/15 pt-6">
-          <p
-            id="reach-list-label"
-            className="text-xs font-bold uppercase tracking-[0.1em] text-brand-teal-300"
-          >
-            {/**
-             * NOT "patients we have treated", which is what this said.
-             *
-             * Only two of the fourteen are evidenced in AOHC's own
-             * published material — the New Zealand testimonial and the
-             * Iraqi patient's video. The rest come from the International
-             * Patients page, which describes who may get in touch rather
-             * than who has been treated. One list was an explicit
-             * instruction and stays one list; the label now covers both
-             * kinds honestly instead of asserting a treatment history for
-             * all fourteen. See the note in `src/data/reach.ts`.
-             */}
-            Patients and enquiries from
-          </p>
+        {/* ── Where people come from ───────────────────────────────── */}
+        <div className="border-t border-white/10 p-6 sm:p-8">
+          {/**
+           * THE COUNT IS THE ANCHOR, and it is counted from the list
+           * rendered directly beneath it rather than typed in, so the two
+           * cannot drift apart.
+           *
+           * This is not a statistic in the sense `StatBand` refuses to
+           * publish. That gate exists for outcome claims — response rates,
+           * survival — which need a cited basis. This is a count of the
+           * items on screen, and the reader can check it by looking.
+           *
+           * NOT "patients we have treated", which is what the label said.
+           * Only two of the fourteen are evidenced in AOHC's own published
+           * material — the New Zealand testimonial and the Iraqi patient's
+           * video. The rest come from the International Patients page,
+           * which describes who may get in touch rather than who has been
+           * treated. One list was an explicit instruction and stays one
+           * list; the label covers both kinds honestly. See the note in
+           * `src/data/reach.ts`.
+           */}
+          <div className="flex items-baseline gap-3">
+            <p className="font-display text-stat tabular-nums text-white">
+              {allMarkers.length}
+            </p>
+            <p
+              id="reach-list-label"
+              className="text-sm font-semibold leading-snug text-brand-teal-100"
+            >
+              countries patients and enquiries have come from
+            </p>
+          </div>
 
           <ul
             aria-labelledby="reach-list-label"
-            className="mt-3 flex flex-wrap gap-2"
+            className="mt-6 flex flex-wrap gap-2"
             onPointerLeave={() => setHovered(null)}
           >
             {allMarkers.map((marker) => {
@@ -107,10 +139,15 @@ export function ReachExplorer() {
                     }
                     /* min-h-11 = 44px: the tap-target floor, which a chip of
                        this text size would otherwise miss by a few pixels. */
+                    /* The resting state is quieter than it was — a softer
+                       border and fill — so the selected chip, which is the
+                       one driving the globe, is unmistakably the odd one
+                       out in the row rather than a slightly brighter pill
+                       among thirteen bright ones. */
                     className={`inline-flex min-h-11 items-center gap-1.5 rounded-(--radius-pill) border px-3.5 py-1.5 text-sm font-semibold transition-colors duration-200 ${
                       isActive
                         ? 'border-brand-teal-300 bg-brand-teal-300 text-brand-teal-950'
-                        : 'border-white/25 bg-white/10 text-white hover:border-white/50 hover:bg-white/20'
+                        : 'border-white/15 bg-white/8 text-white hover:border-white/40 hover:bg-white/15'
                     }`}
                   >
                     {marker.country === homeMarker.country ? (
@@ -123,27 +160,39 @@ export function ReachExplorer() {
             })}
           </ul>
 
-          {/* THE CAVEAT LEADS AND THE GLOBE HINT FOLLOWS. These were the
-              other way round, which put the most consequential sentence
-              in the panel — whether this practice can take you on at all —
-              behind an instruction about a decoration. "Select" rather
-              than "tap", because this is read on phones and desktops and
-              reached by keyboard. */}
+          {/* A hint about a decoration, kept at the weight of one. */}
           <p className="mt-4 text-xs leading-relaxed text-brand-teal-300">
-            Whether we can take on a new patient depends on clinical assessment,
-            the services their care needs and whether travel is realistic for
-            them. Select a country to turn the globe to it.
+            Select a country to turn the globe to it.
           </p>
         </div>
 
-        <Button
-          href={routes.internationalEnquiry}
-          variant="accent"
-          icon="arrow-right"
-          className="mt-7 rounded-(--radius-pill)"
-        >
-          International Patient Enquiry
-        </Button>
+        {/* ── What it takes, and the way in ─────────────────────────────
+            The caveat used to be the tail of the globe hint, in the
+            panel's quietest style. It is the most consequential sentence
+            here — whether this practice can take someone on at all — and
+            it now has its own ground, its own icon and a readable size,
+            directly above the button it qualifies. */}
+        <div className="border-t border-white/10 bg-brand-teal-950/40 p-6 sm:p-8">
+          <p className="flex gap-3 text-sm leading-relaxed text-brand-teal-100">
+            <Icon name="info" className="mt-0.5 size-4 shrink-0 text-brand-teal-300" />
+            <span>
+              Whether we can take on a new patient depends on clinical
+              assessment, the services their care needs and whether travel is
+              realistic for them.
+            </span>
+          </p>
+
+          {/* Full width on a phone: the label is long enough to wrap inside
+              a shrink-to-fit pill, which looked like a mistake. */}
+          <Button
+            href={routes.internationalEnquiry}
+            variant="accent"
+            icon="arrow-right"
+            className="mt-5 w-full rounded-(--radius-pill) sm:w-fit"
+          >
+            International Patient Enquiry
+          </Button>
+        </div>
       </div>
     </div>
   )

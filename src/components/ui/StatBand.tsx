@@ -30,18 +30,34 @@ export function StatBand({
   const everyFigureCited = items.length > 0 && items.every((item) => item.basis)
   if (!everyFigureCited) return null
 
+  /**
+   * THE LAYOUT IS THE ONE THAT WAS ASKED FOR: a pale teal band, the figures
+   * large and centred in the brand teal, the label beneath each in grey. The
+   * previous treatment — left-aligned under a 2px accent rule on white — is
+   * gone.
+   *
+   * Two columns on a phone rather than one. Four figures stacked vertically
+   * is a very long band for very little information, and these are short
+   * enough to sit side by side at 320px.
+   *
+   * The figures are `text-accent` (#0B8291) rather than the brighter
+   * `--color-primary` they appear to be in the reference. #0E9CAF on this
+   * background is about 3.1:1, which scrapes past only because the type is
+   * large; one step down is 4.5:1 and reads as the same colour.
+   */
   return (
-    <section className="border-y border-border bg-surface py-(--spacing-section)">
+    <section className="bg-primary-subtle py-(--spacing-section)">
       <Container>
-        <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-12 sm:gap-x-8 lg:grid-cols-4">
           {items.map((item) => (
-            <li key={item.label} className="border-t-2 border-accent pt-5">
-              <p className="font-display text-[clamp(2.5rem,4vw,3.5rem)] font-bold leading-none tracking-[-0.03em] text-text tabular-nums">
+            <li key={item.label} className="text-center">
+              <p className="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-none tracking-[-0.03em] text-accent tabular-nums">
                 {item.value}
               </p>
-              <p className="mt-3 text-base leading-relaxed text-neutral-700">
+              <p className="mx-auto mt-4 max-w-[22ch] text-sm leading-relaxed text-text-muted sm:text-base">
                 {item.label}
               </p>
+              {/* The basis is part of the figure, not a footnote to it. */}
               {item.sourceHref ? (
                 <a
                   href={item.sourceHref}
@@ -52,14 +68,16 @@ export function StatBand({
                   {item.basis}
                 </a>
               ) : (
-                <p className="mt-2 text-sm text-text-muted">{item.basis}</p>
+                <p className="mx-auto mt-2 max-w-[26ch] text-sm text-text-subtle">
+                  {item.basis}
+                </p>
               )}
             </li>
           ))}
         </ul>
 
         {footnote ? (
-          <p className="mt-10 max-w-(--measure) border-t border-border pt-5 text-sm text-text-muted">
+          <p className="mx-auto mt-12 max-w-(--measure) border-t border-border-brand pt-5 text-center text-sm text-text-muted">
             {footnote}
           </p>
         ) : null}
