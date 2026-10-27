@@ -491,20 +491,18 @@ export const home: HomeContent = {
    * hand. These are registered trademarks; an approximation is both wrong and
    * worse than the wordmark it replaced.
    *
-   * FOUR ARE STILL MISSING, each marked at its entry below:
-   *
-   *   • Zee News and NDTV — both sites return 403 to an automated request.
-   *     That is them declining to be scraped, so the files have to be asked
-   *     for rather than taken.
-   *   • The Industry Outlook — only a sub-brand banner is published.
-   *   • India Pharma Outlook — the article page carries AOHC's logo, not the
-   *     publication's.
-   *
-   * The five that are present were taken from each outlet's own site, four of
-   * them from the `publisher.logo` their schema.org markup declares. Two
+   * ALL NINE ARE PRESENT. Five were taken from each outlet's own site, four
+   * of those from the `publisher.logo` their schema.org markup declares. Two
    * arrived under the wrong extension — the Times of India serves a PNG named
    * `.jpg`, Hindustan Times a JPEG named `.png` — and are stored here under
    * what they actually are.
+   *
+   * The remaining four were supplied by the site owner, because Zee News and
+   * NDTV both return 403 to an automated request and the two Outlook titles
+   * publish no masthead on the pages that carry the coverage. Each was
+   * cropped to its ink before being committed: the strip sizes by height, so
+   * packaging whitespace does not scale away — it just shrinks that wordmark
+   * next to its neighbours.
    * ---------------------------------------------------------------------------
    */
   press: [
@@ -517,9 +515,16 @@ export const home: HomeContent = {
         height: 60,
       },
     },
-    /* ⚠️  Logo still outstanding — zeenews.india.com refuses automated
-       requests, so this one has to come from Zee's press kit. */
-    { name: 'Zee News' },
+    {
+      /* The only vector in the set, supplied by the site owner. */
+      name: 'Zee News',
+      logo: {
+        src: '/images/press/zee-news.svg',
+        alt: 'Zee News',
+        width: 916,
+        height: 346,
+      },
+    },
     {
       name: 'Business Today',
       logo: {
@@ -561,20 +566,41 @@ export const home: HomeContent = {
         height: 60,
       },
     },
-    /* ⚠️  Logo still outstanding — ndtv.com refuses automated requests, so
-       this one has to come from NDTV's press kit. */
-    { name: 'NDTV' },
     {
-      /* ⚠️  Logo still outstanding. The only mark on the site is the "IO
-         Startups" vertical's banner, which is a sub-brand rather than the
-         masthead, so the wordmark stands until the real one is supplied. */
+      /**
+       * Supplied as a screenshot that carried an exchange4media watermark in
+       * the top-right corner. Cropped to the logo block, which removes it —
+       * a third party's watermark must not ship on this page.
+       *
+       * Unlike the rest, this mark is white lettering ON a red block rather
+       * than ink on white, so it carries its own background by design.
+       */
+      name: 'NDTV',
+      logo: {
+        src: '/images/press/ndtv.jpg',
+        alt: 'NDTV',
+        width: 491,
+        height: 175,
+      },
+    },
+    {
       name: 'The Industry Outlook',
+      logo: {
+        src: '/images/press/industry-outlook.jpg',
+        alt: 'The Industry Outlook',
+        width: 448,
+        height: 155,
+      },
       href: 'https://www.theindustryoutlook.com/startups/vendor/art-of-healing-cancer-a-dedicated-initiative-towards-treating-advanced-cancers--cid-8123.html',
     },
     {
-      /* ⚠️  Logo still outstanding. The only logo on the article page is
-         AOHC's own, in the vendor card — not the publication's. */
       name: 'India Pharma Outlook',
+      logo: {
+        src: '/images/press/india-pharma-outlook.png',
+        alt: 'India Pharma Outlook',
+        width: 574,
+        height: 144,
+      },
       href: 'https://www.indiapharmaoutlook.com/manufacturing/vendor/art-of-healing-cancer-a-dedicated-initiative-towards-treating-advanced-cancers-cid-1404.html',
     },
   ],

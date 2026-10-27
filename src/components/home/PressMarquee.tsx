@@ -57,6 +57,14 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
               alt={outlet.logo.alt}
               width={outlet.logo.width}
               height={outlet.logo.height}
+              /**
+               * Vectors skip the optimiser. Resizing an SVG gains nothing,
+               * and routing it through `/_next/image` would otherwise mean
+               * turning on `dangerouslyAllowSVG` globally — which exists
+               * under that name because an SVG can carry script, and the
+               * flag would apply to every image the optimiser ever serves.
+               */
+              unoptimized={outlet.logo.src.endsWith('.svg')}
               className="h-7 w-auto object-contain mix-blend-multiply opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 sm:h-8"
             />
           ) : (
