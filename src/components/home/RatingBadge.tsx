@@ -59,9 +59,22 @@ function Star({ fill, id }: { fill: number; id: string }) {
 export function RatingBadge({
   faces = [],
   storiesHref,
+  idPrefix = 'rating',
 }: {
   faces?: ImageAsset[]
   storiesHref: string
+  /**
+   * ⚠️  REQUIRED IF THIS BADGE APPEARS TWICE ON A PAGE, and the hero renders
+   * it twice — once inside the card for `lg`, once below it for phones.
+   *
+   * Each star fills itself from a `<linearGradient>` referenced by `id`.
+   * Two badges meant two sets of identical ids, and `url(#…)` resolves to
+   * the FIRST match in the document — which is the copy sitting in the
+   * `display: none` branch. A paint server in a tree that is not rendered
+   * does not resolve, so every star lost its fill and the rating showed as
+   * five invisible stars.
+   */
+  idPrefix?: string
 }) {
   const { rating, count, url } = site.reviews
   if (rating == null) return null
@@ -78,7 +91,7 @@ export function RatingBadge({
             {[0, 1, 2, 3, 4].map((i) => (
               <Star
                 key={i}
-                id={`rating-star-${i}`}
+                id={`${idPrefix}-star-${i}`}
                 fill={Math.max(0, Math.min(1, rating - i))}
               />
             ))}

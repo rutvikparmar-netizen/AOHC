@@ -284,7 +284,12 @@
   --text-stat--line-height: 1;
   --text-stat--font-weight: 700;
   --text-stat--letter-spacing: -0.02em;
-  --text-eyebrow: 0.75rem;
+  /* 14px, not the 12px it was. The rule at the top of this scale — nothing
+     below 14px — had one exception left in it, and it was the footer's
+     column headings, which are the labels a reader scans to find the page
+     they want. An uppercase label at 12px with 0.12em tracking is the
+     hardest thing on the site to read. */
+  --text-eyebrow: 0.875rem;
   --text-eyebrow--line-height: 1.4;
   --text-eyebrow--font-weight: 700;
   --text-eyebrow--letter-spacing: 0.12em;

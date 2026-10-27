@@ -248,7 +248,10 @@ export function CheckboxField({
           defaultChecked={defaultChecked}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
-          className="mt-1 size-5 shrink-0 accent-[var(--color-primary)]"
+          /* 24px is the WCAG 2.5.8 floor for a target, and the box was 20.
+             The label is clickable too, so the usable area is larger than
+             this — but the box is what a reader aims at. */
+          className="mt-0.5 size-6 shrink-0 accent-[var(--color-primary)]"
         />
         <label htmlFor={name} className="text-sm leading-relaxed text-neutral-700">
           {children}

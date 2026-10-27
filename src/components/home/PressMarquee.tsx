@@ -90,7 +90,11 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
               href={outlet.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/outlet inline-flex items-center gap-2 font-display text-lg font-bold text-text-muted transition-colors hover:text-accent-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-xl"
+              /* `min-h-11` because the mastheads are 28px tall and these are
+                 real links to the articles — on a phone that is the whole
+                 target. The strip's own height is unchanged; the extra is
+                 padding around the logo. */
+              className="group/outlet inline-flex min-h-11 items-center gap-2 font-display text-lg font-bold text-text-muted transition-colors hover:text-accent-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-xl"
             >
               {body}
             </a>

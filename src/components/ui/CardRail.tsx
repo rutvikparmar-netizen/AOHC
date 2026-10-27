@@ -161,7 +161,11 @@ export function CardRail({
 
   return (
     <div>
-      <div className="mb-6 flex items-end justify-between gap-6">
+      {/* STACKED ON PHONES. Side by side, the two 48px arrows plus their
+          gaps leave the caption about 160px at 320px, which broke "Showing
+          7 of 12 specialists. See the full team." over five lines next to
+          the controls. */}
+      <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
         <div className="min-w-0">{aside}</div>
 
         <div className="flex shrink-0 gap-2">

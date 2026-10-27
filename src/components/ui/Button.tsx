@@ -45,6 +45,15 @@ interface CommonProps {
   children: React.ReactNode
   variant?: Variant
   size?: Size
+  /**
+   * ⚠️  DO NOT PASS A DISPLAY UTILITY HERE — `hidden`, `block`, `flex` and
+   * friends will not win. `cn()` joins class strings without resolving
+   * Tailwind conflicts, so `inline-flex` from `base` survives alongside
+   * whatever is passed, and the one Tailwind emits last takes effect.
+   * `.inline-flex` is emitted after `.hidden`, so `hidden` silently does
+   * nothing. Wrap the button in an element that carries the display classes
+   * instead — see the header's consultation button.
+   */
   className?: string
   icon?: IconName
   /** Icons sit after the label by default — before it for "back" affordances. */

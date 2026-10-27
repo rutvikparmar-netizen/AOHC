@@ -65,10 +65,13 @@ export function Footer() {
             {contactRows.length > 0 ? (
               <ul className="space-y-2.5 text-sm">
                 {contactRows.map((row) => (
-                  <li key={row.label} className="flex items-start gap-2.5">
-                    <Icon name={row.icon} className="mt-0.5 size-4 text-brand-teal-300" />
+                  <li key={row.label} className="flex items-center gap-2.5">
+                    <Icon name={row.icon} className="size-4 shrink-0 text-brand-teal-300" />
                     {row.href ? (
-                      <a href={row.href} className="text-brand-teal-100 hover:text-white hover:underline">
+                      <a
+                        href={row.href}
+                        className="inline-flex min-h-11 items-center text-brand-teal-100 hover:text-white hover:underline lg:min-h-0"
+                      >
                         {row.label}
                       </a>
                     ) : (
@@ -122,10 +125,17 @@ export function Footer() {
             {footerNav.map((group) => (
               <nav key={group.label} aria-label={group.label}>
                 <p className="text-eyebrow mb-3 uppercase text-brand-teal-300">{group.label}</p>
-                <ul className="space-y-2.5 text-sm">
+                {/* 44px rows until the layout is wide enough to be a mouse.
+                    These links were 19px tall with a 10px gap — a 29px pitch
+                    for the site's whole secondary navigation, on a page read
+                    largely by older people on phones. */}
+                <ul className="space-y-1 text-sm lg:space-y-2.5">
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-brand-teal-100 hover:text-white hover:underline">
+                      <Link
+                        href={link.href}
+                        className="inline-flex min-h-11 items-center text-brand-teal-100 hover:text-white hover:underline lg:min-h-0"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -174,10 +184,13 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          <ul className="flex flex-wrap gap-x-5">
             {legalNav.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-brand-teal-100 hover:text-white hover:underline">
+                <Link
+                  href={link.href}
+                  className="inline-flex min-h-11 items-center text-brand-teal-100 hover:text-white hover:underline lg:min-h-0"
+                >
                   {link.label}
                 </Link>
               </li>

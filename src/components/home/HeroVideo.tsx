@@ -98,7 +98,10 @@ export function HeroVideo({
         /* Deliberately quiet. It is a required control, not a design feature
            — the reference puts carousel arrows in this corner, and this sits
            in the same place at the same weight. */
-        className="absolute bottom-5 right-5 z-10 inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-brand-teal-950/40 text-white/80 backdrop-blur-md transition-colors hover:bg-white hover:text-brand-teal-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        /* size-11 = 44px: quiet, but still a target this audience can hit.
+           It was 40, which is under the floor every other control here
+           clears. */
+        className="absolute bottom-5 right-5 z-10 inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-brand-teal-950/40 text-white/80 backdrop-blur-md transition-colors hover:bg-white hover:text-brand-teal-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <Icon name={playing ? 'pause' : 'play'} className={playing ? 'size-4' : 'ml-0.5 size-4'} />
       </button>

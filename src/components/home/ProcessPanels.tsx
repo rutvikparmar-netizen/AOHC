@@ -36,6 +36,21 @@ import { Icon } from '@/components/ui/Icon'
  * `flex-row` — so a phone gets an ordinary accordion of stacked strips rather
  * than four unreadable slivers.
  *
+ * ⚠️  AND ON PHONES THE OPEN PANEL IS SIZED BY ITS CONTENT, not by a share of
+ * a fixed height. The column used to be `h-[38rem]`, split five-to-one
+ * between the open panel and the three collapsed strips, which left the open
+ * one 361px tall — while its copy needs 364px to 421px depending on the
+ * stage. Since the copy is anchored to the BOTTOM of the panel, the overflow
+ * came off the top: stage 2 lost 60px, which is its heading. Measured at
+ * 390px; at 320px even stage 1 lost 83px.
+ *
+ * The fix is `grid-template-rows: 0fr` → `1fr` on the panel, which is the one
+ * way to animate to a content-driven height in CSS. The inner wrapper needs
+ * `min-h-0` and `overflow-hidden` or the row will not collapse to zero. From
+ * `lg` up the panel goes back to `display: block` and the fixed-height flex
+ * row takes over again, where there is width to spare and the original
+ * composition is the right one.
+ *
  * INTERACTION, AND WHY IT IS NOT HOVER-ONLY. The published versions of this
  * pattern are usually pure CSS `:hover`, which leaves touch and keyboard with
  * nothing. Here:
@@ -55,7 +70,7 @@ export function ProcessPanels({ steps }: { steps: ProcessStep[] }) {
   const [open, setOpen] = useState(0)
 
   return (
-    <ol className="flex h-[38rem] flex-col gap-2.5 lg:h-[34rem] lg:flex-row lg:gap-3">
+    <ol className="flex flex-col gap-2.5 lg:h-[34rem] lg:flex-row lg:gap-3">
       {steps.map((step, index) => {
         const isOpen = index === open
 
@@ -68,8 +83,8 @@ export function ProcessPanels({ steps }: { steps: ProcessStep[] }) {
               // it through would open the panel under the finger twice.
               if (event.pointerType === 'mouse') setOpen(index)
             }}
-            className={`group/panel relative min-h-16 basis-0 overflow-hidden rounded-(--radius-2xl) bg-brand-teal-950 transition-[flex-grow] duration-700 ease-(--ease-out-settle) lg:min-h-0 lg:min-w-20 ${
-              isOpen ? 'grow-[5]' : 'grow'
+            className={`group/panel relative grid min-h-16 grid-rows-[0fr] overflow-hidden rounded-(--radius-2xl) bg-brand-teal-950 transition-[grid-template-rows] duration-700 ease-(--ease-out-settle) data-[open]:grid-rows-[1fr] lg:block lg:min-h-0 lg:min-w-20 lg:basis-0 lg:transition-[flex-grow] ${
+              isOpen ? 'lg:grow-[5]' : 'lg:grow'
             }`}
           >
             {step.image ? (
@@ -116,42 +131,51 @@ export function ProcessPanels({ steps }: { steps: ProcessStep[] }) {
               className="absolute inset-0 z-10 cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
             />
 
-            {/* OPEN CONTENT. The width is fixed rather than fluid: text that
+            {/* OPEN CONTENT. Two elements, and both are load-bearing: the
+                outer one is the collapsing grid row on phones and the
+                bottom-anchored overlay from `lg` up, while the inner one
+                carries the padding and the fade. `min-h-0` is what lets the
+                row actually reach zero — a grid item's automatic minimum
+                size would otherwise hold it open at content height.
+
+                From `lg`, the width is fixed rather than fluid: text that
                 rewraps on every frame of the expansion looks broken. The
                 delay lets the panel get most of the way open first, so the
                 copy reads as a consequence of the expansion. */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 translate-y-4 p-6 opacity-0 transition-all delay-150 duration-500 ease-(--ease-out-settle) group-data-[open]/panel:translate-y-0 group-data-[open]/panel:opacity-100 sm:p-8 lg:w-[32rem] lg:max-w-full">
-              {/* Hidden on phones: the open panel there is only ~380px tall
-                  and this was pushing the heading off the top of it. The
-                  collapsed strips already number every stage, so nothing is
-                  lost — on wider screens the panel has room and it returns. */}
-              <span className="hidden items-center gap-2 rounded-(--radius-pill) border border-white/25 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-brand-teal-200 backdrop-blur-md sm:inline-flex">
-                Stage {index + 1}
-              </span>
+            <div className="pointer-events-none z-20 min-h-0 overflow-hidden lg:absolute lg:inset-x-0 lg:bottom-0">
+              <div className="translate-y-4 p-6 opacity-0 transition-all delay-150 duration-500 ease-(--ease-out-settle) group-data-[open]/panel:translate-y-0 group-data-[open]/panel:opacity-100 sm:p-8 lg:w-[32rem] lg:max-w-full">
+                {/* This was hidden on phones while the panel had a fixed
+                    height, because it pushed the heading off the top. The
+                    panel is sized by its content there now, so it is back at
+                    every width. */}
+                <span className="inline-flex items-center gap-2 rounded-(--radius-pill) border border-white/25 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-brand-teal-200 backdrop-blur-md">
+                  Stage {index + 1}
+                </span>
 
-              <h3 className="font-display text-2xl font-bold leading-snug text-white sm:mt-4 sm:text-3xl">
-                {step.title}
-              </h3>
+                <h3 className="mt-4 font-display text-2xl font-bold leading-snug text-white sm:text-3xl">
+                  {step.title}
+                </h3>
 
-              <p className="mt-3 max-w-(--measure) text-sm leading-relaxed text-brand-teal-100 sm:text-base">
-                {step.description}
-              </p>
+                <p className="mt-3 max-w-(--measure) text-sm leading-relaxed text-brand-teal-100 sm:text-base">
+                  {step.description}
+                </p>
 
-              {step.points?.length ? (
-                <ul className="mt-5 space-y-2.5 border-t border-white/15 pt-5">
-                  {step.points.map((point) => (
-                    <li key={point} className="flex gap-2.5">
-                      <Icon
-                        name="check"
-                        className="mt-0.5 size-3.5 shrink-0 text-brand-teal-300"
-                      />
-                      <span className="text-xs leading-relaxed text-brand-teal-100">
-                        {point}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+                {step.points?.length ? (
+                  <ul className="mt-5 space-y-2.5 border-t border-white/15 pt-5">
+                    {step.points.map((point) => (
+                      <li key={point} className="flex gap-2.5">
+                        <Icon
+                          name="check"
+                          className="mt-0.5 size-3.5 shrink-0 text-brand-teal-300"
+                        />
+                        <span className="text-xs leading-relaxed text-brand-teal-100">
+                          {point}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
             </div>
           </li>
         )

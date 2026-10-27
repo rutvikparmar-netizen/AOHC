@@ -151,15 +151,32 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
-            href={routes.consultation}
-            size="sm"
-            variant="accent"
-            className="hidden rounded-(--radius-pill) sm:inline-flex"
-          >
-            {/* ONE primary label across the whole site. */}
-            Request a Consultation
-          </Button>
+          {/**
+           * THE BREAKPOINT LIVES ON THIS WRAPPER, NOT ON THE BUTTON.
+           *
+           * `hidden` passed to `<Button>` through `className` did nothing:
+           * `cn()` only joins strings, so the button kept both `inline-flex`
+           * from its own base classes and `hidden` from here. Two utilities,
+           * same specificity — so the winner is whichever Tailwind emits
+           * last, and that is `.inline-flex`. The button was therefore
+           * visible on every phone, where the label wrapped onto two lines
+           * and squeezed the logo.
+           *
+           * A wrapper has no competing display of its own, so `hidden` means
+           * hidden. Anything else that needs to hide a `<Button>`
+           * responsively should wrap it the same way.
+           */}
+          <div className="hidden sm:block">
+            <Button
+              href={routes.consultation}
+              size="sm"
+              variant="accent"
+              className="rounded-(--radius-pill)"
+            >
+              {/* ONE primary label across the whole site. */}
+              Request a Consultation
+            </Button>
+          </div>
 
           <MobileMenu nav={primaryNav} onDark={overlay} />
         </div>
