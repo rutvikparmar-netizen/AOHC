@@ -1,5 +1,6 @@
 import type { StatItem } from '@/types'
 import { Container } from '@/components/ui/Container'
+import { CountUp } from '@/components/ui/CountUp'
 
 /**
  * Headline figures.
@@ -51,11 +52,18 @@ export function StatBand({
   return (
     <section className="bg-primary-subtle py-(--spacing-section)">
       <Container>
-        <ul className="grid grid-cols-2 gap-x-6 gap-y-12 sm:gap-x-8 lg:grid-cols-4">
+        {/* `lg:divide-x` is safe only because the grid is a single row at
+            `lg`. Below that it is two columns, where a left border on every
+            item but the first would also land on the first item of the
+            second row. */}
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-12 sm:gap-x-8 lg:grid-cols-4 lg:gap-x-0 lg:divide-x lg:divide-border-brand">
           {items.map((item) => (
-            <li key={item.label} className="text-center">
+            <li key={item.label} className="text-center lg:px-8">
               <p className="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-none tracking-[-0.03em] text-accent tabular-nums">
-                {item.value}
+                {/* Counts up on first scroll into view; renders the final
+                    value on the server, so it is right with no JavaScript
+                    and right for a crawler. */}
+                <CountUp value={item.value} />
               </p>
               <p className="mx-auto mt-4 max-w-[22ch] text-sm leading-relaxed text-text-muted sm:text-base">
                 {item.label}

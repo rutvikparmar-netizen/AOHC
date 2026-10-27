@@ -142,12 +142,19 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* ── Outcome figures ───────────────────────────────────────────
+          Directly under "Who we are" on request. It reads as the evidence
+          for the paragraph above it rather than as an interruption
+          halfway down the page, which is where it used to sit.
+
+          The figures count up the first time they scroll into view. See
+          the note in `StatBand` on what they still need. */}
+      <StatBand items={home.stats.items} footnote={home.stats.footnote} />
+
       {/* ── Where patients come from ──────────────────────────────────
-          Moved up to sit directly under "Who we are": the globe is a
-          credibility beat, and it reads best straight after the paragraph
-          that claims the reach. It also breaks up what was otherwise a long
-          run of light sections. The list is the content; the globe is
-          aria-hidden illustration. */}
+          The globe is a credibility beat and reads best shortly after the
+          paragraph that claims the reach. The list is the content; the
+          globe is aria-hidden illustration. */}
       <ReachSection />
 
       {/* ── International patients ──────────────────────────────────────
@@ -220,9 +227,6 @@ export default function HomePage() {
           </Reveal>
         </Container>
       </section>
-
-      {/* Renders only once every figure carries a source. */}
-      <StatBand items={home.stats.items} footnote={home.stats.footnote} />
 
       {/* ── Who we help ───────────────────────────────────────────────── */}
       <section className="bg-surface py-(--spacing-section)">
