@@ -448,10 +448,10 @@ export const home: HomeContent = {
    *     In The News" section.
    *
    *   • Hindustan Times and NDTV appear as logos in the strip near the top of
-   *     the live home page, which is not labelled as coverage. They are
-   *     included because they sit on AOHC's own site in what reads as an
-   *     as-seen-in strip — but that inference is mine, so ⚠️ CONFIRM BOTH, or
-   *     delete them.
+   *     the live home page, which is not labelled as coverage. They were
+   *     originally carried here on inference from that strip alone. ✅ BOTH
+   *     CONFIRMED by the site owner on 2026-10-27 as real coverage, which is
+   *     what cleared Hindustan Times to be shown as a masthead.
    *
    *   • The last two are verified articles; the URLs below were read, not
    *     assumed. Note that The Industry Outlook piece is editorial coverage,
@@ -487,28 +487,93 @@ export const home: HomeContent = {
    * The strip sizes by height and lets width follow, so the two numbers only
    * need to be in the right proportion to each other.
    *
-   * ⚠️  THE FILES MUST COME FROM THE OUTLETS' OWN PRESS KITS, not from a
-   * search result and not redrawn by hand. These are registered trademarks;
-   * an approximation is both wrong and worse than the wordmark it replaced.
+   * ⚠️  THE FILES MUST COME FROM THE OUTLETS' OWN PRESS KITS, not redrawn by
+   * hand. These are registered trademarks; an approximation is both wrong and
+   * worse than the wordmark it replaced.
    *
-   * ⚠️  TWO ENTRIES BELOW ARE STILL UNCONFIRMED — see the Hindustan Times and
-   * NDTV note above. Resolve those before giving them a masthead: a logo
-   * asserts the coverage far more strongly than a name set in type does.
+   * FOUR ARE STILL MISSING, each marked at its entry below:
+   *
+   *   • Zee News and NDTV — both sites return 403 to an automated request.
+   *     That is them declining to be scraped, so the files have to be asked
+   *     for rather than taken.
+   *   • The Industry Outlook — only a sub-brand banner is published.
+   *   • India Pharma Outlook — the article page carries AOHC's logo, not the
+   *     publication's.
+   *
+   * The five that are present were taken from each outlet's own site, four of
+   * them from the `publisher.logo` their schema.org markup declares. Two
+   * arrived under the wrong extension — the Times of India serves a PNG named
+   * `.jpg`, Hindustan Times a JPEG named `.png` — and are stored here under
+   * what they actually are.
    * ---------------------------------------------------------------------------
    */
   press: [
-    { name: 'The Times of India' },
+    {
+      name: 'The Times of India',
+      logo: {
+        src: '/images/press/times-of-india.png',
+        alt: 'The Times of India',
+        width: 600,
+        height: 60,
+      },
+    },
+    /* ⚠️  Logo still outstanding — zeenews.india.com refuses automated
+       requests, so this one has to come from Zee's press kit. */
     { name: 'Zee News' },
-    { name: 'Business Today' },
-    { name: 'India Today' },
-    { name: 'India TV' },
-    { name: 'Hindustan Times' },
+    {
+      name: 'Business Today',
+      logo: {
+        src: '/images/press/business-today.png',
+        alt: 'Business Today',
+        width: 527,
+        height: 59,
+      },
+    },
+    {
+      name: 'India Today',
+      logo: {
+        src: '/images/press/india-today.png',
+        alt: 'India Today',
+        width: 600,
+        height: 60,
+      },
+    },
+    {
+      /**
+       * The DARK variant, not the 600×60 colour one that sits in India TV's
+       * own header. That file sets "TV" in white for a dark masthead bar, and
+       * half the wordmark would simply disappear against this page.
+       */
+      name: 'India TV',
+      logo: {
+        src: '/images/press/india-tv.webp',
+        alt: 'India TV',
+        width: 150,
+        height: 43,
+      },
+    },
+    {
+      name: 'Hindustan Times',
+      logo: {
+        src: '/images/press/hindustan-times.jpg',
+        alt: 'Hindustan Times',
+        width: 600,
+        height: 60,
+      },
+    },
+    /* ⚠️  Logo still outstanding — ndtv.com refuses automated requests, so
+       this one has to come from NDTV's press kit. */
     { name: 'NDTV' },
     {
+      /* ⚠️  Logo still outstanding. The only mark on the site is the "IO
+         Startups" vertical's banner, which is a sub-brand rather than the
+         masthead, so the wordmark stands until the real one is supplied. */
       name: 'The Industry Outlook',
       href: 'https://www.theindustryoutlook.com/startups/vendor/art-of-healing-cancer-a-dedicated-initiative-towards-treating-advanced-cancers--cid-8123.html',
     },
     {
+      /* ⚠️  Logo still outstanding. The only logo on the article page is
+         AOHC's own, in the vendor card — not the publication's. */
       name: 'India Pharma Outlook',
       href: 'https://www.indiapharmaoutlook.com/manufacturing/vendor/art-of-healing-cancer-a-dedicated-initiative-towards-treating-advanced-cancers-cid-1404.html',
     },

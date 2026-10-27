@@ -38,9 +38,18 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
            * NDTV at wildly different optical weights. `object-contain`
            * guarantees nothing is cropped, whatever the file turns out to be.
            *
-           * Muted to greyscale so nine different brand palettes do not fight
-           * each other, or the page's teal, and restored on hover for the
-           * linked ones.
+           * SHOWN IN THEIR OWN COLOURS. A greyscale strip is the tidier
+           * design, but these are mastheads: The Times of India's black, the
+           * India Today red and the Hindustan Times cyan are most of what
+           * makes each one recognisable at this size.
+           *
+           * `mix-blend-multiply` IS LOAD-BEARING, not decoration. Two of the
+           * supplied files have a white background baked in rather than an
+           * alpha channel — Hindustan Times is a JPEG, and the Times of India
+           * PNG has no transparency — so without it they render as white
+           * rectangles on the warm page. Multiply drops white into the
+           * background and leaves the dark ink, and it is a no-op on the
+           * files that do have alpha.
            */}
           {outlet.logo ? (
             <Image
@@ -48,7 +57,7 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
               alt={outlet.logo.alt}
               width={outlet.logo.width}
               height={outlet.logo.height}
-              className="h-7 w-auto object-contain opacity-80 grayscale transition duration-200 group-hover/outlet:opacity-100 group-hover/outlet:grayscale-0 sm:h-8"
+              className="h-7 w-auto object-contain mix-blend-multiply opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 sm:h-8"
             />
           ) : (
             <span>{outlet.name}</span>
