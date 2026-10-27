@@ -83,8 +83,8 @@ export function RatingBadge({
   const label = `Rated ${score} out of 5 on Google${count ? ` from ${count} reviews` : ''}`
 
   const scoreBlock = (
-    <div className="flex items-center gap-3 sm:gap-4">
-      <GoogleG className="size-9 shrink-0 sm:size-12" />
+    <div className="flex items-center gap-2 sm:gap-4">
+      <GoogleG className="size-8 shrink-0 sm:size-12" />
       <div>
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="flex gap-0.5">
@@ -96,7 +96,7 @@ export function RatingBadge({
               />
             ))}
           </div>
-          <p className="text-base font-bold text-text sm:text-2xl">
+          <p className="text-sm font-bold text-text sm:text-2xl">
             {score}
           </p>
         </div>
@@ -116,7 +116,7 @@ export function RatingBadge({
      * — so the whole thing fits across a 360px screen. `flex-wrap` stays as
      * the fallback for anything narrower rather than letting it overflow.
      */
-    <div className="flex w-full flex-wrap items-center gap-x-3 gap-y-4 rounded-(--radius-2xl) bg-[#F3F3FB] px-4 py-4 shadow-(--shadow-modal) sm:w-max sm:flex-nowrap sm:gap-x-7 sm:px-6 sm:py-5">
+    <div className="flex w-full flex-wrap items-center gap-x-2 gap-y-4 rounded-(--radius-2xl) bg-[#F3F3FB] px-4 py-4 shadow-(--shadow-modal) sm:w-max sm:flex-nowrap sm:gap-x-7 sm:px-6 sm:py-5">
       {url ? (
         <a
           href={url}
@@ -139,23 +139,27 @@ export function RatingBadge({
           <a
             href={storiesHref}
             aria-label="Watch our patients' stories"
-            className="flex -space-x-2 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:-space-x-3"
+            className="flex -space-x-4 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:-space-x-3"
           >
             {/* The thumbnails are 16:9 title cards with the patient on the
                 right, so each circle zooms in on that side — otherwise the
                 crop is mostly overlay text. */}
             {/**
-             * THREE FACES ON A PHONE, FOUR FROM `sm`. Four at a size that
-             * fits across 360px came out 24px, where a face is a grey dot
-             * rather than a person — the point of the stack. Dropping one
-             * buys the other three 50% more diameter in the same space.
+             * ALL FOUR FACES ON A PHONE, AT 36px, by overlapping them more
+             * rather than by shrinking them or dropping one.
+             *
+             * The constraint is the badge staying on one line across a
+             * 360px screen, which leaves the stack about 92px. Four at 24px
+             * fit, but a 24px face is a grey dot rather than a person,
+             * which is the whole point of the stack. Four at 36px with a
+             * 14px overlap come to the same 92px and each one is legible —
+             * an overlapping stack is read as a group, so the covered
+             * third of each face costs nothing.
              */}
-            {faces.slice(0, 4).map((face, index) => (
+            {faces.slice(0, 4).map((face) => (
               <span
                 key={face.src}
-                className={`relative size-9 shrink-0 overflow-hidden rounded-full border-2 border-white bg-surface sm:size-14 sm:border-[3px] ${
-                  index === 3 ? 'max-sm:hidden' : ''
-                }`}
+                className="relative size-9 shrink-0 overflow-hidden rounded-full border-2 border-white bg-surface sm:size-14 sm:border-[3px]"
               >
                 <Image
                   src={face.src}

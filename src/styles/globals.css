@@ -234,6 +234,32 @@
   [data-reveal='right'] {
     transform: translate3d(2rem, 0, 0);
   }
+
+  /**
+   * ⚠️  NO SIDEWAYS OFFSET BELOW `lg`. THIS IS AN OVERFLOW FIX, NOT TASTE.
+   *
+   * A reveal holds its starting transform until the observer fires, so every
+   * `direction="right"` block below the fold sits 32px to the right of where
+   * it belongs — and on a phone those blocks are already the full width of
+   * the column. The page therefore measured 16px wider than the viewport at
+   * every width from 320 to 430, and could be panned sideways. Three blocks
+   * did it: the About copy, the International steps and the contact column.
+   *
+   * `overflow-x: clip` on `body` was supposed to be the backstop and is not
+   * one. It propagates to the viewport, which leaves the body itself not
+   * clipping anything, and the page still panned on a real phone. Content
+   * that fits is the fix; the clip stays only as a second line of defence.
+   *
+   * The offset exists to make a two-column section assemble from its two
+   * sides. Below `lg` those columns are stacked, so there are no sides to
+   * come in from and the horizontal travel was never doing anything here.
+   */
+  @media (max-width: 63.9375rem) {
+    [data-reveal='left'],
+    [data-reveal='right'] {
+      transform: translate3d(0, 2rem, 0);
+    }
+  }
   /* Card entrance from the design-system motion spec: scale 0.92 + 16px rise,
      settling on a back-out overshoot rather than stopping dead. */
   [data-reveal='scale'] {
