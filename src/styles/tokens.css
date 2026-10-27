@@ -189,7 +189,13 @@
    * Tailwind's `@theme` block cannot hold one. Change the numbers there and
    * the entire page re-spaces — there are no per-section overrides to hunt.
    */
-  --container-site: 83.75rem; /* 1340px — page chrome */
+  /* 1440px. Was 1340, which the header outgrew: logo, eight nav items and
+     the consultation button need about 1360px of row, so the button was
+     being squeezed onto two lines at every screen size. Widening the one
+     container widens the page with it, which keeps the header aligned to
+     the content beneath it — a wider header over a narrower page would
+     put the logo out of line with everything below. */
+  --container-site: 90rem; /* 1440px — page chrome */
   --container-content: 64rem; /* 1024px — composed sections */
   --container-prose: 44rem; /* 704px — ~70 char measure for long reads */
 

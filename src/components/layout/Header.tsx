@@ -99,7 +99,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           into from the shell. */}
       <Container
         data-header-row
-        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 xl:gap-6"
+        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 xl:gap-4"
       >
         <Link href={routes.home} className="shrink-0" aria-label={`${site.name} — home`}>
           {/* The lockup is reversed out over the hero with a filter and
@@ -161,13 +161,22 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                  * window. Taking the positioning off this one item is what
                  * lets the same markup do both.
                  */
+                /* `shrink-0` on each item as well as on the nav: the items
+                   are flex children too, and without it they compress
+                   below their own labels while `whitespace-nowrap` stops
+                   the text reflowing — so the words run into each other
+                   instead of the row simply being too wide. */
                 <li
                   key={group.label}
-                  className={`group flex items-center ${mega ? 'static' : 'relative'}`}
+                  className={`group flex shrink-0 items-center ${mega ? 'static' : 'relative'}`}
                 >
                   <Link
                     href={group.href ?? '#'}
-                    className={`inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-(--radius-button) px-2.5 text-sm font-semibold transition-colors ${
+                    /* 14px and tighter padding, so eight items and the
+                       button fit on one row. 14px is the floor this type
+                       scale sets and `--text-xs` is the token for it — the
+                       scale's own note explains why nothing goes below. */
+                    className={`inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-(--radius-button) px-2 text-xs font-semibold transition-colors ${
                       overlay
                         ? 'text-white/85 hover:text-white group-data-[scrolled]/header:text-text group-data-[scrolled]/header:hover:text-primary-dark'
                         : 'text-text hover:text-primary-dark'
@@ -310,7 +319,9 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
               href={routes.consultation}
               size="sm"
               variant="accent"
-              className="rounded-(--radius-pill)"
+              /* The label is one phrase and was breaking across two lines
+                 whenever the row ran short. */
+              className="rounded-(--radius-pill) whitespace-nowrap"
             >
               {/* ONE primary label across the whole site. */}
               Request a Consultation
