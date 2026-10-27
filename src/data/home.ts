@@ -1181,12 +1181,36 @@ export const home: HomeContent = {
     title: 'Written for the question you are about to ask',
     intro:
       'Long-form explanations of the things people search for at two in the morning — what a treatment actually does, why a symptom will not settle, and what it means for the next appointment.',
+    /**
+     * ⚠️  THE THUMBNAILS ARE DECORATIVE STOCK ALREADY USED ELSEWHERE ON
+     * THIS PAGE, and not one of them is a picture of what its article is
+     * about. The blog publishes no per-article artwork — all nine posts
+     * serve the AOHC logo as their `og:image` — so these were chosen on
+     * the owner's instruction to give the cards a visual.
+     *
+     * They are paired as closely as the set allows: an infusion line
+     * against the chemotherapy piece, a scan being discussed against the
+     * lung-imaging one, sample tubes against the molecular series. The alt
+     * text describes the SCENE and never the article, which is what keeps
+     * a stock photograph from reading as a claim — the same rule the rest
+     * of this file follows.
+     *
+     * These are the images `ProcessPanels` already flags for replacement.
+     * Real photography, or artwork made for each article, should replace
+     * them here first.
+     */
     featured: {
       kicker: 'Eight-part series',
       title: 'Breast Cancer Bone Metastasis',
       summary:
         'A guided entry point to the whole series: a plain-English synopsis of every chapter, with a direct link into any of them.',
       href: 'https://artofhealingcancer.com/blogs/breast-cancer-bone-metastasis-8%E2%80%91part-series-overview-insights/',
+      image: {
+        src: '/images/card-molecular.jpg',
+        alt: 'A pipette dispensing into a tray of sample tubes',
+        width: 1000,
+        height: 667,
+      },
     },
     items: [
       {
@@ -1196,6 +1220,12 @@ export const home: HomeContent = {
         summary:
           'Medicines that kill fast-growing cancer cells also reach fast-growing healthy ones — in hair, mouth, gut and bone marrow. That is where the side effects come from.',
         href: 'https://artofhealingcancer.com/blogs/ac-chemotherapy-how-it-works-side-effects-care-faqs/',
+        image: {
+          src: '/images/card-infusion.jpg',
+          alt: 'An intravenous line against a softly blurred window',
+          width: 1000,
+          height: 667,
+        },
       },
       {
         title: 'Persistent Fever in Cancer: Causes, Treatments & Natural Relief',
@@ -1204,6 +1234,12 @@ export const home: HomeContent = {
         summary:
           'Recurring fevers that do not settle on antibiotics, and more than a dozen non-infectious reasons they happen.',
         href: 'https://artofhealingcancer.com/blogs/persistent-fever-in-cancer-causes-treatments-natural-relief/',
+        image: {
+          src: '/images/card-supportive.jpg',
+          alt: 'Two people sitting together, one hand resting on another',
+          width: 1000,
+          height: 563,
+        },
       },
       {
         title: 'Why Does Pleural Effusion Happen in Lung Cancer Patients?',
@@ -1211,6 +1247,12 @@ export const home: HomeContent = {
         summary:
           'Families focus on the word "cancer" itself. This is about one of the problems that arrives later and frightens them just as much.',
         href: 'https://artofhealingcancer.com/blogs/why-does-pleural-effusion-happen-in-lung-cancer-patients-a-complete-guide/',
+        image: {
+          src: '/images/scan-discussion.jpg',
+          alt: 'A patient seated at a desk while a scan is displayed on a laptop beside them',
+          width: 1400,
+          height: 788,
+        },
       },
     ],
     cta: {

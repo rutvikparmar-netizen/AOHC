@@ -104,7 +104,15 @@ export function StickyHeaderShell({ children }: { children: React.ReactNode }) {
         ref={shellRef}
         className="group/header fixed inset-x-0 top-0 z-(--z-header)"
       >
-        <div className="transition-[background-color,box-shadow] duration-300 ease-(--ease-out-soft) group-data-[scrolled]/header:bg-surface group-data-[scrolled]/header:shadow-(--shadow-header)">
+        {/**
+         * THE BAR STARTS LOW AND RISES. From `lg` the hero card is inset by
+         * `--gutter` on all four sides, so the top of the window there is
+         * the warm page, not the card — and a transparent bar with white
+         * type on it would be invisible. At rest the bar is dropped by that
+         * same gutter so it sits over the card; once scrolled it goes to
+         * the top of the window and takes its background with it.
+         */}
+        <div className="transition-[background-color,box-shadow,margin] duration-300 ease-(--ease-out-soft) group-data-[scrolled]/header:bg-surface group-data-[scrolled]/header:shadow-(--shadow-header) lg:mt-(--gutter) lg:group-data-[scrolled]/header:mt-0">
           {children}
         </div>
       </div>

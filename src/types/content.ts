@@ -208,6 +208,12 @@ export interface KnowledgeTeaser {
   summary: string
   href: string
   readingTime?: string
+  /**
+   * Decorative only. The blog has no per-article artwork, so these are
+   * stock already used elsewhere on the page and the alt text describes the
+   * scene rather than the article. See the note in `src/data/home.ts`.
+   */
+  image: ImageAsset
 }
 
 export interface HomeContent {
@@ -353,6 +359,8 @@ export interface HomeContent {
       title: string
       summary: string
       href: string
+      /** Decorative, as above. */
+      image: ImageAsset
     }
     items: KnowledgeTeaser[]
     cta: NavLink
