@@ -352,16 +352,6 @@ export interface HomeContent {
     eyebrow: string
     title: string
     intro: string
-    /** The one article given a panel of its own. */
-    featured: {
-      /** Sits above the title in place of a category — "Eight-part series". */
-      kicker: string
-      title: string
-      summary: string
-      href: string
-      /** Decorative, as above. */
-      image: ImageAsset
-    }
     items: KnowledgeTeaser[]
     cta: NavLink
   }

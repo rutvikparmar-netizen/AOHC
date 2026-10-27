@@ -533,7 +533,6 @@ export default function HomePage() {
         eyebrow={home.knowledge.eyebrow}
         title={home.knowledge.title}
         intro={home.knowledge.intro}
-        featured={home.knowledge.featured}
         items={home.knowledge.items}
         cta={home.knowledge.cta}
       />

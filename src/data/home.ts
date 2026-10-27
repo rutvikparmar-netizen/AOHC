@@ -1165,11 +1165,15 @@ export const home: HomeContent = {
    *
    * ⚠️  THREE OF THE NINE POSTS ON THAT PAGE ARE DOSING CALCULATORS — one of
    * them for fenbendazole and one for ivermectin, neither of which is an
-   * approved cancer treatment. They are deliberately not among the four
+   * approved cancer treatment. They are deliberately not among the three
    * surfaced here: the home page is the most prominent surface on the site,
    * and a dosing tool for an unapproved drug is not what it should lead
    * with. They remain on the blog itself; this is a choice about what to
    * feature, not about what to publish.
+   *
+   * The eight-part bone-metastasis series had a wide lead card above these
+   * three. It was removed on request, so the series is now reached through
+   * "All articles" rather than from the home page directly.
    *
    * `category` is the article's own where it prints one ("Cancer Treatment"
    * on the chemotherapy piece). The other two are editorial labels taken
@@ -1199,19 +1203,6 @@ export const home: HomeContent = {
      * Real photography, or artwork made for each article, should replace
      * them here first.
      */
-    featured: {
-      kicker: 'Eight-part series',
-      title: 'Breast Cancer Bone Metastasis',
-      summary:
-        'A guided entry point to the whole series: a plain-English synopsis of every chapter, with a direct link into any of them.',
-      href: 'https://artofhealingcancer.com/blogs/breast-cancer-bone-metastasis-8%E2%80%91part-series-overview-insights/',
-      image: {
-        src: '/images/card-molecular.jpg',
-        alt: 'A pipette dispensing into a tray of sample tubes',
-        width: 1000,
-        height: 667,
-      },
-    },
     items: [
       {
         title: 'AC Chemotherapy: How It Works, Side Effects, Care & FAQs',
