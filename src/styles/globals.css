@@ -374,6 +374,45 @@
     }
   }
 
+  /* ==========================================================================
+     WHATSAPP FAB
+     One soft ring that expands out of the button and fades, about every three
+     seconds. It is a nudge, not a notification: nothing on a cancer clinic's
+     page should imitate an unread-message badge, so there is no counter, no
+     bounce and no colour change.
+
+     THE RING IS A PSEUDO-ELEMENT so it cannot take the tap. Sizing it with
+     `inset: 0` keeps it concentric with the button at every breakpoint
+     without repeating the diameter here.
+
+     `pointer-events: none` matters more than it looks: at the far end of the
+     animation the ring is twice the button's width, and without it the dead
+     transparent edge would swallow clicks aimed just outside the button.
+     ========================================================================== */
+  .wa-fab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: #128c7e;
+    opacity: 0.55;
+    pointer-events: none;
+    animation: wa-fab-pulse 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  @keyframes wa-fab-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    /* Holds briefly at full fade so the ring reads as one pulse, not a throb. */
+    70%,
+    100% {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+  }
+
   /* Clamp copy to N lines so cards in a grid stay aligned. */
   .line-clamp-2-safe {
     display: -webkit-box;
@@ -487,6 +526,16 @@
   .marquee-track {
     animation: none !important;
     transform: none !important;
+  }
+
+  /**
+   * Collapsing the duration would leave the ring parked at the end of its
+   * keyframes — scaled to 1.9 and fully transparent. Invisible, but still a
+   * stretched box sitting over the corner of the viewport. Removing it
+   * outright leaves the button exactly as it renders without the effect.
+   */
+  .wa-fab::before {
+    content: none;
   }
 }
 

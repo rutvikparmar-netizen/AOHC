@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Fraunces, Lexend } from 'next/font/google'
 import { Footer } from '@/components/layout/Footer'
 import { MobileBottomBar } from '@/components/layout/MobileBottomBar'
+import { WhatsAppFab } from '@/components/layout/WhatsAppFab'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildMetadata } from '@/lib/seo'
 import { organizationSchema, websiteSchema } from '@/lib/structured-data'
@@ -159,6 +160,13 @@ export default function SiteLayout({
         </div>
 
         <MobileBottomBar />
+
+        {/**
+         * After the bottom bar in the DOM on purpose: both sit at
+         * `--z-sticky`, so source order is what decides which wins if the
+         * offsets are ever changed into an overlap.
+         */}
+        <WhatsAppFab />
       </body>
     </html>
   )
