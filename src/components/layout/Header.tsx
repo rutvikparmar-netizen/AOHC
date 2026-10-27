@@ -74,11 +74,18 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
         </div>
       ) : null}
 
+      {/* The row shortens once `StickyHeaderShell` marks the page scrolled.
+          Every scrolled style is written as `group-data-[scrolled]/header:`
+          so it sits on the element it affects rather than being reached
+          into from the shell. */}
       <Container
         data-header-row
-        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 lg:min-h-(--spacing-header)"
+        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16"
       >
         <Link href={routes.home} className="shrink-0" aria-label={`${site.name} — home`}>
+          {/* The lockup is reversed out over the hero with a filter and
+              returns to its own colours once the bar is frosted — the
+              wordmark is dark teal and would vanish into it otherwise. */}
           <Image
             src="/aohc-logo.svg"
             alt={site.name}
@@ -86,8 +93,10 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
             height={131}
             priority
             data-header-logo
-            className={`h-12 w-auto transition-[height] duration-300 lg:h-16 ${
-              overlay ? 'brightness-0 invert' : ''
+            className={`h-12 w-auto transition-[height,filter] duration-300 group-data-[scrolled]/header:h-9 lg:h-16 lg:group-data-[scrolled]/header:h-11 ${
+              overlay
+                ? 'brightness-0 invert group-data-[scrolled]/header:brightness-100 group-data-[scrolled]/header:invert-0'
+                : ''
             }`}
           />
         </Link>
@@ -110,7 +119,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                     href={group.href ?? '#'}
                     className={`inline-flex min-h-11 items-center gap-1 rounded-(--radius-button) px-3 text-sm font-semibold transition-colors ${
                       overlay
-                        ? 'text-white/85 hover:text-white'
+                        ? 'text-white/85 hover:text-white group-data-[scrolled]/header:text-text group-data-[scrolled]/header:hover:text-primary-dark'
                         : 'text-text hover:text-primary-dark'
                     }`}
                   >
@@ -119,7 +128,9 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                       <Icon
                         name="chevron-down"
                         className={`size-3.5 transition-transform group-hover:rotate-180 ${
-                          overlay ? 'text-white/60' : 'text-text-subtle'
+                          overlay
+                            ? 'text-white/60 group-data-[scrolled]/header:text-text-subtle'
+                            : 'text-text-subtle'
                         }`}
                       />
                     ) : null}

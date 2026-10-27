@@ -17,6 +17,7 @@ import { PressMarquee } from '@/components/home/PressMarquee'
 import { ReachSection } from '@/components/home/ReachSection'
 import { StoryGrid } from '@/components/home/StoryGrid'
 import { ProcessPanels } from '@/components/home/ProcessPanels'
+import { BlogSection } from '@/components/home/BlogSection'
 import { Reveal } from '@/components/motion/Reveal'
 import { Cta } from '@/components/home/Cta'
 
@@ -511,6 +512,19 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      {/* ── Knowledge ─────────────────────────────────────────────────
+          LAST, BELOW THE FORM, ON REQUEST. It reads as the alternative to
+          the form rather than competing with it: someone who is not ready
+          to send an enquiry is exactly who wants to go and read first. */}
+      <BlogSection
+        eyebrow={home.knowledge.eyebrow}
+        title={home.knowledge.title}
+        intro={home.knowledge.intro}
+        featured={home.knowledge.featured}
+        items={home.knowledge.items}
+        cta={home.knowledge.cta}
+      />
     </>
   )
 }

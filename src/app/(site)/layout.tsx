@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Fraunces, Lexend } from 'next/font/google'
 import { Footer } from '@/components/layout/Footer'
+import { Header } from '@/components/layout/Header'
+import { StickyHeaderShell } from '@/components/layout/StickyHeaderShell'
 import { MobileBottomBar } from '@/components/layout/MobileBottomBar'
 import { WhatsAppFab } from '@/components/layout/WhatsAppFab'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -119,38 +121,30 @@ export default function SiteLayout({
         </a>
 
         {/**
-         * NO `<Header />` HERE, DELIBERATELY.
+         * THE LAYOUT OWNS THE HEADER, and there is exactly one of it.
          *
-         * The home page nests the header inside its dark hero card, where it
-         * has to be transparent and absolutely positioned; every other page
-         * wants the solid, sticky version above white content. A layout cannot
-         * tell which it is without turning into a client component to read the
-         * pathname.
+         * It used to be nested inside the home page's hero card, absolutely
+         * positioned over the video, which meant it scrolled away with the
+         * hero and the rest of a very long page had no navigation at all.
+         * `StickyHeaderShell` fixes it to the viewport instead and toggles
+         * `data-scrolled`; the header is transparent over the hero and
+         * frosts into a compact bar below it. See that component for why it
+         * is one header rather than two, and fixed rather than sticky.
          *
-         * So each page renders its own: `<Header />` at the top for an
-         * ordinary page, or `<Header variant="overlay" />` from inside a hero.
-         * One extra line per page, and no client boundary in the layout.
-         */}
-        {/**
-         * The layout owns the header again now the hero is light — there is
-         * no overlay variant in use on the home page.
-         *
-         * `pb-20 lg:pb-0` reserves room for the mobile action bar, which is
-         * fixed to the bottom of the viewport. Without it the bar covers the
-         * last row of the footer.
-         */}
-        {/**
-         * NO `<Header />` HERE. The home page nests it inside its dark hero
-         * card, where it has to be transparent and absolutely positioned;
-         * any future page on white content renders `<Header />` itself,
-         * optionally wrapped in `StickyHeaderShell` to get the compact-on-
-         * scroll behaviour. A layout cannot tell which it needs without
-         * becoming a client component to read the pathname.
+         * ⚠️  THE TRANSPARENT STATE ASSUMES A DARK THING AT THE TOP OF THE
+         * PAGE. The home page opens with the hero card, so white type reads.
+         * A future page that opens on the warm background wants
+         * `<Header />` without `variant="overlay"`, which is solid from the
+         * start — pass it from the page then rather than from here.
          *
          * `pb-20 lg:pb-0` reserves room for the mobile action bar, which is
          * fixed to the bottom of the viewport. Without it the bar covers the
          * last row of the footer.
          */}
+        <StickyHeaderShell>
+          <Header variant="overlay" />
+        </StickyHeaderShell>
+
         <div className="flex min-h-dvh flex-col pb-20 lg:pb-0">
           <main id="main-content" className="flex-1">
             {children}

@@ -1079,6 +1079,78 @@ export const home: HomeContent = {
   },
 
   /**
+   * KNOWLEDGE — REAL ARTICLES, READ FROM THE LIVE SITE ON 2026-10-27.
+   *
+   * Titles and URLs are verbatim from artofhealingcancer.com/blogs. Each
+   * summary is condensed from that article's own opening lines, not written
+   * from the title — "families often focus on the word cancer itself" is the
+   * pleural-effusion piece's first sentence, and the chemotherapy summary is
+   * its first two. Reading times are the ones the articles print; the two
+   * that do not print one simply have no `readingTime`, rather than an
+   * estimate.
+   *
+   * ⚠️  THE LINKS POINT AT THE LIVE SITE, not at this one. `/knowledge/blogs`
+   * exists in `routes` but has no page in this app yet. When these articles
+   * are brought across, swap each `href` for `routes.blog(slug)` and the
+   * section needs no other change.
+   *
+   * ⚠️  THREE OF THE NINE POSTS ON THAT PAGE ARE DOSING CALCULATORS — one of
+   * them for fenbendazole and one for ivermectin, neither of which is an
+   * approved cancer treatment. They are deliberately not among the four
+   * surfaced here: the home page is the most prominent surface on the site,
+   * and a dosing tool for an unapproved drug is not what it should lead
+   * with. They remain on the blog itself; this is a choice about what to
+   * feature, not about what to publish.
+   *
+   * `category` is the article's own where it prints one ("Cancer Treatment"
+   * on the chemotherapy piece). The other two are editorial labels taken
+   * from the subject in the title, which is a navigation aid rather than a
+   * claim.
+   */
+  knowledge: {
+    eyebrow: 'From the knowledge base',
+    title: 'Written for the question you are about to ask',
+    intro:
+      'Long-form explanations of the things people search for at two in the morning — what a treatment actually does, why a symptom will not settle, and what it means for the next appointment.',
+    featured: {
+      kicker: 'Eight-part series',
+      title: 'Breast Cancer Bone Metastasis',
+      summary:
+        'A guided entry point to the whole series: a plain-English synopsis of every chapter, with a direct link into any of them.',
+      href: 'https://artofhealingcancer.com/blogs/breast-cancer-bone-metastasis-8%E2%80%91part-series-overview-insights/',
+    },
+    items: [
+      {
+        title: 'AC Chemotherapy: How It Works, Side Effects, Care & FAQs',
+        category: 'Cancer treatment',
+        readingTime: '30 min read',
+        summary:
+          'Medicines that kill fast-growing cancer cells also reach fast-growing healthy ones — in hair, mouth, gut and bone marrow. That is where the side effects come from.',
+        href: 'https://artofhealingcancer.com/blogs/ac-chemotherapy-how-it-works-side-effects-care-faqs/',
+      },
+      {
+        title: 'Persistent Fever in Cancer: Causes, Treatments & Natural Relief',
+        category: 'Symptoms',
+        readingTime: '22 min read',
+        summary:
+          'Recurring fevers that do not settle on antibiotics, and more than a dozen non-infectious reasons they happen.',
+        href: 'https://artofhealingcancer.com/blogs/persistent-fever-in-cancer-causes-treatments-natural-relief/',
+      },
+      {
+        title: 'Why Does Pleural Effusion Happen in Lung Cancer Patients?',
+        category: 'Lung cancer',
+        summary:
+          'Families focus on the word "cancer" itself. This is about one of the problems that arrives later and frightens them just as much.',
+        href: 'https://artofhealingcancer.com/blogs/why-does-pleural-effusion-happen-in-lung-cancer-patients-a-complete-guide/',
+      },
+    ],
+    cta: {
+      label: 'All articles',
+      href: 'https://artofhealingcancer.com/blogs/',
+    },
+  },
+
+  /**
    * PATIENT TESTIMONIAL VIDEOS — the real ones, from the AOHC YouTube channel.
    *
    * Titles come from YouTube's oEmbed endpoint and thumbnails from

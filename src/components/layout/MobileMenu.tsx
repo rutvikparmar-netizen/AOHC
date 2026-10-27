@@ -127,8 +127,10 @@ export function MobileMenu({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className={`inline-flex size-11 items-center justify-center rounded-(--radius-button) xl:hidden ${
-          onDark ? 'text-white' : 'text-text'
+        /* Over the hero the trigger is white; once the header frosts it has
+           to come back to ink or it disappears into the bar. */
+        className={`inline-flex size-11 items-center justify-center rounded-(--radius-button) transition-colors xl:hidden ${
+          onDark ? 'text-white group-data-[scrolled]/header:text-text' : 'text-text'
         }`}
         aria-label="Open menu"
         aria-expanded={open}

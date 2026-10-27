@@ -13,12 +13,22 @@ import { cn } from '@/lib/utils'
  * should hard-code its own side padding; that is how pages end up with edges
  * that almost line up.
  */
+/**
+ * ⚠️  ANYTHING ELSE PASSED IS FORWARDED, and that is not decoration.
+ *
+ * `data-header-row` was being set on a `<Container>` and silently thrown
+ * away, because the props were listed exhaustively and there was nothing to
+ * spread. TypeScript does not catch it: a JSX attribute containing a hyphen
+ * is exempt from excess-property checking, so `data-*` on a component type
+ * checks whether or not the component does anything with it.
+ */
 export function Container({
   children,
   width = 'site',
   className,
   id,
   as: Tag = 'div',
+  ...rest
 }: {
   children: React.ReactNode
   width?: 'site' | 'content' | 'prose'
@@ -26,7 +36,7 @@ export function Container({
   /** Anchor target, for in-page links such as `#appointment`. */
   id?: string
   as?: 'div' | 'section' | 'header' | 'footer' | 'nav' | 'article'
-}) {
+} & React.HTMLAttributes<HTMLElement>) {
   const widths = {
     site: 'max-w-(--container-site)',
     content: 'max-w-(--container-content)',
@@ -37,6 +47,7 @@ export function Container({
     <Tag
       id={id}
       className={cn('mx-auto w-full px-(--gutter)', widths[width], className)}
+      {...rest}
     >
       {children}
     </Tag>

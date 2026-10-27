@@ -179,6 +179,28 @@ export interface NewsItem {
   href?: string
 }
 
+/**
+ * A teaser for one of the blog's own articles.
+ *
+ * Deliberately not `BlogPost`. That model is for articles this site hosts —
+ * it requires a slug, a body, an image, an author and a published date,
+ * none of which a link out to the existing blog has. Forcing these into it
+ * would mean inventing five fields to satisfy a type.
+ *
+ * `readingTime` is a string, not a number of minutes, because it is quoted
+ * from the article rather than computed, and it is optional because only
+ * some of them print one. An absent value renders nothing; it is never
+ * estimated.
+ */
+export interface KnowledgeTeaser {
+  title: string
+  /** The article's own category where it prints one, else an editorial label. */
+  category: string
+  summary: string
+  href: string
+  readingTime?: string
+}
+
 export interface HomeContent {
   hero: HeroContent
   /** Cancer-type shortcuts shown as chips under the hero heading. */
@@ -300,6 +322,23 @@ export interface HomeContent {
   news: {
     title: string
     items: NewsItem[]
+  }
+
+  /** The reading section at the foot of the home page. */
+  knowledge: {
+    eyebrow: string
+    title: string
+    intro: string
+    /** The one article given a panel of its own. */
+    featured: {
+      /** Sits above the title in place of a category — "Eight-part series". */
+      kicker: string
+      title: string
+      summary: string
+      href: string
+    }
+    items: KnowledgeTeaser[]
+    cta: NavLink
   }
 
   testimonials: {

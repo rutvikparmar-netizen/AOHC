@@ -3,7 +3,6 @@ import type { ChipLink, HeroContent, ImageAsset } from "@/types";
 import { routes } from "@/lib/routes";
 import { Container } from "@/components/ui/Container";
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/Button";
 import { HeroVideo } from "./HeroVideo";
 import { RatingBadge } from "./RatingBadge";
@@ -191,7 +190,12 @@ export function Hero({
           className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-linear-to-t from-brand-teal-950/90 to-transparent"
         />
 
-        <Header variant="overlay" />
+        {/* NO HEADER IN HERE ANY MORE. It is fixed to the viewport from the
+            site layout, so it survives the scroll instead of leaving with
+            the hero — and it cannot live in this card regardless, which is
+            `overflow-hidden` and would pin it inside the card rather than
+            the window. The `pt-24` below is what keeps the headline clear
+            of it. */}
 
         {/* Copy sits on the floor of the card on phones, where the vertical
             scrim is heaviest, and is centred again once the card is tall
