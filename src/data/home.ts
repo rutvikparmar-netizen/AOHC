@@ -539,8 +539,8 @@ export const home: HomeContent = {
       logo: {
         src: '/images/press/india-today.png',
         alt: 'India Today',
-        width: 600,
-        height: 60,
+        width: 244,
+        height: 30,
       },
     },
     {
@@ -562,8 +562,8 @@ export const home: HomeContent = {
       logo: {
         src: '/images/press/hindustan-times.jpg',
         alt: 'Hindustan Times',
-        width: 600,
-        height: 60,
+        width: 360,
+        height: 46,
       },
     },
     {
