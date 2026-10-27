@@ -92,10 +92,14 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           />
         </Link>
 
-        {/* `mr-auto` groups the nav tight against the logo and pushes the
-            actions to the far right — the reference layout's arrangement.
-            Without it `justify-between` centres the nav in the gap. */}
-        <nav aria-label="Main" className="mr-auto hidden xl:block">
+        {/* The nav sits tight against the logo; the free space goes after
+            it, via `ml-auto` on the actions below. That margin used to live
+            here as `mr-auto`, which did nothing at all below `xl` — this
+            element is `hidden` there, and a `display: none` element is not
+            a flex item, so it has no margins to collect the free space.
+            The result was a menu button packed against the logo on every
+            screen narrower than 1280px instead of out at the edge. */}
+        <nav aria-label="Main" className="hidden xl:block">
           <ul className="flex items-center gap-0.5">
             {primaryNav.map((group) => {
               const hasChildren = group.links.length > 0
@@ -150,7 +154,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2">
           {/**
            * THE BREAKPOINT LIVES ON THIS WRAPPER, NOT ON THE BUTTON.
            *

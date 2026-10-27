@@ -63,8 +63,11 @@ function CancerTypeChip({
   lead: boolean;
   tone: "dark" | "light";
 }) {
+  /* `px-4` on phones so a fourth chip clears the edge and shows as a
+     sliver; at `px-5` three of them filled the row exactly and it read as
+     the whole list. The fade on the rail does the rest. */
   const base =
-    "inline-flex min-h-11 items-center rounded-(--radius-pill) px-5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2";
+    "inline-flex min-h-11 items-center rounded-(--radius-pill) px-4 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-5";
 
   const dark = lead
     ? "bg-white text-brand-teal-900 hover:bg-brand-teal-50 focus-visible:outline-white"
@@ -247,9 +250,23 @@ export function Hero({
                  * signals there is more to the right — a row that stops
                  * short of the edge reads as complete.
                  */}
-                <ul className="scroll-rail -mx-(--gutter) px-(--gutter) pb-1">
+                {/**
+                 * NOT `.scroll-rail` HERE, deliberately. That utility sets
+                 * `scroll-snap-type: x mandatory`, and mandatory snapping
+                 * aligns the first chip with the SNAPPORT — the padding
+                 * box — not with the content box. Combined with the
+                 * negative-margin bleed it scrolled the rail 16px on load
+                 * and parked "Breast" flush against the edge of the
+                 * screen, out of line with the headline above it. Chips
+                 * are not slides; free scrolling is the right behaviour
+                 * and it keeps the gutter.
+                 *
+                 * The tighter `gap-2` is what leaves room for the fourth
+                 * chip to show past the edge.
+                 */}
+                <ul className="rail-fade-end -mx-(--gutter) flex gap-2 overflow-x-auto px-(--gutter) pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   {cancerTypes.map((type, index) => (
-                    <li key={type.slug}>
+                    <li key={type.slug} className="shrink-0">
                       <CancerTypeChip
                         type={type}
                         lead={index === 0}

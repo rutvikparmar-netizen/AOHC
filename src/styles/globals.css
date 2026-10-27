@@ -448,6 +448,28 @@
     transform: translateY(-0.25rem);
   }
 
+  /**
+   * A RAIL WHOSE RIGHT EDGE FADES, so the row reads as continuing past the
+   * screen instead of ending at it.
+   *
+   * A chip that happens to finish flush with the viewport edge looks like
+   * the last one, and the cancer-type row did exactly that at 360px: three
+   * chips, the third clipped so cleanly it read as complete. A fade cannot
+   * be mistaken for an ending.
+   *
+   * The fade is unconditional, so the final chip stays slightly soft once
+   * the rail is scrolled all the way over. Making it conditional needs a
+   * scroll-driven animation, which is not worth a dependency on
+   * `animation-timeline` for a 40px gradient.
+   */
+  .rail-fade-end {
+    mask-image: linear-gradient(
+      to right,
+      #000 calc(100% - 2.5rem),
+      transparent 100%
+    );
+  }
+
   /* Edge-to-edge horizontal scroller for mobile rails. */
   .scroll-rail {
     display: flex;

@@ -144,10 +144,18 @@ export function RatingBadge({
             {/* The thumbnails are 16:9 title cards with the patient on the
                 right, so each circle zooms in on that side — otherwise the
                 crop is mostly overlay text. */}
-            {faces.slice(0, 4).map((face) => (
+            {/**
+             * THREE FACES ON A PHONE, FOUR FROM `sm`. Four at a size that
+             * fits across 360px came out 24px, where a face is a grey dot
+             * rather than a person — the point of the stack. Dropping one
+             * buys the other three 50% more diameter in the same space.
+             */}
+            {faces.slice(0, 4).map((face, index) => (
               <span
                 key={face.src}
-                className="relative size-6 shrink-0 overflow-hidden rounded-full border-2 border-white bg-surface sm:size-14 sm:border-[3px]"
+                className={`relative size-9 shrink-0 overflow-hidden rounded-full border-2 border-white bg-surface sm:size-14 sm:border-[3px] ${
+                  index === 3 ? 'max-sm:hidden' : ''
+                }`}
               >
                 <Image
                   src={face.src}
