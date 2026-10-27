@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { PressMention } from '@/types'
 import { Icon } from '@/components/ui/Icon'
 
@@ -26,7 +27,32 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
     items.map((outlet) => {
       const body = (
         <>
-          <span>{outlet.name}</span>
+          {/**
+           * A MASTHEAD WHERE ONE EXISTS, THE NAME WHERE IT DOES NOT. The two
+           * are interchangeable here: both say which outlet covered AOHC, so
+           * a half-supplied list reads as a deliberate mix rather than as a
+           * row of broken images.
+           *
+           * Sized by height with `w-auto`, because mastheads have no common
+           * aspect ratio — a shared width would set The Times of India and
+           * NDTV at wildly different optical weights. `object-contain`
+           * guarantees nothing is cropped, whatever the file turns out to be.
+           *
+           * Muted to greyscale so nine different brand palettes do not fight
+           * each other, or the page's teal, and restored on hover for the
+           * linked ones.
+           */}
+          {outlet.logo ? (
+            <Image
+              src={outlet.logo.src}
+              alt={outlet.logo.alt}
+              width={outlet.logo.width}
+              height={outlet.logo.height}
+              className="h-7 w-auto object-contain opacity-80 grayscale transition duration-200 group-hover/outlet:opacity-100 group-hover/outlet:grayscale-0 sm:h-8"
+            />
+          ) : (
+            <span>{outlet.name}</span>
+          )}
           {outlet.href ? (
             <Icon
               name="external-link"

@@ -461,6 +461,40 @@ export const home: HomeContent = {
    * ⚠️  No outlet may be added to this list without a link or a published
    * reference. A masthead on a cancer clinic's home page asserts that the
    * paper wrote about them.
+   *
+   * ---------------------------------------------------------------------------
+   * ADDING THE REAL MASTHEADS
+   *
+   * `PressMarquee` renders `logo` when it is present and falls back to the
+   * wordmark when it is not, so these can be filled in one at a time without
+   * the strip ever looking half-built.
+   *
+   * Put the files in `public/images/press/` and point at them from the repo
+   * root, as the doctor portraits do:
+   *
+   *     {
+   *       name: 'The Times of India',
+   *       logo: {
+   *         src: '/images/press/times-of-india.svg',
+   *         alt: 'The Times of India',
+   *         width: 240,
+   *         height: 48,
+   *       },
+   *     }
+   *
+   * `width` and `height` are the file's own intrinsic dimensions — Next uses
+   * them to reserve space, and a wrong ratio shows as a squashed masthead.
+   * The strip sizes by height and lets width follow, so the two numbers only
+   * need to be in the right proportion to each other.
+   *
+   * ⚠️  THE FILES MUST COME FROM THE OUTLETS' OWN PRESS KITS, not from a
+   * search result and not redrawn by hand. These are registered trademarks;
+   * an approximation is both wrong and worse than the wordmark it replaced.
+   *
+   * ⚠️  TWO ENTRIES BELOW ARE STILL UNCONFIRMED — see the Hindustan Times and
+   * NDTV note above. Resolve those before giving them a masthead: a logo
+   * asserts the coverage far more strongly than a name set in type does.
+   * ---------------------------------------------------------------------------
    */
   press: [
     { name: 'The Times of India' },
