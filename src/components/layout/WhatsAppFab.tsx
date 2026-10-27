@@ -41,7 +41,14 @@ export function WhatsAppFab() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="wa-fab fixed right-4 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-(--z-sticky) inline-flex size-14 items-center justify-center rounded-full bg-[#128C7E] text-white shadow-[0_8px_24px_rgba(6,42,49,0.28)] transition-transform duration-200 ease-out hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent lg:right-6 lg:bottom-6"
+      /**
+       * `right-5` (20px), not 16. The pulse ring reaches 16.8px past the
+       * button at the end of its keyframes, so at 16px the far side of the
+       * ring was cut off against the edge of the screen and the button read
+       * as stuck to it. The inset and the ring's size are a pair — see the
+       * keyframe in `globals.css` before changing either.
+       */
+      className="wa-fab fixed right-5 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-(--z-sticky) inline-flex size-14 items-center justify-center rounded-full bg-[#128C7E] text-white shadow-[0_8px_24px_rgba(6,42,49,0.28)] transition-transform duration-200 ease-out hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent lg:right-6 lg:bottom-6"
     >
       {/**
        * The ring is painted by the parent's ::before so it cannot intercept a

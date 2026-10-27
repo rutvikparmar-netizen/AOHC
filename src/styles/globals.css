@@ -405,10 +405,17 @@
       transform: scale(1);
       opacity: 0.55;
     }
-    /* Holds briefly at full fade so the ring reads as one pulse, not a throb. */
+    /**
+     * 1.6, not 1.9. At 1.9 the ring reached 25px beyond a 56px button that
+     * sits 20px from the edge of the screen, so its outer edge was sliced
+     * off square against the viewport on every pulse. 1.6 reaches 16.8px
+     * and stays inside the inset.
+     *
+     * Holds briefly at full fade so the ring reads as one pulse, not a throb.
+     */
     70%,
     100% {
-      transform: scale(1.9);
+      transform: scale(1.6);
       opacity: 0;
     }
   }

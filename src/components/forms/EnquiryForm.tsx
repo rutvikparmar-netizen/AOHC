@@ -8,6 +8,7 @@ import { initialEnquiryState } from '@/lib/forms/state'
 import { Button } from '@/components/ui/Button'
 import { Callout } from '@/components/ui/Callout'
 import { Icon } from '@/components/ui/Icon'
+import { dialCodes } from '@/data/dial-codes'
 import { CheckboxField, SelectField, TextArea, TextField } from './Field'
 
 /**
@@ -27,21 +28,6 @@ import { CheckboxField, SelectField, TextArea, TextField } from './Field'
  * never reaches the browser — only an HMAC of it — so the field cannot be
  * read out of the markup. See `lib/forms/captcha.ts`.
  */
-
-/** Common dial codes. Not exhaustive; the field accepts any typed number. */
-const DIAL_CODES = [
-  { value: '+91', label: 'India +91' },
-  { value: '+1', label: 'United States +1' },
-  { value: '+44', label: 'United Kingdom +44' },
-  { value: '+971', label: 'UAE +971' },
-  { value: '+61', label: 'Australia +61' },
-  { value: '+1 ', label: 'Canada +1' },
-  { value: '+234', label: 'Nigeria +234' },
-  { value: '+254', label: 'Kenya +254' },
-  { value: '+880', label: 'Bangladesh +880' },
-  { value: '+977', label: 'Nepal +977' },
-  { value: '+other', label: 'Other' },
-]
 
 const COUNTRIES = [
   { value: '', label: 'Select country' },
@@ -159,52 +145,65 @@ export function EnquiryForm({
         defaultValue={state.values?.name}
       />
 
-      <TextField
-        name="email"
-        label="Email"
-        type="email"
-        inputMode="email"
-        placeholder="Enter Email"
-        required
-        autoComplete="email"
-        error={state.errors?.email}
-        defaultValue={state.values?.email}
-      />
+      {/* EMAIL AND PHONE SHARE A ROW, half each, from `sm` up. They stack on
+          phones: the phone group is itself two controls, and splitting a
+          320px column in two leaves a dial-code picker about 140px wide
+          beside a number field that cannot show a number. */}
+      <div className="grid gap-5 sm:grid-cols-2">
+        <TextField
+          name="email"
+          label="Email"
+          type="email"
+          inputMode="email"
+          placeholder="Enter Email"
+          required
+          autoComplete="email"
+          error={state.errors?.email}
+          defaultValue={state.values?.email}
+        />
 
-      {/* Dial code and number are separate controls so the code can be
-          picked rather than typed — but they are one labelled group, or a
-          screen reader announces two unrelated fields. */}
-      <fieldset>
-        <legend className="mb-1.5 text-sm font-bold text-text">
-          Phone
-          <span aria-hidden className="ml-1 text-accent-dark">
-            *
-          </span>
-          <span className="sr-only"> (required)</span>
-        </legend>
+        {/* Dial code and number are separate controls so the code can be
+            picked rather than typed — but they are one labelled group, or a
+            screen reader announces two unrelated fields. */}
+        <fieldset className="min-w-0">
+          <legend className="mb-1.5 text-sm font-bold text-text">
+            Phone
+            <span aria-hidden className="ml-1 text-accent-dark">
+              *
+            </span>
+            <span className="sr-only"> (required)</span>
+          </legend>
 
-        <div className="grid gap-3 sm:grid-cols-[minmax(0,11rem)_1fr]">
-          <SelectField
-            name="dialCode"
-            label="Country code"
-            labelHidden
-            options={DIAL_CODES}
-            defaultValue={state.values?.dialCode ?? '+91'}
-          />
-          <TextField
-            name="phone"
-            label="Phone number"
-            labelHidden
-            type="tel"
-            inputMode="tel"
-            placeholder="(201) 555-0123"
-            required
-            autoComplete="tel"
-            error={state.errors?.phone}
-            defaultValue={state.values?.phone}
-          />
-        </div>
-      </fieldset>
+          {/* `minmax(0,…)` rather than a fixed column: inside half a row the
+              picker has to be able to shrink, and a grid track's automatic
+              minimum would otherwise hold it at the width of the longest
+              country name. 7.5rem, because the old 11rem left the number
+              field 94px at the 640px breakpoint — too narrow to show a phone
+              number. The picker truncates the country name instead, which
+              costs nothing once it has been chosen. */}
+          <div className="grid gap-3 sm:grid-cols-[minmax(0,7.5rem)_1fr]">
+            <SelectField
+              name="dialCode"
+              label="Country code"
+              labelHidden
+              options={dialCodes}
+              defaultValue={state.values?.dialCode ?? '+91'}
+            />
+            <TextField
+              name="phone"
+              label="Phone number"
+              labelHidden
+              type="tel"
+              inputMode="tel"
+              placeholder="(201) 555-0123"
+              required
+              autoComplete="tel"
+              error={state.errors?.phone}
+              defaultValue={state.values?.phone}
+            />
+          </div>
+        </fieldset>
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-3">
         <SelectField

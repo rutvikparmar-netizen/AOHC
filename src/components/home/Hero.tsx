@@ -228,6 +228,48 @@ export function Hero({
             </Button>
           </div>
 
+          {/* ── Inside the card, phones ─────────────────────────────────
+              These were below the card, which left a dead band of video
+              between the header and the headline — the copy is anchored to
+              the floor, so whatever the card's minimum height does not use
+              shows up as emptiness at the top. Bringing the chips and the
+              rating back in fills it without making the card any taller,
+              because the minimum height was the binding constraint, not the
+              content. The accreditation row stays below: adding it too
+              would push the card past one screen. */}
+          <div className="mt-8 lg:hidden">
+            {cancerTypes.length > 0 ? (
+              <nav aria-label="Cancer types">
+                {/**
+                 * ONE SWIPEABLE ROW, BLED TO THE CARD'S EDGES. Wrapped,
+                 * these nine chips were a 252px block. The negative margin
+                 * lets the row run to the edge of the screen, which is what
+                 * signals there is more to the right — a row that stops
+                 * short of the edge reads as complete.
+                 */}
+                <ul className="scroll-rail -mx-(--gutter) px-(--gutter) pb-1">
+                  {cancerTypes.map((type, index) => (
+                    <li key={type.slug}>
+                      <CancerTypeChip
+                        type={type}
+                        lead={index === 0}
+                        tone="dark"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ) : null}
+
+            <div className="mt-5">
+              <RatingBadge
+                faces={faces}
+                storiesHref="#stories"
+                idPrefix="hero-phone"
+              />
+            </div>
+          </div>
+
           {/* ── Inside the card, from `lg` up ───────────────────────────
               Frosted chips and the Google rating badge share one row, the
               badge aligned to the chips' last line. The badge promotes the
@@ -268,37 +310,10 @@ export function Hero({
       </div>
 
       {/* ── Below the card, phones only ─────────────────────────────────
-          This block carries its own gutter now that the section has none,
-          so the badge and the accreditations stay inset from the screen
-          edge while the card behind them runs full width. */}
+          Only the accreditations. This block carries its own gutter now
+          that the section has none, so it stays inset from the screen edge
+          while the card above it runs full width. */}
       <div className="px-(--gutter) lg:hidden">
-        {cancerTypes.length > 0 ? (
-          <nav aria-label="Cancer types" className="mt-8">
-            {/**
-             * ONE SWIPEABLE ROW, BLED TO THE SCREEN EDGES. Wrapped, these
-             * nine chips were a 252px block directly under the headline.
-             * The negative margin lets the row run to the edge of the
-             * screen, which is what signals there is more to the right —
-             * a row that stops short of the edge reads as complete.
-             */}
-            <ul className="scroll-rail -mx-(--gutter) px-(--gutter) pb-1">
-              {cancerTypes.map((type, index) => (
-                <li key={type.slug}>
-                  <CancerTypeChip type={type} lead={index === 0} tone="light" />
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ) : null}
-
-        <div className="mt-8">
-          <RatingBadge
-            faces={faces}
-            storiesHref="#stories"
-            idPrefix="hero-phone"
-          />
-        </div>
-
         <TrustBar items={trust} tone="light" className="mt-8" />
       </div>
     </section>

@@ -41,7 +41,7 @@ function GoogleG({ className }: { className?: string }) {
 /** One star, filled to `fill` (0–1) so 4.8 shows as four and four-fifths. */
 function Star({ fill, id }: { fill: number; id: string }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden className="size-6 sm:size-7">
+    <svg viewBox="0 0 24 24" aria-hidden className="size-4.5 sm:size-7">
       <defs>
         <linearGradient id={id}>
           <stop offset={`${fill * 100}%`} stopColor="#F5B301" />
@@ -83,10 +83,10 @@ export function RatingBadge({
   const label = `Rated ${score} out of 5 on Google${count ? ` from ${count} reviews` : ''}`
 
   const scoreBlock = (
-    <div className="flex items-center gap-4">
-      <GoogleG className="size-11 shrink-0 sm:size-12" />
+    <div className="flex items-center gap-3 sm:gap-4">
+      <GoogleG className="size-9 shrink-0 sm:size-12" />
       <div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="flex gap-0.5">
             {[0, 1, 2, 3, 4].map((i) => (
               <Star
@@ -96,7 +96,7 @@ export function RatingBadge({
               />
             ))}
           </div>
-          <p className="text-xl font-bold text-text sm:text-2xl">
+          <p className="text-base font-bold text-text sm:text-2xl">
             {score}
           </p>
         </div>
@@ -108,7 +108,15 @@ export function RatingBadge({
   )
 
   return (
-    <div className="flex w-full flex-wrap items-center gap-x-7 gap-y-4 rounded-(--radius-2xl) bg-[#F3F3FB] px-6 py-5 shadow-(--shadow-modal) sm:w-max sm:flex-nowrap">
+    /**
+     * ONE LINE ON A PHONE. The badge used to wrap, dropping the patient
+     * faces onto a second row and making it twice as tall as it needed to
+     * be. Everything inside steps down a size below `sm` — the mark, the
+     * stars, the score and especially the faces, which go from 48px to 28px
+     * — so the whole thing fits across a 360px screen. `flex-wrap` stays as
+     * the fallback for anything narrower rather than letting it overflow.
+     */
+    <div className="flex w-full flex-wrap items-center gap-x-3 gap-y-4 rounded-(--radius-2xl) bg-[#F3F3FB] px-4 py-4 shadow-(--shadow-modal) sm:w-max sm:flex-nowrap sm:gap-x-7 sm:px-6 sm:py-5">
       {url ? (
         <a
           href={url}
@@ -131,7 +139,7 @@ export function RatingBadge({
           <a
             href={storiesHref}
             aria-label="Watch our patients' stories"
-            className="flex -space-x-3 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            className="flex -space-x-2 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:-space-x-3"
           >
             {/* The thumbnails are 16:9 title cards with the patient on the
                 right, so each circle zooms in on that side — otherwise the
@@ -139,7 +147,7 @@ export function RatingBadge({
             {faces.slice(0, 4).map((face) => (
               <span
                 key={face.src}
-                className="relative size-12 shrink-0 overflow-hidden rounded-full border-[3px] border-white bg-surface sm:size-14"
+                className="relative size-6 shrink-0 overflow-hidden rounded-full border-2 border-white bg-surface sm:size-14 sm:border-[3px]"
               >
                 <Image
                   src={face.src}

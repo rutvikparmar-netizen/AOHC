@@ -12,8 +12,18 @@ import { cn } from '@/lib/utils'
  * Shared by the public forms and the admin console, so they cannot drift.
  */
 
+/**
+ * `min-h-[3.125rem]` (50px) IS THERE TO MAKE A SELECT MATCH A TEXT FIELD.
+ *
+ * With identical padding and font, a text input comes out 50px — 17px of
+ * text at the scale's 1.65 line-height, plus the padding and border — while
+ * a select comes out 45px, because Chrome lays out the closed control with
+ * its own normal line-height and ignores the one set here. The 5px step was
+ * invisible while the two were in separate rows and obvious the moment the
+ * dial code sat beside the phone number. A shared floor fixes both.
+ */
 const inputBase =
-  'w-full rounded-(--radius-input) border bg-surface px-3.5 py-2.5 text-base text-text ' +
+  'w-full min-h-[3.125rem] rounded-(--radius-input) border bg-surface px-3.5 py-2.5 text-base text-text ' +
   'placeholder:text-text-subtle focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 ' +
   'aria-[invalid=true]:border-danger'
 
@@ -214,8 +224,11 @@ export function SelectField({
         aria-describedby={error ? errorId : undefined}
         className={cn(inputBase, error ? 'border-danger' : 'border-border-strong')}
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
+        {/* KEYED BY POSITION, NOT BY VALUE. The dial-code list repeats values
+            by design — +1 is the United States, Canada and most of the
+            Caribbean — and these lists are static, so position is stable. */}
+        {options.map((option, index) => (
+          <option key={`${index}-${option.value}`} value={option.value}>
             {option.label}
           </option>
         ))}
