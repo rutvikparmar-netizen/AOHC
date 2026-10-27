@@ -235,22 +235,25 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                    * them inside an arbitrary value.
                    */}
                   {mega ? (
-                    <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1250px,calc(100vw_-_3rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                      <div className="max-h-[min(40rem,calc(100dvh_-_9rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
-                          {/* ALL SEVEN COLUMNS ON ONE ROW. Four-and-three
-                              wrapped the panel onto a second row and made
-                              it tall enough to scroll; one row of seven
-                              reads as a single map of the section. The
-                              columns are about 155px each at this width,
-                              so the longer labels wrap inside them —
-                              which is the trade that buys the single
-                              row. */}
-                          <ul className="grid grid-cols-7 gap-x-5 gap-y-7">
+                    <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1420px,calc(100vw_-_2.5rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="max-h-[min(44rem,calc(100dvh_-_8rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
+                          {/* ALL SEVEN COLUMNS ON ONE ROW, AND NO SCROLL.
+                              Those two pull against each other: seven
+                              columns in a narrow panel means long labels
+                              wrap over three or four lines, and the
+                              tallest column then sets a height past what
+                              the viewport allows. Width is what breaks
+                              the tie — at 1420 each column is about
+                              180px rather than 155, most labels fall to
+                              two lines, and the panel comes in under the
+                              cap. The cap stays as a backstop for short
+                              windows; it should not normally be hit. */}
+                          <ul className="grid grid-cols-7 gap-x-4 gap-y-6">
                             {mega.map((column) => (
                               <li key={column.label}>
                                 <Link
                                   href={column.href ?? '#'}
-                                  className="block text-xs font-bold uppercase tracking-[0.1em] text-accent-dark hover:underline"
+                                  className="block text-xs font-bold uppercase tracking-[0.06em] text-accent-dark hover:underline"
                                 >
                                   {column.label}
                                 </Link>
@@ -261,7 +264,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                                       <li key={link.href}>
                                         <Link
                                           href={link.href}
-                                          className="block rounded-(--radius-button) px-2 py-1.5 text-sm text-text transition-colors hover:bg-primary-subtle hover:text-primary-dark"
+                                          className="block rounded-(--radius-button) px-2 py-1 text-xs leading-snug text-text transition-colors hover:bg-primary-subtle hover:text-primary-dark"
                                         >
                                           {link.label}
                                         </Link>
@@ -274,7 +277,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                                               <li key={child.href}>
                                                 <Link
                                                   href={child.href}
-                                                  className="block rounded-(--radius-button) px-2 py-1 text-sm text-text-muted transition-colors hover:bg-primary-subtle hover:text-primary-dark"
+                                                  className="block rounded-(--radius-button) px-2 py-1 text-xs leading-snug text-text-muted transition-colors hover:bg-primary-subtle hover:text-primary-dark"
                                                 >
                                                   {child.label}
                                                 </Link>
