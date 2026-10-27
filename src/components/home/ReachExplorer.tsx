@@ -50,12 +50,17 @@ export function ReachExplorer() {
       </div>
 
       <div className="rounded-(--radius-2xl) border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8">
+        {/* The centre is NAMED here rather than described. The section
+            heading and its intro already say care happens in India; saying
+            it a third time in the panel left the one concrete fact — which
+            building, and where — as an afterthought on the second line. */}
         <p className="flex items-center gap-2.5 text-base font-bold text-white">
           <Icon name="map-pin" className="size-5 text-brand-teal-300" />
-          Care is delivered in {homeMarker.country}
+          HCAH Transition Care Centre
         </p>
         <p className="mt-2 text-sm leading-relaxed text-brand-teal-100">
-          From the HCAH Transition Care Centre in Gurugram, Haryana.
+          Gurugram, Haryana, in the Delhi capital region. All treatment takes
+          place here.
         </p>
 
         <div className="mt-7 border-t border-white/15 pt-6">
@@ -63,7 +68,19 @@ export function ReachExplorer() {
             id="reach-list-label"
             className="text-xs font-bold uppercase tracking-[0.1em] text-brand-teal-300"
           >
-            Patients we have treated
+            {/**
+             * NOT "patients we have treated", which is what this said.
+             *
+             * Only two of the fourteen are evidenced in AOHC's own
+             * published material — the New Zealand testimonial and the
+             * Iraqi patient's video. The rest come from the International
+             * Patients page, which describes who may get in touch rather
+             * than who has been treated. One list was an explicit
+             * instruction and stays one list; the label now covers both
+             * kinds honestly instead of asserting a treatment history for
+             * all fourteen. See the note in `src/data/reach.ts`.
+             */}
+            Patients and enquiries from
           </p>
 
           <ul
@@ -106,10 +123,16 @@ export function ReachExplorer() {
             })}
           </ul>
 
+          {/* THE CAVEAT LEADS AND THE GLOBE HINT FOLLOWS. These were the
+              other way round, which put the most consequential sentence
+              in the panel — whether this practice can take you on at all —
+              behind an instruction about a decoration. "Select" rather
+              than "tap", because this is read on phones and desktops and
+              reached by keyboard. */}
           <p className="mt-4 text-xs leading-relaxed text-brand-teal-300">
-            Tap a country to turn the globe to it, or drag the globe to spin it.
-            Acceptance of a new patient depends on clinical assessment, service
-            availability and travel feasibility.
+            Whether we can take on a new patient depends on clinical assessment,
+            the services their care needs and whether travel is realistic for
+            them. Select a country to turn the globe to it.
           </p>
         </div>
 

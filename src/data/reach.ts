@@ -13,10 +13,16 @@
  * Middle East, Africa, Southeast Asia, and other regions" — wording that
  * describes who may get in touch rather than who has been treated.
  *
- * Presenting them together was an explicit instruction, and for a practice
- * of this size it is very likely accurate. It is nonetheless a factual claim
- * about the business that should be checked against patient records before
- * the site goes live, and corrected here if any country does not belong.
+ * Presenting them together was an explicit instruction, and the list stays
+ * one list. What changed is the label above it: the panel used to head this
+ * "Patients we have treated", which asserts a treatment history for all
+ * fourteen that only two of them support. It now reads "Patients and
+ * enquiries from", which is true of every country here.
+ *
+ * ⚠️  IF PATIENT RECORDS CONFIRM TREATMENT IN ALL FOURTEEN, the stronger
+ * label is the better one and should go back — it is a single line in
+ * `ReachExplorer`. Until someone has checked, the weaker claim is the only
+ * one the published evidence carries.
  *
  * Coordinates are capital cities, rounded — they position a marker on a
  * globe, nothing more.
@@ -67,6 +73,12 @@ export const allMarkers: ReachMarker[] = [homeMarker, ...patientCountries]
 export const reach = {
   eyebrow: 'International patients',
   title: 'Our Patients Come From Around the World',
+  /**
+   * The intro sets up the geography and stops. It used to end with "Point at
+   * a country below to turn the globe to it" — mouse-only wording on a page
+   * read mostly on phones, and a duplicate of the hint in the panel itself,
+   * which is where someone looking at the chips will actually be reading.
+   */
   intro:
-    'Care is delivered from our centre in Gurugram, India, and patients reach us from across Europe, the Middle East, Africa, Asia and the Americas. Point at a country below to turn the globe to it.',
+    'Patients reach us from across Europe, the Middle East, Africa, Asia and the Americas. Treatment itself takes place at a single centre, in Gurugram, India.',
 }
