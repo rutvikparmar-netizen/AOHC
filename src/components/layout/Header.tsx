@@ -132,8 +132,20 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
             long enough to break did, and "About Us", "International
             Patients" and "Contact Us" each sat on two lines. A nav item is
             a single phrase and should never wrap. */}
-        <nav aria-label="Main" className="hidden shrink-0 xl:block">
-          <ul className="flex items-center gap-0.5">
+        {/**
+         * ⚠️  THE ITEMS ARE FULL HEIGHT, AND THAT IS WHAT MAKES THE
+         * DROPDOWNS REACHABLE.
+         *
+         * A panel opens on `group-hover` of its `<li>` and hangs from the
+         * bottom of the header. While the `<li>` was only as tall as its
+         * own text there was a band of dead header between the two: the
+         * pointer left the item, `group-hover` went false, and the panel
+         * closed before it could be reached. Stretching the items to the
+         * full height of the row removes the gap entirely — the trigger
+         * now ends exactly where the panel begins.
+         */}
+        <nav aria-label="Main" className="hidden shrink-0 self-stretch xl:block">
+          <ul className="flex h-full items-stretch gap-0.5">
             {primaryNav.map((group) => {
               const mega = group.mega
               const hasChildren = mega ? mega.length > 0 : group.links.length > 0
@@ -151,7 +163,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                  */
                 <li
                   key={group.label}
-                  className={`group ${mega ? 'static' : 'relative'}`}
+                  className={`group flex items-center ${mega ? 'static' : 'relative'}`}
                 >
                   <Link
                     href={group.href ?? '#'}
@@ -174,19 +186,35 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                     ) : null}
                   </Link>
 
-                  {/* ── Full-width panel ─────────────────────────────
-                      Eight columns of it, so it is laid out as a grid
-                      rather than a list and spans the window. Like the
-                      narrow dropdown it opens on hover AND on
-                      `focus-within`: a hover-only menu leaves its links
-                      focusable but invisible, which is worse than no menu
-                      at all. No JavaScript, so it works before hydration
-                      and for a crawler. */}
+                  {/**
+                   * ── The expertise panel ──────────────────────────────
+                   * A CONTAINED BOX, NOT A FULL-BLEED BAND. Spanning the
+                   * window put the far column a long way from the trigger
+                   * and left nothing tying the panel back to the item
+                   * that opened it. A card centred under the header reads
+                   * as belonging to "Our Expertise", and eight columns
+                   * still fit as four across and two down.
+                   *
+                   * It is centred on the HEADER rather than on its own
+                   * item — hence `static` on that `<li>` — because a box
+                   * this wide anchored to a mid-nav trigger would hang
+                   * off the right edge of the window.
+                   *
+                   * Opens on hover AND on `focus-within`, like the narrow
+                   * dropdowns: a hover-only menu leaves its links
+                   * focusable but invisible, which is worse than no menu
+                   * at all. No JavaScript, so it works before hydration
+                   * and for a crawler.
+                   *
+                   * The `calc()` needs spaces around its minus or the
+                   * whole declaration is invalid and the cap silently
+                   * does nothing — underscores are how Tailwind writes
+                   * them inside an arbitrary value.
+                   */}
                   {mega ? (
-                    <div className="invisible absolute inset-x-0 top-full z-(--z-dropdown) translate-y-1 pt-2 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                      <div className="max-h-[min(34rem,calc(100dvh-8rem))] overflow-y-auto border-y border-border bg-surface shadow-(--shadow-dropdown)">
-                        <Container className="py-8">
-                          <ul className="grid grid-cols-2 gap-x-8 gap-y-8 xl:grid-cols-4">
+                    <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1250px,calc(100vw_-_3rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="max-h-[min(40rem,calc(100dvh_-_9rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-7 shadow-(--shadow-dropdown)">
+                          <ul className="grid grid-cols-4 gap-x-6 gap-y-7">
                             {mega.map((column) => (
                               <li key={column.label}>
                                 <Link
@@ -229,8 +257,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                                 ) : null}
                               </li>
                             ))}
-                          </ul>
-                        </Container>
+                        </ul>
                       </div>
                     </div>
                   ) : hasChildren ? (

@@ -5,16 +5,18 @@ import { routes } from '@/lib/routes'
  * OUR EXPERTISE — the full-width menu, transcribed from the supplied
  * structure.
  *
- * Eight columns, and one of them goes three deep: Hematological (Blood)
+ * Seven columns, and one of them goes three deep: Hematological (Blood)
  * Malignancies carries the four blood cancers beneath it. Nothing else on
  * the site nests that far, which is why `MegaNavColumn` exists rather than
  * this being another `NavGroup`.
  *
- * ⚠️  TWO GAPS, BOTH FROM THE SOURCE RATHER THAN THE TRANSCRIPTION. The
- * supplied screenshot is cut off after "ECCT" under Research, so Research
- * may have more entries than the two here; and "Precision Cancer Healing"
- * was named in the list but its children were below the crop, so it is a
- * column heading with nothing under it. Send the rest and they drop
+ * "Precision Cancer Healing" was an eighth column. Its children were below
+ * the crop in the supplied screenshot, so it stood as a heading with
+ * nothing under it, and it was removed on request.
+ *
+ * ⚠️  ONE GAP LEFT, FROM THE SOURCE RATHER THAN THE TRANSCRIPTION: the
+ * screenshot is cut off after "ECCT" under Research, so that column may
+ * have more entries than the two here. Send the rest and they drop
  * straight in — nothing else has to change.
  *
  * Every slug is derived from its label. None of these pages exists, like
@@ -130,11 +132,6 @@ export const expertiseNav: MegaNavColumn[] = [
       { label: '2-DeoxyGlucose (2DG)', href: expertise('2-deoxyglucose-2dg') },
       { label: 'ECCT', href: expertise('ecct') },
     ],
-  },
-  {
-    label: 'Precision Cancer Healing',
-    href: expertise('precision-cancer-healing'),
-    links: [],
   },
 ]
 
