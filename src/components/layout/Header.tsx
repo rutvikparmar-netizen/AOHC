@@ -120,13 +120,13 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           />
         </Link>
 
-        {/* The nav sits tight against the logo; the free space goes after
-            it, via `ml-auto` on the actions below. That margin used to live
-            here as `mr-auto`, which did nothing at all below `xl` — this
-            element is `hidden` there, and a `display: none` element is not
-            a flex item, so it has no margins to collect the free space.
-            The result was a menu button packed against the logo on every
-            screen narrower than 1280px instead of out at the edge. */}
+        {/* An earlier version put `mr-auto` here to push the actions right.
+            It did nothing below `xl` — this element is `hidden` there, and
+            a `display: none` element is not a flex item, so it has no
+            margins to collect the free space. The menu button ended up
+            packed against the logo on every screen under 1280px. The rule
+            that replaced it is on the actions, and on this element from
+            `xl` up; see both comments below. */}
         {/* `shrink-0`, because the nav was being squeezed below its content
             width at exactly the breakpoint that reveals it: every label
             long enough to break did, and "About Us", "International
@@ -144,7 +144,21 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
          * full height of the row removes the gap entirely — the trigger
          * now ends exactly where the panel begins.
          */}
-        <nav aria-label="Main" className="hidden shrink-0 self-stretch xl:block">
+        {/**
+         * CENTRED BY AUTO MARGINS, not by absolute positioning. Auto
+         * margins absorb the free space on both sides of the nav and push
+         * the actions to the far edge, and because the nav is still in
+         * the flow it can never overlap the logo or the button — which an
+         * absolutely centred nav does at 1280, where the row has only a
+         * few pixels to spare. The nav therefore centres between the logo
+         * and the button rather than on the window; with the two end
+         * blocks at 103px and 206px that is about 50px off true centre,
+         * and no reader will measure it.
+         */}
+        <nav
+          aria-label="Main"
+          className="hidden shrink-0 self-stretch xl:mx-auto xl:block"
+        >
           <ul className="flex h-full items-stretch gap-0.5">
             {primaryNav.map((group) => {
               const mega = group.mega
@@ -222,8 +236,16 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                    */}
                   {mega ? (
                     <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1250px,calc(100vw_-_3rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                      <div className="max-h-[min(40rem,calc(100dvh_-_9rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-7 shadow-(--shadow-dropdown)">
-                          <ul className="grid grid-cols-4 gap-x-6 gap-y-7">
+                      <div className="max-h-[min(40rem,calc(100dvh_-_9rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
+                          {/* ALL SEVEN COLUMNS ON ONE ROW. Four-and-three
+                              wrapped the panel onto a second row and made
+                              it tall enough to scroll; one row of seven
+                              reads as a single map of the section. The
+                              columns are about 155px each at this width,
+                              so the longer labels wrap inside them —
+                              which is the trade that buys the single
+                              row. */}
+                          <ul className="grid grid-cols-7 gap-x-5 gap-y-7">
                             {mega.map((column) => (
                               <li key={column.label}>
                                 <Link
@@ -298,7 +320,11 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        {/* `ml-auto` holds the actions at the right edge while the nav is
+            hidden. From `xl` the nav's own auto margins do that job, and a
+            second auto margin here would split the free space three ways
+            and pull the actions back inward. */}
+        <div className="ml-auto flex items-center gap-2 xl:ml-0">
           {/**
            * THE BREAKPOINT LIVES ON THIS WRAPPER, NOT ON THE BUTTON.
            *
