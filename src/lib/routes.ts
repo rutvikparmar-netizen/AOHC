@@ -54,6 +54,13 @@ export const routes = {
    */
   contact: '/#appointment',
 
+  /* Our expertise --------------------------------------------------------
+     The mega menu's forty-odd entries all hang off this one base, so the
+     whole section can be re-rooted from here if it moves. None of these
+     pages exists yet — see the note at the top of this file. */
+  expertise: '/our-expertise',
+  expertiseItem: (slug: Slug) => `/our-expertise/${slug}`,
+
   /* Clinical content ----------------------------------------------------- */
   integrativeCare: '/integrative-cancer-care',
   cancerTypes: '/cancer-types',

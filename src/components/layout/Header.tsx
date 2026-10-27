@@ -48,12 +48,18 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
              * The text and logo still recoloured correctly, because the
              * cascade does not care about positioning, which made it look
              * like a colour bug rather than a layout one.
+             *
+             * `relative` is the one exception, and it is not positioning
+             * this element so much as offering itself as the positioning
+             * context for the full-width expertise panel below — that
+             * panel is `absolute inset-x-0` and has to resolve against the
+             * header to span the window.
              */
-            ''
+            'relative'
           : // Sticky on its own. Wrap it in `StickyHeaderShell` as well to
             // get the compact-on-scroll behaviour, which the data-header-*
             // hooks below are there for.
-            'sticky top-0 z-(--z-header) bg-surface shadow-(--shadow-header)'
+            'relative sticky top-0 z-(--z-header) bg-surface shadow-(--shadow-header)'
       }
     >
       {/* Utility bar. Renders only where there is something true to put in
@@ -129,10 +135,24 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
         <nav aria-label="Main" className="hidden shrink-0 xl:block">
           <ul className="flex items-center gap-0.5">
             {primaryNav.map((group) => {
-              const hasChildren = group.links.length > 0
+              const mega = group.mega
+              const hasChildren = mega ? mega.length > 0 : group.links.length > 0
 
               return (
-                <li key={group.label} className="group relative">
+                /**
+                 * `static` FOR THE MEGA ITEM, `relative` FOR THE REST.
+                 *
+                 * An absolutely positioned panel resolves against its
+                 * nearest positioned ancestor. A narrow dropdown wants that
+                 * to be its own `<li>`, so it hangs under its trigger; the
+                 * full-width panel wants the header, so it can span the
+                 * window. Taking the positioning off this one item is what
+                 * lets the same markup do both.
+                 */
+                <li
+                  key={group.label}
+                  className={`group ${mega ? 'static' : 'relative'}`}
+                >
                   <Link
                     href={group.href ?? '#'}
                     className={`inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-(--radius-button) px-2.5 text-sm font-semibold transition-colors ${
@@ -154,7 +174,66 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                     ) : null}
                   </Link>
 
-                  {hasChildren ? (
+                  {/* ── Full-width panel ─────────────────────────────
+                      Eight columns of it, so it is laid out as a grid
+                      rather than a list and spans the window. Like the
+                      narrow dropdown it opens on hover AND on
+                      `focus-within`: a hover-only menu leaves its links
+                      focusable but invisible, which is worse than no menu
+                      at all. No JavaScript, so it works before hydration
+                      and for a crawler. */}
+                  {mega ? (
+                    <div className="invisible absolute inset-x-0 top-full z-(--z-dropdown) translate-y-1 pt-2 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="max-h-[min(34rem,calc(100dvh-8rem))] overflow-y-auto border-y border-border bg-surface shadow-(--shadow-dropdown)">
+                        <Container className="py-8">
+                          <ul className="grid grid-cols-2 gap-x-8 gap-y-8 xl:grid-cols-4">
+                            {mega.map((column) => (
+                              <li key={column.label}>
+                                <Link
+                                  href={column.href ?? '#'}
+                                  className="block text-xs font-bold uppercase tracking-[0.1em] text-accent-dark hover:underline"
+                                >
+                                  {column.label}
+                                </Link>
+
+                                {column.links.length > 0 ? (
+                                  <ul className="mt-3 space-y-1">
+                                    {column.links.map((link) => (
+                                      <li key={link.href}>
+                                        <Link
+                                          href={link.href}
+                                          className="block rounded-(--radius-button) px-2 py-1.5 text-sm text-text transition-colors hover:bg-primary-subtle hover:text-primary-dark"
+                                        >
+                                          {link.label}
+                                        </Link>
+
+                                        {/* The third level — only the
+                                            blood cancers go this deep. */}
+                                        {link.links?.length ? (
+                                          <ul className="mt-1 ml-2 space-y-0.5 border-l border-border pl-3">
+                                            {link.links.map((child) => (
+                                              <li key={child.href}>
+                                                <Link
+                                                  href={child.href}
+                                                  className="block rounded-(--radius-button) px-2 py-1 text-sm text-text-muted transition-colors hover:bg-primary-subtle hover:text-primary-dark"
+                                                >
+                                                  {child.label}
+                                                </Link>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        ) : null}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                ) : null}
+                              </li>
+                            ))}
+                          </ul>
+                        </Container>
+                      </div>
+                    </div>
+                  ) : hasChildren ? (
                     <div className="invisible absolute left-0 top-full z-(--z-dropdown) w-76 translate-y-1 pt-2 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       <ul className="overflow-hidden rounded-(--radius-panel) border border-border bg-surface p-2 shadow-(--shadow-dropdown)">
                         {group.links.map((link) => (

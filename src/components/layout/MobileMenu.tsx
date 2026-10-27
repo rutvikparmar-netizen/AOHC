@@ -178,7 +178,9 @@ export function MobileMenu({
             >
               <ul className="space-y-1">
                 {nav.map((group) =>
-                  group.links.length > 0 ? (
+                  /* `mega` counts as having children too — the expertise
+                     group keeps `links` empty and puts everything there. */
+                  group.links.length > 0 || group.mega?.length ? (
                     <li key={group.label}>
                       <button
                         type="button"
@@ -264,6 +266,78 @@ export function MobileMenu({
                     </li>
                   ))}
                 </ul>
+
+                {/**
+                 * ── The expertise menu ──────────────────────────────────
+                 * Sections rather than a third drill-down level.
+                 *
+                 * The drawer slides one panel at a time, and the desktop
+                 * menu is three deep — Centre of Excellence, then blood
+                 * malignancies, then leukemia. Carrying that through would
+                 * mean a second sliding level and a stack to get back out
+                 * of; forty-odd links are not worth that.
+                 *
+                 * `<details>` instead: the browser owns the open state,
+                 * the keyboard behaviour and the ARIA, only one column is
+                 * open at a time by the reader's choice, and every link is
+                 * in the HTML whether or not JavaScript ran.
+                 */}
+                {panelGroup.mega?.length ? (
+                  <div className="mt-2 divide-y divide-border border-t border-border">
+                    {panelGroup.mega.map((column) => (
+                      <details key={column.label} className="group/col">
+                        <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-3 text-left font-semibold text-text [&::-webkit-details-marker]:hidden">
+                          {column.label}
+                          {column.links.length > 0 ? (
+                            <Icon
+                              name="chevron-down"
+                              className="size-5 shrink-0 text-text-muted transition-transform group-open/col:rotate-180"
+                            />
+                          ) : null}
+                        </summary>
+
+                        <ul className="pb-2">
+                          {column.href ? (
+                            <li>
+                              <Link
+                                href={column.href}
+                                className="flex min-h-11 items-center rounded-(--radius-button) px-3 text-sm font-semibold text-accent-dark hover:bg-surface-subtle"
+                              >
+                                All of {column.label}
+                              </Link>
+                            </li>
+                          ) : null}
+
+                          {column.links.map((link) => (
+                            <li key={link.href}>
+                              <Link
+                                href={link.href}
+                                className="flex min-h-11 items-center rounded-(--radius-button) px-3 text-sm text-text hover:bg-surface-subtle hover:text-primary-dark"
+                              >
+                                {link.label}
+                              </Link>
+
+                              {link.links?.length ? (
+                                <ul className="ml-3 border-l border-border pl-3">
+                                  {link.links.map((child) => (
+                                    <li key={child.href}>
+                                      <Link
+                                        href={child.href}
+                                        className="flex min-h-11 items-center rounded-(--radius-button) px-3 text-sm text-text-muted hover:bg-surface-subtle hover:text-primary-dark"
+                                      >
+                                        {child.label}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : null}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ))}
+                  </div>
+                ) : null}
               </nav>
             ) : null}
           </div>

@@ -40,10 +40,35 @@ export interface NavLink {
   description?: string
 }
 
+/**
+ * A nav link that may have children of its own.
+ *
+ * Only the expertise menu goes three deep — "Centre of Excellence" holds
+ * "Hematological (Blood) Malignancies", which holds "Leukemia". Nothing
+ * else on the site nests past two, so this stays out of `NavLink`.
+ */
+export interface MegaNavLink extends NavLink {
+  links?: NavLink[]
+}
+
+/** One column of a full-width menu panel. */
+export interface MegaNavColumn {
+  label: string
+  href?: string
+  links: MegaNavLink[]
+}
+
 export interface NavGroup {
   label: string
   href?: string
   links: NavLink[]
+  /**
+   * When present the header renders a full-width panel of columns instead
+   * of the narrow dropdown, and the mobile drawer renders the columns as
+   * sections rather than a flat list. `links` should stay empty on a group
+   * that has this.
+   */
+  mega?: MegaNavColumn[]
 }
 
 export interface Breadcrumb {
