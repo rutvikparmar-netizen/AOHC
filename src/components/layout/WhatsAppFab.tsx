@@ -1,5 +1,5 @@
 import { whatsappHref } from '@/lib/format'
-import { Icon } from '@/components/ui/Icon'
+import { WhatsAppGlyph } from '@/components/ui/WhatsAppGlyph'
 
 /**
  * Floating "chat on WhatsApp" button, pinned to the bottom-right corner.
@@ -16,13 +16,12 @@ import { Icon } from '@/components/ui/Icon'
  * official brand colour, measures 4.14:1 against white, and sits closer to
  * the page's teal accent.
  *
- * THE GLYPH IS THE GENERIC CHAT BUBBLE, DELIBERATELY. WhatsApp's real mark is
- * a handset inside a bubble, and drawing an approximation of it here would be
- * inventing a third party's trademark — the same reason `src/data/home.ts`
- * ships no press mastheads. Every other WhatsApp affordance on the site
- * (header, footer, bottom bar) already uses `message-circle`, so this is
- * consistent rather than merely cautious. Drop the official asset in from
- * WhatsApp's brand resources to make it authentic.
+ * THE GLYPH IS WHATSAPP'S OWN MARK, not the `message-circle` bubble the
+ * header, footer and bottom bar use. A floating green circle is read as
+ * "WhatsApp" from the corner of the eye, so the real handset-in-bubble is
+ * what makes it legible at a glance; a generic bubble there just looks like
+ * an unlabelled chat widget. The path is the official glyph rather than an
+ * approximation — see `WhatsAppGlyph`.
  *
  * It guards on an empty number for the same reason `WhatsAppAction` does: a
  * cleared config must render nothing, not a `https://wa.me/` link to nowhere.
@@ -49,7 +48,7 @@ export function WhatsAppFab() {
        * tap, and it is `aria-hidden` by virtue of being a pseudo-element —
        * there is nothing here for a screen reader to announce twice.
        */}
-      <Icon name="message-circle" className="relative size-7" />
+      <WhatsAppGlyph className="relative size-7" />
     </a>
   )
 }
