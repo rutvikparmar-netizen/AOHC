@@ -91,10 +91,7 @@ export default function HomePage() {
       <Hero
         content={home.hero}
         cancerTypes={home.cancerTypes}
-        faces={home.testimonials.items.flatMap((item) =>
-          item.thumbnail ? [item.thumbnail] : [],
-        )}
-        trust={home.heroTrust}
+        storyCount={home.testimonials.items.length}
       />
 
       {/* ── Opening statement ─────────────────────────────────────────

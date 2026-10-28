@@ -1,38 +1,39 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import type { HomeContent } from '@/types'
+import type { HomeContent, PillarItem } from '@/types'
 import { Container } from '@/components/ui/Container'
 import { Icon, type IconName } from '@/components/ui/Icon'
 import { Reveal } from '@/components/motion/Reveal'
-import { SectionHeader } from '@/components/ui/SectionHeader'
 
 /**
  * "Connecting Different Perspectives Around One Patient" — the four strands
- * of the integrative approach.
+ * of the integrative approach, as a bento of full-bleed image tiles.
  *
  * ──────────────────────────────────────────────────────────────────────────
- * THIRD LAYOUT, AND THE FIRST WITHOUT A CARD.
+ * FOURTH LAYOUT. The first three were variations on the same idea and all of
+ * them were rejected, which is the signal that the idea was the problem:
  *
- *   1. Bordered cards with a 3:2 photograph on top and an icon on its own
- *      row beneath it. 700px tall each, and the icon said nothing the
- *      picture had not.
- *   2. The same cards with a fixed image band and the icon moved up beside
- *      the title. Shorter, but still four bordered rectangles on a page that
- *      had become wall-to-wall bordered rectangles.
+ *   1. Bordered cards, image on top, icon on its own row. 700px each.
+ *   2. The same cards with a fixed image band and the icon beside the title.
+ *   3. No card: the image with the title over it, the description below on
+ *      the bare page. Cleaner, still four identical rectangles in a 2x2.
  *
- * THE PICTURE IS THE CARD NOW. Each strand is a photograph with a teal scrim
- * running up from its foot, the icon in a frosted disc and the title set over
- * it in the display serif — the hero's own language, which is the most
- * confident thing on the site and was being used in exactly one place. The
- * description sits on the page below it with no border, no fill and no
- * shadow, so the section reads as four images rather than four containers.
+ * Each of those put the picture and the words in separate boxes stacked one
+ * above the other, four times, in a regular grid. THE TILE IS THE PICTURE
+ * NOW — the whole strand lives inside one frame, with the copy set over a
+ * scrim at its foot — and the four tiles are different sizes, so the eye
+ * moves through them instead of scanning a table.
  *
- * ⚠️  THE IMAGE IS NO LONGER OPTIONAL FURNITURE. The title is set over it, so
- * hiding the picture below `sm` — which the previous layout did, to save
- * ~800px on a phone — would now hide the heading with it. It is short on
- * phones instead: `h-44` rising to `h-64`. That costs a phone roughly 640px
- * against the version that dropped them, which is the price of the strand
- * being legible as one object at every width.
+ * ON DARK, which is what makes glass read as glass. The frosted icon chip,
+ * the hairline borders and the scrims all need something behind them; over
+ * white they were grey smudges. It also gives the long warm middle of this
+ * page a break, and it is the hero's own treatment — the most confident
+ * thing on the site, previously used in exactly one place.
+ *
+ * THE BENTO IS 3+2 THEN 2+3 at `lg`, which is the smallest asymmetry that
+ * reads as deliberate. Equal halves read as a table; a single huge tile plus
+ * three small ones makes three of the four strands look like footnotes, and
+ * these four are of equal clinical weight.
  *
  * ⚠️  THE IMAGES ARE DETAIL SHOTS, NOT TREATMENT PHOTOGRAPHS, and that is a
  * decision rather than what the stock library happened to have. See the note
@@ -41,92 +42,116 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
  * be reading this, and the available sets of them carry visible NIH/NCI
  * branding that would imply an affiliation AOHC does not have.
  */
+
+/** `span` is the tile's share of the 5-column bento row at `lg`. */
+function StrandTile({ pillar, span }: { pillar: PillarItem; span: string }) {
+  return (
+    <Link
+      href={pillar.href ?? '#'}
+      className={`group relative isolate flex min-h-[22rem] flex-col justify-end overflow-hidden rounded-(--radius-3xl) border border-white/10 p-7 transition-colors hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:p-8 lg:min-h-[27rem] ${span}`}
+    >
+      {pillar.image ? (
+        <Image
+          src={pillar.image.src}
+          alt={pillar.image.alt}
+          fill
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          className="-z-20 object-cover transition-transform duration-700 ease-(--ease-out-soft) group-hover:scale-105"
+        />
+      ) : null}
+
+      {/* Nearly solid at the foot where the copy is, clearing by the top so
+          the photograph still reads as a photograph. Two stops are not
+          enough — a linear ramp over this much text greys the middle of the
+          picture out. */}
+      <span
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-linear-to-t from-brand-teal-950 from-20% via-brand-teal-950/75 via-60% to-brand-teal-950/15"
+      />
+
+      <span className="mb-5 flex size-12 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white backdrop-blur-md transition-colors group-hover:border-accent group-hover:bg-accent">
+        <Icon name={pillar.icon as IconName} className="size-5" />
+      </span>
+
+      <h3 className="font-display text-2xl font-bold leading-snug text-white sm:text-3xl">
+        {pillar.title}
+      </h3>
+
+      <p className="mt-3 max-w-prose text-sm leading-relaxed text-brand-teal-100 sm:text-base">
+        {pillar.description}
+      </p>
+
+      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+        Learn more
+        <Icon
+          name="arrow-right"
+          className="size-4 transition-transform group-hover:translate-x-1"
+        />
+      </span>
+    </Link>
+  )
+}
+
+/* 3+2 on the first row, 2+3 on the second. */
+const SPANS = ['lg:col-span-3', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-3']
+
 export function ApproachSection({
   content,
 }: {
   content: HomeContent['approach']
 }) {
   return (
-    <section className="bg-surface py-(--spacing-section)">
+    <section className="relative isolate overflow-hidden bg-brand-teal-950 py-(--spacing-section) text-white">
+      {/* One soft light, so the flat dark does not read as a block of ink. */}
+      <div
+        aria-hidden
+        className="absolute -right-32 top-0 -z-10 size-[44rem] rounded-full bg-brand-teal-800/40 blur-3xl"
+      />
+
       <Container>
-        {/* Title and lead share a row rather than stacking, so the heading
-            never sits alone against an empty right half. */}
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-14">
           <Reveal className="lg:col-span-7">
-            <SectionHeader eyebrow={content.eyebrow} title={content.title} />
+            <p className="text-eyebrow uppercase text-brand-teal-300">
+              {content.eyebrow}
+            </p>
+            <h2 className="mt-4 font-display text-h2 font-bold tracking-[-0.02em] text-white">
+              {content.title}
+            </h2>
           </Reveal>
+
           <Reveal delay={80} className="lg:col-span-5 lg:self-end">
-            <p className="max-w-(--measure) text-base leading-relaxed text-neutral-700">
+            <p className="max-w-(--measure) text-base leading-relaxed text-brand-teal-100">
               {content.intro}
             </p>
           </Reveal>
         </div>
 
-        <ul className="mt-12 grid gap-x-8 gap-y-12 md:grid-cols-2 lg:mt-14">
+        <ul className="mt-12 grid gap-5 lg:mt-14 lg:grid-cols-5">
           {content.pillars.map((pillar, index) => (
-            <Reveal as="li" key={pillar.title} direction="up" delay={index * 70}>
-              <Link
-                href={pillar.href ?? '#'}
-                className="group block rounded-(--radius-2xl) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                <div className="relative overflow-hidden rounded-(--radius-2xl) bg-surface-subtle">
-                  {pillar.image ? (
-                    <Image
-                      src={pillar.image.src}
-                      alt={pillar.image.alt}
-                      width={pillar.image.width}
-                      height={pillar.image.height}
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="h-44 w-full object-cover transition-transform duration-700 ease-(--ease-out-soft) group-hover:scale-105 sm:h-52 lg:h-64"
-                    />
-                  ) : null}
-
-                  {/* Heavy at the foot where the words are, clear at the top
-                      so the photograph still reads as a photograph. */}
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 bg-linear-to-t from-brand-teal-950/92 via-brand-teal-950/35 to-transparent"
-                  />
-
-                  <div className="absolute inset-x-0 bottom-0 flex items-center gap-3.5 p-5 sm:p-6">
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white backdrop-blur-md transition-colors group-hover:bg-accent group-hover:border-accent">
-                      <Icon name={pillar.icon as IconName} className="size-5" />
-                    </span>
-                    <h3 className="font-display text-xl font-bold leading-snug text-white sm:text-2xl">
-                      {pillar.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <p className="mt-5 max-w-(--measure) text-base leading-relaxed text-neutral-700">
-                  {pillar.description}
-                </p>
-
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark">
-                  Learn more
-                  <Icon
-                    name="arrow-right"
-                    className="size-4 transition-transform group-hover:translate-x-1"
-                  />
-                </span>
-              </Link>
+            <Reveal
+              as="li"
+              key={pillar.title}
+              direction="up"
+              delay={index * 70}
+              className={`flex ${SPANS[index] ?? 'lg:col-span-5'}`}
+            >
+              <StrandTile pillar={pillar} span="w-full" />
             </Reveal>
           ))}
         </ul>
 
-        {/* The §7 / checklist-item-30 sentence, in the same panel the other
-            two sections use. "Not every treatment or test is appropriate for
-            every patient" is the most important line here and the one a
-            reader is most likely to skip. */}
+        {/* The §7 / checklist-item-30 sentence. "Not every treatment or test
+            is appropriate for every patient" is the most important line in
+            this section and the one a reader is most likely to skip, so it
+            is set on a rule rather than dropped into small print. */}
         <Reveal>
-          <div className="mt-14 flex gap-4 rounded-(--radius-2xl) border border-border-brand bg-primary-subtle p-6 sm:gap-5 sm:p-7">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-primary-dark">
-              <Icon name="info" className="size-5" />
-            </span>
-            <p className="max-w-5xl self-center text-base leading-relaxed text-neutral-700">
-              {content.outro}
-            </p>
-          </div>
+          <p className="mt-12 flex max-w-4xl gap-4 border-t border-white/15 pt-7 text-base leading-relaxed text-brand-teal-100">
+            <Icon
+              name="info"
+              className="mt-1 size-5 shrink-0 text-brand-teal-300"
+            />
+            {content.outro}
+          </p>
         </Reveal>
       </Container>
     </section>

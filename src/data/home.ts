@@ -676,13 +676,17 @@ export const home: HomeContent = {
     },
   ],
 
-  /**
-   * HERO TRUST BAR
+  /*
+   * ⚠️  `heroTrust` IS GONE — the accreditation row was removed from the hero
+   * on request. Nothing is lost from the site: all three claims are still
+   * published in the partners section ("Where your care takes place"), where
+   * RGCC and CK Birla appear with their actual logos instead of as a row of
+   * 12px labels.
    *
-   * ⚠️  WHAT WAS ASKED FOR AND WHY IT IS NOT HERE.
-   *
-   * The brief named two example items: an "Industry Outlook 2023 Award" and
-   * "trusted for 15 years". Neither could be substantiated:
+   * WHAT THAT ROW WAS NEVER ALLOWED TO CARRY, kept here because the
+   * temptation will come back the next time someone wants a trust signal in
+   * the hero. The original brief named two items and neither could be
+   * substantiated:
    *
    *   • There is no Industry Outlook award. The Industry Outlook published a
    *     feature ABOUT AOHC — it is in the press list above. A feature article
@@ -694,15 +698,10 @@ export const home: HomeContent = {
    *     chosen because it looks good — exactly what the note at the top of
    *     this file rules out.
    *
-   * What is here instead is every trust signal AOHC already publishes about
-   * itself. If there IS an award, add it with the awarding body and the year
-   * and it belongs in this bar; `href` is there for the citation.
+   * The hero now carries a count of the patient-story videos instead, which
+   * is simply the length of `testimonials.items`. See `PatientStoriesBadge`
+   * for why the Google rating it replaced was not worth keeping.
    */
-  heroTrust: [
-    { icon: 'shield-check', label: 'Accredited by RGCC Labs, Greece' },
-    { icon: 'hospital', label: 'Affiliated with CK Birla Hospital' },
-    { icon: 'award', label: 'NABH-accredited partner clinics' },
-  ],
 
   whoWeAre: {
     eyebrow: 'Who we are',

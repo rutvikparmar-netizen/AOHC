@@ -31,12 +31,18 @@ export interface SiteSocial {
 }
 
 /**
- * AOHC's public Google rating, shown as a badge in the hero.
+ * AOHC's public Google rating.
+ *
+ * ⚠️  NOTHING RENDERS THIS ANY MORE. The hero badge that used it was replaced
+ * on request: it showed "4.9" with `count: null` and `url: ''`, which is a
+ * score with no number of reviews behind it and no link to check it against.
+ * The config is kept because the figures are real and may be wanted
+ * elsewhere, but a rating nobody can verify should not go back on the page
+ * until `count` and `url` are filled in from the Google Business Profile.
  *
  * ⚠️  COPY THESE FROM AOHC'S GOOGLE BUSINESS PROFILE — NEVER ESTIMATE THEM.
  * A star rating is a claim about what real patients said; on a cancer
- * clinic's home page an invented one is misleading advertising. While
- * `rating` is null the badge renders nothing at all.
+ * clinic's home page an invented one is misleading advertising.
  */
 export interface SiteReviews {
   /** e.g. 4.8 — out of 5. */

@@ -1,45 +1,45 @@
-import Link from "next/link";
-import type { ChipLink, HeroContent, ImageAsset } from "@/types";
+﻿import Link from "next/link";
+import type { ChipLink, HeroContent } from "@/types";
 import { routes } from "@/lib/routes";
 import { Container } from "@/components/ui/Container";
-import { Icon, type IconName } from "@/components/ui/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { HeroVideo } from "./HeroVideo";
-import { RatingBadge } from "./RatingBadge";
+import { PatientStoriesBadge } from "./PatientStoriesBadge";
 
 /**
- * Home hero — full-bleed video card, matched to the reference layout.
+ * Home hero â€” full-bleed video card, matched to the reference layout.
  *
  * TYPE IS SANS, NOT THE DISPLAY SERIF. The reference sets its headline in a
  * bold grotesque, and at this size the serif was fighting the moving image
- * behind it — thin strokes and high contrast are exactly what a video
+ * behind it â€” thin strokes and high contrast are exactly what a video
  * background destroys. Lexend bold holds up on every frame.
  *
  * ONE CTA UNDER THE STANDFIRST. The header button alone was too easy to
- * miss — it is small, top-right, and hidden below `sm` — so the next step is
+ * miss â€” it is small, top-right, and hidden below `sm` â€” so the next step is
  * offered where the eye lands after the headline. One button, not a row: a
  * single action reads as "start here"; three read as a menu.
  *
  * THE SCRIM IS TWO GRADIENTS, NOT A FLAT TINT. A uniform overlay dims bright
  * and dark frames equally, so white text drifts in and out of legibility as
- * footage plays. A horizontal ramp — heavy left under the headline, clearing
- * right so the picture shows — plus a vertical one under the chips holds
+ * footage plays. A horizontal ramp â€” heavy left under the headline, clearing
+ * right so the picture shows â€” plus a vertical one under the chips holds
  * contrast on every frame.
  *
  * THE FROSTED CHIPS are `bg-brand-teal-950/40` + `backdrop-blur-md` + a
  * `white/15` hairline. The hairline is what makes blur read as glass rather
  * than a smudge; without an edge the panel has no shape.
  *
- * ──────────────────────────────────────────────────────────────────────────
+ * â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
  * THE PHONE LAYOUT IS A DIFFERENT COMPOSITION, NOT A NARROWER ONE.
  *
  * Everything used to sit inside the dark card at every width, which measured
- * 1163px tall on a 390px screen — a screen and a half of hero before a reader
+ * 1163px tall on a 390px screen â€” a screen and a half of hero before a reader
  * reached a single word of the page. Most of that was furniture: the nine
  * cancer-type chips wrapped into four rows and took 252px on their own.
  *
- * So on phones the card holds only what the reference holds — headline,
- * standfirst, one button — and is capped at roughly one screen with the copy
+ * So on phones the card holds only what the reference holds â€” headline,
+ * standfirst, one button â€” and is capped at roughly one screen with the copy
  * sitting on its floor, where the scrim is heaviest. The chips, the Google
  * rating and the accreditation row move out below the card onto the warm
  * page, the chips as a single swipeable row instead of a block. Nothing is
@@ -47,7 +47,7 @@ import { RatingBadge } from "./RatingBadge";
  *
  * THE TWO ARRANGEMENTS ARE RENDERED FROM THE SAME SUB-COMPONENTS, one branch
  * `lg:hidden` and the other `hidden lg:block`. Only one is ever in the layout
- * — and `display: none` also takes the other out of the accessibility tree,
+ * â€” and `display: none` also takes the other out of the accessibility tree,
  * so nothing is announced twice.
  */
 
@@ -86,75 +86,25 @@ function CancerTypeChip({
   );
 }
 
-/**
- * TRUST BAR.
- *
- * Accreditations and affiliations only — things a third party conferred and
- * that can be checked. No ratings, no patient counts, no years-in-operation,
- * because AOHC publishes none of those and a number invented for this row
- * would be the single least defensible thing on the page. See the note on
- * `heroTrust` in `src/data/home.ts` for what was asked for and left out.
- */
-function TrustBar({
-  items,
-  tone,
-  className,
-}: {
-  items: { icon: string; label: string; href?: string }[];
-  tone: "dark" | "light";
-  className?: string;
-}) {
-  if (items.length === 0) return null;
-
-  return (
-    <ul
-      className={`flex flex-wrap items-center gap-x-7 gap-y-3 border-t pt-6 ${
-        tone === "dark" ? "border-white/15" : "border-border"
-      } ${className ?? ""}`}
-    >
-      {items.map((item) => (
-        <li
-          key={item.label}
-          className={`flex items-center gap-2.5 text-xs font-semibold ${
-            tone === "dark" ? "text-brand-teal-100" : "text-text-muted"
-          }`}
-        >
-          <Icon
-            name={item.icon as IconName}
-            className={`size-4 shrink-0 ${
-              tone === "dark" ? "text-brand-teal-300" : "text-primary-dark"
-            }`}
-          />
-          {item.href ? (
-            <a
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline-offset-4 hover:underline"
-            >
-              {item.label}
-            </a>
-          ) : (
-            item.label
-          )}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export function Hero({
   content,
   cancerTypes,
-  faces = [],
-  trust = [],
+  storyCount = 0,
 }: {
   content: HeroContent;
   cancerTypes: ChipLink[];
-  /** Patient-story thumbnails for the rating badge's face stack. */
-  faces?: ImageAsset[];
-  /** Accreditation and affiliation chips. See the note where they render. */
-  trust?: { icon: string; label: string; href?: string }[];
+  /**
+   * How many patient-story videos exist, for the trust badge.
+   *
+   * âš ï¸  THE ACCREDITATION ROW AND THE GOOGLE RATING ARE BOTH GONE from this
+   * hero, on request â€” the `trust` and `faces` props with them. The three
+   * accreditations are still published, in "Where your care takes place"
+   * further down the page, where they sit beside the institutions' actual
+   * logos instead of as a row of 12px labels. The rating is not published
+   * anywhere now; see `PatientStoriesBadge` for why it was not worth
+   * keeping.
+   */
+  storyCount?: number;
 }) {
   /**
    * FULL BLEED ON PHONES. The card used to sit in a 16px frame on all four
@@ -166,9 +116,9 @@ export function Hero({
    * The bottom padding stays: that is the gap before the chips, not a frame.
    * From `lg` the full inset frame returns, top included.
    *
-   * ⚠️  THE TOP INSET AND THE HEADER'S RESTING POSITION ARE A PAIR. The
+   * âš ï¸  THE TOP INSET AND THE HEADER'S RESTING POSITION ARE A PAIR. The
    * header is fixed and transparent until you scroll, so it only reads over
-   * the dark card — park it over the warm strip above the card and the white
+   * the dark card â€” park it over the warm strip above the card and the white
    * wordmark and white nav disappear into it. `StickyHeaderShell` drops the
    * bar by this same `--gutter` at rest for that reason. Change one and the
    * other has to move with it.
@@ -179,8 +129,8 @@ export function Hero({
        * `svh` RATHER THAN `vh` ON PHONES. `vh` resolves against the viewport
        * with the browser's address bar retracted, so a `100vh` card is taller
        * than the screen on first paint and the button under the standfirst
-       * starts below the fold. `svh` is the small viewport — what is actually
-       * visible with the chrome showing — and the `max()` floor stops the
+       * starts below the fold. `svh` is the small viewport â€” what is actually
+       * visible with the chrome showing â€” and the `max()` floor stops the
        * card collapsing on a short screen or a landscape phone.
        */}
       {/* Bottom corners only on a phone, where the card meets the top of the
@@ -190,7 +140,7 @@ export function Hero({
       <div className="relative isolate flex min-h-[max(30rem,80svh)] flex-col overflow-hidden rounded-b-(--radius-3xl) bg-brand-teal-950 lg:min-h-[860px] lg:rounded-(--radius-3xl)">
         <HeroVideo src="/hero.mp4" poster="/images/hero-poster.jpg" />
 
-        {/* Lighter than before on the right — the reference lets its image
+        {/* Lighter than before on the right â€” the reference lets its image
             read clearly there, and so should the helix. */}
         <div
           aria-hidden
@@ -203,7 +153,7 @@ export function Hero({
 
         {/* NO HEADER IN HERE ANY MORE. It is fixed to the viewport from the
             site layout, so it survives the scroll instead of leaving with
-            the hero — and it cannot live in this card regardless, which is
+            the hero â€” and it cannot live in this card regardless, which is
             `overflow-hidden` and would pin it inside the card rather than
             the window. The `pt-24` below is what keeps the headline clear
             of it. */}
@@ -236,15 +186,15 @@ export function Hero({
 
             {/**
              * BOTH LABELS COME FROM THE CONTENT RECORD, not from here. The
-             * supplied home-page copy names the two actions — "Request a
-             * Consultation" and "Understand Our Approach" — and a label typed
+             * supplied home-page copy names the two actions â€” "Request a
+             * Consultation" and "Understand Our Approach" â€” and a label typed
              * into JSX is the thing `src/data/home.ts` exists to prevent.
              *
              * STILL ONE BUTTON, THOUGH. The note at the top of this file is
              * about weight rather than count: two accent buttons side by side
              * read as a menu and split the decision at the one moment the
              * page has the reader's full attention. The secondary action is
-             * therefore a link — present, keyboard-reachable, 44px tall, and
+             * therefore a link â€” present, keyboard-reachable, 44px tall, and
              * unmistakably the quieter of the two.
              */}
             <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-7">
@@ -272,9 +222,9 @@ export function Hero({
             </div>
           </div>
 
-          {/* ── Inside the card, phones ─────────────────────────────────
+          {/* â”€â”€ Inside the card, phones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
               These were below the card, which left a dead band of video
-              between the header and the headline — the copy is anchored to
+              between the header and the headline â€” the copy is anchored to
               the floor, so whatever the card's minimum height does not use
               shows up as emptiness at the top. Bringing the chips and the
               rating back in fills it without making the card any taller,
@@ -288,14 +238,14 @@ export function Hero({
                  * ONE SWIPEABLE ROW, BLED TO THE CARD'S EDGES. Wrapped,
                  * these nine chips were a 252px block. The negative margin
                  * lets the row run to the edge of the screen, which is what
-                 * signals there is more to the right — a row that stops
+                 * signals there is more to the right â€” a row that stops
                  * short of the edge reads as complete.
                  */}
                 {/**
                  * NOT `.scroll-rail` HERE, deliberately. That utility sets
                  * `scroll-snap-type: x mandatory`, and mandatory snapping
-                 * aligns the first chip with the SNAPPORT — the padding
-                 * box — not with the content box. Combined with the
+                 * aligns the first chip with the SNAPPORT â€” the padding
+                 * box â€” not with the content box. Combined with the
                  * negative-margin bleed it scrolled the rail 16px on load
                  * and parked "Breast" flush against the edge of the
                  * screen, out of line with the headline above it. Chips
@@ -320,21 +270,19 @@ export function Hero({
             ) : null}
 
             <div className="mt-5">
-              <RatingBadge
-                faces={faces}
-                storiesHref="#stories"
-                idPrefix="hero-phone"
-              />
+              <PatientStoriesBadge count={storyCount} href="#stories" />
             </div>
           </div>
 
-          {/* ── Inside the card, from `lg` up ───────────────────────────
-              Frosted chips and the Google rating badge share one row, the
+          {/* â”€â”€ Inside the card, from `lg` up â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+              Frosted chips and the patient-stories badge share one row, the
               badge aligned to the chips' last line. The badge promotes the
-              organisation, never one doctor, and renders nothing until a
-              real rating is configured — see `RatingBadge`. */}
+              organisation, never one doctor. */}
           <div className="hidden lg:block">
-            <div className="mt-14 flex flex-row items-end justify-between gap-8">
+            {/* `pe-16` keeps the badge clear of the video's pause control,
+                which is pinned to the bottom-right corner of the card and
+                was overlapping it by 17px. */}
+            <div className="mt-14 flex flex-row items-end justify-between gap-8 pe-16">
               {cancerTypes.length > 0 ? (
                 <nav aria-label="Cancer types">
                   <ul className="flex max-w-2xl flex-wrap gap-2">
@@ -352,27 +300,11 @@ export function Hero({
               ) : null}
 
               <div className="shrink-0">
-                <RatingBadge
-                  faces={faces}
-                  storiesHref="#stories"
-                  idPrefix="hero-wide"
-                />
+                <PatientStoriesBadge count={storyCount} href="#stories" />
               </div>
             </div>
-
-            {/* `pr-16` so the last accreditation never runs under the
-                video's pause control in the corner. */}
-            <TrustBar items={trust} tone="dark" className="mt-8 pr-16" />
           </div>
         </Container>
-      </div>
-
-      {/* ── Below the card, phones only ─────────────────────────────────
-          Only the accreditations. This block carries its own gutter now
-          that the section has none, so it stays inset from the screen edge
-          while the card above it runs full width. */}
-      <div className="px-(--gutter) lg:hidden">
-        <TrustBar items={trust} tone="light" className="mt-8" />
       </div>
     </section>
   );

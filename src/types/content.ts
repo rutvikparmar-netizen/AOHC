@@ -317,15 +317,6 @@ export interface HomeContent {
 
   press: PressMention[]
 
-  /**
-   * Credential chips under the hero.
-   *
-   * Every entry is a verifiable statement about an accreditation, affiliation
-   * or award — never an outcome, a rating or a round number. `href` carries
-   * the citation where one exists.
-   */
-  heroTrust: { icon: string; label: string; href?: string }[]
-
   whoWeAre: {
     eyebrow: string
     title: string
