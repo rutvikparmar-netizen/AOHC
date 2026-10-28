@@ -31,9 +31,17 @@ export const home: HomeContent = {
     title: 'A More Personalized Approach to Cancer Care',
     standfirst:
       'Bringing together oncology, patient-specific information, and integrative care to help inform individual treatment decisions.',
+    /**
+     * ALL THREE PARAGRAPHS OF THE SUPPLIED HERO COPY, which is more than the
+     * hero card can hold — it has room for the headline, the standfirst and
+     * one button, and on a 390px phone it is already capped at roughly one
+     * screen. They are rendered as the opening statement directly beneath the
+     * card instead; see the note on that section in `(site)/page.tsx`.
+     */
     body: [
       'Every cancer journey is different. The diagnosis, disease biology, previous treatments, response to therapy, side effects, overall health, and personal priorities can all influence the next steps in care.',
-      'At Art of Healing Cancer (AOHC), our approach is built around understanding the individual behind the diagnosis.',
+      'At Art of Healing Cancer (AOHC), our approach is built around understanding the individual behind the diagnosis. We aim to bring relevant clinical information together and evaluate appropriate conventional and integrative options with the patient’s needs at the centre.',
+      'Our goal is to help patients and families better understand their options and make informed decisions in collaboration with qualified healthcare professionals.',
     ],
     primaryCta: { label: 'Request a Consultation', href: routes.consultation },
     secondaryCta: { label: 'Understand Our Approach', href: routes.integrativeCare },
@@ -290,6 +298,54 @@ export const home: HomeContent = {
       },
     ],
     cta: { label: 'Request an Appointment', href: routes.consultation },
+  },
+
+  /**
+   * "A STRUCTURED APPROACH TO UNDERSTANDING YOUR CASE" — the five stages,
+   * supplied verbatim.
+   *
+   * ⚠️  THIS DOES NOT REPLACE `process` ABOVE, and the distinction is worth
+   * keeping straight when either is edited. `process` is the live site's
+   * four-stage TREATMENT approach — "Decode the Disease" and the rest, with
+   * twelve capability sub-points. This is what happens to a patient's RECORDS
+   * AND CASE between the first enquiry and a plan: review, gaps, options,
+   * discussion, reassessment. Two different things at two points in the
+   * journey, so both are on the page.
+   *
+   * No sub-points, no imagery and no call to action, because the supplied copy
+   * has none. The stages render as a plain numbered sequence rather than
+   * through `ProcessPanels`, which is built around an image per stage.
+   */
+  caseReview: {
+    eyebrow: 'A structured approach to understanding your case',
+    title: 'From Medical Records to Informed Decisions',
+    steps: [
+      {
+        title: 'Understand your medical history',
+        description:
+          'We begin by reviewing your diagnosis, treatment history, pathology reports, scans, laboratory results, and current concerns.',
+      },
+      {
+        title: 'Identify information gaps',
+        description:
+          'We assess whether additional medical records, specialist opinions, or diagnostic investigations may be useful.',
+      },
+      {
+        title: 'Evaluate relevant options',
+        description:
+          'The clinical team considers appropriate treatments and supportive approaches in light of the available information.',
+      },
+      {
+        title: 'Discuss an individualized plan',
+        description:
+          'Options, uncertainties, possible benefits, risks, and next steps are discussed with you and, where appropriate, your existing treating team.',
+      },
+      {
+        title: 'Review and adapt',
+        description:
+          "Cancer care may need to change as new results become available or the patient's condition changes. Follow-up and reassessment are therefore important.",
+      },
+    ],
   },
 
   /**

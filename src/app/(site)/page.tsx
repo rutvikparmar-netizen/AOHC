@@ -19,23 +19,53 @@ import { StoryGrid } from '@/components/home/StoryGrid'
 import { ProcessPanels } from '@/components/home/ProcessPanels'
 import { BlogSection } from '@/components/home/BlogSection'
 import { FaqSection } from '@/components/home/FaqSection'
+import { ChecklistSection } from '@/components/home/ChecklistSection'
+import { ApproachSection } from '@/components/home/ApproachSection'
+import { CaseReviewSection } from '@/components/home/CaseReviewSection'
+import { ClosingSection } from '@/components/home/ClosingSection'
 import { Reveal } from '@/components/motion/Reveal'
 import { Cta } from '@/components/home/Cta'
 
 /**
  * Home page.
  *
- * ORDER: Hero → Press → About → How it works → Who we help → Doctors →
- * Partners & accreditations → Patient stories → International → Contact.
+ * ORDER: Hero → opening statement → Press → About → figures → One diagnosis →
+ * Our approach → Case review → Reach → International → How it works → Who we
+ * help → Doctors → Partners → Patient stories → When the next step is unclear
+ * → Questions → Contact → Knowledge → Closing.
  *
- * TWO DARK SECTIONS ON THE WHOLE PAGE, and no more: patient stories and the
- * footer. Everything else sits on warm off-white with white cards. The page
- * used to alternate dark/teal/light every section, which made it read as a
- * sequence of unrelated slides rather than one document — variety now comes
- * from layout, not background colour.
+ * ──────────────────────────────────────────────────────────────────────────
+ * THE SUPPLIED HOME-PAGE COPY IS NOW ALL ON THE PAGE. Five of its seven
+ * sections had been sitting unrendered in `src/data/home.ts` since the copy
+ * was first transcribed — `individual`, `approach`, `complexJourney`,
+ * `closing`, and the hero's own body paragraphs. The data was right; the page
+ * simply never reached for it.
  *
- * The outcome-statistics band is in the tree but renders nothing: `StatBand`
- * gates itself on every figure having a cited source.
+ * ⚠️  NOTHING EXISTING WAS REPLACED TO MAKE ROOM. In particular `process` —
+ * the live site's four-stage treatment approach, with its twelve capability
+ * sub-points — is untouched, and the new five-stage sequence sits beside it as
+ * `caseReview`. They look similar and are not: one is what AOHC does
+ * clinically, the other is what happens to a patient's records between an
+ * enquiry and a plan. See the note on `caseReview` in `src/data/home.ts`
+ * before merging them.
+ *
+ * WHERE THE NEW SECTIONS LANDED, AND WHY NOT IN DOCUMENT ORDER. The three
+ * framing sections go after the figures, before the globe, so the page
+ * explains how it thinks before it claims reach. "When the next step is not
+ * clear" goes immediately after the patient stories instead of next to the
+ * process: the stories are what a reader scrolls through when they are
+ * weighing a second opinion, and that section answers the question those
+ * stories raise. It then runs stories → "a review may help clarify…" →
+ * questions → form, which is one argument rather than four adjacent topics.
+ *
+ * BACKGROUNDS STILL ALTERNATE through the insertions — page colour, white,
+ * page colour — with one exception worth knowing about: `CaseReviewSection`
+ * punches its connecting rule out behind each numbered badge with
+ * `ring-background`, so that section has to stay on the page colour. Moving it
+ * onto `bg-surface` shows the rings as off-white discs on white.
+ *
+ * DARK SECTIONS: the globe, the patient stories, and the footer. The closing
+ * panel is deliberately light — see the note in `ClosingSection`.
  */
 export default function HomePage() {
   /* RGCC and CK Birla appear in both the partners and accreditations lists.
@@ -66,6 +96,39 @@ export default function HomePage() {
         )}
         trust={home.heroTrust}
       />
+
+      {/* ── Opening statement ─────────────────────────────────────────
+          THE HERO'S OWN BODY COPY, which the hero card cannot hold.
+
+          `hero.body` is three paragraphs in the supplied content, and the card
+          has room for a headline, a standfirst and a button — on a 390px phone
+          it is already capped at roughly one screen, and the whole point of
+          that layout was getting the hero down from a screen and a half. The
+          paragraphs open the page here instead of being dropped.
+
+          NO HEADING, DELIBERATELY. A heading would make this a section the
+          reader has to place; without one it reads as the hero finishing its
+          sentence. The first paragraph is set a size up to carry the handoff,
+          and there is no bottom padding because the press section below brings
+          its own. */}
+      <section className="pt-12 lg:pt-16">
+        <Container>
+          <Reveal className="max-w-(--measure) space-y-5">
+            {home.hero.body.map((paragraph, index) => (
+              <p
+                key={paragraph.slice(0, 32)}
+                className={
+                  index === 0
+                    ? 'text-lg leading-relaxed text-text sm:text-xl'
+                    : 'text-base leading-relaxed text-neutral-700'
+                }
+              >
+                {paragraph}
+              </p>
+            ))}
+          </Reveal>
+        </Container>
+      </section>
 
       {/* ── Press ─────────────────────────────────────────────────────
           "As featured in" and "In the news" merged into one section. */}
@@ -150,6 +213,21 @@ export default function HomePage() {
           The figures count up the first time they scroll into view. See
           the note in `StatBand` on what they still need. */}
       <StatBand items={home.stats.items} footnote={home.stats.footnote} />
+
+      {/* ── One diagnosis does not tell the whole story ───────────────
+          The problem the rest of the page answers, and the right place for it
+          is directly after the figures: the band above makes outcome claims,
+          and this is the section that says outcomes depend on the individual
+          case. Reading them the other way round would be worse. */}
+      <ChecklistSection content={home.individual} />
+
+      {/* ── Our approach to integrative cancer care ─────────────────── */}
+      <ApproachSection content={home.approach} />
+
+      {/* ── From medical records to informed decisions ────────────────
+          Must stay on the page colour — see the note in the component and at
+          the top of this file. */}
+      <CaseReviewSection content={home.caseReview} />
 
       {/* ── Where patients come from ──────────────────────────────────
           The globe is a credibility beat and reads best shortly after the
@@ -407,6 +485,15 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* ── When the next step is not clear ───────────────────────────
+          IMMEDIATELY AFTER THE STORIES, not next to the process section where
+          the content draft has it. Someone reading seven patient videos is
+          usually weighing whether to ask for another opinion, and this is the
+          section that answers that — including the sentence saying what a
+          consultation cannot guarantee. No image: every photograph in the repo
+          is already used above, and a seventh stock shot would add nothing. */}
+      <ChecklistSection content={home.complexJourney} surface />
+
       {/* ── Questions ─────────────────────────────────────────────────
           Immediately before the form, because most of these are things
           someone would otherwise type into the message box and then wait
@@ -540,6 +627,12 @@ export default function HomePage() {
         items={home.knowledge.items}
         cta={home.knowledge.cta}
       />
+
+      {/* ── Start with a conversation ─────────────────────────────────
+          The last word before the footer. Light rather than brand-dark, and
+          the only section on the page with two buttons — both explained in
+          the component. */}
+      <ClosingSection content={home.closing} />
     </>
   )
 }

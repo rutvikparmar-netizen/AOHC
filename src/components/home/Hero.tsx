@@ -234,16 +234,42 @@ export function Hero({
               {content.standfirst}
             </p>
 
-            <Button
-              href={routes.consultation}
-              variant="accent"
-              size="lg"
-              icon="calendar"
-              iconPosition="start"
-              className="mt-8 w-full rounded-(--radius-pill) sm:w-fit"
-            >
-              Schedule a Free Meeting
-            </Button>
+            {/**
+             * BOTH LABELS COME FROM THE CONTENT RECORD, not from here. The
+             * supplied home-page copy names the two actions — "Request a
+             * Consultation" and "Understand Our Approach" — and a label typed
+             * into JSX is the thing `src/data/home.ts` exists to prevent.
+             *
+             * STILL ONE BUTTON, THOUGH. The note at the top of this file is
+             * about weight rather than count: two accent buttons side by side
+             * read as a menu and split the decision at the one moment the
+             * page has the reader's full attention. The secondary action is
+             * therefore a link — present, keyboard-reachable, 44px tall, and
+             * unmistakably the quieter of the two.
+             */}
+            <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-7">
+              <Button
+                href={content.primaryCta.href}
+                variant="accent"
+                size="lg"
+                icon="calendar"
+                iconPosition="start"
+                className="w-full rounded-(--radius-pill) sm:w-fit"
+              >
+                {content.primaryCta.label}
+              </Button>
+
+              <Link
+                href={content.secondaryCta.href}
+                className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                {content.secondaryCta.label}
+                <Icon
+                  name="arrow-right"
+                  className="size-4 transition-transform group-hover:translate-x-1"
+                />
+              </Link>
+            </div>
           </div>
 
           {/* ── Inside the card, phones ─────────────────────────────────

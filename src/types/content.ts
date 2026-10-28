@@ -235,6 +235,21 @@ export interface HomeContent {
     steps: ProcessStep[]
     cta: NavLink
   }
+  /**
+   * "A Structured Approach to Understanding Your Case".
+   *
+   * DELIBERATELY NOT `process`. That one is the live site's four-stage
+   * TREATMENT approach; this is what happens to a patient's records and case
+   * between the first enquiry and a plan. See the note in `src/data/home.ts`.
+   *
+   * No `intro` and no `cta`, because the supplied copy has neither — a field
+   * that would only ever hold an invented sentence is not declared.
+   */
+  caseReview: {
+    eyebrow: string
+    title: string
+    steps: ProcessStep[]
+  }
   /** The live site's headline figures. See `StatItem` on why `basis` exists. */
   stats: {
     items: StatItem[]
