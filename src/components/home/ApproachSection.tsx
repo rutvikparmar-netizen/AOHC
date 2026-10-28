@@ -41,13 +41,19 @@ export function ApproachSection({
   return (
     <section className="bg-surface py-(--spacing-section)">
       <Container>
-        <Reveal>
-          <SectionHeader
-            eyebrow={content.eyebrow}
-            title={content.title}
-            intro={content.intro}
-          />
-        </Reveal>
+        {/* Title and lead share a row rather than stacking, so the heading
+            never sits alone against an empty right half — the same header
+            shape as `ChecklistSection`. */}
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-14">
+          <Reveal className="lg:col-span-7">
+            <SectionHeader eyebrow={content.eyebrow} title={content.title} />
+          </Reveal>
+          <Reveal delay={80} className="lg:col-span-5 lg:self-end">
+            <p className="max-w-(--measure) text-base leading-relaxed text-neutral-700">
+              {content.intro}
+            </p>
+          </Reveal>
+        </div>
 
         <ul className="mt-12 grid gap-6 md:grid-cols-2">
           {content.pillars.map((pillar, index) => (
@@ -67,8 +73,13 @@ export function ApproachSection({
                     They are decorative, so nothing is lost: the alt text
                     describes a scene, never the strand of care it sits above.
                     Delete `hidden sm:block` to show them everywhere. */}
+                {/* A FIXED BAND, NOT A RATIO. At `aspect-3/2` in a 660px
+                    column the picture came out 440px tall and ran the card:
+                    the photograph is decorative and the forty words under it
+                    are the content. A fixed height crops to a banner that
+                    stays the same whatever the column does. */}
                 {pillar.image ? (
-                  <div className="hidden overflow-hidden bg-surface-subtle sm:block">
+                  <div className="hidden h-48 overflow-hidden bg-surface-subtle sm:block lg:h-56">
 
                     <Image
                       src={pillar.image.src}
@@ -76,17 +87,23 @@ export function ApproachSection({
                       width={pillar.image.width}
                       height={pillar.image.height}
                       sizes="(min-width: 768px) 50vw, 100vw"
-                      className="aspect-16/9 size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 ) : null}
 
+                {/* ICON AND TITLE ON ONE LINE. Stacked, the icon sat on its
+                    own row directly under a 3:2 photograph and the cards ran
+                    to 700px each — a second graphic element immediately below
+                    a graphic element, costing 60px of height to say nothing
+                    the picture had not already said. */}
                 <div className="flex flex-1 flex-col gap-3 p-6 sm:p-7">
-                  <span className="flex size-12 items-center justify-center rounded-full bg-primary-subtle text-primary-dark transition-colors group-hover:bg-accent group-hover:text-white">
-                    <Icon name={pillar.icon as IconName} className="size-5" />
-                  </span>
-
-                  <h3 className="text-lg font-bold text-text">{pillar.title}</h3>
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-primary-dark transition-colors group-hover:bg-accent group-hover:text-white">
+                      <Icon name={pillar.icon as IconName} className="size-5" />
+                    </span>
+                    <h3 className="text-lg font-bold text-text">{pillar.title}</h3>
+                  </div>
 
                   <p className="text-sm leading-relaxed text-neutral-700">
                     {pillar.description}
@@ -105,14 +122,24 @@ export function ApproachSection({
           ))}
         </ul>
 
-        {/* THE SAME TREATMENT AS THE OTHER QUALIFYING SENTENCES on this page —
-            body size, against a brand rule. "Not every treatment or test is
-            appropriate for every patient" is the most important sentence in
-            this section and the one a reader is most likely to skip. */}
+        {/* THE SAME PANEL AS THE OTHER TWO QUALIFYING SENTENCES on this page,
+            so the three read as one recurring kind of note rather than three
+            different asides. "Not every treatment or test is appropriate for
+            every patient" is the most important sentence in this section and
+            the one a reader is most likely to skip.
+
+            It was a hairline-ruled paragraph, which looked like a pull quote
+            someone had forgotten to finish and left the right half of the
+            row empty. */}
         <Reveal>
-          <p className="mt-10 max-w-(--measure) border-l-2 border-border-brand pl-5 text-base leading-relaxed text-neutral-700">
-            {content.outro}
-          </p>
+          <div className="mt-10 flex gap-4 rounded-(--radius-2xl) border border-border-brand bg-primary-subtle p-6 sm:gap-5 sm:p-7">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-primary-dark">
+              <Icon name="info" className="size-5" />
+            </span>
+            <p className="max-w-5xl self-center text-base leading-relaxed text-neutral-700">
+              {content.outro}
+            </p>
+          </div>
         </Reveal>
       </Container>
     </section>

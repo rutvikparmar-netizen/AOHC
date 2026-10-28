@@ -108,20 +108,30 @@ export default function HomePage() {
 
           NO HEADING, DELIBERATELY. A heading would make this a section the
           reader has to place; without one it reads as the hero finishing its
-          sentence. The first paragraph is set a size up to carry the handoff,
-          and there is no bottom padding because the press section below brings
-          its own. */}
-      <section className="pt-12 lg:pt-16">
+          sentence. There is no bottom padding because the press section below
+          brings its own.
+
+          ⚠️  SECOND LAYOUT. Three paragraphs capped at `--measure` left the
+          right half of the screen empty and read as unstyled body text
+          dumped under the hero. Setting the first in the display face as a
+          standfirst and running the other two as columns beneath a rule
+          makes it an opening statement and uses the width. */}
+      <section className="pt-14 lg:pt-20">
         <Container>
-          <Reveal className="max-w-(--measure) space-y-5">
-            {home.hero.body.map((paragraph, index) => (
+          <Reveal>
+            <p className="max-w-5xl font-display text-h3 font-bold leading-snug tracking-[-0.015em] text-text">
+              {home.hero.body[0]}
+            </p>
+          </Reveal>
+
+          <Reveal
+            delay={80}
+            className="mt-8 grid gap-x-14 gap-y-4 border-t border-border pt-8 lg:grid-cols-2"
+          >
+            {home.hero.body.slice(1).map((paragraph) => (
               <p
                 key={paragraph.slice(0, 32)}
-                className={
-                  index === 0
-                    ? 'text-lg leading-relaxed text-text sm:text-xl'
-                    : 'text-base leading-relaxed text-neutral-700'
-                }
+                className="text-base leading-relaxed text-neutral-700"
               >
                 {paragraph}
               </p>

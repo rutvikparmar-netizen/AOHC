@@ -471,11 +471,26 @@ export const home: HomeContent = {
     secondaryCta: { label: 'Contact Our Team', href: routes.contact },
     note: 'A consultation request does not establish a doctor–patient relationship or guarantee acceptance for treatment.',
     /**
-     * No image, deliberately. The closing panel runs on brand colour so the
-     * last thing before the footer is the call to action itself rather than
-     * another stock photograph — by that point in the page there have been
-     * six.
+     * THE ONE PHOTOGRAPH IN THE REPO THAT NOTHING ELSE USES. It was attached
+     * to `international` for a section that renders steps rather than an
+     * image, so it had never appeared on the site at all.
+     *
+     * It is also the right picture for this particular panel. The note on the
+     * hero image says plainly that a brain scan is a confronting first thing
+     * to show someone who has just been diagnosed, and suggests this frame
+     * instead; two people talking across a desk is what "start with a
+     * conversation" actually looks like, and it is the last thing a reader
+     * sees before the footer.
+     *
+     * ⚠️  STOCK, LIKE THE REST. The alt text describes the scene and must not
+     * name or imply a role at AOHC — see the note on `hero.image`.
      */
+    image: {
+      src: '/images/consultation-room.jpg',
+      alt: 'A clinician and a patient talking across a desk in a consulting room',
+      width: 1400,
+      height: 788,
+    },
   },
 
   /* ========================================================================
