@@ -56,10 +56,6 @@ export function ChecklistSection({
 }) {
   const { eyebrow, title, intro, items, outro, cta, image } = content
 
-  /* Cards invert against whatever the section is standing on, or they
-     disappear into it. */
-  const card = surface ? 'bg-background' : 'bg-surface'
-
   const leadParagraphs = (
     <div className="max-w-(--measure) space-y-4">
       {intro.map((paragraph) => (
@@ -109,22 +105,26 @@ export function ChecklistSection({
           )}
         </div>
 
-        {/* Tighter on phones, where these stack: as cards rather than
-            bullets the list is taller, and the padding is the part of that
-            which buys the least. */}
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-12 lg:grid-cols-3">
+        {/* RULED COLUMNS, NOT BORDERED CARDS. These were six boxes, on a page
+            that had become wall-to-wall boxes; a rule above each item gives
+            the same grouping for one line instead of four, and lets the warm
+            page colour run straight through the grid. */}
+        <ul className="mt-10 grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3">
           {items.map((item, index) => (
-            <Reveal as="li" key={item} direction="up" delay={index * 60}>
-              <div
-                className={`flex h-full gap-3.5 rounded-(--radius-2xl) border border-border ${card} p-4 transition-colors duration-300 hover:border-border-brand sm:p-5`}
-              >
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-(--radius-md) bg-primary-subtle text-primary-dark">
-                  <Icon name="check" className="size-4" />
-                </span>
-                <span className="text-sm leading-relaxed text-neutral-700">
-                  {item}
-                </span>
-              </div>
+            <Reveal
+              as="li"
+              key={item}
+              direction="up"
+              delay={index * 60}
+              className="flex gap-3.5 border-t border-border pt-5"
+            >
+              <Icon
+                name="check"
+                className="mt-0.5 size-5 shrink-0 text-accent"
+              />
+              <span className="text-base leading-relaxed text-neutral-700">
+                {item}
+              </span>
             </Reveal>
           ))}
         </ul>
