@@ -7,11 +7,12 @@ import { Reveal } from '@/components/motion/Reveal'
 /**
  * "The Story Behind AOHC" — the founding story, told as an article.
  *
- * ⚠️  THIS IS ABOUT A REAL PERSON WHO DIED. Ruchika Jaiswal is named, and the
- * image beside the story is a detail shot of two people's hands — never a
- * face. Every photograph in this repo is Unsplash stock of models, so a
- * portrait here would read as a photograph of her. See the note at the top
- * of `src/data/about.ts`.
+ * ⚠️  THIS IS ABOUT A REAL PERSON WHO DIED. Ruchika Jaiswal is named in the
+ * first sentence, so any uncaptioned face in this rail is read as her. The
+ * image here is Arpan Talwar — her husband, named in the copy — and it is
+ * captioned with whose it is. A stock portrait must never go in this slot,
+ * captioned or not; her own portrait belongs to the memorial lower down the
+ * page. See the rules at the top of `src/data/about.ts`.
  *
  * SET AS AN ARTICLE, NOT AS A SECTION OF CARDS. Ten paragraphs across two
  * sub-headed passages is reading material, so it gets the shape reading
@@ -37,16 +38,29 @@ export function StorySection({ content }: { content: AboutContent['story'] }) {
               {content.eyebrow}
             </p>
 
-            <div className="mt-7 overflow-hidden rounded-(--radius-3xl) bg-surface-subtle">
+            {/* SQUARE, ON WHITE. The portrait is a 460x460 cut-out on a
+                white ground, so the plate is white to match it seamlessly
+                and the ratio is square — the old `aspect-4/3` crop was set
+                for a landscape stock photograph and would take the top of
+                his head and his shoulders off. */}
+            <div className="mt-7 overflow-hidden rounded-(--radius-3xl) bg-white">
               <Image
                 src={content.image.src}
                 alt={content.image.alt}
                 width={content.image.width}
                 height={content.image.height}
                 sizes="(min-width: 1024px) 420px, 100vw"
-                className="aspect-4/3 size-full object-cover"
+                className="aspect-square size-full object-cover"
               />
             </div>
+
+            {/* ⚠️  NOT DECORATION. An uncaptioned face beside a story that
+                opens on Ruchika Jaiswal's name is read as Ruchika. */}
+            {content.imageCaption ? (
+              <p className="mt-3 text-sm text-text-muted">
+                {content.imageCaption}
+              </p>
+            ) : null}
 
             <p className="mt-7 border-l-2 border-accent pl-5 font-display text-xl font-bold leading-snug text-text">
               {content.dedication}

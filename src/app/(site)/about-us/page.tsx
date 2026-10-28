@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import type { Breadcrumb } from '@/types'
 import { about } from '@/data/about'
@@ -35,11 +36,12 @@ import { MemorialPanel } from '@/components/about/MemorialPanel'
  * dark, and anything that ever replaces it has to be too.
  *
  * ⚠️  IT NAMES A REAL PERSON WHO DIED OF CANCER. Ruchika Jaiswal's story is
- * told twice, as the founding story and as the memorial. No photograph
- * stands in for her anywhere — every image in this repo is stock of models —
- * and her outcome is never presented as a treatment result. The full set of
- * rules is at the top of `src/data/about.ts`; read it before editing either
- * section.
+ * told twice, as the founding story and as the memorial. Her own portrait,
+ * supplied by AOHC, appears once — in the memorial — and nothing stock may
+ * ever stand in for her; the other face on the page is Arpan Talwar's and is
+ * captioned as his. Her outcome is never presented as a treatment result.
+ * The full set of rules is at the top of `src/data/about.ts`; read it before
+ * editing either section.
  *
  * ⚠️  ONE LINK ON THIS PAGE 404s. The memorial's "Read Her Story" points at
  * `routes.memorial`, which has no page yet. The story section's CTA jumps to
@@ -137,6 +139,25 @@ export default function AboutPage() {
               </p>
             ))}
           </Reveal>
+
+          {/* Breaks up the longest unbroken stretch of prose on the page.
+              Wide and shallow rather than a column-height picture, so it
+              reads as a rule between the argument and the list that
+              follows it instead of competing with either. */}
+          {about.personalised.image ? (
+            <Reveal delay={120} className="mt-12">
+              <div className="overflow-hidden rounded-(--radius-3xl) bg-surface-subtle">
+                <Image
+                  src={about.personalised.image.src}
+                  alt={about.personalised.image.alt}
+                  width={about.personalised.image.width}
+                  height={about.personalised.image.height}
+                  sizes="(min-width: 1024px) 1120px, 100vw"
+                  className="aspect-16/9 size-full object-cover lg:aspect-[21/8]"
+                />
+              </div>
+            </Reveal>
+          ) : null}
 
           <Reveal className="mt-14">
             <h3 className="font-display text-h3 font-bold tracking-[-0.02em] text-text">

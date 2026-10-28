@@ -1,17 +1,31 @@
+import Image from 'next/image'
 import type { AboutContent } from '@/types'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
-import { Icon } from '@/components/ui/Icon'
 import { Reveal } from '@/components/motion/Reveal'
 
 /**
  * "In Loving Memory of Ruchika Jaiswal".
  *
- * ⚠️  NO PHOTOGRAPH, AND THE TYPE HAS NO FIELD FOR ONE. Every image in this
- * repo is Unsplash stock of models. Anything placed beside this heading
- * would be read as a picture of a real woman who died of cancer, by her
- * family among others. If a photograph is ever supplied by the family, with
- * their permission, it goes in then and not before.
+ * ⚠️  THE PORTRAIT IS OF A REAL WOMAN WHO DIED OF CANCER, supplied by AOHC.
+ * This section carried no image at all until it arrived, and the type had no
+ * field for one, because every other picture in this repo is stock of models
+ * and any of them here would have been read as her by her family among
+ * others. That reasoning has not expired: nothing stock may be substituted
+ * into this slot, and if the portrait is withdrawn the section goes back to
+ * having no image rather than borrowing one.
+ *
+ * IT IS SHOWN WHOLE, ON A WHITE PLATE. The file arrives already in a gold
+ * memorial surround on a white ground — the family's own framing, which is
+ * not ours to crop out. Dropping that straight onto the dark band would put
+ * a white rectangle on it, so the plate is pure white and padded: the
+ * image's ground and the plate's are the same colour, there is no seam, and
+ * the whole thing reads as a framed photograph resting on the panel.
+ *
+ * NO CAPTION, AND NO HEART ICON ANY MORE. The eyebrow directly beneath the
+ * portrait reads "In loving memory of Ruchika Jaiswal", which names her
+ * better than a caption repeating it; the icon was standing in for an image
+ * that did not exist yet, and a gold filigree frame needs no second ornament.
  *
  * ⚠️  THE LINK 404s TODAY. `routes.memorial` has no page yet. It is left
  * pointing at the real path — see the note on `memorial.cta` in
@@ -37,11 +51,22 @@ export function MemorialPanel({
     >
       <Container>
         <Reveal className="mx-auto max-w-3xl text-center">
-          <span className="mx-auto flex size-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-brand-teal-200">
-            <Icon name="heart" className="size-5" />
-          </span>
+          {/* 500x402 displayed inside an 18rem plate, so the portrait lands
+              at about 248px — comfortably under its native width. It must
+              not be set wider than this; see the note on `memorial.image`
+              in `src/data/about.ts`. */}
+          <div className="mx-auto w-full max-w-72 rounded-(--radius-3xl) bg-white p-4 shadow-2xl shadow-black/30 ring-1 ring-white/15">
+            <Image
+              src={content.image.src}
+              alt={content.image.alt}
+              width={content.image.width}
+              height={content.image.height}
+              sizes="288px"
+              className="h-auto w-full"
+            />
+          </div>
 
-          <p className="mt-7 text-eyebrow uppercase text-brand-teal-300">
+          <p className="mt-9 text-eyebrow uppercase text-brand-teal-300">
             {content.eyebrow}
           </p>
 

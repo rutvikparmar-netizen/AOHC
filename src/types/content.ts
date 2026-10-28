@@ -439,6 +439,14 @@ export interface AboutContent {
     dedication: string
     cta: NavLink
     image: ImageAsset
+    /**
+     * Who the photograph is of, printed under it.
+     *
+     * ⚠️  REQUIRED WHENEVER `image` IS A REAL, NAMED PERSON. An uncaptioned
+     * face beside this story is read as Ruchika Jaiswal by default, which is
+     * the one thing the rules at the top of `src/data/about.ts` forbid.
+     */
+    imageCaption?: string
   }
 
   purpose: ListSection
@@ -458,6 +466,8 @@ export interface AboutContent {
     considerIntro: string
     items: LabelledItem[]
     outro: string
+    /** Sits between the argument and the list of what a discussion considers. */
+    image?: ImageAsset
   }
 
   process: {
@@ -490,6 +500,16 @@ export interface AboutContent {
     title: string
     body: string[]
     cta: NavLink
+    /**
+     * A photograph of Ruchika Jaiswal, supplied by AOHC.
+     *
+     * ⚠️  THIS FIELD EXISTS FOR EXACTLY ONE PICTURE. It was deliberately
+     * absent until AOHC provided her portrait, because every other image in
+     * this repo is stock of models and any of them placed here would have
+     * been read as her. Nothing stock goes in this slot — if the portrait is
+     * ever withdrawn, remove the field again rather than substituting.
+     */
+    image: ImageAsset
   }
 
   continuing: {

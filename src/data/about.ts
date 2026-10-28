@@ -15,11 +15,14 @@ import { routes } from '@/lib/routes'
  * section 1 and again as the memorial near the foot of the page. Three things
  * must survive any edit:
  *
- *   1. NO PHOTOGRAPH STANDS IN FOR HER. Every image in this repo is Unsplash
- *      stock of models. A stock portrait beside her name would read as a
- *      picture of her, which is why `AboutContent['memorial']` has no image
- *      field at all and why the story section's image is a detail shot of two
- *      hands rather than a face.
+ *   1. ONLY HER OWN PHOTOGRAPH STANDS IN FOR HER, AND ONLY IN THE MEMORIAL.
+ *      AOHC supplied `/images/ruchika-jaiswal.webp`, so the memorial now
+ *      carries a real portrait of her. That is the only reason the slot
+ *      exists: it was deliberately absent while every image in this repo was
+ *      stock of models, because any of them beside her name would have been
+ *      read as a picture of her. The rule has not relaxed, it has been
+ *      satisfied — nothing stock may ever be substituted into that slot, and
+ *      any other face on this page must be captioned with whose it is.
  *   2. HER OUTCOME IS NOT A RESULT. "Ruchika lived longer than her initial
  *      prognosis, but she eventually passed away" is in the copy as supplied
  *      and must stay whole. Dropping the second clause would turn a
@@ -95,16 +98,26 @@ export const about: AboutContent = {
      */
     cta: { label: 'Read In Loving Memory of Ruchika Jaiswal', href: '#in-memory' },
     /**
-     * A detail shot of two people's hands, never a face. See rule 1 at the
-     * top of this file: a stock portrait next to Ruchika's name would read
-     * as a photograph of her.
+     * Arpan Talwar, who the first passage names in its second sentence.
+     *
+     * THE ONE REAL PERSON THIS SECTION CAN SHOW. It replaced a stock shot of
+     * two anonymous hands, which was standing in for a story about named
+     * people. Ruchika's own portrait is not used here — it belongs to the
+     * memorial, and using it twice on one page would spend it.
+     *
+     * ⚠️  IT IS CAPTIONED, AND THE CAPTION IS NOT DECORATION. An uncaptioned
+     * face beside "The story of Art of Healing Cancer began with Ruchika
+     * Jaiswal's journey" is read as Ruchika. The wording below is taken from
+     * the supplied copy — "Her husband, Arpan Talwar" — and no title is
+     * invented for him beyond it.
      */
     image: {
-      src: '/images/card-supportive.jpg',
-      alt: 'Two people sitting together, one hand resting on another',
-      width: 1000,
-      height: 563,
+      src: '/team-arpan-talwar.jpg',
+      alt: 'Arpan Talwar',
+      width: 460,
+      height: 460,
     },
+    imageCaption: "Arpan Talwar, Ruchika's husband",
   },
 
   purpose: {
@@ -125,6 +138,18 @@ export const about: AboutContent = {
     ],
     outro:
       'Our purpose is to support informed discussions and responsible decision-making, while recognising that clinical recommendations must be made by appropriately qualified healthcare professionals.',
+    /**
+     * The hands, moved here from the story section when that section got a
+     * photograph of a real person instead. It belongs against "Keeping the
+     * Patient at the Centre of Care" rather better than it ever did against
+     * a founding story about two named people.
+     */
+    image: {
+      src: '/images/card-supportive.jpg',
+      alt: 'Two people sitting together, one hand resting on another',
+      width: 1000,
+      height: 563,
+    },
   },
 
   philosophy: {
@@ -206,6 +231,21 @@ export const about: AboutContent = {
     ],
     outro:
       'The relevance of each factor depends on the individual case and should be assessed by qualified healthcare professionals.',
+    /**
+     * Breaks up the longest unbroken stretch of prose on the page — five
+     * paragraphs of argument followed by a seven-item list, with nothing to
+     * look at between them.
+     *
+     * A consultation rather than a procedure, because this section is about
+     * the conversation: "discussing treatment options with qualified
+     * healthcare professionals" is what the copy either side of it says.
+     */
+    image: {
+      src: '/images/scan-discussion.jpg',
+      alt: 'A patient seated at a desk while a scan is displayed on a laptop beside them',
+      width: 1400,
+      height: 788,
+    },
   },
 
   process: {
@@ -331,6 +371,36 @@ export const about: AboutContent = {
      * edit here — but it should ship before this page goes live.
      */
     cta: { label: 'Read Her Story', href: routes.memorial },
+    /**
+     * RUCHIKA JAISWAL, SUPPLIED BY AOHC. The only photograph of a named
+     * patient anywhere in this repo, and the only image that may ever sit
+     * here — see rule 1 at the top of this file.
+     *
+     * IT ARRIVES ALREADY FRAMED, in a gold memorial surround on a white
+     * ground, so it is shown whole rather than cropped: the surround is how
+     * the family presented her and cutting the portrait out of it would be
+     * taking that decision away from them. The white ground is why
+     * `MemorialPanel` sets it on an ivory plate instead of straight onto the
+     * dark band, where it would have read as a white rectangle.
+     *
+     * 500x402 is small. It is sized to display at roughly half that, which
+     * it carries comfortably, and it must not be scaled up — ask AOHC for
+     * the original before using it any larger. Its EXIF and XMP were
+     * stripped when it was brought into the repo; it is a private person's
+     * photograph and carried no business being shipped with camera metadata.
+     */
+    image: {
+      src: '/images/ruchika-jaiswal.webp',
+      alt: 'Ruchika Jaiswal, in a gold memorial frame',
+      width: 500,
+      height: 402,
+    },
+    /*
+     * No `imageCaption` here on purpose: the eyebrow immediately beneath the
+     * portrait reads "In loving memory of Ruchika Jaiswal", which names her
+     * more gracefully than a caption repeating it. If that eyebrow is ever
+     * reworded so it no longer carries her name, add one back.
+     */
   },
 
   continuing: {
