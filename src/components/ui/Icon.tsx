@@ -47,6 +47,16 @@ const paths: Record<string, string> = {
   award: 'M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM8.2 13.9 7 22l5-3 5 3-1.2-8.1',
   hospital:
     'M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M12 7v6M9 10h6M9 21v-4h6v4',
+  /**
+   * Added for the about page, where "Respect and Dignity" and the memorial
+   * section both wanted it and the nearest thing in the set was a rosette.
+   *
+   * ⚠️  NOT FOR OUTCOMES OR RATINGS. A heart beside a figure reads as a
+   * promise about recovery; it belongs against compassion and remembrance
+   * only. `award` is the icon for anything a third party conferred.
+   */
+  heart:
+    'M12 20.5 3.9 12.4a5 5 0 0 1 7.1-7.1l1 1 1-1a5 5 0 0 1 7.1 7.1Z',
 }
 
 export type IconName = keyof typeof paths

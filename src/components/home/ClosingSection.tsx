@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import type { HomeContent } from '@/types'
+import type { ClosingPanel } from '@/types'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
@@ -39,7 +39,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 export function ClosingSection({
   content,
 }: {
-  content: HomeContent['closing']
+  content: ClosingPanel
 }) {
   return (
     <section className="py-(--spacing-section)">

@@ -89,6 +89,39 @@ export interface ListSection {
   image?: ImageAsset
 }
 
+/**
+ * The last panel on a page: two actions and the sentence that qualifies them.
+ *
+ * SHARED BY THE HOME AND ABOUT PAGES, which is why it is its own type rather
+ * than inlined into `HomeContent`. Both end on the same ask with the same
+ * caveat, and `ClosingSection` renders either.
+ */
+export interface ClosingPanel {
+  eyebrow: string
+  title: string
+  body: string[]
+  primaryCta: NavLink
+  secondaryCta: NavLink
+  /**
+   * The disclaimer under the buttons — that an enquiry guarantees neither a
+   * consultation nor an outcome. REQUIRED, and not decorative: it is the last
+   * thing read before someone acts.
+   */
+  note: string
+  image?: ImageAsset
+}
+
+/**
+ * A heading with a label and a paragraph, listed as a definition rather than
+ * a card. Used for the about page's "What May Be Considered" and "Our
+ * Commitment" lists.
+ */
+export interface LabelledItem {
+  icon: string
+  label: string
+  description: string
+}
+
 /* ==========================================================================
    SECTIONS TAKEN FROM THE LIVE SITE (artofhealingcancer.com)
    These have no equivalent in the content draft; the draft describes a
@@ -278,16 +311,7 @@ export interface HomeContent {
     intro: string
     items: PillarItem[]
   }
-  closing: {
-    eyebrow: string
-    title: string
-    body: string[]
-    primaryCta: NavLink
-    secondaryCta: NavLink
-    note: string
-    /** Optional: the closing panel currently runs on brand colour, not a photo. */
-    image?: ImageAsset
-  }
+  closing: ClosingPanel
 
   /* ---- Live-site sections ---- */
 
@@ -382,5 +406,111 @@ export interface HomeContent {
     subtitle: string
     /** "What happens after you submit" — reassurance beside the form. */
     afterSubmit: { title: string; steps: string[] }
+  }
+}
+
+/* ==========================================================================
+   ABOUT PAGE
+   ========================================================================== */
+
+/**
+ * `/about-us`.
+ *
+ * ⚠️  THE STORY AND THE MEMORIAL ARE ABOUT A REAL PERSON WHO DIED. Ruchika
+ * Jaiswal's journey is the organisation's founding story and is told here
+ * with her name. Two rules follow from that and are enforced by the shape of
+ * these types rather than left to whoever edits the copy:
+ *
+ *   - `memorial` HAS NO IMAGE FIELD. Every photograph on this site is stock,
+ *     and a stock portrait beside her name would read as a picture of her.
+ *     There is no circumstance in which that is acceptable, so the field a
+ *     future editor would fill does not exist.
+ *   - `story.dedication` is pulled out and set large on the page. It is the
+ *     sentence that says what the story is for — a dedication, not a claim
+ *     that a treatment worked. The content draft is explicit that her
+ *     outcome must never be presented as a result.
+ */
+export interface AboutContent {
+  hero: {
+    eyebrow: string
+    title: string
+    standfirst: string
+    /** Shown beneath the hero as the page's opening statement. */
+    body: string[]
+    image: ImageAsset
+  }
+
+  story: {
+    eyebrow: string
+    /** Two sub-headed passages: the journey, then what it became. */
+    parts: { title: string; body: string[] }[]
+    /** Set large, on its own. See the warning above. */
+    dedication: string
+    cta: NavLink
+    image: ImageAsset
+  }
+
+  purpose: ListSection
+
+  philosophy: {
+    eyebrow: string
+    title: string
+    intro: string
+    principles: { title: string; body: string[] }[]
+  }
+
+  personalised: {
+    eyebrow: string
+    title: string
+    body: string[]
+    considerTitle: string
+    considerIntro: string
+    items: LabelledItem[]
+    outro: string
+  }
+
+  process: {
+    eyebrow: string
+    title: string
+    intro: string
+    steps: ProcessStep[]
+    note: string
+  }
+
+  commitment: {
+    eyebrow: string
+    title: string
+    intro: string
+    items: LabelledItem[]
+    note: string
+  }
+
+  /** "What We Do Not Promise" — prose, deliberately not a list of claims. */
+  honesty: {
+    eyebrow: string
+    title: string
+    /** The sentence to set apart; must appear in `body` too. */
+    lead: string
+    body: string[]
+  }
+
+  memorial: {
+    eyebrow: string
+    title: string
+    body: string[]
+    cta: NavLink
+  }
+
+  continuing: {
+    eyebrow: string
+    title: string
+    body: string[]
+  }
+
+  closing: ClosingPanel
+
+  disclaimer: {
+    title: string
+    body: string[]
   }
 }
