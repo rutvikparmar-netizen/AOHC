@@ -4,56 +4,51 @@ import { Reveal } from '@/components/motion/Reveal'
 
 /**
  * "From Medical Records to Informed Decisions" — the five stages of a case
- * review, as a full-width ledger.
+ * review, as cards whose progress bars fill one after another.
  *
  * ⚠️  NOT RENDERED THROUGH `ProcessPanels`. That is the expanding image
  * accordion used for the treatment approach further down: it is built around
  * one photograph per stage and shows one stage at a time. These five have no
  * imagery in the supplied copy, and the point of the section is that there
- * IS an order, which a reader should take in at once. Two accordions on one
- * page would also read as the same section twice.
+ * IS an order, which a reader should take in at once.
  *
  * ──────────────────────────────────────────────────────────────────────────
- * FIFTH LAYOUT, AND THE FIRST ONE THAT IS NOT FIVE COLUMNS SIDE BY SIDE.
+ * SIXTH LAYOUT. The first four were five columns side by side in different
+ * paint and were rejected each time; the fifth was a full-width ledger, one
+ * row per stage, which fixed the cramping but was asked to be boxed with the
+ * sequence actually animating.
  *
- *   1. Five pale badges on a hairline. Thin and unfinished — 14px numbers on
- *      `primary-subtle`, a rule that all but vanished, baselines out.
- *   2. Five bordered cards. Legible, but five more rectangles on a page that
- *      had become wall-to-wall rectangles.
- *   3. Ruled columns with a 2px accent rule and a 48px numeral. Clean, and
- *      still five identical columns of small grey text.
- *   4. 72px numerals with a gradient painted through them, on a flat tint.
- *      The numerals were good. Everything under them was not.
+ * ⚠️  THREE ACROSS, NOT FIVE, AND THAT IS THE LESSON FROM LAYOUTS 1-4. Five
+ * cards in this container are about 246px each: every title wraps to three
+ * lines, every description to six, and the type has to shrink to fit — which
+ * is what made five stages read as five captions. At three they are about
+ * 424px and the copy sits on one or two lines. Five into three leaves one
+ * cell short, so the last card stretches to close the row, the same fix as
+ * `LabelledList`.
  *
- * All four were the same idea with different paint, and all four were
- * rejected, so the idea was the problem. Five columns forces every stage
- * into a sixth of the page: the titles wrapped to two lines, the
- * descriptions ran four or five lines at about forty characters, and the
- * type had to shrink to `text-base` headings over `text-sm` body to fit. At
- * that size five stages read as five captions.
+ * THE PROGRESS IS THE POINT, AND IT COSTS NO NEW CSS. Each card carries a
+ * track with an accent fill marked `.rule-draw` — an existing utility that
+ * holds `scaleX(0)` until an ancestor gains `data-revealed`, then grows from
+ * its left edge. `--reveal-delay` is a custom property and therefore
+ * inherits, so a bar inside a staggered card already waits its turn; each
+ * bar overrides it with a slightly longer delay so the fill lands just after
+ * its own card has settled. Stage one fills, then two, then three.
  *
- * A ROW PER STAGE GIVES EACH ONE THE FULL WIDTH. The numeral anchors the
- * left margin, the title sits up at `text-2xl` in the display face instead
- * of being the same weight as a label, and the description gets a real
- * measure on one or two lines. It also reads top to bottom, which is how a
- * sequence is read — the five-column version asked the eye to travel left to
- * right across a page whose every other section runs downward.
- *
- * THE NUMERALS KEPT THEIR GRADIENT from layout four. It was the one part of
- * that attempt worth carrying forward.
- *
- * ⚠️  NO CONNECTING SPINE DOWN THE LEFT, and it is not coming back. Twice it
- * was drawn as one span behind the whole sequence and twice that was wrong,
- * because the last marker is not at the sequence's edge: `right-5` overshot
- * it by 213px at 1440, and `bottom-5` ran 89px down the side of the final
- * paragraph. Each row rules its own top edge, which cannot overshoot
- * anything.
+ * ⚠️  NO CONNECTOR BETWEEN THE CARDS, and that is still not coming back.
+ * Twice it was drawn as one span behind the whole sequence and twice it
+ * overshot, because the last marker is not at the sequence's edge: `right-5`
+ * ran 213px past it at 1440 and `bottom-5` ran 89px down the side of the
+ * final paragraph. A bar per card cannot overshoot anything, and it survives
+ * the cards wrapping to two rows and stacking on a phone, which a connector
+ * drawn between columns does not.
  */
 export function CaseReviewSection({
   content,
 }: {
   content: HomeContent['caseReview']
 }) {
+  const steps = content.steps
+
   return (
     <section className="bg-primary-subtle py-(--spacing-section)">
       <Container>
@@ -66,42 +61,69 @@ export function CaseReviewSection({
           </h2>
         </Reveal>
 
-        <ol className="mt-12 lg:mt-16">
-          {content.steps.map((step, index) => (
-            <Reveal
-              as="li"
-              key={step.title}
-              direction="up"
-              delay={index * 70}
-              /* The first rule is the heavier one so the sequence has a
-                 top edge rather than appearing to continue from the
-                 heading above it. */
-              className={`grid gap-x-10 gap-y-2 py-7 lg:grid-cols-12 lg:items-baseline lg:gap-y-0 lg:py-9 ${
-                index === 0
-                  ? 'border-t-2 border-accent'
-                  : 'border-t border-border-brand'
-              }`}
-            >
-              {/* `aria-hidden` because the gradient needs `text-transparent`
-                  to show through `bg-clip-text`, and because the ordered
-                  list already carries the order for assistive technology —
-                  the numeral is decoration repeating what <ol> says. */}
-              <span
-                aria-hidden
-                className="block bg-linear-to-br from-accent-dark to-brand-teal-400 bg-clip-text font-display text-5xl font-bold leading-none tracking-[-0.03em] text-transparent lg:col-span-2 lg:text-6xl"
+        <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
+          {steps.map((step, index) => {
+            const isLast = index === steps.length - 1
+
+            return (
+              <Reveal
+                as="li"
+                key={step.title}
+                direction="up"
+                /* Wide enough apart to read as one-after-another rather
+                   than as a single block arriving slightly unevenly. */
+                delay={index * 180}
+                className={`flex ${isLast ? 'sm:col-span-2 lg:col-span-2' : ''}`}
               >
-                {String(index + 1).padStart(2, '0')}
-              </span>
+                <div className="flex w-full flex-col rounded-(--radius-card) border border-border-brand bg-surface p-6 shadow-(--shadow-card) transition duration-300 hover:-translate-y-0.5 hover:shadow-(--shadow-card-hover) sm:p-7">
+                  {/* The track is always visible so the row reads as five
+                      equal stages before anything animates; the fill is
+                      what moves. `aria-hidden` because the <ol> already
+                      carries the order for assistive technology. */}
+                  <span
+                    aria-hidden
+                    className="block h-1 w-full overflow-hidden rounded-full bg-border-brand"
+                  >
+                    <span
+                      className="rule-draw block h-full w-full rounded-full bg-accent"
+                      /* Its own delay rather than the inherited one, so the
+                         fill starts just after its card has settled instead
+                         of racing it. */
+                      style={
+                        {
+                          '--reveal-delay': `${index * 180 + 160}ms`,
+                        } as React.CSSProperties
+                      }
+                    />
+                  </span>
 
-              <h3 className="font-display text-xl font-bold leading-snug text-text lg:col-span-4 lg:text-2xl">
-                {step.title}
-              </h3>
+                  <span
+                    aria-hidden
+                    className="mt-6 block bg-linear-to-br from-accent-dark to-brand-teal-400 bg-clip-text font-display text-4xl font-bold leading-none tracking-[-0.03em] text-transparent"
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
 
-              <p className="max-w-(--measure) text-base leading-relaxed text-neutral-700 lg:col-span-6">
-                {step.description}
-              </p>
-            </Reveal>
-          ))}
+                  <h3 className="mt-4 font-display text-xl font-bold leading-snug text-text">
+                    {step.title}
+                  </h3>
+
+                  {/* The stretched card drops the measure cap, the same
+                      as a stretched card in `LabelledList`: it has already
+                      been widened to close the row, and holding its text
+                      to 65ch only moves the empty space from outside the
+                      card to inside it. */}
+                  <p
+                    className={`mt-2.5 text-sm leading-relaxed text-neutral-700 ${
+                      isLast ? '' : 'max-w-(--measure)'
+                    }`}
+                  >
+                    {step.description}
+                  </p>
+                </div>
+              </Reveal>
+            )
+          })}
         </ol>
       </Container>
     </section>
