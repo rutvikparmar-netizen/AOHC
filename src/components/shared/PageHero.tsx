@@ -1,6 +1,7 @@
 import type { Breadcrumb, PageHeroContent } from '@/types'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Container } from '@/components/ui/Container'
+import { Icon } from '@/components/ui/Icon'
 import { Reveal } from '@/components/motion/Reveal'
 
 /**
@@ -68,6 +69,20 @@ export function PageHero({
             </p>
           ))}
         </Reveal>
+
+        {/* ⚠️  THE LINE THAT SAYS WHAT THE PAGE IS NOT. Quiet, but in the
+            hero rather than at the foot: a reader who acts on an
+            educational page has usually acted before scrolling to the
+            disclaimer. It is not styled as a third paragraph, because it
+            is not making the page's case — it is limiting it. */}
+        {content.note ? (
+          <Reveal delay={140}>
+            <p className="mt-8 flex max-w-3xl gap-3 text-sm leading-relaxed text-brand-teal-200">
+              <Icon name="info" className="mt-0.5 size-4 shrink-0" />
+              {content.note}
+            </p>
+          </Reveal>
+        ) : null}
       </Container>
     </section>
   )

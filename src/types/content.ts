@@ -139,6 +139,17 @@ export interface PageHeroContent {
   eyebrow: string
   title: string
   body: string[]
+  /**
+   * A qualifying line under the body, set small beside an icon.
+   *
+   * For the sentence that says what the page is NOT — "the information on
+   * this page is educational, it is not a substitute for an individual
+   * medical assessment". Kept out of `body` so it does not read as a third
+   * selling paragraph, and kept in the hero rather than pushed to the foot
+   * because a reader who acts on an educational page has usually acted
+   * before reaching the disclaimer.
+   */
+  note?: string
 }
 
 /**
@@ -618,6 +629,46 @@ export interface IntegrativeCareContent {
    * The medical disclaimer that follows the band does the work `note` does
    * elsewhere.
    */
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
+/**
+ * CANCER TYPES — `/cancer-types`.
+ *
+ * ⚠️  THIS PAGE DESCRIBES WHAT A REVIEW CONSIDERS. IT DOES NOT OFFER
+ * TREATMENT FOR ANYTHING IT NAMES. Every entry in `types` is written as
+ * "a review may consider…" rather than "we treat…", and the supplied draft
+ * is explicit that a cancer type becomes a clinical service page "only
+ * after confirming that the team accepts and assesses that cancer type".
+ * Nothing here may be rewritten into an offer, and no entry may gain a
+ * "Learn more" link until the page behind it exists and that confirmation
+ * has happened — see the note on `types` in `src/data/cancer-types.ts`.
+ *
+ * ⚠️  BLOOD CANCERS CARRY AN EXTRA CONDITION in the draft, recorded with
+ * that entry: a service page for them must identify the relevant clinical
+ * expertise and scope of care before publication.
+ */
+export interface CancerTypesContent {
+  hero: PageHeroContent
+
+  index: {
+    eyebrow: string
+    title: string
+    /**
+     * The entries. Deliberately NOT links — see the warning above.
+     *
+     * `body` is one or two paragraphs; "Other Cancer Types" has one and
+     * the rest have two, so nothing may assume a fixed count.
+     */
+    types: { name: string; body: string[] }[]
+  }
+
+  /** "What Information Helps Us Understand Your Case?" */
+  documents: ListSection
+
   closing: {
     title: string
     cta: NavLink
