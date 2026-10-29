@@ -59,7 +59,25 @@ export const routes = {
      whole section can be re-rooted from here if it moves. None of these
      pages exists yet — see the note at the top of this file. */
   expertise: '/our-expertise',
-  expertiseItem: (slug: Slug) => `/our-expertise/${slug}`,
+  /**
+   * ⚠️  FLAT, NOT NESTED UNDER `/our-expertise`, on request. "Treatment"
+   * is `/treatment`, not `/our-expertise/treatment`. Only the menu's own
+   * landing page keeps the `/our-expertise` path.
+   *
+   * ⚠️  THIS PUTS ~44 SLUGS IN THE ROOT NAMESPACE, which is the cost of
+   * the change and the thing to check before adding any new top-level
+   * page. `treatment`, `diagnosis`, `research`, `imaging`, `surgery` and
+   * `leukemia` are now reserved; a future `/treatment` that means
+   * something else would silently collide. Nothing collides today — the
+   * nearest misses are `integrative-oncology` against
+   * `/integrative-cancer-care` and `treatment` against
+   * `/treatments-and-therapies` and `/treatment-costs`, all distinct.
+   *
+   * Reverting is this one line. Every link in the mega menu, the mobile
+   * drawer and the footer is built from it, which is why it is a function
+   * here rather than forty template strings.
+   */
+  expertiseItem: (slug: Slug) => `/${slug}`,
 
   /* Clinical content ----------------------------------------------------- */
   integrativeCare: '/integrative-cancer-care',

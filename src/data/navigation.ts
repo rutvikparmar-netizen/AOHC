@@ -159,12 +159,19 @@ export const expertiseNav: MegaNavColumn[] = [
 /**
  * SITE NAVIGATION — the AOHC main menu, exactly as supplied.
  *
- * Four of the seven top-level items carry children, so the header renders a
+ * Four of the eight top-level items carry children, so the header renders a
  * dropdown for those and a plain link for the rest. `description` is used as
  * the second line inside a dropdown; items without one render as a single
  * line, which keeps the International Patients menu compact at seven entries.
  *
- * Every target except `/` is unbuilt and will 404 until written.
+ * ⚠️  THE ROW HAS NO SPARE WIDTH AT 1280, which is the breakpoint that
+ * reveals it. Eight labels, a logo and a button fit with a few pixels to
+ * spare; a ninth item, or a materially longer label, pushes the nav into
+ * the button. Adding one means checking the header at 1280 before shipping
+ * it — swapping Media for Cancer Types cost about 50px on its own.
+ *
+ * `/`, `/about-us`, `/cancer-types` and `/integrative-cancer-care` are
+ * built. Every other target will 404 until written.
  */
 
 export const primaryNav: NavGroup[] = [
@@ -194,9 +201,32 @@ export const primaryNav: NavGroup[] = [
         description: 'Certifications and global affiliations',
       },
       { label: 'RGCC', href: routes.rgcc, description: 'Our Greece laboratory partner' },
+      /**
+       * MOVED IN FROM THE TOP LEVEL, on request, which is also where it
+       * belongs: press coverage is something about the organisation rather
+       * than a service a patient is looking for, and it was taking a slot
+       * in a row that has no spare width.
+       *
+       * The description is taken from the home page's own press section,
+       * "Art of Healing in the news", rather than invented.
+       */
+      { label: 'Media', href: routes.media, description: 'AOHC in the news' },
     ],
   },
-  { label: 'Media', href: routes.media, links: [] },
+  /**
+   * TOOK MEDIA'S SLOT RATHER THAN BEING APPENDED, so the row keeps its
+   * eight items — see the note above about the nav having no spare width
+   * at 1280. It also reads in the right order here: a patient scanning the
+   * bar goes from who AOHC is, to what it is asked to review, to how.
+   *
+   * ⚠️  NO DROPDOWN, DELIBERATELY. There are nine cancer types in
+   * `home.cancerTypes` and `routes.cancerType(slug)` resolves for all of
+   * them, but not one of those pages exists — a dropdown here would be
+   * nine links to 404s. The same reasoning keeps the entries on
+   * `/cancer-types` itself unlinked; see the note at the top of
+   * `src/data/cancer-types.ts`.
+   */
+  { label: 'Cancer Types', href: routes.cancerTypes, links: [] },
   {
     label: 'International Patients',
     href: routes.international,

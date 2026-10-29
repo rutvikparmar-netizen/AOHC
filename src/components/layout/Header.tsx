@@ -142,7 +142,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           into from the shell. */}
       <Container
         data-header-row
-        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 xl:gap-4"
+        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 min-[85rem]:gap-4"
       >
         <Link href={routes.home} className="shrink-0" aria-label={`${site.name} — home`}>
           {/* The lockup is reversed out over the hero with a filter and
@@ -198,9 +198,33 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
          * blocks at 103px and 206px that is about 50px off true centre,
          * and no reader will measure it.
          */}
+        {/**
+         * ⚠️  THE SWITCH IS AT 85rem (1360px), NOT AT `xl`. THIS IS A FIT
+         * MEASUREMENT, NOT A PREFERENCE.
+         *
+         * Logo, nav and button come to 1240px of content before any gaps.
+         * At 1280 the container is 1200px, so the row was 40px over and the
+         * auto margins had nothing left to give: "Request a Consultation"
+         * was pushed past the right edge and clipped by the hero card's
+         * `overflow-hidden`. It was already ~27px over with the old eight
+         * items and went to ~72px when Media was swapped for the longer
+         * "Cancer Types".
+         *
+         * Trimming does not recover it — dropping the item padding and the
+         * row gap to nothing saves about 46px, and 14px is the floor of the
+         * type scale. 85rem leaves the container at 1280 and about 20px of
+         * breathing room on each side, which also keeps 1366 laptops on the
+         * full nav. Below it the header is logo + button + drawer, which is
+         * what every width under `xl` already showed.
+         *
+         * ⚠️  FOUR PLACES MOVE TOGETHER: this element, the row's gap, the
+         * actions wrapper's `ml-0`, and the drawer trigger's `hidden` in
+         * `MobileMenu.tsx`. Change one and the header breaks in a way that
+         * only shows up in a narrow band of widths.
+         */}
         <nav
           aria-label="Main"
-          className="hidden shrink-0 self-stretch xl:mx-auto xl:block"
+          className="hidden shrink-0 self-stretch min-[85rem]:mx-auto min-[85rem]:block"
         >
           <ul className="flex h-full items-stretch gap-0.5">
             {primaryNav.map((group) => {
@@ -439,10 +463,11 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
         </nav>
 
         {/* `ml-auto` holds the actions at the right edge while the nav is
-            hidden. From `xl` the nav's own auto margins do that job, and a
+            hidden. From 85rem the nav's own auto margins do that job, and a
             second auto margin here would split the free space three ways
-            and pull the actions back inward. */}
-        <div className="ml-auto flex items-center gap-2 xl:ml-0">
+            and pull the actions back inward. The breakpoint matches the
+            nav's — see the note on it. */}
+        <div className="ml-auto flex items-center gap-2 min-[85rem]:ml-0">
           {/**
            * THE BREAKPOINT LIVES ON THIS WRAPPER, NOT ON THE BUTTON.
            *

@@ -128,8 +128,14 @@ export function MobileMenu({
         type="button"
         onClick={() => setOpen(true)}
         /* Over the hero the trigger is white; once the header frosts it has
-           to come back to ink or it disappears into the bar. */
-        className={`inline-flex size-11 items-center justify-center rounded-(--radius-button) transition-colors xl:hidden ${
+           to come back to ink or it disappears into the bar.
+
+           ⚠️  85rem, MATCHING THE DESKTOP NAV in `Header.tsx` — the row of
+           eight items plus the logo and the button does not fit below it,
+           and the reasoning is written out there. The two breakpoints must
+           move together, or a band of widths gets both the drawer and the
+           nav, or neither. */
+        className={`inline-flex size-11 items-center justify-center rounded-(--radius-button) transition-colors min-[85rem]:hidden ${
           onDark ? 'text-white group-data-[scrolled]/header:text-text' : 'text-text'
         }`}
         aria-label="Open menu"
