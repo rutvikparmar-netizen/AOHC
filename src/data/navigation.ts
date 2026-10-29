@@ -10,10 +10,10 @@ import { routes } from '@/lib/routes'
  * the site nests that far, which is why `MegaNavColumn` exists rather than
  * this being another `NavGroup`.
  *
- * ⚠️  THE ARRAY ORDER IS A LAYOUT DECISION, NOT JUST A READING ORDER. The
- * panel lays these seven out five across and stacks the last two beneath
- * the second and third headings. See the note above Research before
- * reordering anything.
+ * FIVE OF THESE TAKE A COLUMN AND TWO STACK UNDER A NAMED NEIGHBOUR, which
+ * each one declares with `stackUnder`. Array order sets reading order and
+ * the mobile drawer; it no longer decides placement, so these can be
+ * reordered freely.
  *
  * "Precision Cancer Healing" was an eighth column. Its children were below
  * the crop in the supplied screenshot, so it stood as a heading with
@@ -125,22 +125,20 @@ export const expertiseNav: MegaNavColumn[] = [
     ],
   },
   /**
-   * ⚠️  RESEARCH COMES BEFORE SUPPORTIVE THERAPY, AND THE ORDER IS LOAD-
-   * BEARING. The panel is five columns wide, and anything past the fifth is
-   * stacked underneath one of them by `stackMegaColumns` in `Header.tsx`:
-   * the first extra goes under the second column, the next under the third.
-   * That is what puts Research under Diagnosis and Supportive Therapy under
-   * Treatment. Swapping these two back puts each under the wrong heading,
-   * and nothing will fail to compile when it happens.
+   * THE LAST TWO SIT UNDER A NAMED NEIGHBOUR rather than taking columns of
+   * their own — the panel is five wide and there are seven of these. See
+   * `stackUnder` on `MegaNavColumn`, and `stackMegaColumns` in `Header.tsx`
+   * for how it is laid out.
    *
-   * They are still top-level columns, not children of the headings they sit
-   * beneath. The alignment is visual only: 2-DeoxyGlucose and ECCT are
-   * research therapies rather than diagnostic tests, and nesting Research
-   * inside Diagnosis would say otherwise.
+   * They are still top-level columns, not children of the headings above
+   * them. The alignment is visual only: 2-DeoxyGlucose and ECCT are research
+   * therapies rather than a kind of precision oncology, and nesting Research
+   * inside that column would say otherwise.
    */
   {
     label: 'Research',
     href: expertise('research'),
+    stackUnder: 'Precision Oncology',
     links: [
       { label: '2-DeoxyGlucose (2DG)', href: expertise('2-deoxyglucose-2dg') },
       { label: 'ECCT', href: expertise('ecct') },
@@ -149,6 +147,7 @@ export const expertiseNav: MegaNavColumn[] = [
   {
     label: 'Supportive Therapy',
     href: expertise('supportive-therapy'),
+    stackUnder: 'Treatment',
     links: [
       { label: 'Diet & Nutrition', href: expertise('diet-and-nutrition') },
       { label: 'Spiritual Healing', href: expertise('spiritual-healing') },

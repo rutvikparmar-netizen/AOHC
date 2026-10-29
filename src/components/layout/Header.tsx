@@ -9,35 +9,46 @@ import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { MobileMenu } from './MobileMenu'
 
-/** Columns across the expertise panel. Anything past this stacks. */
-const MEGA_COLS = 5
-
 /**
  * Groups the flat column list into one stack per grid cell.
  *
  * ⚠️  THE EXTRAS STACK INSIDE A CELL, THEY DO NOT FORM A SECOND GRID ROW.
  * They used to, and a grid row is as tall as its tallest cell: Centre of
- * Excellence runs to eleven lines, so Research could not begin until that
- * column had finished and sat about 110px below Diagnosis with nothing in
- * between. Stacking lets each cell close up on its own.
+ * Excellence runs to eleven lines, so the stacked column could not begin
+ * until that one had finished and sat about 110px below its own neighbour
+ * with nothing in between. Stacking lets each cell close up on its own.
  *
- * Extra `n` goes under column `n + 1`, so with seven columns Research lands
- * under Diagnosis and Supportive Therapy under Treatment. That keeps the
- * array order in `src/data/navigation.ts` load-bearing — it carries the
- * matching warning. A list of five or fewer is returned one per cell.
+ * The cost, taken deliberately: second-level headings no longer line up
+ * across the panel, because each column closes at its own height. Aligning
+ * them is exactly what a grid row does, and that alignment is what the dead
+ * space was paying for. Do not "fix" the ragged headings by going back to a
+ * row.
+ *
+ * WHICH COLUMN A STACK JOINS COMES FROM THE DATA, via `stackUnder`. An
+ * earlier version worked it out by index, which made the order of
+ * `expertiseNav` load-bearing in a way nothing could check — moving two
+ * entries put each under the wrong heading and still compiled. A column
+ * naming a parent that is not there keeps a cell of its own rather than
+ * disappearing from the menu.
  */
 function stackMegaColumns(
   columns: MegaNavColumn[],
 ): { key: string; stack: MegaNavColumn[] }[] {
-  const extras = columns.slice(MEGA_COLS)
-
   /* `key` rather than reading `stack[0]` at the call site: with
      `noUncheckedIndexedAccess` an index into an array is possibly
      undefined, and the head is only known to exist here. */
-  return columns.slice(0, MEGA_COLS).map((column, index) => ({
-    key: column.label,
-    stack: [column, ...extras.filter((_, extra) => extra + 1 === index)],
-  }))
+  const cells = columns
+    .filter((column) => !column.stackUnder)
+    .map((column) => ({ key: column.label, stack: [column] }))
+
+  for (const column of columns) {
+    if (!column.stackUnder) continue
+    const parent = cells.find((cell) => cell.key === column.stackUnder)
+    if (parent) parent.stack.push(column)
+    else cells.push({ key: column.label, stack: [column] })
+  }
+
+  return cells
 }
 
 /**
@@ -269,22 +280,31 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                   {mega ? (
                     <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1420px,calc(100vw_-_2.5rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       <div className="max-h-[min(44rem,calc(100dvh_-_8rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
-                          {/* FIVE ACROSS, WITH THE EXTRAS STACKED INSIDE
-                              THEIR CELL rather than wrapping to a second
-                              grid row — see `stackMegaColumns`, which is
-                              where the "Research sits under Diagnosis"
-                              rule lives.
+                          {/* FIVE CELLS, WITH THE EXTRA COLUMNS STACKED
+                              INSIDE ONE rather than wrapping to a second
+                              grid row — see `stackMegaColumns`, and
+                              `stackUnder` in `src/data/navigation.ts` for
+                              which column joins which.
 
                               All seven shared one row once, which left
                               each about 180px at the 1420 cap — narrow
                               enough that "Blood Based Tests & Markers"
                               ran to four lines and the tallest column
-                              pushed the panel into its scroll cap. At
-                              five they are about 260px.
+                              pushed the panel into its scroll cap.
 
-                              The cap stays as a backstop for short
+                              THE FIRST CELL IS WIDER THAN THE REST, at
+                              1.4fr against 1fr: about 340px rather than
+                              260. Centre of Excellence carries the four
+                              longest labels in the menu and the only
+                              third level, so at an equal share
+                              "Hematological (Blood) Malignancies" took
+                              two lines on its own and pushed the four
+                              blood cancers down with it. The others lose
+                              about 20px each and none of them wraps.
+
+                              The scroll cap stays as a backstop for short
                               windows; it should not normally be hit. */}
-                          <ul className="grid grid-cols-5 gap-x-4">
+                          <ul className="grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-x-4">
                             {stackMegaColumns(mega).map((cell) => (
                               <li key={cell.key}>
                                 {cell.stack.map((column, depth) => (

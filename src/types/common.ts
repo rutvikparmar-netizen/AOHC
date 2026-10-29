@@ -56,6 +56,23 @@ export interface MegaNavColumn {
   label: string
   href?: string
   links: MegaNavLink[]
+  /**
+   * The `label` of the column this one sits beneath, instead of taking a
+   * column of its own.
+   *
+   * The expertise panel has more columns than it is wide, and the extras
+   * are stacked under a named neighbour rather than wrapped to a second
+   * grid row — a row is as tall as its tallest cell, which left the short
+   * columns with a large gap above whatever followed them.
+   *
+   * ⚠️  IT NAMES ITS PARENT RATHER THAN RELYING ON ARRAY ORDER. The first
+   * version worked out placement by index, which made the order of the
+   * array load-bearing in a way nothing could check: moving two entries
+   * put each under the wrong heading and still compiled. A column whose
+   * `stackUnder` matches nothing falls back to a column of its own, so a
+   * typo here costs the layout rather than the link.
+   */
+  stackUnder?: string
 }
 
 export interface NavGroup {
