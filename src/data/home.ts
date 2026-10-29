@@ -138,19 +138,34 @@ export const home: HomeContent = {
           'Established cancer treatments, such as surgery, chemotherapy, radiation therapy, targeted therapy, hormonal therapy, and immunotherapy, where clinically appropriate.',
         href: routes.treatments,
         /**
-         * Abstract detail shots, not treatment photographs, across all four.
+         * SUPPLIED BY AOHC, AND THE FOUR ARE ONE SET. They replaced four
+         * unrelated stock photographs from four shoots and four colour
+         * worlds — an ice-blue infusion line, a magenta pipette on navy, an
+         * orange cardigan, lime-green nails on hospital blue — which fought
+         * each other at full-bleed tile size and were the reason that
+         * section still looked cheap after three redesigns of its layout.
          *
-         * Literal pictures of people receiving cancer treatment are
-         * confronting for the audience most likely to be reading — and the
-         * stock sets of them are largely NIH/NCI releases carrying visible
-         * institutional branding, which would imply an affiliation AOHC does
-         * not have. Detail imagery sidesteps both problems.
+         * ⚠️  THE TONE LAYER IN `ApproachSection` WAS REMOVED WITH THEM. It
+         * existed only to hold those four together and is not needed by
+         * images that already share a palette; applied to these it would
+         * tint an already-blue set twice. If anyone swaps one of these for
+         * something from elsewhere, the mismatch comes back and a filter is
+         * not the fix — match the set or replace all four.
+         *
+         * They arrive 1672x941 with their own darkened lower edge, which is
+         * why the tiles' scrim can stay as light as it is. WebP at about
+         * 40KB each, against 1.6MB for the PNGs that came with them.
+         *
+         * Still not literal pictures of treatment being administered: that
+         * is confronting for the audience most likely to be reading, and
+         * the stock sets of it carry visible NIH/NCI branding that would
+         * imply an affiliation AOHC does not have.
          */
         image: {
-          src: '/images/card-infusion.jpg',
-          alt: 'An intravenous line against a softly blurred window',
-          width: 1000,
-          height: 667,
+          src: '/images/approach/conventional-oncology.webp',
+          alt: 'An intravenous drip beside a hospital bed, daylight from a window behind it',
+          width: 1672,
+          height: 941,
         },
       },
       {
@@ -160,10 +175,10 @@ export const home: HomeContent = {
           'Relevant pathology, molecular profiling, genomic findings, and other diagnostic information that may help clinicians understand a tumour and evaluate treatment options.',
         href: routes.treatments,
         image: {
-          src: '/images/card-molecular.jpg',
-          alt: 'A pipette dispensing into a tray of sample tubes',
-          width: 1000,
-          height: 667,
+          src: '/images/approach/precision-molecular.webp',
+          alt: 'A pipette releasing a droplet into a tray of sample vials in a laboratory',
+          width: 1672,
+          height: 941,
         },
       },
       {
@@ -173,10 +188,10 @@ export const home: HomeContent = {
           'Appropriate measures to support symptom management, nutrition, physical function, emotional well-being, and quality of life alongside cancer treatment.',
         href: routes.integrativeCare,
         image: {
-          src: '/images/card-supportive.jpg',
-          alt: 'Two people sitting together, one hand resting on another',
-          width: 1000,
-          height: 563,
+          src: '/images/approach/supportive-integrative.webp',
+          alt: "A clinician holding a patient's hand at the bedside",
+          width: 1672,
+          height: 941,
         },
       },
       {
@@ -186,10 +201,10 @@ export const home: HomeContent = {
           'A structured review of the patient’s current condition, previous treatments, treatment goals, potential risks, and available options.',
         href: routes.patientJourney,
         image: {
-          src: '/images/tablet-explanation.jpg',
-          alt: 'A clinician holding a tablet while talking with a colleague',
-          width: 1400,
-          height: 933,
+          src: '/images/approach/individualized-planning.webp',
+          alt: 'Two clinicians looking at a tablet together, a scan displayed on a monitor behind them',
+          width: 1672,
+          height: 941,
         },
       },
     ],

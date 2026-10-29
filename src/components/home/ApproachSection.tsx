@@ -42,11 +42,10 @@ import { Reveal } from '@/components/motion/Reveal'
  * be reading this, and the available sets of them carry visible NIH/NCI
  * branding that would imply an affiliation AOHC does not have.
  *
- * THEY ARE ALSO FOUR UNRELATED STOCK SHOTS, which is what the tone layer in
- * `StrandTile` is for — read the note on it before removing the filter and
- * wondering why the section goes back to looking like a clip-art grid. The
- * real fix is a single commissioned shoot; until AOHC supplies one, the
- * treatment is holding four mismatched photographs together.
+ * THE FOUR IMAGES ARE NOW AOHC'S OWN AND ARE ONE SET. They replaced four
+ * unrelated stock shots that a tone layer in `StrandTile` had been holding
+ * together; that layer is gone with them, and the note where it used to sit
+ * explains why it must not be reinstated over the current images.
  */
 
 /** `span` is the tile's share of the 5-column bento row at `lg`. */
@@ -62,34 +61,27 @@ function StrandTile({ pillar, span }: { pillar: PillarItem; span: string }) {
           alt={pillar.image.alt}
           fill
           sizes="(min-width: 1024px) 60vw, 100vw"
-          className="-z-20 object-cover saturate-50 contrast-110 transition-[transform,filter] duration-700 ease-(--ease-out-soft) group-hover:scale-105 group-hover:saturate-100 group-hover:contrast-100"
+          className="-z-20 object-cover transition-transform duration-700 ease-(--ease-out-soft) group-hover:scale-105"
         />
       ) : null}
 
-      {/* ⚠️  THIS LAYER IS WHAT MAKES THE FOUR TILES ONE SET, not a filter
-          anyone added for the look of it.
+      {/* ⚠️  THERE IS NO TONE LAYER HERE ANY MORE, AND IT SHOULD NOT COME
+          BACK WHILE THE CURRENT IMAGES ARE IN PLACE.
 
-          The four photographs come from four unrelated shoots and four
-          unrelated colour worlds: an ice-blue infusion line, a magenta
-          pipette on navy, an orange cardigan, lime-green nails against
-          hospital blue. Side by side at this size they fought each other
-          and the brand, which is the whole reason the section read as
-          cheap. `color` takes the hue and saturation from this teal and
-          keeps the luminosity of the photograph underneath, so all four
-          resolve to the same tone while each keeps its own light.
+          One used to sit between the photograph and the scrim: a teal
+          `mix-blend-color` at 55% with the image desaturated under it. It
+          was never a styling flourish — the four photographs were then
+          four unrelated stock shots in four colour worlds (an ice-blue
+          infusion line, a magenta pipette on navy, an orange cardigan,
+          lime-green nails on hospital blue) and the filter was the only
+          thing making them read as one set.
 
-          Held back to 55% rather than a full duotone: at 100% the hands in
-          "supportive and integrative care" go teal, and teal skin on a
-          cancer site reads as illness. Paired with `saturate-50` on the
-          image, that is enough to kill the clashes and leave skin warm.
-
-          IT CLEARS ON HOVER, along with the image's own filters, so the
-          photograph is still there to be seen — the tone is the resting
-          state, not a permanent treatment. */}
-      <span
-        aria-hidden
-        className="absolute inset-0 -z-[15] bg-brand-teal-700/55 mix-blend-color transition-opacity duration-700 group-hover:opacity-0"
-      />
+          AOHC has since supplied four images that already share a palette,
+          so the filter would now tint an already-blue set twice and flatten
+          what little colour they have. If someone later swaps one tile's
+          image for something from elsewhere, the mismatch returns — and the
+          fix then is to match the set or replace all four, not to put the
+          filter back over the top. */}
 
       {/* Nearly solid at the foot where the copy is, clearing by the top so
           the photograph still reads as a photograph. Two stops are not
