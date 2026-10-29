@@ -10,6 +10,11 @@ import { routes } from '@/lib/routes'
  * the site nests that far, which is why `MegaNavColumn` exists rather than
  * this being another `NavGroup`.
  *
+ * ⚠️  THE ARRAY ORDER IS A LAYOUT DECISION, NOT JUST A READING ORDER. The
+ * panel lays these seven out five across, so the last two fall to a second
+ * row that is deliberately aligned under the second and third headings. See
+ * the note above Research before reordering anything.
+ *
  * "Precision Cancer Healing" was an eighth column. Its children were below
  * the crop in the supplied screenshot, so it stood as a heading with
  * nothing under it, and it was removed on request.
@@ -116,6 +121,27 @@ export const expertiseNav: MegaNavColumn[] = [
       { label: 'Ayurvedic Medicine', href: expertise('ayurvedic-medicine') },
     ],
   },
+  /**
+   * ⚠️  RESEARCH COMES BEFORE SUPPORTIVE THERAPY, AND THE ORDER IS LOAD-
+   * BEARING. The panel is a five-wide grid, so these two are the second row,
+   * and the second row is offset by one column (see `Header.tsx`) to put
+   * Research under Diagnosis and Supportive Therapy under Treatment — which
+   * is what was asked for. Swapping these two back puts each under the wrong
+   * heading, and nothing will fail to compile when it happens.
+   *
+   * They are still top-level columns, not children of the headings they sit
+   * beneath. The alignment is visual only: 2-DeoxyGlucose and ECCT are
+   * research therapies rather than diagnostic tests, and nesting Research
+   * inside Diagnosis would say otherwise.
+   */
+  {
+    label: 'Research',
+    href: expertise('research'),
+    links: [
+      { label: '2-DeoxyGlucose (2DG)', href: expertise('2-deoxyglucose-2dg') },
+      { label: 'ECCT', href: expertise('ecct') },
+    ],
+  },
   {
     label: 'Supportive Therapy',
     href: expertise('supportive-therapy'),
@@ -123,14 +149,6 @@ export const expertiseNav: MegaNavColumn[] = [
       { label: 'Diet & Nutrition', href: expertise('diet-and-nutrition') },
       { label: 'Spiritual Healing', href: expertise('spiritual-healing') },
       { label: 'Yoga & Meditation', href: expertise('yoga-and-meditation') },
-    ],
-  },
-  {
-    label: 'Research',
-    href: expertise('research'),
-    links: [
-      { label: '2-DeoxyGlucose (2DG)', href: expertise('2-deoxyglucose-2dg') },
-      { label: 'ECCT', href: expertise('ecct') },
     ],
   },
 ]

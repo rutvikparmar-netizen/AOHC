@@ -85,7 +85,14 @@ export default function AboutPage() {
           First paragraph in the display face as a standfirst, the second
           beneath it — the same opener the home page uses, so the two pages
           start the same way. */}
-      <section className="pt-14 lg:pt-20">
+      {/* ⚠️  IT NEEDS BOTTOM PADDING AND THE HOME PAGE'S COPY OF IT DOES NOT.
+          This opener was lifted from the home page, where the section below
+          shares the page background, so the gap under the last line is just
+          the next section's own top padding and no edge is visible. Here the
+          story section is `bg-surface`, so there IS an edge — and without
+          padding it sat tight against the final line, which read as the
+          colour change having been cropped. */}
+      <section className="pb-16 pt-14 lg:pb-24 lg:pt-20">
         <Container>
           <Reveal>
             <p className="max-w-5xl font-display text-h3 font-bold leading-snug tracking-[-0.015em] text-text">

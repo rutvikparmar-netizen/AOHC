@@ -215,8 +215,8 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                    * window put the far column a long way from the trigger
                    * and left nothing tying the panel back to the item
                    * that opened it. A card centred under the header reads
-                   * as belonging to "Our Expertise", and eight columns
-                   * still fit as four across and two down.
+                   * as belonging to "Our Expertise", and seven columns
+                   * still fit as five across and two down.
                    *
                    * It is centred on the HEADER rather than on its own
                    * item — hence `static` on that `<li>` — because a box
@@ -237,20 +237,39 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                   {mega ? (
                     <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1420px,calc(100vw_-_2.5rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       <div className="max-h-[min(44rem,calc(100dvh_-_8rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
-                          {/* ALL SEVEN COLUMNS ON ONE ROW, AND NO SCROLL.
-                              Those two pull against each other: seven
-                              columns in a narrow panel means long labels
-                              wrap over three or four lines, and the
-                              tallest column then sets a height past what
-                              the viewport allows. Width is what breaks
-                              the tie — at 1420 each column is about
-                              180px rather than 155, most labels fall to
-                              two lines, and the panel comes in under the
-                              cap. The cap stays as a backstop for short
+                          {/* FIVE ACROSS, SO SEVEN COLUMNS RUN 5 + 2.
+                              All seven used to share one row, which left
+                              each about 180px at the 1420 cap — narrow
+                              enough that "Antisense Oligonucleotide
+                              Therapy in Oncology (AOT)" and "Blood Based
+                              Tests & Markers" ran to three and four lines
+                              and the tallest column pushed the panel into
+                              its scroll cap. At five the columns are
+                              about 260px and most labels fall to one or
+                              two lines.
+
+                              The cap stays as a backstop for short
                               windows; it should not normally be hit. */}
-                          <ul className="grid grid-cols-7 gap-x-4 gap-y-6">
-                            {mega.map((column) => (
-                              <li key={column.label}>
+                          <ul className="grid grid-cols-5 gap-x-4 gap-y-6">
+                            {mega.map((column, index) => (
+                              <li
+                                key={column.label}
+                                /* THE SECOND ROW STARTS AT COLUMN TWO, which
+                                   is what puts Research under Diagnosis and
+                                   Supportive Therapy under Treatment rather
+                                   than under Centre of Excellence and
+                                   Diagnosis. Only the first item of that row
+                                   needs placing — the one after it flows
+                                   into the next free cell on its own.
+
+                                   Tied to the array order in
+                                   `src/data/navigation.ts`, which carries
+                                   the matching warning. It is a no-op for
+                                   any list of five or fewer. */
+                                className={
+                                  index === 5 ? 'col-start-2' : undefined
+                                }
+                              >
                                 <Link
                                   href={column.href ?? '#'}
                                   className="block text-xs font-bold uppercase tracking-[0.06em] text-accent-dark hover:underline"
