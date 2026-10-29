@@ -153,6 +153,25 @@ export interface PageHeroContent {
 }
 
 /**
+ * One entry in a two-column index — a name and one or two paragraphs.
+ *
+ * Shared by `/cancer-types` and `/treatments-and-therapies`, which list the
+ * same shape of thing. Rendered by `EntryGrid`.
+ *
+ * ⚠️  `icon` IS A SCANNING AID, NOT ANATOMY, and it is optional because
+ * only one of the two pages has an honest set. It helps a reader find a
+ * row among a dozen headings and is always shown beside the name — never
+ * on its own, never in a diagram, and never as though it illustrated the
+ * organ. See the block comment above the cancer-type markers in
+ * `src/components/ui/Icon.tsx`.
+ */
+export interface NamedEntry {
+  icon?: string
+  name: string
+  body: string[]
+}
+
+/**
  * A heading with a label and a paragraph, listed as a definition rather than
  * a card. Used for the about page's "What May Be Considered" and "Our
  * Commitment" lists.
@@ -636,6 +655,80 @@ export interface IntegrativeCareContent {
 }
 
 /**
+ * TREATMENTS AND THERAPIES — `/treatments-and-therapies`.
+ *
+ * ⚠️  NOTHING ON THIS PAGE IS AN OFFER, AND THE HERO SAYS SO: the
+ * treatments described are "categories that may be relevant to cancer
+ * care" whose "availability through AOHC must be confirmed individually".
+ * Every entry is written as what a discussion may consider, never as what
+ * AOHC provides. Rewriting any of it into a service description would
+ * claim a capability nobody has confirmed.
+ *
+ * ⚠️  THREE SENTENCES CARRY THE MOST WEIGHT and must survive any edit:
+ *
+ *   - "A molecular finding does not automatically mean that a matching
+ *     medicine will be effective." (targeted therapy)
+ *   - "Laboratory findings or proposed mechanisms alone do not prove that
+ *     these approaches will benefit a patient." (metabolic)
+ *   - `safety`, in full. It is the only place on the site that tells a
+ *     patient outright not to change treatment on the strength of
+ *     something they read here.
+ */
+export interface TreatmentsContent {
+  hero: PageHeroContent
+
+  /** The six conventional treatments, rendered through `EntryGrid`. */
+  conventional: {
+    eyebrow: string
+    title: string
+    entries: NamedEntry[]
+  }
+
+  /** A titled passage with its own sub-heading and prose. */
+  molecular: TreatmentPassage
+  procedures: TreatmentPassage
+  supportive: TreatmentPassage
+
+  /**
+   * The two topics that need the most care — investigational/off-label
+   * medicines and metabolic or repurposed ones. They share one dark band
+   * because they are the same kind of warning and a reader who has
+   * reached either is usually weighing a specific proposal.
+   */
+  caution: {
+    eyebrow: string
+    topics: TreatmentPassage[]
+  }
+
+  /** "How Treatment Options Are Evaluated" — a numbered sequence. */
+  evaluation: {
+    eyebrow: string
+    title: string
+    intro: string
+    items: string[]
+  }
+
+  /** ⚠️  Shown in its own panel, never folded into another section. */
+  safety: {
+    title: string
+    body: string
+  }
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
+export interface TreatmentPassage {
+  eyebrow?: string
+  title: string
+  /** The supplied sub-heading, where the draft has one. */
+  subtitle?: string
+  body: string[]
+}
+
+/**
  * CANCER TYPES — `/cancer-types`.
  *
  * ⚠️  THIS PAGE DESCRIBES WHAT A REVIEW CONSIDERS. IT DOES NOT OFFER
@@ -669,7 +762,7 @@ export interface CancerTypesContent {
      * though it illustrated the organ. See the block comment above the
      * cancer-type markers in `src/components/ui/Icon.tsx`.
      */
-    types: { icon: string; name: string; body: string[] }[]
+    types: NamedEntry[]
   }
 
   /** "What Information Helps Us Understand Your Case?" */

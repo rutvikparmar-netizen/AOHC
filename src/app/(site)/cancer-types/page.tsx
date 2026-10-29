@@ -10,8 +10,8 @@ import { Container } from '@/components/ui/Container'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
+import { EntryGrid } from '@/components/shared/EntryGrid'
 import { ChecklistSection } from '@/components/home/ChecklistSection'
-import { TypeIndex } from '@/components/cancer-types/TypeIndex'
 
 /**
  * CANCER TYPES — `/cancer-types`
@@ -61,8 +61,15 @@ export default function CancerTypesPage() {
 
       <PageHero content={cancerTypes.hero} trail={trail} />
 
-      {/* ── 1. The ten types ─────────────────────────────────────────── */}
-      <TypeIndex content={cancerTypes.index} />
+      {/* ── 1. The ten types ────────────────────────────────────────
+          Through the shared grid, which `/treatments-and-therapies` also
+          uses for its six conventional treatments. */}
+      <EntryGrid
+        eyebrow={cancerTypes.index.eyebrow}
+        title={cancerTypes.index.title}
+        entries={cancerTypes.index.types}
+        surface
+      />
 
       {/* ── 2. What information helps ────────────────────────────────
           A `ListSection`, so it renders through the home page's component.
