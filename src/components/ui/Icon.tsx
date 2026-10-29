@@ -57,6 +57,57 @@ const paths: Record<string, string> = {
    */
   heart:
     'M12 20.5 3.9 12.4a5 5 0 0 1 7.1-7.1l1 1 1-1a5 5 0 0 1 7.1 7.1Z',
+
+  /* ==========================================================================
+     CANCER-TYPE MARKERS — `/cancer-types`
+
+     ⚠️  THESE ARE SCANNING AIDS, NOT ANATOMY. They exist so a reader looking
+     for their own diagnosis can find the right entry without reading ten
+     headings, and every one of them sits beside its label. None is accurate
+     enough to identify an organ on its own, and none may ever be used as
+     though it were — not in a diagram, not in anything explaining a
+     procedure, and not without the name next to it.
+
+     Schematic on purpose. A more literal drawing of a breast, a prostate or
+     an ovary at 20px is both unreadable and, on a page someone has reached
+     because they have just been diagnosed, needlessly confronting.
+
+     `ribbon` is the awareness ribbon and is used for breast cancer because
+     that is what it is universally read as. It is not a campaign badge and
+     must not be given a colour of its own.
+     ====================================================================== */
+  ribbon:
+    'M12 13c3-3 4.5-5.1 4.5-7.5a4.5 4.5 0 1 0-9 0C7.5 7.9 9 10 12 13ZM9.7 11.5 6 21l3.4-1.6L11 22M14.3 11.5 18 21l-3.4-1.6L13 22',
+  /**
+   * ⚠️  SECOND DRAWING OF SIX OF THESE. The first put fine detail in the
+   * middle of the 24 grid, which disappears at the 22px they are rendered
+   * at: the brain read as a small box, the colon as a squiggle, the
+   * pancreas as an eye. The rule that fixed them is to fill the grid —
+   * one bold silhouette spanning roughly 19 of the 24 units, with at most
+   * one interior line. Anything redrawn here has to be checked at 22px on
+   * the page, not at 240px in an editor.
+   */
+  /**
+   * Third drawing. A single outline with shallow arcs rendered as a
+   * rounded box at 22px, twice — the lobes only read when each arc is
+   * close to a half-circle, so this is a chain of four near-semicircular
+   * bumps down each side with the midline between them.
+   */
+  brain:
+    'M12 5.5a3 3 0 0 0-5.8 1.1 3 3 0 0 0-1.3 5.2 3.2 3.2 0 0 0 2.4 5.4 3 3 0 0 0 4.7 1.3M12 5.5a3 3 0 0 1 5.8 1.1 3 3 0 0 1 1.3 5.2 3.2 3.2 0 0 1-2.4 5.4 3 3 0 0 1-4.7 1.3M12 5.5v13',
+  lungs:
+    'M12 3v8M9.5 11h5M9.5 11c-2.6 1-4.5 3.9-4.5 7.1V19a1.5 1.5 0 0 0 3 0v-8M14.5 11c2.6 1 4.5 3.9 4.5 7.1V19a1.5 1.5 0 0 1-3 0v-8',
+  liver:
+    'M3 7.5h15.5A2.5 2.5 0 0 1 21 10c0 4.1-3.4 7.5-7.5 7.5H10c-3 0-5.4-2-6.2-4.8L3 7.5ZM10.5 7.5v4.5',
+  intestine:
+    'M9 2.5a3.25 3.25 0 0 0 0 6.5h6a3.25 3.25 0 0 1 0 6.5H9a3.25 3.25 0 0 0 0 6.5',
+  droplet: 'M12 2.8 6.4 9.4a8 8 0 1 0 11.2 0L12 2.8Z',
+  ovaries:
+    'M12 20.5v-8M12 12.5 7.9 9.4M12 12.5l4.1-3.1M5.5 5.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM18.5 5.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM9 20.5h6',
+  prostate:
+    'M12 2.5v4.5M12 17v4.5M12 7a5.5 5 0 1 0 0 10 5.5 5 0 0 0 0-10Z',
+  pancreas:
+    'M2.5 12a4.5 4.5 0 0 1 4.5-4.5c2.8 0 4.7 1.5 7 2.5 2.6 1.2 5 1.8 7.5 1.9-2.5.1-4.9.7-7.5 1.9-2.3 1-4.2 2.7-7 2.7A4.5 4.5 0 0 1 2.5 12ZM6.5 12H12',
 }
 
 export type IconName = keyof typeof paths

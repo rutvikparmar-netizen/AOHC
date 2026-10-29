@@ -662,8 +662,14 @@ export interface CancerTypesContent {
      *
      * `body` is one or two paragraphs; "Other Cancer Types" has one and
      * the rest have two, so nothing may assume a fixed count.
+     *
+     * ⚠️  `icon` IS A SCANNING AID, NOT ANATOMY. It helps a reader find
+     * their own diagnosis among ten headings and is always shown beside
+     * the name — never on its own, never in a diagram, and never as
+     * though it illustrated the organ. See the block comment above the
+     * cancer-type markers in `src/components/ui/Icon.tsx`.
      */
-    types: { name: string; body: string[] }[]
+    types: { icon: string; name: string; body: string[] }[]
   }
 
   /** "What Information Helps Us Understand Your Case?" */

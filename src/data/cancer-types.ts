@@ -62,6 +62,7 @@ export const cancerTypes: CancerTypesContent = {
      */
     types: [
       {
+        icon: 'ribbon',
         name: 'Breast Cancer',
         body: [
           'Breast cancer includes several biological subtypes, which may differ in hormone receptor status, HER2 status, molecular characteristics, and response to treatment.',
@@ -69,6 +70,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'ovaries',
         name: 'Ovarian Cancer',
         body: [
           'Ovarian cancer care depends on the confirmed tumour type, disease extent, surgical history, previous systemic treatments, current symptoms, and overall condition.',
@@ -76,6 +78,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'brain',
         name: 'Brain Tumours',
         body: [
           'Brain tumours vary by pathology, molecular classification, location, grade, previous surgery, radiation therapy, and systemic treatment.',
@@ -83,6 +86,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'intestine',
         name: 'Colorectal Cancer',
         body: [
           'Colorectal cancer assessment may involve pathology, disease stage, imaging, previous surgery, treatment history, and relevant molecular or biomarker findings.',
@@ -90,6 +94,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'lungs',
         name: 'Lung Cancer',
         body: [
           'Lung cancer includes different histological and molecular subtypes. Treatment options may depend on pathology, biomarker findings, disease extent, previous therapies, and overall health.',
@@ -97,6 +102,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'prostate',
         name: 'Prostate Cancer',
         body: [
           'Prostate cancer management depends on disease characteristics, stage, pathology, PSA trends, imaging, previous treatment, symptoms, and individual goals.',
@@ -104,6 +110,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'pancreas',
         name: 'Pancreatic Cancer',
         body: [
           'Pancreatic cancer assessment may involve pathology, imaging, disease extent, treatment tolerance, nutritional status, symptoms, and relevant molecular findings.',
@@ -111,6 +118,7 @@ export const cancerTypes: CancerTypesContent = {
         ],
       },
       {
+        icon: 'liver',
         name: 'Liver Cancer and Cancer Involving the Liver',
         body: [
           'Primary liver cancer and cancer that has spread to the liver are different clinical situations.',
@@ -126,12 +134,14 @@ export const cancerTypes: CancerTypesContent = {
          * rendered — but it binds whoever builds the blood cancers page,
          * and the expertise menu already lists four of them.
          */
+        icon: 'droplet',
         name: 'Blood Cancers',
         body: [
           'Blood cancers include conditions such as leukaemias, lymphomas, and myeloma. These require disease-specific assessment and appropriate haematology expertise.',
         ],
       },
       {
+        icon: 'stethoscope',
         name: 'Other Cancer Types',
         body: [
           "For other diagnoses, patients can contact AOHC to ask whether their case falls within the team's scope.",

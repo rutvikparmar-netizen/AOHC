@@ -1,5 +1,6 @@
 import type { CancerTypesContent } from '@/types'
 import { Container } from '@/components/ui/Container'
+import { Icon, type IconName } from '@/components/ui/Icon'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/motion/Reveal'
 
@@ -50,9 +51,26 @@ export function TypeIndex({
               delay={(index % 2) * 60}
               className="border-t border-border pt-6"
             >
-              <h3 className="font-display text-xl font-bold leading-snug text-text">
-                {type.name}
-              </h3>
+              {/* ⚠️  ALWAYS BESIDE THE NAME, NEVER INSTEAD OF IT. The icon
+                  is there so someone scanning for their own diagnosis can
+                  find the row without reading ten headings; it is not an
+                  illustration of the organ and is not accurate enough to
+                  be read as one. See the block comment above the
+                  cancer-type markers in `Icon.tsx`.
+
+                  `shrink-0` on the chip and `min-w-0` on the heading:
+                  "Liver Cancer and Cancer Involving the Liver" is long
+                  enough to squash a flex sibling that is allowed to
+                  shrink. */}
+              <div className="flex items-center gap-3.5">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-accent-subtle text-accent-dark">
+                  <Icon name={type.icon as IconName} className="size-5.5" />
+                </span>
+
+                <h3 className="min-w-0 font-display text-xl font-bold leading-snug text-text">
+                  {type.name}
+                </h3>
+              </div>
 
               <div className="mt-3 space-y-3">
                 {type.body.map((paragraph) => (
