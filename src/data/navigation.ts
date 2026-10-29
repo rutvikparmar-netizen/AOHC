@@ -11,9 +11,9 @@ import { routes } from '@/lib/routes'
  * this being another `NavGroup`.
  *
  * ⚠️  THE ARRAY ORDER IS A LAYOUT DECISION, NOT JUST A READING ORDER. The
- * panel lays these seven out five across, so the last two fall to a second
- * row that is deliberately aligned under the second and third headings. See
- * the note above Research before reordering anything.
+ * panel lays these seven out five across and stacks the last two beneath
+ * the second and third headings. See the note above Research before
+ * reordering anything.
  *
  * "Precision Cancer Healing" was an eighth column. Its children were below
  * the crop in the supplied screenshot, so it stood as a heading with
@@ -55,7 +55,10 @@ export const expertiseNav: MegaNavColumn[] = [
         ],
       },
       {
-        label: 'Antisense Oligonucleotide Therapy in Oncology (AOT)',
+        /* Shortened from "Antisense Oligonucleotide Therapy in Oncology
+           (AOT)" on request. The slug is unchanged, so the page this will
+           eventually point at does not move. */
+        label: 'Antisense Oligonucleotide Therapy',
         href: expertise('antisense-oligonucleotide-therapy'),
       },
       {
@@ -123,11 +126,12 @@ export const expertiseNav: MegaNavColumn[] = [
   },
   /**
    * ⚠️  RESEARCH COMES BEFORE SUPPORTIVE THERAPY, AND THE ORDER IS LOAD-
-   * BEARING. The panel is a five-wide grid, so these two are the second row,
-   * and the second row is offset by one column (see `Header.tsx`) to put
-   * Research under Diagnosis and Supportive Therapy under Treatment — which
-   * is what was asked for. Swapping these two back puts each under the wrong
-   * heading, and nothing will fail to compile when it happens.
+   * BEARING. The panel is five columns wide, and anything past the fifth is
+   * stacked underneath one of them by `stackMegaColumns` in `Header.tsx`:
+   * the first extra goes under the second column, the next under the third.
+   * That is what puts Research under Diagnosis and Supportive Therapy under
+   * Treatment. Swapping these two back puts each under the wrong heading,
+   * and nothing will fail to compile when it happens.
    *
    * They are still top-level columns, not children of the headings they sit
    * beneath. The alignment is visual only: 2-DeoxyGlucose and ECCT are

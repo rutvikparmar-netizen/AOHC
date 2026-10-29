@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import type { MegaNavColumn } from '@/types'
 import { routes } from '@/lib/routes'
 import { site } from '@/lib/site'
 import { primaryNav } from '@/data/navigation'
@@ -7,6 +8,37 @@ import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { MobileMenu } from './MobileMenu'
+
+/** Columns across the expertise panel. Anything past this stacks. */
+const MEGA_COLS = 5
+
+/**
+ * Groups the flat column list into one stack per grid cell.
+ *
+ * ⚠️  THE EXTRAS STACK INSIDE A CELL, THEY DO NOT FORM A SECOND GRID ROW.
+ * They used to, and a grid row is as tall as its tallest cell: Centre of
+ * Excellence runs to eleven lines, so Research could not begin until that
+ * column had finished and sat about 110px below Diagnosis with nothing in
+ * between. Stacking lets each cell close up on its own.
+ *
+ * Extra `n` goes under column `n + 1`, so with seven columns Research lands
+ * under Diagnosis and Supportive Therapy under Treatment. That keeps the
+ * array order in `src/data/navigation.ts` load-bearing — it carries the
+ * matching warning. A list of five or fewer is returned one per cell.
+ */
+function stackMegaColumns(
+  columns: MegaNavColumn[],
+): { key: string; stack: MegaNavColumn[] }[] {
+  const extras = columns.slice(MEGA_COLS)
+
+  /* `key` rather than reading `stack[0]` at the call site: with
+     `noUncheckedIndexedAccess` an index into an array is possibly
+     undefined, and the head is only known to exist here. */
+  return columns.slice(0, MEGA_COLS).map((column, index) => ({
+    key: column.label,
+    stack: [column, ...extras.filter((_, extra) => extra + 1 === index)],
+  }))
+}
 
 /**
  * Site header.
@@ -237,77 +269,69 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                   {mega ? (
                     <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1420px,calc(100vw_-_2.5rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       <div className="max-h-[min(44rem,calc(100dvh_-_8rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
-                          {/* FIVE ACROSS, SO SEVEN COLUMNS RUN 5 + 2.
-                              All seven used to share one row, which left
+                          {/* FIVE ACROSS, WITH THE EXTRAS STACKED INSIDE
+                              THEIR CELL rather than wrapping to a second
+                              grid row — see `stackMegaColumns`, which is
+                              where the "Research sits under Diagnosis"
+                              rule lives.
+
+                              All seven shared one row once, which left
                               each about 180px at the 1420 cap — narrow
-                              enough that "Antisense Oligonucleotide
-                              Therapy in Oncology (AOT)" and "Blood Based
-                              Tests & Markers" ran to three and four lines
-                              and the tallest column pushed the panel into
-                              its scroll cap. At five the columns are
-                              about 260px and most labels fall to one or
-                              two lines.
+                              enough that "Blood Based Tests & Markers"
+                              ran to four lines and the tallest column
+                              pushed the panel into its scroll cap. At
+                              five they are about 260px.
 
                               The cap stays as a backstop for short
                               windows; it should not normally be hit. */}
-                          <ul className="grid grid-cols-5 gap-x-4 gap-y-6">
-                            {mega.map((column, index) => (
-                              <li
-                                key={column.label}
-                                /* THE SECOND ROW STARTS AT COLUMN TWO, which
-                                   is what puts Research under Diagnosis and
-                                   Supportive Therapy under Treatment rather
-                                   than under Centre of Excellence and
-                                   Diagnosis. Only the first item of that row
-                                   needs placing — the one after it flows
-                                   into the next free cell on its own.
+                          <ul className="grid grid-cols-5 gap-x-4">
+                            {stackMegaColumns(mega).map((cell) => (
+                              <li key={cell.key}>
+                                {cell.stack.map((column, depth) => (
+                                  <div
+                                    key={column.label}
+                                    className={depth > 0 ? 'mt-8' : undefined}
+                                  >
+                                    <Link
+                                      href={column.href ?? '#'}
+                                      className="block text-xs font-bold uppercase tracking-[0.06em] text-accent-dark hover:underline"
+                                    >
+                                      {column.label}
+                                    </Link>
 
-                                   Tied to the array order in
-                                   `src/data/navigation.ts`, which carries
-                                   the matching warning. It is a no-op for
-                                   any list of five or fewer. */
-                                className={
-                                  index === 5 ? 'col-start-2' : undefined
-                                }
-                              >
-                                <Link
-                                  href={column.href ?? '#'}
-                                  className="block text-xs font-bold uppercase tracking-[0.06em] text-accent-dark hover:underline"
-                                >
-                                  {column.label}
-                                </Link>
+                                    {column.links.length > 0 ? (
+                                      <ul className="mt-3 space-y-1">
+                                        {column.links.map((link) => (
+                                          <li key={link.href}>
+                                            <Link
+                                              href={link.href}
+                                              className="block rounded-(--radius-button) px-2 py-1 text-xs leading-snug text-text transition-colors hover:bg-primary-subtle hover:text-primary-dark"
+                                            >
+                                              {link.label}
+                                            </Link>
 
-                                {column.links.length > 0 ? (
-                                  <ul className="mt-3 space-y-1">
-                                    {column.links.map((link) => (
-                                      <li key={link.href}>
-                                        <Link
-                                          href={link.href}
-                                          className="block rounded-(--radius-button) px-2 py-1 text-xs leading-snug text-text transition-colors hover:bg-primary-subtle hover:text-primary-dark"
-                                        >
-                                          {link.label}
-                                        </Link>
-
-                                        {/* The third level — only the
-                                            blood cancers go this deep. */}
-                                        {link.links?.length ? (
-                                          <ul className="mt-1 ml-2 space-y-0.5 border-l border-border pl-3">
-                                            {link.links.map((child) => (
-                                              <li key={child.href}>
-                                                <Link
-                                                  href={child.href}
-                                                  className="block rounded-(--radius-button) px-2 py-1 text-xs leading-snug text-text-muted transition-colors hover:bg-primary-subtle hover:text-primary-dark"
-                                                >
-                                                  {child.label}
-                                                </Link>
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        ) : null}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                ) : null}
+                                            {/* The third level — only the
+                                                blood cancers go this deep. */}
+                                            {link.links?.length ? (
+                                              <ul className="mt-1 ml-2 space-y-0.5 border-l border-border pl-3">
+                                                {link.links.map((child) => (
+                                                  <li key={child.href}>
+                                                    <Link
+                                                      href={child.href}
+                                                      className="block rounded-(--radius-button) px-2 py-1 text-xs leading-snug text-text-muted transition-colors hover:bg-primary-subtle hover:text-primary-dark"
+                                                    >
+                                                      {child.label}
+                                                    </Link>
+                                                  </li>
+                                                ))}
+                                              </ul>
+                                            ) : null}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    ) : null}
+                                  </div>
+                                ))}
                               </li>
                             ))}
                         </ul>
