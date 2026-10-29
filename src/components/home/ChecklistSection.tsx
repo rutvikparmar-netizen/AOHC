@@ -54,7 +54,7 @@ export function ChecklistSection({
   /** `true` puts the section on white rather than the warm page colour. */
   surface?: boolean
 }) {
-  const { eyebrow, title, intro, items, outro, cta, image } = content
+  const { eyebrow, title, intro, items, outro, warning, cta, image } = content
 
   const leadParagraphs = (
     <div className="max-w-(--measure) space-y-4">
@@ -140,6 +140,30 @@ export function ChecklistSection({
                   right, which read as a mistake rather than as a measure. */}
               <p className="max-w-5xl self-center text-base leading-relaxed text-neutral-700">
                 {outro}
+              </p>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {/* ⚠️  LOUDER THAN THE OUTRO, ON PURPOSE. `warning` carries the
+            sentences that could harm someone if they were skimmed past —
+            not delaying standard treatment, and supplements interacting
+            with cancer medicines. Given the same tinted panel as the outro
+            they would read as more hedging, so this one is accent-bordered
+            with a triangle and the text is set bold.
+
+            It is accent teal rather than amber or red because there is no
+            warning colour in the token set, and inventing one for a single
+            panel would put a colour on this site that means nothing
+            anywhere else. The icon and the weight carry the register. */}
+        {warning ? (
+          <Reveal>
+            <div className="mt-5 flex gap-4 rounded-(--radius-2xl) border-2 border-accent bg-accent-subtle p-6 sm:gap-5 sm:p-7">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
+                <Icon name="alert-triangle" className="size-5" />
+              </span>
+              <p className="max-w-5xl self-center text-base font-bold leading-relaxed text-text">
+                {warning}
               </p>
             </div>
           </Reveal>

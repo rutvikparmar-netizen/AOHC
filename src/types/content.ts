@@ -85,6 +85,18 @@ export interface ListSection {
   items: string[]
   /** Paragraph after the list — usually the qualifying sentence. */
   outro?: string
+  /**
+   * A safety sentence set below `outro` in its own, louder panel.
+   *
+   * ⚠️  FOR THINGS THAT COULD HARM SOMEONE IF MISSED, not for a second
+   * qualifier. It exists because the integrative-care page has two sentences
+   * that are a different kind of statement from the rest — "an integrative
+   * approach should not delay a time-sensitive, potentially beneficial
+   * standard treatment", and the one about supplements interacting with
+   * cancer medicines. Folded into `outro` they read as more hedging; a
+   * reader who skips them has misread the list above as an offer.
+   */
+  warning?: string
   cta?: NavLink
   image?: ImageAsset
 }
@@ -109,6 +121,24 @@ export interface ClosingPanel {
    */
   note: string
   image?: ImageAsset
+}
+
+/**
+ * The dark, type-only hero at the top of an inner page.
+ *
+ * ⚠️  EVERY PAGE HAS TO OPEN ON SOMETHING DARK. `(site)/layout.tsx` renders
+ * `<Header variant="overlay" />` for all routes — transparent until you
+ * scroll, white wordmark, white nav — so a page that opens on the warm page
+ * colour loses its header entirely.
+ *
+ * `body` takes two paragraphs. They are set as columns under a rule, which
+ * is what keeps a type-only hero from leaving half the row empty; one
+ * paragraph makes that row look short, and three make the hero a wall.
+ */
+export interface PageHeroContent {
+  eyebrow: string
+  title: string
+  body: string[]
 }
 
 /**
@@ -523,5 +553,73 @@ export interface AboutContent {
   disclaimer: {
     title: string
     body: string[]
+  }
+}
+
+/**
+ * INTEGRATIVE CANCER CARE — `/integrative-cancer-care`.
+ *
+ * ⚠️  THE MOST SAFETY-SENSITIVE PAGE ON THE SITE. It is the one that tells a
+ * patient what AOHC thinks about treatments outside routine cancer care, and
+ * the supplied copy is careful in a way that is easy to erode by accident.
+ * Three things must survive any edit:
+ *
+ *   1. CONVENTIONAL ONCOLOGY IS NOT OPTIONAL in the copy's framing. "The
+ *      objective is not to replace evidence-based oncology with unproven
+ *      alternatives" is in the hero, and `conventional.warning` says an
+ *      integrative approach "should not delay a time-sensitive, potentially
+ *      beneficial standard treatment". Neither may be softened or dropped.
+ *   2. NOTHING HERE IS OFFERED. `supportive.outro` says the services "must
+ *      be confirmed with AOHC before they are represented as available".
+ *      That sentence is what keeps the list above it a description rather
+ *      than a menu.
+ *   3. `caution` IS A WARNING SECTION, NOT A SERVICE SECTION. It names no
+ *      therapy AOHC provides and promises nothing. Its `lead` — that a
+ *      rationale or early study "does not establish that a treatment is
+ *      safe or effective for a particular patient" — is the page's single
+ *      most important sentence.
+ */
+export interface IntegrativeCareContent {
+  hero: PageHeroContent
+
+  definition: {
+    eyebrow: string
+    title: string
+    body: string[]
+  }
+
+  conventional: ListSection
+  supportive: ListSection
+
+  /** "A Careful Approach to Emerging or Non-Standard Therapies". */
+  caution: {
+    eyebrow: string
+    title: string
+    body: string[]
+    /** The sentence to set apart. Must also appear in `body`. */
+    lead: string
+    /** Introduces `items` — the copy's "the clinical team should assess:". */
+    itemsIntro: string
+    items: string[]
+    outro: string
+  }
+
+  quality: {
+    eyebrow: string
+    title: string
+    body: string[]
+    image?: ImageAsset
+  }
+
+  /**
+   * NOT A `ClosingPanel`. That type requires lead paragraphs, two actions
+   * and a disclaimer under the buttons; the supplied copy for this page is
+   * a heading and one button, and the rest would have had to be written.
+   * The medical disclaimer that follows the band does the work `note` does
+   * elsewhere.
+   */
+  closing: {
+    title: string
+    cta: NavLink
   }
 }
