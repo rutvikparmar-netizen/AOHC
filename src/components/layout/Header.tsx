@@ -227,30 +227,82 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                   key={group.label}
                   className={`group flex shrink-0 items-center ${mega ? 'static' : 'relative'}`}
                 >
-                  <Link
-                    href={group.href ?? '#'}
-                    /* 14px and tighter padding, so eight items and the
-                       button fit on one row. 14px is the floor this type
-                       scale sets and `--text-xs` is the token for it — the
-                       scale's own note explains why nothing goes below. */
-                    className={`inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-(--radius-button) px-2 text-xs font-semibold transition-colors ${
-                      overlay
-                        ? 'text-white/85 hover:text-white group-data-[scrolled]/header:text-text group-data-[scrolled]/header:hover:text-primary-dark'
-                        : 'text-text hover:text-primary-dark'
-                    }`}
-                  >
-                    {group.label}
-                    {hasChildren ? (
-                      <Icon
-                        name="chevron-down"
-                        className={`size-3.5 transition-transform group-hover:rotate-180 ${
-                          overlay
-                            ? 'text-white/60 group-data-[scrolled]/header:text-text-subtle'
-                            : 'text-text-subtle'
-                        }`}
+                  {/**
+                   * ── The trigger, and what ties the panel to it ───────
+                   *
+                   * THE WRAPPER EXISTS TO ANCHOR THE CARET. The `<li>` is
+                   * `static` so the mega panel can centre on the header,
+                   * which means nothing inside it can be positioned
+                   * against the item itself. This span is `relative` and
+                   * `self-stretch`, so it is exactly as tall as the header
+                   * row and its bottom edge is where the panel begins —
+                   * giving the caret something to hang from without
+                   * disturbing the panel's own containing block.
+                   *
+                   * It must not be given a width or a background: the
+                   * `<li>` is the hover target, and shrinking the hit area
+                   * back to the label would reopen the dead band between
+                   * trigger and panel that the full-height items fixed.
+                   */}
+                  <span className="relative flex items-center self-stretch">
+                    <Link
+                      href={group.href ?? '#'}
+                      /* 14px and tighter padding, so eight items and the
+                         button fit on one row. 14px is the floor this type
+                         scale sets and `--text-xs` is the token for it —
+                         the scale's own note explains why nothing goes
+                         below.
+
+                         THE FILL IS THE "THIS ONE IS OPEN" MARKER. It is
+                         on `group-hover`, not `hover`, so it lights up
+                         while the pointer is anywhere in the panel below
+                         — the whole point is that it stays lit for as long
+                         as the menu it opened is on screen. */
+                      className={`inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-(--radius-button) px-2 text-xs font-semibold transition-colors ${
+                        overlay
+                          ? 'text-white/85 group-hover:bg-white/10 group-hover:text-white group-focus-within:bg-white/10 group-data-[scrolled]/header:text-text group-data-[scrolled]/header:group-hover:bg-primary-subtle group-data-[scrolled]/header:group-hover:text-primary-dark'
+                          : 'text-text group-hover:bg-primary-subtle group-hover:text-primary-dark group-focus-within:bg-primary-subtle'
+                      }`}
+                    >
+                      {group.label}
+                      {hasChildren ? (
+                        <Icon
+                          name="chevron-down"
+                          className={`size-3.5 transition-transform group-hover:rotate-180 ${
+                            overlay
+                              ? 'text-white/60 group-data-[scrolled]/header:text-text-subtle'
+                              : 'text-text-subtle'
+                          }`}
+                        />
+                      ) : null}
+                    </Link>
+
+                    {/**
+                     * ⚠️  THE CARET IS ONLY FOR THE MEGA PANEL. Every other
+                     * dropdown is `absolute left-0` inside its own
+                     * `relative` item, so it already hangs visibly beneath
+                     * the word that opened it. This one is centred on the
+                     * header and can open six items away from its trigger,
+                     * which is the whole problem it solves.
+                     *
+                     * ⚠️  `0.75rem` IS THE PANEL WRAPPER'S `pt-3`. The
+                     * caret is centred on the card's top edge: the half
+                     * above shows, the half below is covered because the
+                     * panel carries `z-(--z-dropdown)` and paints over it.
+                     * Change that padding and change this, or the caret
+                     * floats off the card or vanishes under it.
+                     *
+                     * `rotate` and `translate` are separate properties in
+                     * Tailwind v4, so the rotation and the centring
+                     * compose instead of overwriting one another.
+                     */}
+                    {mega ? (
+                      <span
+                        aria-hidden
+                        className="invisible absolute left-1/2 top-[calc(100%_+_0.75rem)] size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t border-border bg-surface opacity-0 transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100"
                       />
                     ) : null}
-                  </Link>
+                  </span>
 
                   {/**
                    * ── The expertise panel ──────────────────────────────
