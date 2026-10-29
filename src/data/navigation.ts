@@ -170,8 +170,11 @@ export const expertiseNav: MegaNavColumn[] = [
  * the button. Adding one means checking the header at 1280 before shipping
  * it — swapping Media for Cancer Types cost about 50px on its own.
  *
- * `/`, `/about-us`, `/cancer-types` and `/integrative-cancer-care` are
- * built. Every other target will 404 until written.
+ * `/`, `/about-us`, `/about-us/our-doctors`, `/cancer-types`,
+ * `/integrative-cancer-care`, `/international-patients` and
+ * `/treatments-and-therapies` are built. Every other target will 404 until
+ * written — including all seven children of International Patients, which
+ * that page deliberately does not link to for the same reason.
  */
 
 export const primaryNav: NavGroup[] = [

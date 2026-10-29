@@ -812,3 +812,91 @@ export interface CancerTypesContent {
     cta: NavLink
   }
 }
+
+/**
+ * One stage of the international enquiry process.
+ *
+ * ⚠️  THERE IS NO `number` OR `label` FIELD, ON PURPOSE. The supplied copy
+ * writes "Step 1: Initial Enquiry", but the position in the array is the step
+ * number and storing it twice is how the two come to disagree — insert a
+ * stage and every label below it is wrong while the markup is still right.
+ * `JourneySteps` prints the index.
+ *
+ * `body` is the prose before the list, `items` the list, `outro` the sentence
+ * after it. Only step 2 has a list at all; nothing may assume one.
+ *
+ * ⚠️  `caution` IS FOR THE TWO SENTENCES THAT PROTECT THE PATIENT, not for a
+ * limitation. It carries "do not send full medical records until the team has
+ * provided an appropriate secure submission method" and "patients should not
+ * travel for treatment without a clear plan" — an instruction a reader can
+ * act on and be harmed by missing. The limiting sentences on steps 3 and 4
+ * ("a preliminary review cannot guarantee…", "remote consultations… may not
+ * replace an in-person examination") are ordinary second paragraphs: they
+ * qualify what the step is, and putting four callouts in six cards would mean
+ * none of them reads as one.
+ */
+export interface EnquiryStep {
+  title: string
+  body: string[]
+  items?: string[]
+  outro?: string
+  caution?: string
+}
+
+/**
+ * INTERNATIONAL PATIENTS — `/international-patients`.
+ *
+ * ⚠️  THIS PAGE DESCRIBES A PROCESS. IT CONFIRMS NO SERVICE. The hero's note
+ * is the governing sentence — "acceptance for consultation or treatment
+ * depends on clinical assessment, service availability, travel feasibility,
+ * and applicable requirements" — and every stage below is written as what may
+ * be arranged rather than what is provided. One sentence of the supplied
+ * draft is deliberately not rendered because it is an instruction to AOHC
+ * about what it may advertise; it is quoted in full in
+ * `src/data/international-patients.ts`.
+ *
+ * ⚠️  THE SEVEN CHILD PAGES OF THIS SECTION DO NOT EXIST. `routes.ts` has
+ * payments, accommodation, SIM, cash to carry, sightseeing, airport pickup
+ * and medical visa, and the header renders them as a dropdown under this
+ * page's label. Nothing here may link to them until they are written — step 5
+ * names visas, accommodation and interpretation precisely because they are
+ * things to ask about, not pages to visit.
+ */
+export interface InternationalPatientsContent {
+  hero: PageHeroContent
+
+  /**
+   * The regions a patient may enquire from.
+   *
+   * `body` is the supplied sentence verbatim; `names` are the region names
+   * out of that same sentence, set beside it as a scanning aid. See the
+   * component for why both are shown.
+   */
+  regions: {
+    eyebrow: string
+    body: string
+    names: string[]
+  }
+
+  process: {
+    eyebrow: string
+    title: string
+    steps: EnquiryStep[]
+  }
+
+  /** "Important Considerations Before Travelling". */
+  considerations: ListSection
+
+  caregivers: TitledPassage
+
+  /**
+   * NOT A `ClosingPanel`, for the same reason as the other pages built from
+   * this draft: that type requires lead paragraphs, two actions and a
+   * disclaimer under the buttons, and the supplied copy is a heading and one
+   * button.
+   */
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}

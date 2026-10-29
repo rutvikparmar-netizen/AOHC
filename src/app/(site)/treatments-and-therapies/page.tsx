@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import type { Breadcrumb, TitledPassage } from '@/types'
+import type { Breadcrumb } from '@/types'
 /**
  * ⚠️  `treatments-page`, NOT `treatments`. `src/data/treatments.ts` is a
  * deliberately empty `Treatment[]` that the demo repository imports, and
@@ -19,6 +19,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
 import { EntryGrid } from '@/components/shared/EntryGrid'
+import { Passage } from '@/components/shared/Passage'
 import { CautionBand } from '@/components/treatments/CautionBand'
 
 /**
@@ -61,55 +62,6 @@ export const metadata: Metadata = buildMetadata({
     'The treatment categories a clinical discussion may cover, how molecular findings and investigational approaches are weighed, and how options are evaluated against an individual case.',
   canonicalPath: routes.treatments,
 })
-
-/**
- * A titled passage: heading left, prose right.
- *
- * Three sections share this shape, so they share a component rather than
- * three near-identical blocks of JSX. Heading beside the prose rather than
- * above it, because three paragraphs at a reading measure under a heading
- * leave the right half of the row empty.
- */
-function Passage({
-  content,
-  surface = false,
-}: {
-  content: TitledPassage
-  surface?: boolean
-}) {
-  return (
-    <section className={`py-(--spacing-section) ${surface ? 'bg-surface' : ''}`}>
-      <Container>
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <Reveal direction="left" className="lg:col-span-5">
-            <SectionHeader eyebrow={content.eyebrow ?? ''} title={content.title} />
-          </Reveal>
-
-          <Reveal direction="right" delay={80} className="lg:col-span-7">
-            {content.subtitle ? (
-              <h3 className="font-display text-xl font-bold leading-snug text-text">
-                {content.subtitle}
-              </h3>
-            ) : null}
-
-            <div
-              className={`max-w-(--measure) space-y-5 ${content.subtitle ? 'mt-5' : ''}`}
-            >
-              {content.body.map((paragraph) => (
-                <p
-                  key={paragraph.slice(0, 32)}
-                  className="text-base leading-relaxed text-neutral-700"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </Container>
-    </section>
-  )
-}
 
 export default function TreatmentsPage() {
   const { evaluation, safety, closing } = treatments

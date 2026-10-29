@@ -7,10 +7,10 @@ import { buildMetadata } from '@/lib/seo'
 import { breadcrumbSchema } from '@/lib/structured-data'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
-import { SectionHeader } from '@/components/ui/SectionHeader'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
+import { Passage } from '@/components/shared/Passage'
 import { ChecklistSection } from '@/components/home/ChecklistSection'
 import { TeamRoster } from '@/components/doctors/TeamRoster'
 
@@ -85,34 +85,11 @@ export default function DoctorsPage() {
       />
 
       {/* ── 3. Clinical responsibility and collaboration ───────────
-          Heading beside the prose rather than above it: two paragraphs
-          at a reading measure under a heading leave the right half of
-          the row empty. */}
-      <section className="py-(--spacing-section)">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <Reveal direction="left" className="lg:col-span-5">
-              <SectionHeader
-                eyebrow={responsibility.eyebrow ?? ''}
-                title={responsibility.title}
-              />
-            </Reveal>
-
-            <Reveal direction="right" delay={80} className="lg:col-span-7">
-              <div className="max-w-(--measure) space-y-5">
-                {responsibility.body.map((paragraph) => (
-                  <p
-                    key={paragraph.slice(0, 32)}
-                    className="text-base leading-relaxed text-neutral-700"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
+          Through the shared passage component — heading beside the prose
+          rather than above it, because two paragraphs at a reading
+          measure under a full-width heading leave the right half of the
+          row empty. */}
+      <Passage content={responsibility} />
 
       {/* ── 4. Closing ─────────────────────────────────────────────
           Thin, like the other pages built from this draft: the supplied

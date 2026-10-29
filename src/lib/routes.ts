@@ -3,8 +3,16 @@ import type { Slug } from '@/types'
 /**
  * Every internal URL in one place, mirroring the AOHC main menu.
  *
- * ONLY `/` IS BUILT SO FAR — the rest resolve to 404 until each page is
- * written, which is expected during build-out rather than a bug.
+ * MOST OF THESE ARE NOT BUILT YET — they resolve to 404 until each page is
+ * written, which is expected during build-out rather than a bug. Built so
+ * far: `home`, `about`, `doctors`, `cancerTypes`, `integrativeCare`,
+ * `international` and `treatments`.
+ *
+ * ⚠️  `international` IS BUILT BUT ITS SEVEN CHILDREN ARE NOT — payments,
+ * accommodation, sim, cashToCarry, sightseeing, airportPickup, medicalVisa.
+ * The header renders them as a dropdown under the parent, and the parent
+ * page deliberately does not link to them; see the note at the top of
+ * `src/data/international-patients.ts`.
  *
  * Components link via `routes.doctor(slug)` rather than an inline template
  * string, so a routing change is one edit here instead of a grep.
