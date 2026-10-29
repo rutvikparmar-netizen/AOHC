@@ -685,9 +685,9 @@ export interface TreatmentsContent {
   }
 
   /** A titled passage with its own sub-heading and prose. */
-  molecular: TreatmentPassage
-  procedures: TreatmentPassage
-  supportive: TreatmentPassage
+  molecular: TitledPassage
+  procedures: TitledPassage
+  supportive: TitledPassage
 
   /**
    * The two topics that need the most care — investigational/off-label
@@ -697,7 +697,7 @@ export interface TreatmentsContent {
    */
   caution: {
     eyebrow: string
-    topics: TreatmentPassage[]
+    topics: TitledPassage[]
   }
 
   /** "How Treatment Options Are Evaluated" — a numbered sequence. */
@@ -720,12 +720,51 @@ export interface TreatmentsContent {
   }
 }
 
-export interface TreatmentPassage {
+/** A titled run of prose: heading on the left, paragraphs on the right. */
+export interface TitledPassage {
   eyebrow?: string
   title: string
   /** The supplied sub-heading, where the draft has one. */
   subtitle?: string
   body: string[]
+}
+
+/**
+ * DOCTORS AND SPECIALISTS — `/about-us/our-doctors`.
+ *
+ * ⚠️  THE ROSTER IS NOT IN THIS TYPE. It lives on `home.team.members`,
+ * which is the transcription of artofhealingcancer.com/our-doctors and is
+ * already rendered as a preview on the home page. One list, two views —
+ * duplicating fifteen real people's names and credentials into a second
+ * file is how the two copies start to disagree.
+ *
+ * ⚠️  THESE ARE REAL PEOPLE AND THEIR CREDENTIALS. `TeamMember` renders
+ * each field only when present, so anything unverified must stay absent
+ * rather than be filled with a plausible guess. The supplied draft's
+ * per-doctor template — biography, areas of clinical focus, professional
+ * registration, consultation availability — is reproduced in
+ * `src/data/doctors-page.ts` as the spec for what still has to be
+ * gathered. None of it may be written by anyone but the doctor or AOHC.
+ */
+export interface DoctorsPageContent {
+  hero: PageHeroContent
+
+  /** "A Multidisciplinary Perspective" — the ten disciplines. */
+  disciplines: ListSection
+
+  /** Heading for the roster, which is read from `home.team.members`. */
+  team: {
+    eyebrow: string
+    title: string
+    cta: NavLink
+  }
+
+  responsibility: TitledPassage
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
 }
 
 /**

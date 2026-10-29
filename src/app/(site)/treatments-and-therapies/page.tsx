@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import type { Breadcrumb, TreatmentPassage } from '@/types'
+import type { Breadcrumb, TitledPassage } from '@/types'
 /**
  * ⚠️  `treatments-page`, NOT `treatments`. `src/data/treatments.ts` is a
  * deliberately empty `Treatment[]` that the demo repository imports, and
@@ -74,7 +74,7 @@ function Passage({
   content,
   surface = false,
 }: {
-  content: TreatmentPassage
+  content: TitledPassage
   surface?: boolean
 }) {
   return (
