@@ -212,8 +212,15 @@ export default function AboutPage() {
             </Reveal>
           </div>
 
+          {/* `onSurface`, because this section is `bg-surface`: a white
+              card on a white band is an invisible card. See the note on
+              the component. */}
           <div className="mt-12">
-            <LabelledList items={about.commitment.items} columns={3} />
+            <LabelledList
+              items={about.commitment.items}
+              columns={3}
+              onSurface
+            />
           </div>
 
           <Reveal>
