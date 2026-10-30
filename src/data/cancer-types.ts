@@ -40,14 +40,14 @@ export const cancerTypes: CancerTypesContent = {
   hero: {
     eyebrow: 'Cancer types',
     title: 'Understanding Your Diagnosis',
-    /* Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+    /* Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the
        note on `PageHeroContent.image`. A laboratory frame, because this
        page is about what a diagnosis is made of. */
     image: {
-      src: '/images/approach/precision-molecular.webp',
-      alt: 'A pipette dispensing into a row of sample vials in a laboratory',
-      width: 1672,
-      height: 941,
+      src: '/images/heroes/cancer-types.webp',
+      alt: 'A darkened laboratory bench with a microscope, slide trays and backlit scans',
+      width: 1942,
+      height: 809,
     },
     body: [
       'Cancer is not a single disease. Different cancer types—and even different tumours within the same person—can have distinct characteristics.',

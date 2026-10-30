@@ -165,13 +165,16 @@ export interface PageHeroContent {
    * A photograph behind the hero, held well back behind the dark field.
    *
    * ⚠️  DECORATION, AND IT HAS TO STAY DECORATION. `PageHero` renders it
-   * `aria-hidden` at low opacity under the teal, so it reads as texture and
-   * a change of subject between pages — never as evidence of anything. Every
-   * one of these is a stock photograph of models, not AOHC staff, patients
-   * or premises, which is why none of them is given meaningful alt text and
-   * why nothing on the page may caption or refer to one. The same rule
-   * governs every image on the home page; see the note on `hero.image` in
-   * `src/data/home.ts`.
+   * `aria-hidden` with `alt=""` under the teal, so it reads as a change of
+   * subject between pages — never as evidence of anything. None of these is
+   * AOHC staff, patients or premises, and none of them contains a face:
+   * they are generated frames of hands, backs and empty rooms, briefed that
+   * way because a recognisable face beside a clinical headline makes a claim
+   * about a person who does not exist. Nothing on the page may caption or
+   * refer to one. The `alt` on the record is an accurate note of what the
+   * frame shows, for a reviewer — the page does not announce it. The same
+   * rule governs every image on the home page; see the note on `hero.image`
+   * in `src/data/home.ts`.
    *
    * Optional: a page without one keeps the plain dark field, which is a
    * perfectly good hero and was the only arrangement until now.

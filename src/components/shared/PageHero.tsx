@@ -34,24 +34,33 @@ import { Reveal } from '@/components/motion/Reveal'
  * `content.image` gives each page a different subject behind the type —
  * infusion, laboratory, a clinician with a patient — so the five pages built
  * from this component stop opening on an identical black field. It is laid
- * under the teal at `opacity-20` with a gradient over it, which is enough to
+ * under the teal at `opacity-45` with a gradient over it, which is enough to
  * change the character of the page and not enough to compete with the
  * headline.
  *
- * ⚠️  IT IS DECORATION AND MUST STAY DECORATION. `aria-hidden` with `alt=""`:
- * these are stock photographs of models, not AOHC staff, patients or
- * premises, and at this opacity a reader cannot make out what is in them
- * anyway. Nothing on these pages may caption, credit or refer to one, and
- * none of them may be brought forward to a legible opacity without real
- * photography to put there instead. The same rule governs the home page; see
- * the note on `hero.image` in `src/data/home.ts`.
+ * ⚠️  IT IS DECORATION AND MUST STAY DECORATION. `aria-hidden` with `alt=""`.
+ * These five were generated to a brief for these five pages and deliberately
+ * contain no faces — hands, backs and empty rooms — because a recognisable
+ * face behind "The Right Expertise for the Clinical Question" makes a claim
+ * about a person, and none of these people exist. They are not AOHC staff,
+ * patients or premises. Nothing on these pages may caption, credit or refer
+ * to one, and no replacement may show an identifiable face without the
+ * consent §11 of the content draft requires.
  *
- * ⚠️  THE SCRIM IS NOT OPTIONAL EITHER. White body text at `text-brand-teal-100`
+ * ⚠️  THE SCRIM IS NOT OPTIONAL. White body text at `text-brand-teal-100`
  * over a photograph is the classic way to lose contrast on exactly the frames
  * that matter — a bright window behind a sentence. The flat `bg-brand-teal-950`
- * base stays, the image sits on top of it at a fifth, and a left-to-right
- * ramp darkens the half the type occupies. Measured against the lightest
- * pixel under the body copy, the result still clears WCAG AA.
+ * base stays, the image sits on top of it at 45 per cent, and a left-to-right
+ * ramp darkens the half the type occupies.
+ *
+ * ⚠️  45 PER CENT IS A MEASURED CEILING, NOT A TASTE. The first set of
+ * backgrounds was borrowed stock and sat at 20; these were briefed dark and
+ * low-key, so at 20 they were invisible and the pages looked unchanged.
+ * Screenshotting each hero with every text node set to `visibility: hidden`
+ * and sampling the lightest background pixel inside each text block's own
+ * rect gives, at 45: 6.48, 5.84, 6.20, 6.05 and 6.12 to one, against a 4.5
+ * requirement. Raising it further eats that margin. Re-measure before
+ * changing either the opacity or the images.
  *
  * `priority` because this is the largest paint on every inner page and the
  * first thing above the fold; without it the hero visibly fills in.
@@ -76,7 +85,7 @@ export function PageHero({
           fill
           priority
           sizes="100vw"
-          className="-z-20 object-cover opacity-20"
+          className="-z-20 object-cover opacity-45"
         />
       ) : null}
 

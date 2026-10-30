@@ -37,16 +37,16 @@ export const integrativeCare: IntegrativeCareContent = {
   hero: {
     eyebrow: 'Integrative cancer care',
     title: 'Considering Cancer Care From More Than One Perspective',
-    /* Decoration, rendered `alt=""` and `aria-hidden` at a fifth opacity —
+    /* Decoration, rendered `alt=""` and `aria-hidden` at 45 per cent opacity —
        see the note on `PageHeroContent.image`. The alt is kept accurate
        here as a record of what the frame shows, not because the page
-       announces it. Shared with the home page's approach bento, which is
-       acceptable at this opacity and worth knowing about. */
+       announces it. Commissioned for this page rather than borrowed from
+       the home page's bento, which is what the first version did. */
     image: {
-      src: '/images/approach/supportive-integrative.webp',
-      alt: 'A clinician sitting at a bedside, holding a patient’s hand',
-      width: 1672,
-      height: 941,
+      src: '/images/heroes/integrative-cancer-care.webp',
+      alt: 'A clinician’s hands resting over a patient’s at a bedside, a window beyond',
+      width: 1942,
+      height: 809,
     },
     body: [
       "Integrative cancer care brings conventional cancer treatment together with appropriate supportive approaches, based on the patient's needs and clinical circumstances.",

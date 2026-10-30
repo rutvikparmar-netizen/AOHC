@@ -50,20 +50,20 @@ export const internationalPatients: InternationalPatientsContent = {
     eyebrow: 'International patients',
     title: 'Helping Patients Navigate Cancer Care Across Borders',
     /**
-     * Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+     * Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the
      * note on `PageHeroContent.image`.
      *
-     * A consultation rather than anything about travel. There is no
-     * aeroplane, passport or globe in the repo, and the honest subject for
-     * this page is the thing the whole process leads to — the other four
-     * pages take the AOHC-supplied approach set, which has no frame that
-     * fits here.
+     * ⚠️  THE BRIGHTEST OF THE FIVE, AND THE ONE TO RE-MEASURE FIRST. The
+     * window runs the full width with sky behind it, so unlike the other
+     * four there is no dark half for the headline to sit on; the scrim is
+     * doing real work here rather than tidying up. Contrast was measured
+     * after it went in, not assumed.
      */
     image: {
-      src: '/images/consultation-room.jpg',
-      alt: 'A patient and a clinician talking across a desk in a consulting room',
-      width: 1400,
-      height: 788,
+      src: '/images/heroes/international-patients.webp',
+      alt: 'An airport walkway before dawn, aircraft on a wet apron beyond the glass',
+      width: 1942,
+      height: 809,
     },
     body: [
       'Patients travelling from another country may face additional challenges when arranging medical records, consultations, appointments, accommodation, travel, and follow-up care.',

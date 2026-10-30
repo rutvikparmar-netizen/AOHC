@@ -37,13 +37,13 @@ export const treatmentsPage: TreatmentsContent = {
   hero: {
     eyebrow: 'Treatments and therapies',
     title: 'Evaluating Treatment Options in the Context of Your Case',
-    /* Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+    /* Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the
        note on `PageHeroContent.image`. */
     image: {
-      src: '/images/approach/conventional-oncology.webp',
-      alt: 'An infusion stand beside a treatment chair in a day unit',
-      width: 1672,
-      height: 941,
+      src: '/images/heroes/treatments-and-therapies.webp',
+      alt: 'An empty infusion suite at low light, a drip stand beside a treatment chair',
+      width: 1942,
+      height: 809,
     },
     body: [
       'Treatment selection depends on the confirmed diagnosis, disease extent, tumour characteristics, previous treatment, patient health, available evidence, and the goals of care.',
