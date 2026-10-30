@@ -761,6 +761,65 @@ export interface TreatmentsContent {
   }
 }
 
+/**
+ * One stage of the patient journey.
+ *
+ * ⚠️  NO `number` FIELD. The position in the array is the stage number, and
+ * `JourneyDeck` prints the index — the supplied copy writes "Stage 1:
+ * Make an Enquiry", but holding the numeral in the data as well as the
+ * order is how a page comes to show "Stage 4" twice after someone inserts
+ * one. Same reasoning as `EnquiryStep`.
+ */
+export interface JourneyStage {
+  title: string
+  body: string[]
+}
+
+/**
+ * YOUR PATIENT JOURNEY — `/patient-journey`.
+ *
+ * ⚠️  THE WHOLE PAGE IS WRITTEN IN THE CONDITIONAL AND MUST STAY THERE.
+ * Every stage says what *may* happen — "the clinical team may consider",
+ * "if a treatment plan is proposed", "additional testing is not
+ * automatically required". It describes a process, not a promise about
+ * what any particular patient will be offered, and rewriting a "may" into
+ * a "will" turns a description into a commitment.
+ */
+export interface PatientJourneyContent {
+  hero: PageHeroContent
+
+  stages: {
+    eyebrow: string
+    title: string
+    items: JourneyStage[]
+  }
+
+  /** "What You Can Do to Prepare". */
+  prepare: ListSection
+
+  /**
+   * "You Remain Part of Every Decision".
+   *
+   * ⚠️  `emphasis` IS A PATIENT-RIGHTS STATEMENT, NOT A PULL QUOTE. It is
+   * the supplied line "You should never feel pressured to proceed with a
+   * test, treatment, or procedure you do not understand", and it is the
+   * only sentence on the page addressed to someone who is being pushed.
+   * It gets its own panel for that reason and must not be folded back
+   * into the prose to tidy the section.
+   */
+  consent: {
+    eyebrow: string
+    title: string
+    body: string[]
+    emphasis: string
+  }
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
 /** A titled run of prose: heading on the left, paragraphs on the right. */
 export interface TitledPassage {
   eyebrow?: string

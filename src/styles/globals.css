@@ -301,13 +301,28 @@
     backface-visibility: hidden;
   }
 
+  /* ⚠️  THE RECEDE IS GATED TO `lg` TO MATCH THE PIN, which the component
+     applies as `lg:sticky`. Below that the cards are a plain stacked list,
+     and a scroll-linked transform on a list that does not pin reads as
+     cards randomly dimming as they leave — the effect without the thing it
+     is explaining. The width is the same 64rem Tailwind's `lg` uses; change
+     one and change the other.
+
+     WHY THE PIN STOPS AT `lg` AT ALL: a sticky element taller than the
+     space below its `top` offset pins with its own bottom below the fold
+     and keeps it there, so the reader can never reach it. Measured on the
+     journey deck, the tallest card is 615px on a 360x800 phone against
+     618px of room — a 3px margin, and negative on any shorter handset. At
+     `lg` the cards are 209-240px against 704-788px. */
   @supports (animation-timeline: view()) {
-    .deck-card {
-      animation: deck-recede linear both;
-      animation-timeline: view();
-      /* Starts once the card has pinned and run most of its length, so the
-         card is readable before it begins to fall back. */
-      animation-range: exit-crossing 0% exit-crossing 100%;
+    @media (min-width: 64rem) {
+      .deck-card {
+        animation: deck-recede linear both;
+        animation-timeline: view();
+        /* Starts once the card has pinned and run most of its length, so
+           the card is readable before it begins to fall back. */
+        animation-range: exit-crossing 0% exit-crossing 100%;
+      }
     }
   }
 

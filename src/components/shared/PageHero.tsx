@@ -120,9 +120,19 @@ export function PageHero({
           </h1>
         </Reveal>
 
+        {/* ⚠️  ONE PARAGRAPH IS NOT SET AS A ONE-COLUMN GRID. Two columns
+            with the right half empty is the exact failure this hero was
+            built around, and `/patient-journey` supplies a single
+            sentence. It runs as one wide lead instead, capped at a
+            reading measure so it does not stretch to 1280px. Two or more
+            still take the columns. */}
         <Reveal
           delay={80}
-          className="mt-10 grid gap-x-14 gap-y-5 border-t border-white/15 pt-8 lg:grid-cols-2"
+          className={`mt-10 border-t border-white/15 pt-8 ${
+            content.body.length > 1
+              ? 'grid gap-x-14 gap-y-5 lg:grid-cols-2'
+              : 'max-w-3xl'
+          }`}
         >
           {content.body.map((paragraph) => (
             <p
