@@ -15,8 +15,16 @@ import { Reveal } from '@/components/motion/Reveal'
  * alternative is passing a solid header from the page — but the layout owns
  * the header, so the page cannot.
  *
- * `pt-36` is what clears the fixed bar, which also drops by `--gutter` at
- * rest on desktop. Change one and check the other.
+ * ⚠️  THE TOP PADDING CLEARS THE FIXED BAR AND IS NOT THE SAME AT EVERY
+ * WIDTH, BECAUSE THE BAR IS NOT. On a phone the header is 64px and sits
+ * flush at the top, so `pt-24` leaves 32px of air above the breadcrumb.
+ * From `lg` the bar also drops by `--gutter` at rest, which is why it needs
+ * `pt-44`.
+ *
+ * It was `pt-36` at every width: 144px against a 64px header, so every page
+ * but the home one opened on 80px of nothing. Measure the header before
+ * changing either number, and change `AboutHero` with it — the two heroes
+ * have to agree or the about page sits lower than its siblings.
  *
  * NO PHOTOGRAPH, WHICH IS WHY THE BODY IS TWO COLUMNS. `AboutHero` puts a
  * picture in the right five columns; this one has nothing to put there, and
@@ -73,7 +81,7 @@ export function PageHero({
   trail: Breadcrumb[]
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-brand-teal-950 pb-16 pt-36 text-white lg:pb-20 lg:pt-44">
+    <section className="relative isolate overflow-hidden bg-brand-teal-950 pb-14 pt-24 text-white lg:pb-20 lg:pt-44">
       {/* ⚠️  DECORATION ONLY — see the note above. `alt=""` and
           `aria-hidden`, because it is a stock photograph of models and at
           this opacity it is texture rather than a picture of anything. */}

@@ -15,8 +15,16 @@ import { Reveal } from '@/components/motion/Reveal'
  * the header, so the page cannot, and a dark opening panel is the right
  * answer for this page anyway.
  *
- * `pt-36` is what clears the fixed bar, which also drops by `--gutter` at
- * rest on desktop. Change one and check the other.
+ * ⚠️  THE TOP PADDING CLEARS THE FIXED BAR AND IS NOT THE SAME AT EVERY
+ * WIDTH, BECAUSE THE BAR IS NOT. On a phone the header is 64px and sits
+ * flush at the top, so `pt-24` leaves 32px of air above the breadcrumb.
+ * From `lg` the bar also drops by `--gutter` at rest, which is why it needs
+ * `pt-44`.
+ *
+ * It was `pt-36` at every width: 144px against a 64px header, so this page
+ * opened on 80px of nothing. These numbers are shared with `PageHero`, which
+ * every other inner page uses — change one and change the other, or the
+ * about page sits lower than its siblings.
  *
  * FULL BLEED, NOT AN INSET CARD. The home hero is a rounded card floating on
  * the page colour because it holds video; this one holds type, and running it
@@ -30,7 +38,7 @@ export function AboutHero({
   trail: Breadcrumb[]
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-brand-teal-950 pb-16 pt-36 text-white lg:pb-24 lg:pt-44">
+    <section className="relative isolate overflow-hidden bg-brand-teal-950 pb-14 pt-24 text-white lg:pb-24 lg:pt-44">
       {/* A single soft light behind the type, the same device the reach
           section uses, so the flat dark does not read as a block of ink. */}
       <div
