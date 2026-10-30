@@ -70,12 +70,21 @@ export const metadata: Metadata = {
   applicationName: site.name,
   /**
    * No `icons` entry, deliberately. Next's file convention picks up
-   * `src/app/icon.png` — the lotus cropped out of the logo — and generates
-   * the correct `<link>` tags with a content hash.
+   * `src/app/favicon.ico`, `icon.png` and `apple-icon.png` and emits the
+   * three `<link>` tags with a content hash on each. Declaring `icons` here
+   * would override all of that.
    *
-   * Declaring `icons` here would override that and point back at the old
-   * placeholder SVG. The lockup itself is not usable as a favicon: the
-   * wordmark is illegible below about 64px, so only the mark is used.
+   * ⚠️  THE SET IS AOHC'S SUPPLIED MARK — a white lotus on the brand teal,
+   * which is #0d9cae and therefore the same colour as `themeColor` below to
+   * within a digit per channel. It replaced a pale blue lotus on white that
+   * was effectively invisible on a light tab strip. The lockup in
+   * `public/aohc-logo.svg` is still not usable here: the wordmark is
+   * illegible below about 64px, so only the mark is used.
+   *
+   * ⚠️  THE PNG INSIDE `favicon.ico` HAS TO BE RGBA. Next decodes that file
+   * with its Rust pipeline, which rejects anything else outright — the whole
+   * dev server 500s with "The PNG is not in RGBA format!", not just the icon
+   * route. Regenerate it with an alpha channel and no palette.
    */
 }
 
