@@ -49,6 +49,22 @@ export const internationalPatients: InternationalPatientsContent = {
   hero: {
     eyebrow: 'International patients',
     title: 'Helping Patients Navigate Cancer Care Across Borders',
+    /**
+     * Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+     * note on `PageHeroContent.image`.
+     *
+     * A consultation rather than anything about travel. There is no
+     * aeroplane, passport or globe in the repo, and the honest subject for
+     * this page is the thing the whole process leads to — the other four
+     * pages take the AOHC-supplied approach set, which has no frame that
+     * fits here.
+     */
+    image: {
+      src: '/images/consultation-room.jpg',
+      alt: 'A patient and a clinician talking across a desk in a consulting room',
+      width: 1400,
+      height: 788,
+    },
     body: [
       'Patients travelling from another country may face additional challenges when arranging medical records, consultations, appointments, accommodation, travel, and follow-up care.',
       'AOHC aims to provide clear information about the consultation process and the arrangements that may be available to international patients.',

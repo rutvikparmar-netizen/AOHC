@@ -162,6 +162,22 @@ export interface PageHeroContent {
   title: string
   body: string[]
   /**
+   * A photograph behind the hero, held well back behind the dark field.
+   *
+   * ⚠️  DECORATION, AND IT HAS TO STAY DECORATION. `PageHero` renders it
+   * `aria-hidden` at low opacity under the teal, so it reads as texture and
+   * a change of subject between pages — never as evidence of anything. Every
+   * one of these is a stock photograph of models, not AOHC staff, patients
+   * or premises, which is why none of them is given meaningful alt text and
+   * why nothing on the page may caption or refer to one. The same rule
+   * governs every image on the home page; see the note on `hero.image` in
+   * `src/data/home.ts`.
+   *
+   * Optional: a page without one keeps the plain dark field, which is a
+   * perfectly good hero and was the only arrangement until now.
+   */
+  image?: ImageAsset
+  /**
    * A qualifying line under the body, set small beside an icon.
    *
    * For the sentence that says what the page is NOT — "the information on

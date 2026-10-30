@@ -52,6 +52,22 @@ export const doctorsPage: DoctorsPageContent = {
   hero: {
     eyebrow: 'Doctors and specialists',
     title: 'The Right Expertise for the Clinical Question',
+    /**
+     * Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+     * note on `PageHeroContent.image`.
+     *
+     * ⚠️  THESE ARE MODELS, NOT THE AOHC TEAM, and on this page of all
+     * pages that distinction matters: the real roster is fifteen named
+     * people further down, with their own photographs. The frame is held
+     * at a fifth and unlabelled precisely so it cannot be read as a
+     * picture of the team.
+     */
+    image: {
+      src: '/images/approach/individualized-planning.webp',
+      alt: 'Two clinicians conferring over a tablet in a consulting room',
+      width: 1672,
+      height: 941,
+    },
     body: [
       "Cancer care may involve several medical disciplines. The specialists required depend on the patient's diagnosis, the treatment decision under consideration, and any additional medical needs.",
       'AOHC aims to support an individualized review process and appropriate coordination with qualified healthcare professionals.',

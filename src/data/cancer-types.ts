@@ -40,6 +40,15 @@ export const cancerTypes: CancerTypesContent = {
   hero: {
     eyebrow: 'Cancer types',
     title: 'Understanding Your Diagnosis',
+    /* Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+       note on `PageHeroContent.image`. A laboratory frame, because this
+       page is about what a diagnosis is made of. */
+    image: {
+      src: '/images/approach/precision-molecular.webp',
+      alt: 'A pipette dispensing into a row of sample vials in a laboratory',
+      width: 1672,
+      height: 941,
+    },
     body: [
       'Cancer is not a single disease. Different cancer types—and even different tumours within the same person—can have distinct characteristics.',
       "AOHC's review process should begin with the confirmed diagnosis, pathology findings, imaging, previous treatment, current condition, and the questions the patient wants addressed.",

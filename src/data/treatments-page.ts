@@ -37,6 +37,14 @@ export const treatmentsPage: TreatmentsContent = {
   hero: {
     eyebrow: 'Treatments and therapies',
     title: 'Evaluating Treatment Options in the Context of Your Case',
+    /* Decoration — `alt=""` and `aria-hidden` at a fifth opacity. See the
+       note on `PageHeroContent.image`. */
+    image: {
+      src: '/images/approach/conventional-oncology.webp',
+      alt: 'An infusion stand beside a treatment chair in a day unit',
+      width: 1672,
+      height: 941,
+    },
     body: [
       'Treatment selection depends on the confirmed diagnosis, disease extent, tumour characteristics, previous treatment, patient health, available evidence, and the goals of care.',
       "AOHC's approach is to consider clinically relevant options rather than assume that a single treatment pathway is appropriate for every patient.",
