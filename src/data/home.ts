@@ -664,10 +664,14 @@ export const home: HomeContent = {
     },
     {
       name: 'Business Today',
+      /* Supplied by AOHC and knocked out of its white JPEG background. The
+         strip composites with `mix-blend-multiply`, which hides a white
+         field on a light page but leaves JPEG ringing round the letters as
+         grey mottling — and every other logo here is a transparent PNG. */
       logo: {
         src: '/images/press/business-today.png',
         alt: 'Business Today',
-        width: 527,
+        width: 455,
         height: 59,
       },
     },
