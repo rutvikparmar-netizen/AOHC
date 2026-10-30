@@ -57,6 +57,16 @@ export interface MegaNavColumn {
   href?: string
   links: MegaNavLink[]
   /**
+   * A closing link under the list, set apart by a rule — "View all cancer
+   * types", "View all treatments".
+   *
+   * For a column that shows a useful subset rather than everything. The
+   * heading is already a link to the same place where `href` is set; this
+   * one is there because a reader scanning a list of nine looks for the way
+   * out at the BOTTOM of it, not at the top.
+   */
+  footer?: NavLink
+  /**
    * The `label` of the column this one sits beneath, instead of taking a
    * column of its own.
    *

@@ -1,5 +1,58 @@
 import type { MegaNavColumn, NavGroup, NavLink } from '@/types'
 import { routes } from '@/lib/routes'
+import { slugify } from '@/lib/utils'
+import { cancerTypes } from '@/data/cancer-types'
+import { treatmentsPage } from '@/data/treatments-page'
+
+/**
+ * CANCER CARE — the two-column menu.
+ *
+ * ⚠️  BOTH LISTS ARE GENERATED FROM THE PAGES THEY POINT AT, not typed out
+ * here. Every entry links to an anchor on `/cancer-types` or
+ * `/treatments-and-therapies`, and both the anchor and the label come from
+ * the same record that renders the section — `EntryGrid` puts the id on
+ * each entry with the same `slugify`. Hand-writing either list is how a
+ * menu ends up naming a cancer the page no longer lists, or linking an
+ * anchor that silently scrolls nowhere.
+ *
+ * ⚠️  THESE ARE ANCHORS, NOT PER-TOPIC PAGES. `/cancer-types/breast-cancer`
+ * and `/treatments-and-therapies/chemotherapy` resolve in `routes.ts` and
+ * neither exists; the hero's nine cancer-type chips pointed at exactly
+ * those and were nine dead links until they were removed. The full text of
+ * every entry is already on the index page, so an anchor takes a reader to
+ * the actual content rather than to a 404. When the per-topic pages are
+ * written, swap `#${slug}` for `routes.cancerType(slug)` here and the menu
+ * follows.
+ *
+ * "Other Cancer Types" is dropped from the menu and stays on the page: it is
+ * the catch-all entry, and as a menu item it tells a reader nothing.
+ */
+const cancerCareNav: MegaNavColumn[] = [
+  {
+    label: 'Cancer Types',
+    href: routes.cancerTypes,
+    links: cancerTypes.index.types
+      .filter((type) => type.name !== 'Other Cancer Types')
+      .map((type) => ({
+        label: type.name,
+        href: `${routes.cancerTypes}#${slugify(type.name)}`,
+      })),
+    footer: { label: 'View all cancer types', href: routes.cancerTypes },
+  },
+  {
+    label: 'Cancer Treatments',
+    href: routes.treatments,
+    links: [
+      ...treatmentsPage.conventional.entries.map((entry) => ({
+        label: entry.name,
+        href: `${routes.treatments}#${slugify(entry.name)}`,
+      })),
+      /* The one entry that is its own page rather than an anchor. */
+      { label: 'Integrative Care', href: routes.integrativeCare },
+    ],
+    footer: { label: 'View all treatments', href: routes.treatments },
+  },
+]
 
 /**
  * OUR EXPERTISE — the full-width menu, transcribed from the supplied
@@ -229,7 +282,15 @@ export const primaryNav: NavGroup[] = [
    * `/cancer-types` itself unlinked; see the note at the top of
    * `src/data/cancer-types.ts`.
    */
-  { label: 'Cancer Types', href: routes.cancerTypes, links: [] },
+  {
+    label: 'Cancer Care',
+    href: routes.cancerTypes,
+    /* Empty on purpose: `mega` is what this group renders. Two columns, so
+       the header gives it the narrow panel rather than the full-width
+       sheet — see `narrow` in `Header.tsx`. */
+    links: [],
+    mega: cancerCareNav,
+  },
   {
     label: 'International Patients',
     href: routes.international,

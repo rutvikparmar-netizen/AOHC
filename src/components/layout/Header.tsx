@@ -231,6 +231,22 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
               const mega = group.mega
               const hasChildren = mega ? mega.length > 0 : group.links.length > 0
 
+              /**
+               * A TWO-COLUMN PANEL IS NOT A MEGA MENU, AND MUST NOT BE
+               * POSITIONED LIKE ONE. "Our Expertise" has forty-odd entries
+               * and wants the full window; "Cancer Care" has two short
+               * lists and wants a narrow panel hanging under its own
+               * trigger. Centring two columns in a 1420px sheet leaves
+               * most of the width empty and detaches the panel from the
+               * word that opened it.
+               *
+               * Three things key off this: whether the `<li>` is `static`
+               * or `relative` (which decides what the panel resolves
+               * against), the panel's width and offset, and the column
+               * grid. Everything else is shared.
+               */
+              const narrow = !!mega && mega.length <= 2
+
               return (
                 /**
                  * `static` FOR THE MEGA ITEM, `relative` FOR THE REST.
@@ -249,7 +265,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                    instead of the row simply being too wide. */
                 <li
                   key={group.label}
-                  className={`group flex shrink-0 items-center ${mega ? 'static' : 'relative'}`}
+                  className={`group flex shrink-0 items-center ${mega && !narrow ? 'static' : 'relative'}`}
                 >
                   {/**
                    * ── The trigger, and what ties the panel to it ───────
@@ -354,7 +370,13 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                    * them inside an arbitrary value.
                    */}
                   {mega ? (
-                    <div className="invisible absolute left-1/2 top-full z-(--z-dropdown) w-[min(1420px,calc(100vw_-_2.5rem))] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                    <div
+                      className={`invisible absolute top-full z-(--z-dropdown) translate-y-1 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 ${
+                        narrow
+                          ? 'left-0 w-[min(34rem,calc(100vw_-_2.5rem))]'
+                          : 'left-1/2 w-[min(1420px,calc(100vw_-_2.5rem))] -translate-x-1/2'
+                      }`}
+                    >
                       <div className="max-h-[min(44rem,calc(100dvh_-_8rem))] overflow-y-auto rounded-(--radius-panel) border border-border bg-surface p-6 shadow-(--shadow-dropdown)">
                           {/* FIVE CELLS, WITH THE EXTRA COLUMNS STACKED
                               INSIDE ONE rather than wrapping to a second
@@ -380,7 +402,13 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
 
                               The scroll cap stays as a backstop for short
                               windows; it should not normally be hit. */}
-                          <ul className="grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-x-4">
+                          <ul
+                            className={
+                              narrow
+                                ? 'grid grid-cols-2 gap-x-8'
+                                : 'grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-x-4'
+                            }
+                          >
                             {stackMegaColumns(mega).map((cell) => (
                               <li key={cell.key}>
                                 {cell.stack.map((column, depth) => (
@@ -425,6 +453,19 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                                           </li>
                                         ))}
                                       </ul>
+                                    ) : null}
+
+                                    {/* The way out of a partial list, under
+                                        a rule at the BOTTOM — which is where
+                                        someone who has read nine entries and
+                                        not found theirs is looking. */}
+                                    {column.footer ? (
+                                      <Link
+                                        href={column.footer.href}
+                                        className="mt-3 block border-t border-border px-2 pt-3 text-xs font-bold text-accent-dark hover:underline"
+                                      >
+                                        {column.footer.label}
+                                      </Link>
                                     ) : null}
                                   </div>
                                 ))}

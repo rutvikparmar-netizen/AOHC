@@ -57,6 +57,7 @@ export function Reveal({
   direction = 'up',
   delay = 0,
   className,
+  id,
   as: Tag = 'div',
 }: {
   children: React.ReactNode
@@ -64,6 +65,15 @@ export function Reveal({
   /** Milliseconds. Stagger siblings with `delay={index * 70}`. */
   delay?: number
   className?: string
+  /**
+   * An anchor target on the revealed element.
+   *
+   * `EntryGrid` uses it so the Cancer Care menu can link straight to a
+   * named cancer or treatment. Pair it with a `scroll-mt-*` in `className`
+   * — the header is fixed, and without one it lands on top of whatever the
+   * reader was sent to.
+   */
+  id?: string
   as?: 'div' | 'section' | 'li' | 'article' | 'header'
 }) {
   const ref = useRef<HTMLElement>(null)
@@ -109,6 +119,7 @@ export function Reveal({
   return (
     <Tag
       ref={ref as React.Ref<never>}
+      id={id}
       data-reveal={direction}
       style={delay ? ({ '--reveal-delay': `${delay}ms` } as React.CSSProperties) : undefined}
       className={className}
