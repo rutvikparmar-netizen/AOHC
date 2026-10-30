@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { allMarkers, homeMarker, type ReachMarker } from '@/data/reach'
 import { routes } from '@/lib/routes'
-import { site } from '@/lib/site'
+import { APPOINTMENT_CTA, site } from '@/lib/site'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { RealGlobe } from './RealGlobe'
@@ -195,7 +195,7 @@ export function ReachExplorer() {
             icon="arrow-right"
             className="w-full rounded-(--radius-pill) sm:w-fit"
           >
-            International Patient Enquiry
+            {APPOINTMENT_CTA}
           </Button>
         </div>
       </div>

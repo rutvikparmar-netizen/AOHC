@@ -1,5 +1,6 @@
 import type { DoctorsPageContent } from '@/types'
 import { routes } from '@/lib/routes'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * DOCTORS AND SPECIALISTS PAGE COPY
@@ -106,7 +107,7 @@ export const doctorsPage: DoctorsPageContent = {
     eyebrow: 'Meet our team',
     title: 'The Specialists Behind Your Care',
     /* The call to action the draft's per-doctor template specifies. */
-    cta: { label: 'Request a Consultation', href: routes.consultation },
+    cta: { label: APPOINTMENT_CTA, href: routes.consultation },
   },
 
   responsibility: {
@@ -123,6 +124,6 @@ export const doctorsPage: DoctorsPageContent = {
     /* `routes.contact` is the home page's enquiry form — see the note in
        `routes.ts`. Every CTA on the site lands there until the real contact
        page ships. */
-    cta: { label: 'Contact AOHC', href: routes.contact },
+    cta: { label: APPOINTMENT_CTA, href: routes.contact },
   },
 }

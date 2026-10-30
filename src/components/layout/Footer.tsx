@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { footerNav, legalNav } from '@/data/navigation'
 import { whatsappHref } from '@/lib/format'
-import { site } from '@/lib/site'
+import { APPOINTMENT_CTA, site } from '@/lib/site'
 import { routes } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
@@ -92,7 +92,7 @@ export function Footer() {
               icon="arrow-right"
               className="rounded-(--radius-pill)"
             >
-              Request a Consultation
+              {APPOINTMENT_CTA}
             </Button>
 
             {/* WhatsApp and email belong here too — the footer is where

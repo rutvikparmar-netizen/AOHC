@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { MegaNavColumn } from '@/types'
 import { routes } from '@/lib/routes'
-import { site } from '@/lib/site'
+import { APPOINTMENT_CTA, site } from '@/lib/site'
 import { primaryNav } from '@/data/navigation'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
@@ -204,7 +204,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
          *
          * Logo, nav and button come to 1240px of content before any gaps.
          * At 1280 the container is 1200px, so the row was 40px over and the
-         * auto margins had nothing left to give: "Request a Consultation"
+         * auto margins had nothing left to give: "Request an Appointment"
          * was pushed past the right edge and clipped by the hero card's
          * `overflow-hidden`. It was already ~27px over with the old eight
          * items and went to ~72px when Media was swapped for the longer
@@ -534,7 +534,7 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
               className="rounded-(--radius-pill) whitespace-nowrap"
             >
               {/* ONE primary label across the whole site. */}
-              Request a Consultation
+              {APPOINTMENT_CTA}
             </Button>
           </div>
 

@@ -7,6 +7,7 @@ import type { NavGroup } from '@/types'
 import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/Button'
 import { routes } from '@/lib/routes'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * The small-screen navigation drawer, with drill-down submenus.
@@ -355,7 +356,7 @@ export function MobileMenu({
               className="w-full"
               icon="arrow-right"
             >
-              Request a Consultation
+              {APPOINTMENT_CTA}
             </Button>
           </div>
         </div>

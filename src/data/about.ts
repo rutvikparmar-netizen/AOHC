@@ -1,5 +1,6 @@
 import type { AboutContent } from '@/types'
 import { routes } from '@/lib/routes'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * ABOUT US PAGE COPY
@@ -421,7 +422,7 @@ export const about: AboutContent = {
       'If you or a loved one is exploring cancer-care options, you can contact AOHC to learn about the enquiry process and ask which consultations or services may be available for your circumstances.',
       'Our team can explain the next steps and the information that may be needed to assess your enquiry.',
     ],
-    primaryCta: { label: 'Request a Consultation', href: routes.consultation },
+    primaryCta: { label: APPOINTMENT_CTA, href: routes.consultation },
     secondaryCta: { label: 'Contact AOHC', href: routes.contact },
     note: 'Submitting an enquiry does not guarantee acceptance for consultation, eligibility for a particular treatment, or a specific clinical outcome.',
     image: {

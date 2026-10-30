@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { site } from '@/lib/site'
+import { APPOINTMENT_CTA, site } from '@/lib/site'
 import { routes } from '@/lib/routes'
 import { Icon } from '@/components/ui/Icon'
 
@@ -48,7 +48,7 @@ export function MobileBottomBar() {
           className="flex min-h-14 flex-1 items-center justify-center gap-2.5 bg-accent text-base font-semibold text-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white"
         >
           <Icon name="calendar" className="size-5" />
-          Book Appointment
+          {APPOINTMENT_CTA}
         </Link>
       </div>
     </div>

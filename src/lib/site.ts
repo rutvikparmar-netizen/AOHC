@@ -161,6 +161,28 @@ export function absoluteUrl(path = '/'): string {
 }
 
 /**
+ * The label on every button that asks a reader to get in touch.
+ *
+ * ⚠️  ONE CONSTANT BECAUSE THE SITE HAD SEVEN DIFFERENT WORDINGS FOR THE
+ * SAME ACTION: "Request a Consultation", "Request an Appointment", "Book
+ * Appointment", "Contact AOHC", "Contact Our Team", "Ask About Your Cancer
+ * Type" and "International Patient Enquiry" — all of them pointing at the
+ * same anchor, scattered across nine data files and four components. A
+ * reader crossing three pages met three different names for one thing.
+ *
+ * Importing it is what keeps a new page from inventing an eighth. Change
+ * the wording here and it changes on the header, the footer, the mobile
+ * bar, the drawer, the hero and the foot of every page at once.
+ *
+ * THE ONE EXCEPTION IS A SECONDARY BUTTON BESIDE A PRIMARY. `ClosingPanel`
+ * on the home and about pages renders two actions side by side; both would
+ * read "Request an Appointment", which is not consistency but a stutter.
+ * Those keep "Contact AOHC" and "Contact Our Team" — the quieter of the
+ * pair, and a different register.
+ */
+export const APPOINTMENT_CTA = 'Request an Appointment'
+
+/**
  * The medical disclaimer, quoted from section 16C of the content draft.
  *
  * Centralised because it must be identical everywhere it appears and must

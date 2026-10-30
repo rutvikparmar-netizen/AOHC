@@ -1,5 +1,6 @@
 import type { CancerTypesContent } from '@/types'
 import { routes } from '@/lib/routes'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * CANCER TYPES PAGE COPY
@@ -189,6 +190,6 @@ export const cancerTypes: CancerTypesContent = {
     /* `routes.consultation` is the home page's enquiry form — see the note
        in `routes.ts`. Every CTA on the site lands there until the real
        contact page ships. */
-    cta: { label: 'Ask About Your Cancer Type', href: routes.consultation },
+    cta: { label: APPOINTMENT_CTA, href: routes.consultation },
   },
 }

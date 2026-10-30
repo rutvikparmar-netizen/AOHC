@@ -1,5 +1,6 @@
 import type { IntegrativeCareContent } from '@/types'
 import { routes } from '@/lib/routes'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * INTEGRATIVE CANCER CARE PAGE COPY
@@ -187,6 +188,6 @@ export const integrativeCare: IntegrativeCareContent = {
      * in `routes.ts`. Every CTA on the site lands there until the real
      * contact page ships.
      */
-    cta: { label: 'Request a Consultation', href: routes.consultation },
+    cta: { label: APPOINTMENT_CTA, href: routes.consultation },
   },
 }

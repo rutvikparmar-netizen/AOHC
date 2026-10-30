@@ -1,6 +1,6 @@
 import type { HomeContent } from '@/types'
 import { routes } from '@/lib/routes'
-import { site } from '@/lib/site'
+import { APPOINTMENT_CTA, site } from '@/lib/site'
 
 /**
  * HOME PAGE COPY
@@ -43,7 +43,7 @@ export const home: HomeContent = {
       'At Art of Healing Cancer (AOHC), our approach is built around understanding the individual behind the diagnosis. We aim to bring relevant clinical information together and evaluate appropriate conventional and integrative options with the patient’s needs at the centre.',
       'Our goal is to help patients and families better understand their options and make informed decisions in collaboration with qualified healthcare professionals.',
     ],
-    primaryCta: { label: 'Request a Consultation', href: routes.consultation },
+    primaryCta: { label: APPOINTMENT_CTA, href: routes.consultation },
     secondaryCta: { label: 'Understand Our Approach', href: routes.integrativeCare },
     /**
      * STOCK PHOTOGRAPHY, AND THE ALT TEXT SAYS SO BY SAYING NOTHING.
@@ -363,7 +363,7 @@ export const home: HomeContent = {
         },
       },
     ],
-    cta: { label: 'Request an Appointment', href: routes.consultation },
+    cta: { label: APPOINTMENT_CTA, href: routes.consultation },
   },
 
   /**
@@ -483,7 +483,7 @@ export const home: HomeContent = {
           'Consultation arrangements, travel assistance and accommodation are confirmed with you before anything is booked.',
       },
     ],
-    cta: { label: 'International Patient Enquiry', href: routes.internationalEnquiry },
+    cta: { label: APPOINTMENT_CTA, href: routes.internationalEnquiry },
     image: {
       src: '/images/consultation-room.jpg',
       alt: 'A clinician and a patient talking across a desk in a consulting room',
@@ -533,7 +533,7 @@ export const home: HomeContent = {
       'If you or someone you care for has received a cancer diagnosis and would like to understand the available options, you can contact AOHC to discuss the next steps.',
       'Please share medical information only through the secure channel provided by our team.',
     ],
-    primaryCta: { label: 'Request a Consultation', href: routes.consultation },
+    primaryCta: { label: APPOINTMENT_CTA, href: routes.consultation },
     secondaryCta: { label: 'Contact Our Team', href: routes.contact },
     note: 'A consultation request does not establish a doctor–patient relationship or guarantee acceptance for treatment.',
     /**

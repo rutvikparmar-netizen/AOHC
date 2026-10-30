@@ -1,5 +1,6 @@
 import type { TreatmentsContent } from '@/types'
 import { routes } from '@/lib/routes'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * TREATMENTS AND THERAPIES PAGE COPY
@@ -209,6 +210,6 @@ export const treatmentsPage: TreatmentsContent = {
     /* `routes.consultation` is the home page's enquiry form — see the note
        in `routes.ts`. Every CTA on the site lands there until the real
        contact page ships. */
-    cta: { label: 'Request a Consultation', href: routes.consultation },
+    cta: { label: APPOINTMENT_CTA, href: routes.consultation },
   },
 }
