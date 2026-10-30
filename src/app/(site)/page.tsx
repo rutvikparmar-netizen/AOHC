@@ -12,7 +12,7 @@ import { Todo } from '@/components/ui/Todo'
 import { makeCaptcha } from '@/lib/forms/captcha'
 import { EnquiryForm } from '@/components/forms/EnquiryForm'
 import { Hero } from '@/components/home/Hero'
-import { HeroPoints } from '@/components/home/HeroPoints'
+import { HeroPointsBand } from '@/components/home/HeroPointsBand'
 import { DoctorsGrid } from '@/components/home/DoctorsGrid'
 import { PressMarquee } from '@/components/home/PressMarquee'
 import { ReachSection } from '@/components/home/ReachSection'
@@ -88,19 +88,22 @@ export default function HomePage() {
 
   return (
     <>
-      {/* The hero promotes the organisation, not any one doctor. */}
-      <Hero
-        content={home.hero}
-        cancerTypes={home.cancerTypes}
-        storyCount={home.testimonials.items.length}
-      />
+      {/* The hero promotes the organisation, not any one doctor.
 
-      {/* ── Hero trust points ─────────────────────────────────────────
-          Four of them, on one ruled row under the card. ⚠️  Describing
-          how AOHC works, never what it has achieved — the brief that
-          supplied this copy warned off "1M+ patient outcomes" and
-          guaranteed turnarounds by name. See the component. */}
-      <HeroPoints points={home.hero.points} />
+          ⚠️  NO `cancerTypes` PROP ANY MORE. The nine cancer-type chips
+          that used to sit on the floor of the card were replaced by the
+          four trust points, on request. `home.cancerTypes` is still in the
+          data and nothing renders it; see the note there before deleting
+          it or putting the chips back. */}
+      <Hero content={home.hero} storyCount={home.testimonials.items.length} />
+
+      {/* ── Hero trust points, phones only ───────────────────────────
+          `lg:hidden`. From `lg` the same four render inside the card,
+          under a rule, which is the supplied reference's arrangement.
+          Inside the card on a 360x800 phone they take the hero to 132%
+          of the viewport, so there they sit underneath it instead — see
+          the component. */}
+      <HeroPointsBand points={home.hero.points} />
 
       {/* ── Opening statement ─────────────────────────────────────────
           THE HERO'S OWN BODY COPY, which the hero card cannot hold.

@@ -129,7 +129,15 @@ export const home: HomeContent = {
    * The draft is explicit that these are navigation and educational landing
    * pages, and that a clinical service page is published "only after
    * confirming that the team accepts and assesses that cancer type". They are
-   * shortcuts here, not an offer.
+   * shortcuts, not an offer.
+   *
+   * ⚠️  NOTHING RENDERS THIS ANY MORE. These were the nine chips on the floor
+   * of the hero card, replaced there by `hero.points` on request. The list is
+   * kept because `HomeContent.cancerTypes` is still part of the shape and the
+   * content is real — but anyone putting it back should know the chips linked
+   * `routes.cancerType(slug)` and not one of those nine pages exists, so the
+   * hero carried nine dead links the whole time it showed them. `/cancer-
+   * types` is built and lists all ten; that is the link that works.
    */
   cancerTypes: [
     { label: 'Breast', slug: 'breast-cancer' },
