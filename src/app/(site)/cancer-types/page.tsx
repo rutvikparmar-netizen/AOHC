@@ -64,11 +64,10 @@ export default function CancerTypesPage() {
       {/* ── 1. The ten types ────────────────────────────────────────
           Through the shared grid, which `/treatments-and-therapies` also
           uses for its six conventional treatments. */}
-      {/* ⚠️  BOXED: a card index over the full entries, which is the
-          supplied reference's arrangement. Each card's "Learn more"
-          anchors to its own entry further down THIS page — there is no
-          per-type page to send anyone to, and a button that 404s is worse
-          than no button. See the component.
+      {/* ⚠️  BOXED: ONE CARD PER TYPE, DESCRIPTION INCLUDED. A previous
+          version split this into a compact "Learn more" index above the
+          same ten entries written out in full, which put every name and
+          every box on the page twice. One rendering per entry.
 
           On the warm page colour rather than white: the cards are
           `bg-surface` themselves, and on a white section only their
