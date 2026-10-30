@@ -20,6 +20,28 @@ export interface HeroContent {
   primaryCta: NavLink
   secondaryCta: NavLink
   image: ImageAsset
+  /** The ruled row of trust points under the hero card. */
+  points: TrustPoint[]
+}
+
+/**
+ * One of the four trust points in the ruled row beneath the hero.
+ *
+ * ⚠️  NO NUMBERS, AND THAT IS THE POINT OF THE SHAPE. There is no `value`
+ * field, deliberately: the reference layout this row was taken from leads on
+ * "1M+ patient outcomes" and a guaranteed 48-hour turnaround, and the brief
+ * that supplied the copy said in terms to avoid claims like those "unless
+ * AOHC can substantiate those services and figures". A figure cannot be
+ * added here without someone also adding the field to hold it, which is the
+ * moment to go and get the evidence. If AOHC later has numbers it can
+ * evidence, they belong in `StatItem`, which carries a `basis`.
+ *
+ * Each point is a short label and one sentence describing how AOHC works —
+ * not what it has achieved.
+ */
+export interface TrustPoint {
+  title: string
+  description: string
 }
 
 /** A quick-entry chip — on the home hero, the cancer-type shortcuts. */

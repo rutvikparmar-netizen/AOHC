@@ -78,6 +78,49 @@ export const home: HomeContent = {
       width: 1400,
       height: 788,
     },
+
+    /**
+     * THE RULED ROW UNDER THE HERO CARD.
+     *
+     * ⚠️  THE BRIEF THAT SUPPLIED THESE FOUR CAME WITH A WARNING, AND IT IS
+     * NOT COPY. Reproduced here because it governs anything added to this
+     * row:
+     *
+     *     "Important: I would avoid claims such as 1M+ patient outcomes or
+     *      guaranteed 48-hour reviews unless AOHC can substantiate those
+     *      services and figures."
+     *
+     * The reference layout this row is modelled on leads on exactly those
+     * two — a million patient outcomes and a written opinion in 48 hours.
+     * Neither is here, and neither goes in without evidence behind it. See
+     * `TrustPoint` in `src/types/content.ts` for why the shape has nowhere
+     * to put a number.
+     *
+     * ⚠️  EVERY ONE OF THESE DESCRIBES HOW AOHC WORKS, NOT WHAT IT HAS
+     * ACHIEVED. "Supporting patients and families at every step" is a
+     * commitment; "supported 10,000 families" would be a claim. The
+     * difference is the whole reason this row is safe to put above the fold.
+     */
+    points: [
+      {
+        title: 'Guided Patient Journey',
+        description: 'Supporting patients and families at every step.',
+      },
+      {
+        title: 'Individualised Assessment',
+        description:
+          'Understanding diagnosis, medical history and treatment options.',
+      },
+      {
+        title: 'Integrative Approach',
+        description:
+          'Connecting conventional oncology with appropriate supportive care.',
+      },
+      {
+        title: 'Patient-Centred Care',
+        description: 'Every patient’s journey is unique.',
+      },
+    ],
   },
 
   /**

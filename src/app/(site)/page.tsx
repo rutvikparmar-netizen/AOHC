@@ -12,6 +12,7 @@ import { Todo } from '@/components/ui/Todo'
 import { makeCaptcha } from '@/lib/forms/captcha'
 import { EnquiryForm } from '@/components/forms/EnquiryForm'
 import { Hero } from '@/components/home/Hero'
+import { HeroPoints } from '@/components/home/HeroPoints'
 import { DoctorsGrid } from '@/components/home/DoctorsGrid'
 import { PressMarquee } from '@/components/home/PressMarquee'
 import { ReachSection } from '@/components/home/ReachSection'
@@ -93,6 +94,13 @@ export default function HomePage() {
         cancerTypes={home.cancerTypes}
         storyCount={home.testimonials.items.length}
       />
+
+      {/* ── Hero trust points ─────────────────────────────────────────
+          Four of them, on one ruled row under the card. ⚠️  Describing
+          how AOHC works, never what it has achieved — the brief that
+          supplied this copy warned off "1M+ patient outcomes" and
+          guaranteed turnarounds by name. See the component. */}
+      <HeroPoints points={home.hero.points} />
 
       {/* ── Opening statement ─────────────────────────────────────────
           THE HERO'S OWN BODY COPY, which the hero card cannot hold.
