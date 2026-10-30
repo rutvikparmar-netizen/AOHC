@@ -1138,7 +1138,7 @@ export const home: HomeContent = {
   },
 
   news: {
-    title: 'Art of Healing in the News',
+    title: 'Art of Healing Cancer in the News',
     items: [
       {
         publication: 'India Today',

@@ -142,7 +142,11 @@ export default function HomePage() {
       <section className="py-(--spacing-section)">
         <Container>
           <Reveal>
-            <SectionHeader title="Art of Healing in the news" />
+            {/* From the data file, not a literal. This heading was written
+                out twice — here in lower case and in `home.news.title` in
+                title case — and only this copy was on screen, so the data
+                value was dead and the two had already drifted. */}
+            <SectionHeader title={home.news.title} />
           </Reveal>
 
           <Reveal>

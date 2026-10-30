@@ -211,7 +211,7 @@ export const primaryNav: NavGroup[] = [
        * in a row that has no spare width.
        *
        * The description is taken from the home page's own press section,
-       * "Art of Healing in the news", rather than invented.
+       * "Art of Healing Cancer in the News", rather than invented.
        */
       { label: 'Media', href: routes.media, description: 'AOHC in the news' },
     ],

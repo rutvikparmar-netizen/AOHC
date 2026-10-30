@@ -3,7 +3,8 @@ import type { PressMention } from '@/types'
 import { Icon } from '@/components/ui/Icon'
 
 /**
- * "Art of Healing in the news" — a continuously running strip of outlets.
+ * "Art of Healing Cancer in the News" — a continuously running strip of
+ * outlets.
  *
  * HOW THE LOOP IS SEAMLESS. The track holds the list twice and slides left by
  * exactly half its width before repeating. At the moment it snaps back, the
