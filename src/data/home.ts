@@ -643,6 +643,41 @@ export const home: HomeContent = {
    * ---------------------------------------------------------------------------
    */
   press: [
+    /**
+     * ⚠️  THE FIRST TWO ARE SPEAKING ENGAGEMENTS, NOT PRESS COVERAGE, AND
+     * THEY SIT UNDER A HEADING THAT SAYS "IN THE NEWS". They were added
+     * here on request. The distinction is real and worth resolving before
+     * launch: the other nine are outlets that published something about
+     * AOHC, while these two are platforms Arpan Talwar spoke on. A reader
+     * scanning the strip reads all eleven the same way.
+     *
+     * Both links were checked rather than taken on trust, and both name him
+     * as "the founder of Art of Healing Cancer". Two things a reviewer
+     * should know:
+     *
+     *   - BOTH PAGES ALSO CALL THE ORGANISATION "Art of Healing Clinic" in
+     *     their speaker header, while the bio beneath says "Art of Healing
+     *     Cancer". That is their error, not ours, and worth asking both to
+     *     correct — we have just finished making the name consistent here.
+     *   - THE IPM LOGO SUPPLIED IS THE 2027 CONGRESS (10-12 June 2027).
+     *     The session the link actually points at is 19 June 2026, "Novel
+     *     Based Approaches for Stage 4 Disease". Advertising the 2027 mark
+     *     against a 2026 appearance implies a booking that page does not
+     *     show.
+     *
+     * NEITHER CARRIES A LOGO YET. The supplied files did not reach the
+     * repository, so both fall back to their name set as a wordmark, which
+     * `PressMarquee` does by design. Drop the two images in and add a
+     * `logo` block to each.
+     */
+    {
+      name: 'Integrative & Personalised Medicine',
+      href: 'https://ipmcongress.com/speakers/arpan-talwar',
+    },
+    {
+      name: 'TEDx',
+      href: 'https://www.ted.com/tedx/events/67810',
+    },
     {
       name: 'The Times of India',
       logo: {

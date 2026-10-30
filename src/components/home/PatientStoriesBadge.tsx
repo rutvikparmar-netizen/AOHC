@@ -57,8 +57,13 @@ import { Icon } from '@/components/ui/Icon'
  * the overlap and the stacking are rebuilt here in CSS — where they stay
  * crisp at any size and the ring can be any colour the panel needs.
  *
- * THE COUNT IS THE LENGTH OF THE TESTIMONIALS LIST, passed in rather than
- * written here, so it cannot drift from the section it links to.
+ * ⚠️  `count` IS STILL THE GUARD EVEN THOUGH IT IS NO LONGER PRINTED. The
+ * badge used to read "N video testimonials"; the supplied copy replaced that
+ * with "Discover journeys shared by our patients", which names no number.
+ * The prop stays because the badge must not render at all when there are no
+ * stories — it links to `#stories`, and a link to an empty section is worse
+ * than no badge. It is the length of the testimonials list, passed in rather
+ * than written here, so it cannot drift from the section it points at.
  */
 
 /** The four crops, in the order of the supplied strip. */
@@ -104,7 +109,7 @@ export function PatientStoriesBadge({
             alt=""
             width={128}
             height={128}
-            className="size-7 rounded-full object-cover ring-2 ring-white/90 sm:size-9"
+            className="size-6 rounded-full object-cover ring-2 ring-white/90 sm:size-9"
           />
         ))}
       </span>
@@ -116,16 +121,19 @@ export function PatientStoriesBadge({
 
       <span className="min-w-0">
         <span className="block text-sm font-bold leading-tight text-white">
-          Watch patient stories
+          Stories That Inspire Hope
         </span>
         <span className="mt-0.5 block text-sm leading-tight text-brand-teal-100">
-          {count} video testimonials
+          Discover journeys shared by our patients
         </span>
       </span>
 
+      {/* Hidden below `sm`: it is affordance on a pill that is already
+          obviously tappable, and the 28px it costs is the difference
+          between a one-line title and a two-line one at 360. */}
       <Icon
         name="arrow-right"
-        className="size-4 shrink-0 text-brand-teal-200 transition-transform group-hover:translate-x-1"
+        className="hidden size-4 shrink-0 text-brand-teal-200 transition-transform group-hover:translate-x-1 sm:block"
       />
     </Link>
   )
