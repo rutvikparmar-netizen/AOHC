@@ -106,8 +106,25 @@ export const site: SiteConfig = {
      * anybody answers by voice.
      */
     whatsapp: '919056330977',
+    /**
+     * ⚠️  SUPPLIED VERBATIM, INCLUDING THE CAPITALS. AOHC gave this exact
+     * string; the capitalised portion is how the address reads on the
+     * official record. It is not a mistake to tidy away — ask before
+     * title-casing it.
+     *
+     * ⚠️  THE HOST FACILITY IS NO LONGER NAMED HERE. The previous version
+     * began "Art of Healing Cancer — HCAH Transition Care Centre, …". The
+     * building and the postcode are unchanged; only the label went. One
+     * place still names HCAH: the "where does treatment take place" answer
+     * in `home.faqs`, which is prose rather than a label and was left for a
+     * reviewer to decide on.
+     *
+     * This one string is the single source for the footer, the home page's
+     * contact row and the schema.org `PostalAddress`. Edit it here, nowhere
+     * else.
+     */
     address:
-      'Art of Healing Cancer — HCAH Transition Care Centre, Plot Number 219P, 226, Sector-51, Urban Estate Gurgaon, Gurgaon, Haryana 122413',
+      'Art of Healing Cancer - PLOT NUMBER 219P, 226, SECTOR-51, URBAN ESTATE GURGAON, Gurgaon, Haryana, 122413',
     registeredAddress: '1421, Sector 34 C, Chandigarh 160022',
     hours: 'Mon–Sat: 10 AM – 6 PM | Sunday by appointment',
     gstin: '06ABVFA1555E1ZF',

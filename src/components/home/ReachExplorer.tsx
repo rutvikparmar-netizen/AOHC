@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { allMarkers, homeMarker, type ReachMarker } from '@/data/reach'
 import { routes } from '@/lib/routes'
+import { site } from '@/lib/site'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { RealGlobe } from './RealGlobe'
@@ -63,21 +64,32 @@ export function ReachExplorer() {
        */}
       <div className="overflow-hidden rounded-(--radius-2xl) border border-white/15 bg-white/5 backdrop-blur-md">
         {/* ── Where care happens ───────────────────────────────────────
-            The centre is NAMED here rather than described. The section
-            heading and its intro already say care happens in India; saying
-            it a third time left the one concrete fact — which building,
-            and where — as an afterthought on a second line. The icon sits
-            in a tinted disc, which is how every other list on this site
-            marks a row. */}
+            ⚠️  THE ADDRESS COMES FROM `site.contact.address`, NOT FROM
+            HERE. It used to name the host facility — "HCAH Transition Care
+            Centre" — as a heading with the city on a second line, and the
+            full street address lived only in the footer. Now the panel
+            carries the address itself, which is the one concrete fact a
+            reader wants from this section, and it reads from the same
+            string as the footer and the schema.org `PostalAddress` so the
+            three cannot drift.
+
+            "All treatment takes place here" is kept: the section is about
+            patients travelling from forty countries, and the sentence that
+            says they all come to ONE place is the point of the panel.
+
+            The icon sits in a tinted disc, which is how every other list
+            on this site marks a row. */}
         <div className="flex items-start gap-4 p-6 sm:p-8">
           <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-teal-300/15 text-brand-teal-300">
             <Icon name="map-pin" className="size-5" />
           </span>
           <div className="min-w-0">
-            <p className="text-h5 text-white">HCAH Transition Care Centre</p>
+            <p className="text-h5 text-white">Visit Us</p>
             <p className="mt-1.5 text-sm leading-relaxed text-brand-teal-100">
-              Gurugram, Haryana, in the Delhi capital region. All treatment
-              takes place here.
+              {site.contact.address}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-brand-teal-100">
+              All treatment takes place here.
             </p>
           </div>
         </div>
