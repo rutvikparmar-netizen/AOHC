@@ -64,12 +64,17 @@ export default function CancerTypesPage() {
       {/* ── 1. The ten types ────────────────────────────────────────
           Through the shared grid, which `/treatments-and-therapies` also
           uses for its six conventional treatments. */}
-      {/* ⚠️  BOXED, AND ON THE WARM PAGE COLOUR RATHER THAN WHITE. The
-          cards are `bg-surface`; on a white section they would be white
-          on white and the borders would be the only thing holding them
-          together. The ruled variant on `/treatments-and-therapies` keeps
-          its white section, which is why `surface` and `boxed` are
-          separate props rather than one mode. */}
+      {/* ⚠️  BOXED: a card index over the full entries, which is the
+          supplied reference's arrangement. Each card's "Learn more"
+          anchors to its own entry further down THIS page — there is no
+          per-type page to send anyone to, and a button that 404s is worse
+          than no button. See the component.
+
+          On the warm page colour rather than white: the cards are
+          `bg-surface` themselves, and on a white section only their
+          borders would hold them together. The ruled variant on
+          `/treatments-and-therapies` keeps its white section, which is
+          why `surface` and `boxed` are separate props. */}
       <EntryGrid
         eyebrow={cancerTypes.index.eyebrow}
         title={cancerTypes.index.title}

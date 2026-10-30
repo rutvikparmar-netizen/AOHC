@@ -24,19 +24,21 @@ import { treatmentsPage } from '@/data/treatments-page'
  * written, swap `#${slug}` for `routes.cancerType(slug)` here and the menu
  * follows.
  *
- * "Other Cancer Types" is dropped from the menu and stays on the page: it is
- * the catch-all entry, and as a menu item it tells a reader nothing.
+ * ⚠️  THE TYPES COLUMN IS THE WHOLE PAGE, UNFILTERED, ON REQUEST. An earlier
+ * version dropped "Other Cancer Types" on the grounds that a catch-all makes
+ * a poor menu item. It is back, because the menu and the page listing
+ * different things is worse: a reader who does not find their diagnosis in
+ * the menu needs to see the entry that tells them to ask anyway, and that
+ * entry is the one that says so.
  */
 const cancerCareNav: MegaNavColumn[] = [
   {
     label: 'Cancer Types',
     href: routes.cancerTypes,
-    links: cancerTypes.index.types
-      .filter((type) => type.name !== 'Other Cancer Types')
-      .map((type) => ({
-        label: type.name,
-        href: `${routes.cancerTypes}#${slugify(type.name)}`,
-      })),
+    links: cancerTypes.index.types.map((type) => ({
+      label: type.name,
+      href: `${routes.cancerTypes}#${slugify(type.name)}`,
+    })),
     footer: { label: 'View all cancer types', href: routes.cancerTypes },
   },
   {
