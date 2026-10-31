@@ -168,11 +168,25 @@ export const home: HomeContent = {
     ],
     outro:
       "We consider these factors together to support a more complete understanding of each case. Recommendations depend on the available evidence, the patient's condition, and the assessment of the treating clinical team.",
+    /**
+     * AOHC-SUPPLIED, REPLACING THE STOCK `scan-discussion.jpg` THAT WAS
+     * HERE. A case being reviewed by several clinicians around one screen
+     * is what this section is about — "we consider these factors together
+     * to support a more complete understanding of each case".
+     *
+     * ⚠️  THE ROOM CARRIES AOHC'S BRANDING; THE PEOPLE IN IT ARE NOT AOHC
+     * STAFF. The logo on the wall says this is the centre, so the alt text
+     * stays on what is happening rather than naming anyone — no "our
+     * team", no "our specialists". Nothing on the page may caption these
+     * figures as members of staff. The real roster is at
+     * `/about-us/our-doctors`, fifteen named people with their own
+     * portraits, and that is where a claim about who works here belongs.
+     */
     image: {
-      src: '/images/scan-discussion.jpg',
-      alt: 'A patient seated at a desk while a scan is displayed on a laptop beside them',
-      width: 1400,
-      height: 788,
+      src: '/images/aohc-case-review.webp',
+      alt: 'Clinicians around a meeting table reviewing scans on a large wall display',
+      width: 1672,
+      height: 941,
     },
   },
 
@@ -537,25 +551,33 @@ export const home: HomeContent = {
     secondaryCta: { label: 'Contact Our Team', href: routes.contact },
     note: 'A consultation request does not establish a doctor–patient relationship or guarantee acceptance for treatment.',
     /**
-     * THE ONE PHOTOGRAPH IN THE REPO THAT NOTHING ELSE USES. It was attached
-     * to `international` for a section that renders steps rather than an
-     * image, so it had never appeared on the site at all.
+     * AOHC-SUPPLIED, REPLACING THE STOCK `consultation-room.jpg` THAT WAS
+     * HERE. The argument for the previous frame still holds and this one
+     * answers it better: the note on `hero.image` says a brain scan is a
+     * confronting thing to show someone newly diagnosed and asks for a
+     * conversation instead, and this is that conversation — a clinician
+     * with a patient and the person who came with them. It is the last
+     * thing a reader sees before the footer, which is why it got the
+     * better picture.
      *
-     * It is also the right picture for this particular panel. The note on the
-     * hero image says plainly that a brain scan is a confronting first thing
-     * to show someone who has just been diagnosed, and suggests this frame
-     * instead; two people talking across a desk is what "start with a
-     * conversation" actually looks like, and it is the last thing a reader
-     * sees before the footer.
+     * ⚠️  PORTRAIT, AND THAT IS WHY IT IS HERE RATHER THAN SOMEWHERE ELSE.
+     * `ClosingSection` renders this with `fill` in a 5-of-12 column that
+     * stretches to the height of the copy beside it — the one slot on the
+     * site shaped for a tall frame. Dropped into a wide banner it would
+     * crop to a strip.
      *
-     * ⚠️  STOCK, LIKE THE REST. The alt text describes the scene and must not
-     * name or imply a role at AOHC — see the note on `hero.image`.
+     * ⚠️  THE ROOM CARRIES AOHC'S BRANDING; THE PEOPLE IN IT ARE NOT AOHC
+     * STAFF OR PATIENTS. The logo on the wall says this is the centre, so
+     * the alt text stays on what is happening and names no one. Nothing
+     * may caption these figures as staff, and nothing may present them as
+     * patients — a page that shows a named patient needs the documented
+     * consent §11 of the content draft requires.
      */
     image: {
-      src: '/images/consultation-room.jpg',
-      alt: 'A clinician and a patient talking across a desk in a consulting room',
-      width: 1400,
-      height: 788,
+      src: '/images/aohc-consultation.webp',
+      alt: 'A clinician with a tablet talking to two people across a table in a consulting area',
+      width: 1024,
+      height: 1536,
     },
   },
 
