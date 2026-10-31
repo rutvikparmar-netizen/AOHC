@@ -659,11 +659,13 @@ export const home: HomeContent = {
      *     their speaker header, while the bio beneath says "Art of Healing
      *     Cancer". That is their error, not ours, and worth asking both to
      *     correct — we have just finished making the name consistent here.
-     *   - THE IPM LOGO SUPPLIED IS THE 2027 CONGRESS (10-12 June 2027).
-     *     The session the link actually points at is 19 June 2026, "Novel
-     *     Based Approaches for Stage 4 Disease". Advertising the 2027 mark
-     *     against a 2026 appearance implies a booking that page does not
-     *     show.
+     *   - THE FIRST IPM LOGO SUPPLIED WAS THE 2027 CONGRESS, dated
+     *     "10 - 12 June 2027 • London UK", while the session the link
+     *     points at is 19 June 2026, "Novel Based Approaches for Stage 4
+     *     Disease". RESOLVED: the mark now in the repository is the
+     *     wordmark alone and states no date, so it no longer advertises a
+     *     booking that page does not show. Do not put a dated version
+     *     back without checking what the link resolves to.
      *
      * ⚠️  THE IPM MARK IS A STACKED LOCKUP, NOT A MASTHEAD, which is what
      * `stacked` below is for: at the 32px the newspaper wordmarks use, its
@@ -671,6 +673,21 @@ export const home: HomeContent = {
      * before touching the sizing — the aspect ratio is NOT a reliable test
      * for this and was tried twice.
      */
+    {
+      name: 'TEDx',
+      href: 'https://www.ted.com/tedx/events/67810',
+      /* Supplied as red on opaque white and knocked out against it. The
+         red-channel shortcut used for Business Today does not work here —
+         TEDx red is rgb(230,43,30), whose red channel is nearly white — so
+         the alpha comes from the channel furthest from white and every
+         channel is unpremultiplied back. */
+      logo: {
+        src: '/images/press/tedx.png',
+        alt: 'TEDx',
+        width: 716,
+        height: 211,
+      },
+    },
     {
       name: 'Integrative & Personalised Medicine',
       href: 'https://ipmcongress.com/speakers/arpan-talwar',
@@ -688,21 +705,6 @@ export const home: HomeContent = {
         height: 94,
       },
       stacked: true,
-    },
-    {
-      name: 'TEDx',
-      href: 'https://www.ted.com/tedx/events/67810',
-      /* Supplied as red on opaque white and knocked out against it. The
-         red-channel shortcut used for Business Today does not work here —
-         TEDx red is rgb(230,43,30), whose red channel is nearly white — so
-         the alpha comes from the channel furthest from white and every
-         channel is unpremultiplied back. */
-      logo: {
-        src: '/images/press/tedx.png',
-        alt: 'TEDx',
-        width: 716,
-        height: 211,
-      },
     },
     {
       name: 'The Times of India',
