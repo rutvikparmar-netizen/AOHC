@@ -57,7 +57,7 @@ export const treatmentCosts: TreatmentCostsContent = {
   },
 
   factors: {
-    eyebrow: 'What affects the cost',
+    eyebrow: 'Treatment costs',
     title: 'What Can Affect the Cost?',
     intro: ['Depending on the case, expenses may include:'],
     items: [
@@ -81,7 +81,7 @@ export const treatmentCosts: TreatmentCostsContent = {
   },
 
   estimates: {
-    eyebrow: 'Before you commit',
+    eyebrow: 'Written estimates',
     title: 'Individualized Cost Estimates',
     body: [
       'Where appropriate, patients should receive a written estimate that identifies the proposed services, expected charges, and any known exclusions.',
@@ -91,7 +91,7 @@ export const treatmentCosts: TreatmentCostsContent = {
   },
 
   questions: {
-    eyebrow: 'Questions to ask',
+    eyebrow: 'Before you proceed',
     title: 'Questions to Ask',
     intro: ['Before proceeding, consider asking:'],
     items: [

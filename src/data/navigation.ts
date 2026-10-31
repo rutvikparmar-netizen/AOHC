@@ -257,8 +257,13 @@ export const primaryNav: NavGroup[] = [
       { label: 'Who We Are', href: routes.whoWeAre },
       { label: 'Our Doctors', href: routes.doctors },
       { label: 'Partnering Institutions', href: routes.partners },
-      { label: 'Accreditations', href: routes.accreditations },
-      { label: 'RGCC', href: routes.rgcc },
+      /* ⚠️  ACCREDITATIONS AND RGCC WERE REMOVED FROM THIS MENU ON
+         INSTRUCTION. Both pointed at pages that do not exist, so they
+         were dead links offered from every page on the site. The routes
+         stay declared in `routes.ts` for when the pages are built; the
+         accreditations themselves are still shown, on the home page's
+         "Certified. Accredited. Globally Connected." section and on
+         /about-us/partnering-institutions. */
       /**
        * MOVED IN FROM THE TOP LEVEL, on request, which is also where it
        * belongs: press coverage is something about the organisation rather
@@ -342,7 +347,9 @@ export const footerNav: NavGroup[] = [
       { label: 'Who We Are', href: routes.whoWeAre },
       { label: 'Our Doctors', href: routes.doctors },
       { label: 'Partnering Institutions', href: routes.partners },
-      { label: 'Accreditations', href: routes.accreditations },
+      /* Accreditations removed here too — see the note in the header
+         group above. The footer must not offer a link the menu does
+         not. */
       { label: 'In Loving Memory of Ruchika Jaiswal', href: routes.memorial },
     ],
   },
