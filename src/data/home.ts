@@ -1277,6 +1277,133 @@ export const home: HomeContent = {
     cta: { label: 'All partnering institutions', href: routes.partners },
   },
 
+  /**
+   * THE CARE-NETWORK STRIP.
+   *
+   * ⚠️  THE WORDING HERE IS NOT AOHC'S AND HAS NOT BEEN REVIEWED. Every
+   * other line of copy on this site was supplied and is reproduced
+   * verbatim; this section was requested from a screenshot of another
+   * clinic's website, so there was nothing to reproduce. The reference
+   * read "Complete cancer care, expertly coordinated." over "A curated
+   * network of hospitals, labs and pharmacies so that you get coordinated
+   * care from day one" — a competitor's marketing copy, which is not ours
+   * to lift and which claims a good deal more than this site says
+   * anywhere else.
+   *
+   * What is below is deliberately plain and deliberately conditional, so
+   * it can sit on the page until AOHC writes its own. It should be
+   * replaced, not just approved.
+   *
+   * ⚠️  EVERY LOGO IS A PUBLIC CLAIM THAT THE TWO ORGANISATIONS WORK
+   * TOGETHER. The marks were supplied by AOHC and are reproduced exactly
+   * as given. Nothing may be added here that AOHC has not confirmed a
+   * relationship with, and no mark may be recoloured or redrawn — see
+   * `NetworkPartner` in `src/types/content.ts`.
+   *
+   * ⚠️  CK BIRLA AND RGCC ALSO APPEAR IN `partners` ABOVE, with their
+   * relationship and city. That section answers "who is responsible and
+   * where"; this one answers "how wide is the network". The repetition is
+   * deliberate — delete it from one of the two, not from both.
+   */
+  network: {
+    eyebrow: 'Our care network',
+    title: 'The Organisations We Work With',
+    intro:
+      'Diagnostics, treatment and supportive care may involve partner hospitals, laboratories and specialist providers. Which of them is involved depends on the individual case, and patients are told which facility and which clinician are responsible for each part of their care.',
+    items: [
+      {
+        name: 'HCAH Transition Care Center',
+        logo: {
+          src: '/images/network/hcah-transition-care.webp',
+          alt: 'HCAH Transition Care Center',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'CK Birla Hospital',
+        logo: {
+          src: '/images/network/ck-birla-hospital.webp',
+          alt: 'CK Birla Hospital',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'RGCC',
+        logo: {
+          src: '/images/network/rgcc.webp',
+          alt: 'RGCC',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'Medharbour',
+        logo: {
+          src: '/images/network/medharbour.webp',
+          alt: 'Medharbour',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'Molecular Imaging & Therapy',
+        logo: {
+          src: '/images/network/molecular-imaging-therapy.webp',
+          alt: 'Molecular Imaging & Therapy, a unit of Vitrana Healthcare LLP',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'Neeli Genetic Services',
+        logo: {
+          src: '/images/network/neeli-genetic-services.webp',
+          alt: 'Neeli Genetic Services',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'HBOT India',
+        logo: {
+          src: '/images/network/hbot-india.webp',
+          alt: 'HBOT India',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'The House of Healing',
+        logo: {
+          src: '/images/network/house-of-healing.webp',
+          alt: 'The House of Healing',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'Living Light',
+        logo: {
+          src: '/images/network/living-light.webp',
+          alt: 'Living Light',
+          width: 252,
+          height: 126,
+        },
+      },
+      {
+        name: 'Guru Harikrishn Foundation',
+        logo: {
+          src: '/images/network/guru-harikrishn-foundation.webp',
+          alt: 'Guru Harikrishn Foundation, a non-profit entity',
+          width: 252,
+          height: 126,
+        },
+      },
+    ],
+  },
+
   news: {
     title: 'Art of Healing Cancer in the News',
     items: [

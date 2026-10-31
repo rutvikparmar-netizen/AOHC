@@ -228,6 +228,21 @@ export interface LabelledItem {
    different, more cautious home page. See the note in `src/data/home.ts`.
    ========================================================================== */
 
+/**
+ * One organisation in the care-network strip.
+ *
+ * ⚠️  A LOGO HERE IS A CLAIM OF AFFILIATION. Reproducing an organisation's
+ * mark under a heading about AOHC's network states publicly that the two
+ * work together. Nothing goes in this list that AOHC has not confirmed it
+ * has a relationship with, and a mark is reproduced exactly as supplied —
+ * a third party's trademark is the one asset on this site that must never
+ * be recoloured, redrawn or regenerated.
+ */
+export interface NetworkPartner {
+  name: string
+  logo: ImageAsset
+}
+
 /** A publication that has covered AOHC. Logo strip under the hero. */
 export interface PressMention {
   name: string
@@ -474,6 +489,23 @@ export interface HomeContent {
     intro: string
     items: PartnerInstitution[]
     cta: NavLink
+  }
+
+  /**
+   * The care-network logo strip.
+   *
+   * ⚠️  THIS IS BREADTH; `partners` IS DEPTH. `partners` names two
+   * institutions with the relationship and the city, under "Where Your
+   * Care Takes Place", and answers "who is responsible and where". This
+   * is a running strip of marks and answers "how wide is the network".
+   * CK Birla and RGCC appear in both, which is deliberate but worth
+   * knowing before either section is edited.
+   */
+  network: {
+    eyebrow: string
+    title: string
+    intro: string
+    items: NetworkPartner[]
   }
 
   news: {

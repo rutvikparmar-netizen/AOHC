@@ -15,6 +15,7 @@ import { Hero } from '@/components/home/Hero'
 import { HeroPointsBand } from '@/components/home/HeroPointsBand'
 import { DoctorsGrid } from '@/components/home/DoctorsGrid'
 import { PressMarquee } from '@/components/home/PressMarquee'
+import { NetworkMarquee } from '@/components/home/NetworkMarquee'
 import { ReachSection } from '@/components/home/ReachSection'
 import { StoryGrid } from '@/components/home/StoryGrid'
 import { ProcessPanels } from '@/components/home/ProcessPanels'
@@ -405,6 +406,19 @@ export default function HomePage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* ── Care network ──────────────────────────────────────────────
+          Breadth, immediately before the depth. This strip says how wide
+          the network is; the section under it names two institutions with
+          the relationship and the city and says who is responsible. CK
+          Birla and RGCC appear in both on purpose — see the note on
+          `network` in `src/data/home.ts` before removing either.
+
+          ⚠️  THE COPY IN THIS SECTION IS THE ONLY UNREVIEWED TEXT ON THE
+          SITE. It was requested from a screenshot of another clinic's
+          page, so there was nothing supplied to reproduce; it is written
+          plainly to hold the slot until AOHC writes its own. */}
+      <NetworkMarquee content={home.network} />
 
       {/* ── Partners & accreditations ─────────────────────────────────
           The two sections merged and de-duplicated. No repeated icon —
