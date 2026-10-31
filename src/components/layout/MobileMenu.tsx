@@ -175,10 +175,16 @@ export function MobileMenu({
   }, [open])
 
   /**
-   * Move focus with the panels. Going in, focus lands on Back — the first
-   * thing in the new panel and the way out of it. Coming back, it returns to
-   * the row that was tapped, so a keyboard user resumes where they left off
-   * rather than at the top of the list.
+   * Move focus with the panels. Going in, focus lands on the header's back
+   * button — the way out of where you just arrived. Coming back, it returns
+   * to the row that was tapped, so a keyboard user resumes where they left
+   * off rather than at the top of the list.
+   *
+   * ⚠️  THE BACK BUTTON IS IN THE HEADER NOW, NOT INSIDE A PANEL, so this
+   * no longer scopes the query to `[data-panel="${depth}"]`. There is
+   * exactly one back control and it lives outside the sliding area; a
+   * scoped selector would silently find nothing and leave focus wherever
+   * it was — on a row that is now `inert`.
    */
   useEffect(() => {
     if (!open) return
@@ -186,9 +192,7 @@ export function MobileMenu({
     if (!dialog) return
 
     if (depth > 0) {
-      dialog
-        .querySelector<HTMLElement>(`[data-panel="${depth}"] [data-back]`)
-        ?.focus()
+      dialog.querySelector<HTMLElement>('[data-back]')?.focus()
     } else {
       triggerRefs.current[0]?.focus()
     }
@@ -236,12 +240,40 @@ export function MobileMenu({
         className="drawer m-0 ml-auto h-dvh w-[90%] max-w-sm bg-surface shadow-(--shadow-modal) backdrop:bg-brand-teal-950/55"
       >
         <div className="flex h-full flex-col">
+          {/* ⚠️  THE HEADER IS THE BACK CONTROL AND THE TITLE AT ONCE, which
+              is what stopped the drawer saying the same word three times.
+              A submenu used to render "Menu" in this bar, then a BACK row
+              inside the panel, then the section's name under it, and then
+              "All of <name>" — so opening Knowledge produced Menu /
+              Back / Knowledge / All of Knowledge in four stacked rows
+              before a single link.
+
+              Now the bar carries one control: at the root it reads
+              "Menu", and in a submenu it becomes a back button labelled
+              with the section you are in. One row, one name, and the
+              thing you press to leave is where a phone puts it. */}
           <div className="flex items-center justify-between border-b border-border px-5 py-3">
-            <span className="text-h6">Menu</span>
+            {depth > 0 ? (
+              <button
+                type="button"
+                data-back
+                onClick={() => setStack((s) => s.slice(0, -1))}
+                className="-ml-2 inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-(--radius-button) px-2 text-left text-h6 text-text hover:bg-surface-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                <Icon
+                  name="arrow-left"
+                  className="size-5 shrink-0 text-accent-dark"
+                />
+                <span className="min-w-0">{panels[depth]?.label}</span>
+              </button>
+            ) : (
+              <span className="text-h6">Menu</span>
+            )}
+
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex size-11 items-center justify-center rounded-(--radius-button) text-text-muted"
+              className="-mr-2 inline-flex size-11 shrink-0 items-center justify-center rounded-(--radius-button) text-text-muted"
               aria-label="Close menu"
             >
               <Icon name="x" className="size-5" />
@@ -251,8 +283,21 @@ export function MobileMenu({
           {/* The sliding area. `overflow-hidden` clips the panels parked to
               either side; each panel scrolls on its own. */}
           <div className="relative flex-1 overflow-hidden">
+            {/* ⚠️  420ms AND `--ease-in-out-soft`, NOT 300ms AND
+                `--ease-out-settle`. The old pair was reported as too fast,
+                and the easing was doing more of that than the duration:
+                `out-settle` is cubic-bezier(0.16, 1, 0.3, 1), which puts
+                almost all of its travel in the first third and then
+                crawls — so the panel appears to jump and then dawdle.
+                `in-out-soft` accelerates and decelerates evenly, which is
+                what reads as one deliberate movement rather than a snap.
+
+                The track travels a full panel width every time, so this
+                is a long journey by UI standards and can carry the extra
+                time without feeling slow. `motion-reduce` still removes
+                it outright. */}
             <div
-              className="absolute inset-0 transition-transform duration-300 ease-(--ease-out-settle) motion-reduce:transition-none"
+              className="absolute inset-0 transition-transform duration-[420ms] ease-(--ease-in-out-soft) motion-reduce:transition-none"
               style={{ transform: `translateX(-${depth * 100}%)` }}
             >
               {panels.map((panel, index) => (
@@ -264,23 +309,9 @@ export function MobileMenu({
                   className="absolute inset-y-0 w-full overflow-y-auto overscroll-contain bg-surface px-5 py-4"
                   style={{ left: `${index * 100}%` }}
                 >
-                  {index > 0 ? (
-                    <>
-                      <button
-                        type="button"
-                        data-back
-                        onClick={() => setStack((s) => s.slice(0, index - 1))}
-                        className="flex min-h-12 w-full cursor-pointer items-center gap-2 rounded-(--radius-button) px-3 text-sm font-bold uppercase tracking-[0.08em] text-accent-dark hover:bg-surface-subtle"
-                      >
-                        <Icon name="arrow-left" className="size-4 shrink-0" />
-                        Back
-                      </button>
-
-                      <p className="mt-3 px-3 text-h6">{panel.label}</p>
-                    </>
-                  ) : null}
-
-                  <ul className={index > 0 ? 'mt-2 space-y-0.5' : 'space-y-1'}>
+                  {/* No Back row and no title here any more — the header
+                      bar is both. See the note on it. */}
+                  <ul className={index > 0 ? 'space-y-0.5' : 'space-y-1'}>
                     {/* The section's own page, which the drill-down would
                         otherwise bury — tapping the parent row now opens
                         this list instead of navigating to it. */}
