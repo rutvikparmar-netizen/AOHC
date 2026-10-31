@@ -54,41 +54,12 @@ const cancerCareNav: MegaNavColumn[] = [
     ],
     footer: { label: 'View all treatments', href: routes.treatments },
   },
-  /**
-   * ⚠️  THIS IS HOW `/patient-journey` IS REACHABLE AT ALL. The page was
-   * built and then linked from nowhere — every other built page had a nav
-   * entry and this one did not, so the only way in was to type the URL.
-   *
-   * It stacks under Cancer Types rather than taking a column of its own:
-   * the Cancer Care panel is the narrow two-column one, and a third column
-   * at 544px would cramp all three. `stackUnder` puts it inside the first
-   * cell, under that column's list — which is also where it belongs by
-   * meaning. Types and Treatments are WHAT may be involved; this is what
-   * happens to you, in order, which is the question a reader has before
-   * either of the other two.
-   */
-  {
-    label: 'Your Care Journey',
-    href: routes.patientJourney,
-    stackUnder: 'Cancer Types',
-    links: [
-      {
-        label: 'Your Patient Journey',
-        href: routes.patientJourney,
-        description: 'From first enquiry to follow-up',
-      },
-      {
-        label: 'Integrative Cancer Care',
-        href: routes.integrativeCare,
-        description: 'How supportive care fits alongside treatment',
-      },
-      {
-        label: 'Treatment Costs',
-        href: routes.costs,
-        description: 'What affects the cost, and what to ask',
-      },
-    ],
-  },
+  /* ⚠️  A "Your Care Journey" COLUMN SAT HERE AND WAS MOVED TO About Us ON
+     INSTRUCTION. It held the patient journey, integrative care and
+     treatment costs. Do not add it back without checking About Us first:
+     `/patient-journey` and `/treatment-costs` have exactly one nav entry
+     each, and two entries for the same page in two menus is how a
+     navigation starts disagreeing with itself. */
 ]
 
 /**
@@ -272,38 +243,40 @@ export const primaryNav: NavGroup[] = [
   {
     label: 'About Us',
     href: routes.about,
+    /**
+     * ⚠️  NO DESCRIPTIONS IN THIS GROUP, ON INSTRUCTION. Every link here
+     * used to carry a line under it ("Our purpose, story and commitment",
+     * "The specialists behind your care"). `NavLink.description` still
+     * exists and other groups still use it — this one simply does not.
+     *
+     * Do not reinstate them item by item: nine labels with nine
+     * subtitles is a page of prose hanging off a menu, and the labels
+     * already say where each one goes.
+     */
     links: [
-      {
-        label: 'Who We Are',
-        href: routes.whoWeAre,
-        description: 'Our purpose, story and commitment',
-      },
-      {
-        label: 'Our Doctors',
-        href: routes.doctors,
-        description: 'The specialists behind your care',
-      },
-      {
-        label: 'Partnering Institutions',
-        href: routes.partners,
-        description: 'Hospitals and clinics we work with',
-      },
-      {
-        label: 'Accreditations',
-        href: routes.accreditations,
-        description: 'Certifications and global affiliations',
-      },
-      { label: 'RGCC', href: routes.rgcc, description: 'Our Greece laboratory partner' },
+      { label: 'Who We Are', href: routes.whoWeAre },
+      { label: 'Our Doctors', href: routes.doctors },
+      { label: 'Partnering Institutions', href: routes.partners },
+      { label: 'Accreditations', href: routes.accreditations },
+      { label: 'RGCC', href: routes.rgcc },
       /**
        * MOVED IN FROM THE TOP LEVEL, on request, which is also where it
        * belongs: press coverage is something about the organisation rather
        * than a service a patient is looking for, and it was taking a slot
        * in a row that has no spare width.
-       *
-       * The description is taken from the home page's own press section,
-       * "Art of Healing Cancer in the News", rather than invented.
        */
-      { label: 'Media', href: routes.media, description: 'AOHC in the news' },
+      { label: 'Media', href: routes.media },
+      /**
+       * ⚠️  THESE THREE MOVED HERE FROM A "Your Care Journey" COLUMN UNDER
+       * CANCER CARE, on instruction. Two of them are the only nav entries
+       * for pages that exist — `/patient-journey` and `/treatment-costs`
+       * are reachable from nowhere else — so this list is now load-bearing
+       * rather than supplementary. Removing an item here 404s nothing, but
+       * it does orphan a built page; check before deleting.
+       */
+      { label: 'Your Patient Journey', href: routes.patientJourney },
+      { label: 'Integrative Cancer Care', href: routes.integrativeCare },
+      { label: 'Treatment Costs', href: routes.costs },
     ],
   },
   /**
