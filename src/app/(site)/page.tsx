@@ -420,15 +420,37 @@ export default function HomePage() {
           plainly to hold the slot until AOHC writes its own. */}
       <NetworkMarquee content={home.network} />
 
-      {/* ── Partners & accreditations ─────────────────────────────────
-          The two sections merged and de-duplicated. No repeated icon —
-          each entry is named in type with its role and location. */}
+      {/* ── Affiliations & accreditations ─────────────────────────────
+          The two source lists merged and de-duplicated. No repeated icon —
+          each entry is named in type with its role and location.
+
+          ⚠️  LABELLED FROM `accreditations`, NOT `partners`, BECAUSE THAT IS
+          WHAT IS IN IT. Every merged entry is an affiliation or an
+          accreditation — "Clinical affiliation", "Accredited diagnostics
+          partner", "Accredited partner network" — so "Partnering
+          institutions" over "Where your care takes place" described
+          something the section does not contain. The eyebrow and heading
+          AOHC supplied for exactly this content were sitting unrendered in
+          `accreditations` the whole time.
+
+          The title now comes from the data rather than a literal typed
+          here, which is the same fault the news heading had: a string
+          written out twice drifts, and only one copy is on screen.
+
+          ⚠️  THE INTRO IS STILL `partners.intro`, DELIBERATELY. It carries
+          the one sentence on this page that says patients are told which
+          clinician is responsible, which facility is involved and what the
+          follow-up is — accountability copy that `accreditations.intro`
+          does not have, and that is worth more here than a tighter match
+          of heading to paragraph. `accreditations.intro` is therefore
+          unrendered; it is kept in the data because it is AOHC's supplied
+          wording and a reviewer may prefer it. */}
       <section className="bg-surface py-(--spacing-section)">
         <Container>
           <Reveal>
             <SectionHeader
-              eyebrow={home.partners.eyebrow}
-              title="Where your care takes place"
+              eyebrow={home.accreditations.eyebrow}
+              title={home.accreditations.title}
               intro={home.partners.intro}
             />
           </Reveal>
