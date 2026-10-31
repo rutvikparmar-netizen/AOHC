@@ -39,18 +39,21 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
            * NDTV at wildly different optical weights. `object-contain`
            * guarantees nothing is cropped, whatever the file turns out to be.
            *
-           * SHOWN IN THEIR OWN COLOURS. A greyscale strip is the tidier
-           * design, but these are mastheads: The Times of India's black, the
-           * India Today red and the Hindustan Times cyan are most of what
-           * makes each one recognisable at this size.
+           * ⚠️  `mix-blend-multiply` IS GONE, AND MUST NOT COME BACK. It was
+           * here because several files had a white background baked in
+           * rather than an alpha channel, and multiply dropped that white
+           * into the page. Every logo now carries real transparency — the
+           * background was flood-filled out of each one — so it has nothing
+           * left to do, and it was actively wrong on two of them: multiply
+           * takes white to the colour beneath it, so the white letters
+           * inside the NDTV box and Industry Outlook's reversed "Outlook"
+           * were rendering cream against the warm page instead of white.
            *
-           * `mix-blend-multiply` IS LOAD-BEARING, not decoration. Two of the
-           * supplied files have a white background baked in rather than an
-           * alpha channel — Hindustan Times is a JPEG, and the Times of India
-           * PNG has no transparency — so without it they render as white
-           * rectangles on the warm page. Multiply drops white into the
-           * background and leaves the dark ink, and it is a no-op on the
-           * files that do have alpha.
+           * SHOWN IN THEIR OWN COLOURS, with no greyscale filter. A
+           * desaturated strip is the tidier design, but these are
+           * mastheads: the Times of India's black, the India Today red and
+           * the Hindustan Times cyan are most of what makes each one
+           * recognisable at this size.
            */}
           {outlet.logo ? (
             <Image
@@ -88,7 +91,7 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
                * a single line. No threshold between 2.52 and 2.65 is worth
                * trusting, so the shape is now stated rather than guessed.
                */
-              className={`w-auto object-contain mix-blend-multiply opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 ${
+              className={`w-auto object-contain opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 ${
                 outlet.stacked ? 'h-13 sm:h-15' : 'h-7 sm:h-8'
               }`}
             />

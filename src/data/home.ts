@@ -734,7 +734,7 @@ export const home: HomeContent = {
         src: '/images/press/times-of-india.png',
         alt: 'The Times of India',
         width: 600,
-        height: 60,
+        height: 46,
       },
     },
     {
@@ -777,7 +777,7 @@ export const home: HomeContent = {
        */
       name: 'India TV',
       logo: {
-        src: '/images/press/india-tv.webp',
+        src: '/images/press/india-tv.png',
         alt: 'India TV',
         width: 150,
         height: 43,
@@ -786,7 +786,7 @@ export const home: HomeContent = {
     {
       name: 'Hindustan Times',
       logo: {
-        src: '/images/press/hindustan-times.jpg',
+        src: '/images/press/hindustan-times.png',
         alt: 'Hindustan Times',
         width: 360,
         height: 46,
@@ -803,7 +803,7 @@ export const home: HomeContent = {
        */
       name: 'NDTV',
       logo: {
-        src: '/images/press/ndtv.jpg',
+        src: '/images/press/ndtv.png',
         alt: 'NDTV',
         width: 491,
         height: 175,
@@ -812,7 +812,7 @@ export const home: HomeContent = {
     {
       name: 'The Industry Outlook',
       logo: {
-        src: '/images/press/industry-outlook.jpg',
+        src: '/images/press/industry-outlook.png',
         alt: 'The Industry Outlook',
         width: 448,
         height: 155,
