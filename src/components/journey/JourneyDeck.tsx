@@ -4,43 +4,43 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/motion/Reveal'
 
 /**
- * The seven stages, as a deck of cards that pin and recede as you scroll.
+ * The seven stages, as a timeline.
  *
- * ⚠️  THE SEQUENCE IS THE POINT OF THE SECTION, AND THE EFFECT IS HOW IT IS
- * CARRIED. Seven stages in a plain list are seven headings a reader scrolls
- * past; pinned, each one holds the screen on its own, and the one before it
- * is still visible behind — tilted back and dimmed — so "this is the third
- * thing, and these two already happened" is legible without counting. The
- * numerals are there as well, because the depth cue alone is not an
- * accessible way to convey order.
+ * ⚠️  THIS REPLACED A STICKY CARD DECK, AND THE DECK MUST NOT COME BACK.
+ * It was built for an explicit request — "showing the journey like a 3D
+ * effect so the user is able to understand this is first, this is second" —
+ * and the intent was right while the device was wrong. What it actually did,
+ * measured and screenshotted:
  *
- * ──────────────────────────────────────────────────────────────────────────
- * HOW IT WORKS, AND WHY THERE IS NO JAVASCRIPT.
+ *   • EACH CARD SLICED THE ONE BEFORE IT. The pin offsets grew 14px per
+ *     stage, so mid-scroll the incoming card cut the outgoing one through
+ *     the middle of a sentence. Stage 2's numeral and first line sat
+ *     permanently bisected by stage 3. On a page of clinical instructions
+ *     that reads as a rendering fault, not as depth.
+ *   • `pb-[40vh]` LEFT A FULL EMPTY SCREEN after the last stage, which it
+ *     needed so the final card had room to pin.
+ *   • THE PAGE RAN 5.9 SCREENS for seven stages of two short paragraphs,
+ *     because pinning spends scroll distance to show one card at a time.
+ *   • THE CARDS WERE MOSTLY EMPTY — a title in four columns next to two
+ *     short paragraphs in eight, inside 40px of card padding.
  *
- * Each card is `position: sticky` at an offset that grows by stage, so card
- * two pins 14px below card one, three 28px below, and so on. That alone
- * produces the stack and works in every browser back to the ones that
- * shipped sticky.
+ * A deck hides what came before behind a sliver; a timeline shows the whole
+ * sequence at once with the order drawn down the side of it, which is what
+ * the request was asking for. The rail and the numbered nodes carry "first,
+ * second, third" without the reader counting, and nothing is occluded.
  *
- * The depth comes from `.deck` and `.deck-card` in `globals.css`, which were
- * written for exactly this and were sitting unused: a `perspective` on the
- * container and a `deck-recede` keyframe driven by `animation-timeline:
- * view()`. That is a scroll-driven animation handled on the compositor —
- * no scroll listener, nothing on the main thread, no layout thrash on a
- * long page. A browser without it gets the plain sticky stack: the same
- * layout, flatter.
+ * THE ROW SHAPE IS `PrinciplesSection`'S, deliberately. That component sets
+ * numbered clauses with multi-paragraph bodies — the same shape as these —
+ * as ruled rows with the number and title in four columns and the prose in
+ * eight. Reusing it means the two sequences on the site read as one device,
+ * and it is also the layout that does not leave 40 per cent of a card
+ * empty.
  *
- * ⚠️  REDUCED MOTION IS HANDLED GLOBALLY AND MUST NOT BE RE-IMPLEMENTED
- * HERE. `globals.css` switches `.deck-card` off outright for anyone who has
- * asked for less motion — a scroll-driven animation has no duration to
- * collapse, so the usual `animation-duration: 0.01ms` would apply the full
- * transform instantly and leave the deck looking broken. The note is in that
- * file next to the rule.
- *
- * ⚠️  THE CARDS ARE OPAQUE, AND THAT IS LOAD-BEARING. They pin on top of one
- * another; a translucent card would show the previous stage's text through
- * the current one, which on a page of clinical instructions is worse than
- * ugly.
+ * ⚠️  THE MOTION IS `direction="tilt"`, WHICH IS WHERE THE 3D REQUEST
+ * SURVIVES. `globals.css` defines it as a card lying back in space and
+ * rising to flat — a real perspective transform, applied once as each stage
+ * arrives rather than held for the length of a scroll. Reduced motion is
+ * handled globally for `[data-reveal]`; do not re-implement it here.
  *
  * `scroll-mt` is not needed: nothing links to a stage.
  */
@@ -58,70 +58,67 @@ export function JourneyDeck({
           <SectionHeader eyebrow={content.eyebrow} title={content.title} />
         </Reveal>
 
-        {/* `deck` carries the perspective. The bottom padding is what gives
-            the last card room to pin before the section ends — without it
-            the deck unsticks the moment the final card arrives and the
-            whole effect stops one stage early. */}
-        <ol className="deck mt-12 pb-[40vh] lg:mt-16">
+        <ol className="mt-12 lg:mt-16">
           {stages.map((stage, index) => (
-            <li
+            <Reveal
+              as="li"
               key={stage.title}
-              /* The pin offset grows per card so the stack fans rather than
-                 hiding each previous card completely. `top` clears the
-                 fixed header.
-
-                 ⚠️  `lg:sticky`, NOT `sticky`, AND THAT IS A MEASUREMENT.
-                 A sticky element taller than the room below its `top`
-                 offset pins with its own bottom below the fold and holds
-                 it there — the reader can never reach it. Measured, the
-                 tallest card here is 615px on a 360x800 phone against
-                 618px of room: a 3px margin, and negative on any shorter
-                 handset. At `lg` the cards are 209-240px against 704-788px.
-                 Below `lg` this is a plain stacked list, and `globals.css`
-                 gates the recede to the same 64rem so the two cannot
-                 disagree. */
-              className="deck-card mt-5 first:mt-0 lg:sticky"
-              style={{
-                top: `calc(7rem + ${index * 14}px)`,
-                zIndex: index + 1,
-              }}
+              direction="tilt"
+              delay={index * 60}
+              className="relative pb-10 pl-14 last:pb-0 sm:pl-20"
             >
-              <article className="rounded-(--radius-2xl) border border-border-brand bg-surface p-7 shadow-(--shadow-card) sm:p-9 lg:p-10">
-                <div className="grid gap-6 lg:grid-cols-12 lg:gap-12">
-                  <div className="lg:col-span-4">
-                    {/* The same gradient numeral as the home page's case
-                        review and the international enquiry steps, so the
-                        three sequences read as one device. `aria-hidden`
-                        because the <ol> already carries the order. */}
-                    <span
-                      aria-hidden
-                      className="block bg-linear-to-br from-accent-dark to-brand-teal-400 bg-clip-text font-display text-5xl font-bold leading-none tracking-[-0.03em] text-transparent"
-                    >
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
+              {/* ⚠️  THE RAIL IS DRAWN PER STAGE AND OMITTED ON THE LAST,
+                  not as one line down the whole list. A single absolute
+                  rail is less markup and was what this had — but it spans
+                  the list, so it ran on past stage seven's node and down
+                  the side of its paragraphs, trailing off into nothing. A
+                  connector that belongs to the stage ABOVE it stops the
+                  sequence exactly where the sequence stops.
 
-                    <p className="mt-4 text-eyebrow uppercase text-primary-dark">
-                      Stage {index + 1}
-                    </p>
+                  Decoration, so hidden from the accessibility tree: the
+                  <ol> and the "Stage n" label already state the order, and
+                  a line cannot be read aloud. It starts at the node's
+                  bottom edge — `top-10` against `size-10`, `sm:top-12`
+                  against `sm:size-12` — so the two never overlap. */}
+              {index < stages.length - 1 ? (
+                <span
+                  aria-hidden
+                  className="absolute bottom-0 left-5 top-10 w-px bg-border-brand sm:left-6 sm:top-12"
+                />
+              ) : null}
 
-                    <h3 className="mt-2 font-display text-2xl font-bold leading-snug text-text">
-                      {stage.title}
-                    </h3>
-                  </div>
+              {/* The node sits on the rail: `size-10` centred at `left-5`
+                  means the circle starts at 0 and its centre is exactly
+                  where the connector runs. */}
+              <span
+                aria-hidden
+                className="absolute left-0 top-0 flex size-10 items-center justify-center rounded-full bg-primary-subtle font-display text-sm font-bold text-accent-dark sm:size-12 sm:text-base"
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
 
-                  <div className="max-w-(--measure) space-y-4 lg:col-span-8">
-                    {stage.body.map((paragraph) => (
-                      <p
-                        key={paragraph.slice(0, 32)}
-                        className="text-base leading-relaxed text-neutral-700"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+              <div className="grid gap-4 lg:grid-cols-12 lg:gap-12">
+                <div className="lg:col-span-4">
+                  <p className="text-eyebrow uppercase text-primary-dark">
+                    Stage {index + 1}
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-bold leading-snug text-text">
+                    {stage.title}
+                  </h3>
                 </div>
-              </article>
-            </li>
+
+                <div className="max-w-(--measure) space-y-4 lg:col-span-8">
+                  {stage.body.map((paragraph) => (
+                    <p
+                      key={paragraph.slice(0, 32)}
+                      className="text-base leading-relaxed text-neutral-700"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           ))}
         </ol>
       </Container>

@@ -339,61 +339,6 @@
     transform: perspective(1400px) translate3d(0, 2.5rem, -7rem) rotateX(14deg);
   }
 
-  /* ========================================================================
-     3D SCROLL DECK
-     The process cards pin one below the next and the ones already passed
-     recede into the page, so the stack reads as depth rather than as cards
-     simply overlapping.
-
-     THE RECEDE IS PROGRESSIVE ENHANCEMENT. It runs on `animation-timeline:
-     view()`, which is a scroll-driven animation handled entirely by the
-     compositor — no scroll listener, nothing on the main thread. Browsers
-     without it (Firefox and Safari at the time of writing) get the plain
-     sticky stack, which is the same layout minus the depth. Nothing breaks
-     and nothing is missing; it is simply flatter.
-     ====================================================================== */
-  .deck {
-    perspective: 1400px;
-    perspective-origin: 50% 0%;
-  }
-
-  .deck-card {
-    transform-origin: 50% 0%;
-    backface-visibility: hidden;
-  }
-
-  /* ⚠️  THE RECEDE IS GATED TO `lg` TO MATCH THE PIN, which the component
-     applies as `lg:sticky`. Below that the cards are a plain stacked list,
-     and a scroll-linked transform on a list that does not pin reads as
-     cards randomly dimming as they leave — the effect without the thing it
-     is explaining. The width is the same 64rem Tailwind's `lg` uses; change
-     one and change the other.
-
-     WHY THE PIN STOPS AT `lg` AT ALL: a sticky element taller than the
-     space below its `top` offset pins with its own bottom below the fold
-     and keeps it there, so the reader can never reach it. Measured on the
-     journey deck, the tallest card is 615px on a 360x800 phone against
-     618px of room — a 3px margin, and negative on any shorter handset. At
-     `lg` the cards are 209-240px against 704-788px. */
-  @supports (animation-timeline: view()) {
-    @media (min-width: 64rem) {
-      .deck-card {
-        animation: deck-recede linear both;
-        animation-timeline: view();
-        /* Starts once the card has pinned and run most of its length, so
-           the card is readable before it begins to fall back. */
-        animation-range: exit-crossing 0% exit-crossing 100%;
-      }
-    }
-  }
-
-  @keyframes deck-recede {
-    to {
-      transform: translate3d(0, -1rem, -10rem) rotateX(7deg) scale(0.96);
-      opacity: 0.45;
-    }
-  }
-
   [data-reveal][data-revealed] {
     opacity: 1;
     transform: none;
@@ -650,20 +595,6 @@
     scroll-behavior: auto !important;
   }
 
-  /**
-   * The rules above collapse DURATION, which is not enough on its own here.
-   *
-   * A scroll-driven animation has no duration to collapse — its progress is
-   * tied to scroll position, so `deck-recede` would still apply its full
-   * transform instantly and the deck would read as broken rather than calm.
-   * The whole effect is therefore switched off, and the transform reset, for
-   * anyone who has asked for less motion.
-   */
-  .deck-card {
-    animation: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
 
   [data-reveal] {
     transform: none !important;

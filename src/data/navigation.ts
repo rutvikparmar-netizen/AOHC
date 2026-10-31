@@ -54,6 +54,36 @@ const cancerCareNav: MegaNavColumn[] = [
     ],
     footer: { label: 'View all treatments', href: routes.treatments },
   },
+  /**
+   * ⚠️  THIS IS HOW `/patient-journey` IS REACHABLE AT ALL. The page was
+   * built and then linked from nowhere — every other built page had a nav
+   * entry and this one did not, so the only way in was to type the URL.
+   *
+   * It stacks under Cancer Types rather than taking a column of its own:
+   * the Cancer Care panel is the narrow two-column one, and a third column
+   * at 544px would cramp all three. `stackUnder` puts it inside the first
+   * cell, under that column's list — which is also where it belongs by
+   * meaning. Types and Treatments are WHAT may be involved; this is what
+   * happens to you, in order, which is the question a reader has before
+   * either of the other two.
+   */
+  {
+    label: 'Your Care Journey',
+    href: routes.patientJourney,
+    stackUnder: 'Cancer Types',
+    links: [
+      {
+        label: 'Your Patient Journey',
+        href: routes.patientJourney,
+        description: 'From first enquiry to follow-up',
+      },
+      {
+        label: 'Integrative Cancer Care',
+        href: routes.integrativeCare,
+        description: 'How supportive care fits alongside treatment',
+      },
+    ],
+  },
 ]
 
 /**

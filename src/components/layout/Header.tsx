@@ -245,7 +245,14 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
                * against), the panel's width and offset, and the column
                * grid. Everything else is shared.
                */
-              const narrow = !!mega && mega.length <= 2
+              /* ⚠️  COUNTS RENDERED CELLS, NOT RAW ENTRIES. It used to read
+                 `mega.length`, which is the number of columns in the DATA —
+                 so adding a column that declares `stackUnder`, and
+                 therefore renders inside an existing cell, flipped this
+                 group from the narrow panel to the full-width sheet
+                 without adding a single cell to the grid. The panel shape
+                 has to follow what is actually laid out. */
+              const narrow = !!mega && stackMegaColumns(mega).length <= 2
 
               return (
                 /**
