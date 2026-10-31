@@ -5,14 +5,12 @@ import { home } from '@/data/home'
 import { routes } from '@/lib/routes'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbSchema } from '@/lib/structured-data'
-import { Button } from '@/components/ui/Button'
-import { Container } from '@/components/ui/Container'
+import { ClosingSection } from '@/components/home/ClosingSection'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
 import { Passage } from '@/components/shared/Passage'
 import { ChecklistSection } from '@/components/home/ChecklistSection'
-import { DoctorDirectory } from '@/components/doctors/DoctorDirectory'
+import { TeamRoster } from '@/components/doctors/TeamRoster'
 
 /**
  * DOCTORS AND SPECIALISTS — `/about-us/our-doctors`
@@ -66,32 +64,33 @@ export default function DoctorsPage() {
 
       <PageHero content={doctorsPage.hero} trail={trail} />
 
-      {/* ── 1. A multidisciplinary perspective ──────────────────────
-          A `ListSection`, so it renders through the home page's
-          component. Its outro — "not all disciplines may be available
-          through AOHC directly" — is what keeps the ten specialties a
-          description rather than a roster of staffed services. */}
-      <ChecklistSection content={doctorsPage.disciplines} />
+      {/* ── 1. The team ─────────────────────────────────────────────
+          ⚠️  THE ROSTER COMES FIRST, AHEAD OF THE DISCIPLINES LIST, on
+          AOHC's instruction — and it reverses the supplied document's
+          order, which ran disciplines then people. Worth knowing why
+          before anyone "restores" it: this page is reached from a nav
+          item and a "Meet the full team" link that both promise doctors,
+          and the disciplines section is a ten-item list that pushed them
+          below the fold. The reader who came for a name now gets one
+          without scrolling, and the list still explains the shape of the
+          team directly underneath.
 
-      {/* ── 2. The team ─────────────────────────────────────────────
-          Fifteen real people, searchable and filterable by discipline.
-          See the component before changing any field: every one renders
-          only when present, on purpose — and read the note there on why
-          there is no city filter before adding one.
-
-          IT STAYS DIRECTLY BELOW THE MULTIDISCIPLINARY SECTION, which is
-          both the supplied document's order and the one that reads: that
-          section names the disciplines a case may involve, and this one
-          is who covers them. Nothing goes between the question and the
-          answer. */}
-      <DoctorDirectory
+          Fifteen real people. See the component before changing any
+          field: every one renders only when present, on purpose. */}
+      <TeamRoster
         eyebrow={doctorsPage.team.eyebrow}
         title={doctorsPage.team.title}
         intro={doctorsPage.team.intro}
         members={home.team.members}
         cta={doctorsPage.team.cta}
-        surface
       />
+
+      {/* ── 2. A multidisciplinary perspective ──────────────────────
+          A `ListSection`, so it renders through the home page's
+          component. Its outro — "not all disciplines may be available
+          through AOHC directly" — is what keeps the ten specialties a
+          description rather than a roster of staffed services. */}
+      <ChecklistSection content={doctorsPage.disciplines} />
 
       {/* ── 3. Clinical responsibility and collaboration ───────────
           Through the shared passage component — heading beside the prose
@@ -100,27 +99,14 @@ export default function DoctorsPage() {
           row empty. */}
       <Passage content={responsibility} />
 
-      {/* ── 4. Closing ─────────────────────────────────────────────
-          Thin, like the other pages built from this draft: the supplied
-          copy is a heading and one button, and `ClosingPanel` would need
-          lead paragraphs, a second action and a note inventing. */}
-      <section className="bg-surface py-(--spacing-section)">
-        <Container>
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-h2 font-bold tracking-[-0.02em] text-text">
-              {closing.title}
-            </h2>
-
-            <Button
-              href={closing.cta.href}
-              icon="arrow-right"
-              className="mt-8 rounded-(--radius-pill)"
-            >
-              {closing.cta.label}
-            </Button>
-          </Reveal>
-        </Container>
-      </section>
+      {/* ── Closing ─────────────────────────────────────────────────
+          The shared panel, same as every other page. Only a heading and
+          one action are supplied for this one; the lead paragraphs, the
+          second action and the note under the buttons render when AOHC
+          sends copy for them. */}
+      <ClosingSection
+        content={{ title: closing.title, primaryCta: closing.cta }}
+      />
     </>
   )
 }

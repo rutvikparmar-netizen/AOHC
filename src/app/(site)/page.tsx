@@ -286,27 +286,51 @@ export default function HomePage() {
               </Button>
             </Reveal>
 
-            <Reveal direction="right" delay={100}>
-              <ol className="space-y-4">
-                {home.international.steps.map((step, index) => (
-                  <li
-                    key={step.title}
-                    className="flex gap-4 rounded-(--radius-2xl) border border-border bg-background p-5"
-                  >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-subtle font-display text-sm font-bold text-accent-dark">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <h3 className="text-base font-bold text-text">{step.title}</h3>
-                      <p className="mt-1.5 text-sm leading-relaxed text-neutral-700">
-                        {step.description}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+            {/* ⚠️  A PHOTOGRAPH HERE, NOT THE THREE STEPS. The steps used
+                to sit in this column, which made the row read as prose
+                beside a summary of the same prose — the reader had two
+                versions of one thing side by side and no picture of the
+                care being described. The steps are a sequence and belong
+                on one line underneath, where they read left to right as
+                first, second, third rather than as a stack competing with
+                the paragraphs. */}
+            <Reveal direction="right" delay={100} className="min-w-0">
+              <div className="relative h-64 overflow-hidden rounded-(--radius-3xl) sm:h-80 lg:h-full lg:min-h-[22rem]">
+                <Image
+                  src="/images/cta-backdrop.webp"
+                  alt="A clinician resting a hand on a patient's arm during treatment"
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
             </Reveal>
           </div>
+
+          {/* The three steps, full width under both columns. A numbered
+              sequence reads as a sequence when it runs along a line; in a
+              narrow column it is just a list. */}
+          <ol className="mt-10 grid gap-5 sm:grid-cols-3 lg:mt-14">
+            {home.international.steps.map((step, index) => (
+              <Reveal
+                as="li"
+                key={step.title}
+                direction="up"
+                delay={index * 70}
+                className="flex gap-4 rounded-(--radius-2xl) border border-border bg-background p-5"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-subtle font-display text-sm font-bold text-accent-dark">
+                  {index + 1}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-base font-bold text-text">{step.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-neutral-700">
+                    {step.description}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
         </Container>
       </section>
 

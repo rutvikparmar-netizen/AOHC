@@ -325,6 +325,16 @@ export interface TeamMember {
   speciality?: string
   /** Whole years, only where the source states a figure. */
   experienceYears?: number
+  /**
+   * Where this person practises, only where artofhealingcancer.com states
+   * it — four of the fifteen.
+   *
+   * ⚠️  NEVER DERIVED FROM AN EMPLOYER NAMED IN `role`. "Batra Hospital" or
+   * "Fortis Vasant Kunj" is an affiliation, not a consulting address, and
+   * filling this in for the eleven the source leaves blank would publish a
+   * made-up fact about where a named doctor can be seen.
+   */
+  location?: string
   qualifications?: string[]
   photo?: ImageAsset
   /** Shown on the home-page grid; the rest live on the full team page. */

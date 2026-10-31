@@ -573,12 +573,6 @@ export const home: HomeContent = {
      * patients — a page that shows a named patient needs the documented
      * consent §11 of the content draft requires.
      */
-    image: {
-      src: '/images/aohc-consultation.webp',
-      alt: 'A clinician with a tablet talking to two people across a table in a consulting area',
-      width: 1024,
-      height: 1536,
-    },
   },
 
   /* ========================================================================
@@ -1025,6 +1019,10 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Medical Director · Haematopathologist',
         speciality: 'Pathology',
+        experienceYears: 15,
+        qualifications: [
+          'DM Haematopathology — AIIMS New Delhi',
+        ],
         featured: true,
         photo: {
           src: '/images/doctors/sonal-jain.jpg',
@@ -1039,6 +1037,9 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Leads Interventional Radiology & Interventional Oncology',
         speciality: 'Interventional Radiology',
+        qualifications: [
+          'Advanced training — Seoul National University, Georgetown, Cleveland Clinic, Johns Hopkins',
+        ],
         featured: true,
         photo: {
           src: '/images/doctors/abhishek-bansal.png',
@@ -1067,8 +1068,9 @@ export const home: HomeContent = {
         slug: 'harsimran-singh',
         name: 'Harsimran Singh',
         prefix: 'Dr.',
-        role: 'Surgical Oncologist, Delhi NCR',
+        role: 'Surgical Oncologist',
         speciality: 'Surgical Oncology',
+        location: 'Delhi NCR',
         experienceYears: 15,
         qualifications: ['Fellowship, Head & Neck Onco Surgery'],
         featured: true,
@@ -1085,6 +1087,11 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Senior Consultant — Max Group of Hospitals & Zeeva Clinic',
         speciality: 'Medical Oncology',
+        experienceYears: 17,
+        qualifications: [
+          'MBBS — Maulana Azad Medical College, New Delhi',
+          'DNB (Medical Oncology) — Rajiv Gandhi Cancer Institute',
+        ],
         featured: true,
         photo: {
           src: '/images/doctors/vikas-goswami.png',
@@ -1099,6 +1106,11 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Nuclear Medicine Physician',
         speciality: 'Nuclear Medicine',
+        experienceYears: 20,
+        location: 'Delhi NCR',
+        qualifications: [
+          'MBBS, DRM, DNB (Nuclear Medicine)',
+        ],
         featured: true,
         photo: {
           src: '/images/doctors/ishita-b-sen.png',
@@ -1111,8 +1123,13 @@ export const home: HomeContent = {
         slug: 'ritesh-sharma',
         name: 'Ritesh Sharma',
         prefix: 'Dr.',
-        role: 'Senior Consultant Radiation Oncologist — Batra Hospital, Delhi',
+        role: 'Senior Consultant Radiation Oncologist — Batra Hospital',
         speciality: 'Radiation Oncology',
+        experienceYears: 13,
+        location: 'Delhi',
+        qualifications: [
+          'MBBS, MD (Radiotherapy) — Gandhi Medical College, Bhopal',
+        ],
         featured: true,
         photo: {
           src: '/images/doctors/ritesh-sharma.png',
@@ -1129,6 +1146,11 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Medical Oncologist',
         speciality: 'Medical Oncology',
+        experienceYears: 11,
+        qualifications: [
+          'MBBS — Maulana Azad Medical College, New Delhi',
+          'DM (Medical Oncology) — AIIMS New Delhi',
+        ],
         photo: {
           src: '/images/doctors/siddharth-sahai.png',
           alt: 'Portrait of Dr. Siddharth Sahai',
@@ -1142,6 +1164,10 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Leads R.G.C.C. International GmbH',
         speciality: 'Precision Oncology',
+        qualifications: [
+          'Human Genetics and Haematology Oncology',
+          'MSc Molecular Biology and Oncology',
+        ],
         photo: {
           src: '/images/doctors/ioannis-papasotiriou.png',
           alt: 'Portrait of Dr. Ioannis Papasotiriou',
@@ -1155,6 +1181,10 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Senior Pathologist',
         speciality: 'Pathology',
+        experienceYears: 25,
+        qualifications: [
+          'Armed Forces Medical College, Pune',
+        ],
         photo: {
           src: '/images/doctors/neeraj-prakash.png',
           alt: 'Portrait of Dr. Neeraj Prakash',
@@ -1168,6 +1198,11 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Head of Department — Mahajan Radiology, Fortis Vasant Kunj',
         speciality: 'Radiology',
+        experienceYears: 20,
+        location: 'Delhi',
+        qualifications: [
+          'Armed Forces Medical College, Pune',
+        ],
         photo: {
           src: '/images/doctors/shoma-mukerjee-sharma.png',
           alt: 'Portrait of Dr. Shoma Mukerjee Sharma',
@@ -1181,6 +1216,11 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Senior Consultant & Head, MRI Division — Mahajan Imaging',
         speciality: 'Radiology',
+        experienceYears: 20,
+        location: 'Delhi NCR',
+        qualifications: [
+          'DMRD, DNB',
+        ],
         photo: {
           src: '/images/doctors/shikha-panwar.png',
           alt: 'Portrait of Dr. Shikha Panwar',
@@ -1194,6 +1234,10 @@ export const home: HomeContent = {
         prefix: 'Dr.',
         role: 'Ayurvedic Physician (BAMS) · Senior Medical Officer, NanoLife',
         speciality: 'Ayurveda & Naturopathic Medicine',
+        experienceYears: 18,
+        qualifications: [
+          'BAMS',
+        ],
         photo: {
           src: '/images/doctors/kishore-kanuga.png',
           alt: 'Portrait of Dr. Kishore Kanuga',
@@ -1208,6 +1252,10 @@ export const home: HomeContent = {
         prefix: 'Mr.',
         role: 'Yoga Therapist & Certified Yoga Trainer',
         speciality: 'Yoga and Meditation',
+        experienceYears: 20,
+        qualifications: [
+          'Yogic studies — Bihar Yoga Bharati',
+        ],
         photo: {
           src: '/images/doctors/pankaj-kumar.jpg',
           alt: 'Portrait of Mr. Pankaj Kumar',

@@ -11,7 +11,7 @@ import { routes } from '@/lib/routes'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbSchema } from '@/lib/structured-data'
 import { EMERGENCY_NOTICE, MEDICAL_DISCLAIMER } from '@/lib/site'
-import { Button } from '@/components/ui/Button'
+import { ClosingSection } from '@/components/home/ClosingSection'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { SectionHeader } from '@/components/ui/SectionHeader'
@@ -170,27 +170,14 @@ export default function TreatmentsPage() {
         </Container>
       </section>
 
-      {/* ── 8. Closing ──────────────────────────────────────────────
-          Thin, like the other two clinical pages': `ClosingPanel` needs
-          lead paragraphs, a second action and a note under the buttons,
-          and the supplied copy is a heading and one button. */}
-      <section className="bg-surface py-(--spacing-section)">
-        <Container>
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-h2 font-bold tracking-[-0.02em] text-text">
-              {closing.title}
-            </h2>
-
-            <Button
-              href={closing.cta.href}
-              icon="arrow-right"
-              className="mt-8 rounded-(--radius-pill)"
-            >
-              {closing.cta.label}
-            </Button>
-          </Reveal>
-        </Container>
-      </section>
+      {/* ── Closing ─────────────────────────────────────────────────
+          The shared panel, same as every other page. Only a heading and
+          one action are supplied for this one; the lead paragraphs, the
+          second action and the note under the buttons render when AOHC
+          sends copy for them. */}
+      <ClosingSection
+        content={{ title: closing.title, primaryCta: closing.cta }}
+      />
 
       {/* ── Medical disclaimer ────────────────────────────────────────
           ⚠️  LAST, AND NOT OPTIONAL. Quiet by design — a legal notice

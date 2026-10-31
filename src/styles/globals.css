@@ -15,8 +15,6 @@
   }
 
   html {
-    /* Anchor targets clear the sticky header instead of hiding behind it. */
-    scroll-padding-top: calc(var(--spacing-header) + 1rem);
     -webkit-text-size-adjust: 100%;
 
     /**
@@ -31,6 +29,32 @@
      * The reduced-motion block at the foot of this file resets it to `auto`.
      */
     scroll-behavior: smooth;
+  }
+
+  /**
+   * ⚠️  THE HEADER OFFSET LIVES ON THE TARGET, NOT ON `html`. DO NOT PUT
+   * `scroll-padding-top` BACK.
+   *
+   * It used to sit on `html` as `scroll-padding-top`, which reads as the
+   * same thing and is not: scroll-padding applies to EVERY scroll of that
+   * container, including ones no anchor asked for. On each client-side
+   * navigation React calls `scrollIntoView()` on the incoming page's
+   * sections, in reverse document order, and with `scroll-behavior: smooth`
+   * those six calls animate rather than snap. The page settled on the
+   * second section instead of the first — measured at scrollY 636 on a
+   * 728px hero, which is the hero scrolled off to put section two exactly
+   * one scroll-padding below the top. Every inner page opened halfway down
+   * itself.
+   *
+   * `scroll-margin-top` on `:target` is the same offset applied to the one
+   * element that actually was asked for. Anchor links still clear the fixed
+   * header; a scroll nobody requested is left alone.
+   *
+   * `scroll-mt-*` on an individual element (see the note in `Reveal`) is the
+   * same mechanism and still works alongside this.
+   */
+  :target {
+    scroll-margin-top: calc(var(--spacing-header) + 1rem);
   }
 
   body {
@@ -116,25 +140,62 @@
     backdrop-filter: blur(2px);
   }
 
-  /* The navigation drawer slides in from the edge it is anchored to, rather
-     than appearing. `showModal()` has no transition of its own, so this is a
-     one-shot animation on open; the global reduced-motion rule collapses it. */
+  /**
+   * The navigation drawer slides in from the edge it is anchored to, and —
+   * the part that used to be missing — SLIDES BACK OUT.
+   *
+   * ⚠️  A TRANSITION, NOT A KEYFRAME ANIMATION, AND THE DIFFERENCE IS THE
+   * WHOLE POINT. `animation: drawer-in` only ever ran on the way in, so
+   * tapping a link inside the drawer navigated and the panel vanished in
+   * one frame — the harshest moment in the whole mobile experience, right
+   * at the point the reader had just committed to something.
+   *
+   * Transitioning out of a `<dialog>` needs `allow-discrete`, because
+   * `display` and `overlay` are discrete properties: without it the
+   * element is removed from the top layer immediately and there is nothing
+   * left on screen to animate. `@starting-style` supplies the frame the
+   * entry animates FROM, which a newly displayed element otherwise has no
+   * way to express.
+   *
+   * `translate` rather than `transform`, so this composes with any
+   * transform a utility class puts on the same element instead of
+   * overwriting it.
+   *
+   * The global reduced-motion rule collapses the duration to nothing, which
+   * leaves the open and closed states intact and simply removes the travel.
+   */
+  dialog.drawer {
+    translate: 100% 0;
+    transition:
+      translate var(--duration-base) var(--ease-out-settle),
+      overlay var(--duration-base) allow-discrete,
+      display var(--duration-base) allow-discrete;
+  }
+
   dialog.drawer[open] {
-    animation: drawer-in var(--duration-base) var(--ease-out-settle);
+    translate: 0 0;
   }
 
-  dialog.drawer[open]::backdrop {
-    animation: drawer-backdrop var(--duration-base) linear;
-  }
-
-  @keyframes drawer-in {
-    from {
-      transform: translateX(100%);
+  @starting-style {
+    dialog.drawer[open] {
+      translate: 100% 0;
     }
   }
 
-  @keyframes drawer-backdrop {
-    from {
+  dialog.drawer::backdrop {
+    opacity: 0;
+    transition:
+      opacity var(--duration-base) linear,
+      overlay var(--duration-base) allow-discrete,
+      display var(--duration-base) allow-discrete;
+  }
+
+  dialog.drawer[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    dialog.drawer[open]::backdrop {
       opacity: 0;
     }
   }

@@ -424,12 +424,6 @@ export const about: AboutContent = {
     primaryCta: { label: APPOINTMENT_CTA, href: routes.consultation },
     secondaryCta: { label: 'Contact AOHC', href: routes.contact },
     note: 'Submitting an enquiry does not guarantee acceptance for consultation, eligibility for a particular treatment, or a specific clinical outcome.',
-    image: {
-      src: '/images/consultation-room.jpg',
-      alt: 'A clinician and a patient talking across a desk in a consulting room',
-      width: 1400,
-      height: 788,
-    },
   },
 
   disclaimer: {

@@ -4,10 +4,8 @@ import { internationalPatients as content } from '@/data/international-patients'
 import { routes } from '@/lib/routes'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbSchema } from '@/lib/structured-data'
-import { Button } from '@/components/ui/Button'
-import { Container } from '@/components/ui/Container'
+import { ClosingSection } from '@/components/home/ClosingSection'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
 import { Passage } from '@/components/shared/Passage'
 import { ChecklistSection } from '@/components/home/ChecklistSection'
@@ -98,27 +96,14 @@ export default function InternationalPatientsPage() {
       {/* ── 4. Support for families and caregivers ───────────────── */}
       <Passage content={content.caregivers} />
 
-      {/* ── 5. Closing ─────────────────────────────────────────────
-          Thin, like the other pages built from this draft: the supplied
-          copy is a heading and one button, and `ClosingPanel` would need
-          lead paragraphs, a second action and a note inventing. */}
-      <section className="bg-surface py-(--spacing-section)">
-        <Container>
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-h2 font-bold tracking-[-0.02em] text-text">
-              {closing.title}
-            </h2>
-
-            <Button
-              href={closing.cta.href}
-              icon="arrow-right"
-              className="mt-8 rounded-(--radius-pill)"
-            >
-              {closing.cta.label}
-            </Button>
-          </Reveal>
-        </Container>
-      </section>
+      {/* ── Closing ─────────────────────────────────────────────────
+          The shared panel, same as every other page. Only a heading and
+          one action are supplied for this one; the lead paragraphs, the
+          second action and the note under the buttons render when AOHC
+          sends copy for them. */}
+      <ClosingSection
+        content={{ title: closing.title, primaryCta: closing.cta }}
+      />
     </>
   )
 }

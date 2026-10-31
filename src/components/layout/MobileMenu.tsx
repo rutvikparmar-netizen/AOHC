@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { NavGroup } from '@/types'
@@ -21,35 +21,106 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  * accessible menus usually go wrong — a custom div traps focus badly, leaks
  * Tab to the page behind, or forgets Escape entirely.
  *
- * THE DRILL-DOWN. Tapping a section with children slides the root list out to
- * the left and a second panel in from the right, headed by a back button. It
- * is the pattern every phone OS uses for nested navigation, and it beats an
- * accordion here for a concrete reason: International Patients has seven
- * children and About Us has five, so an expanded accordion pushes the rest of
- * the menu off the bottom of a phone screen and the reader loses their place.
+ * ──────────────────────────────────────────────────────────────────────────
+ * EVERY LEVEL IS A SLIDE. THERE ARE NO DROPDOWNS IN HERE, BY INSTRUCTION.
  *
- * ONLY ONE SUBMENU PANEL EXISTS AT A TIME, and `panelLabel` is what it shows.
- * An earlier version stacked all three sections on top of each other and told
- * them apart with a transform alone; driving it in a headless browser caught
- * it painting the wrong section while the DOM and computed styles both said
- * otherwise. One panel cannot be ambiguous about which section it is.
+ * The expertise menu used to end in `<details>` accordions because it is
+ * three deep and the old code could only animate one submenu panel. The
+ * panels are now a STACK of arbitrary depth, so a column opens the same way
+ * a section does and the reader never has to hold two mental models.
  *
- * `panelLabel` lags `submenu` on the way out on purpose: it keeps rendering
- * the section being closed until the slide-out finishes, so the panel does
- * not blank mid-animation.
+ * HOW THE SLIDING WORKS, and why it is a track rather than per-panel
+ * transforms: every panel is laid out side by side at `left: i * 100%`
+ * inside one element that is itself translated by `-depth * 100%`. The panel
+ * being entered is therefore already mounted OFF-SCREEN before it is asked
+ * to move, so it animates in properly. Transforming each panel individually
+ * does not survive a newly mounted node — React applies the mount and the
+ * new transform in one commit, there is no starting frame to animate from,
+ * and the panel simply appears. Moving the container sidesteps that: the
+ * thing that animates was already there.
  *
- * The off-screen panel is `inert` — without it, Tab walks straight into links
- * sitting outside the viewport, which is invisible and unescapable.
+ * Only the panel at `depth` is interactive; every other one is `inert`.
+ * Without it, Tab walks into links sitting outside the viewport, which is
+ * invisible and unescapable.
  *
- * ESCAPE GOES BACK BEFORE IT CLOSES. From a submenu, Escape returns to the
- * root list; from the root, it dismisses the drawer. The `cancel` event is
- * where that is decided, so it works for every route the browser uses to
- * dismiss a dialog.
+ * ESCAPE GOES BACK BEFORE IT CLOSES. From any depth, Escape pops one level;
+ * at the root it dismisses the drawer. The `cancel` event is where that is
+ * decided, so it works for every route the browser uses to dismiss a dialog.
  *
  * The scroll lock lives in `globals.css` as `html:has(dialog[open])`, so no
- * effect mutates `document.body` and nothing can leave the page locked if this
- * component unmounts while open.
+ * effect mutates `document.body` and nothing can leave the page locked if
+ * this component unmounts while open.
  */
+
+/** One row in the drawer. A node with `children` drills down; the rest link. */
+interface MenuNode {
+  key: string
+  label: string
+  href?: string
+  description?: string
+  children?: MenuNode[]
+}
+
+/**
+ * Flatten the header's nav shape into one uniform tree.
+ *
+ * The source has three different shapes at three depths — `NavGroup`,
+ * `MegaNavColumn`, `MegaNavLink` — which is why the old drawer needed a
+ * different control for each. One node type means one row component and one
+ * panel component, whatever the depth, and a fourth level in the data would
+ * need no change here.
+ */
+function toNodes(nav: NavGroup[]): MenuNode[] {
+  return nav.map((group) => {
+    const children: MenuNode[] = [
+      ...group.links.map((link) => ({
+        key: link.href,
+        label: link.label,
+        href: link.href,
+        description: link.description,
+      })),
+      ...(group.mega ?? []).map((column) => ({
+        key: `col:${column.label}`,
+        label: column.label,
+        href: column.href,
+        children: [
+          ...column.links.map((link) => ({
+            key: link.href,
+            label: link.label,
+            href: link.href,
+            description: link.description,
+            children: link.links?.length
+              ? link.links.map((child) => ({
+                  key: child.href,
+                  label: child.label,
+                  href: child.href,
+                }))
+              : undefined,
+          })),
+          /* The column's closing "View all …" row, kept because a reader
+             scanning a long list looks for the way out at the bottom. */
+          ...(column.footer
+            ? [
+                {
+                  key: column.footer.href,
+                  label: column.footer.label,
+                  href: column.footer.href,
+                },
+              ]
+            : []),
+        ],
+      })),
+    ]
+
+    return {
+      key: `grp:${group.label}`,
+      label: group.label,
+      href: group.href,
+      children: children.length > 0 ? children : undefined,
+    }
+  })
+}
+
 export function MobileMenu({
   nav,
   onDark = false,
@@ -59,8 +130,8 @@ export function MobileMenu({
   onDark?: boolean
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
-  /** The row that opened the current submenu, so Back can return focus to it. */
-  const lastTriggerRef = useRef<HTMLButtonElement | null>(null)
+  /** The row that opened the current panel, so Back can return focus to it. */
+  const triggerRefs = useRef<(HTMLButtonElement | null)[]>([])
   const pathname = usePathname()
 
   /**
@@ -75,24 +146,22 @@ export function MobileMenu({
    * is closed, with nothing to synchronise.
    */
   const [openedAt, setOpenedAt] = useState<string | null>(null)
-  const [submenu, setSubmenu] = useState<string | null>(null)
-  /** Which section the single submenu panel renders. Trails `submenu`. */
-  const [panelLabel, setPanelLabel] = useState<string | null>(null)
+  /** The nodes drilled into, root first. Its length is the current depth. */
+  const [stack, setStack] = useState<MenuNode[]>([])
 
   const open = openedAt !== null && openedAt === pathname
-  /** Derived the same way: a submenu only counts while the drawer is open, so
-      a closed drawer can never reopen onto a stale panel. */
-  const activeLabel = open ? submenu : null
-  const panelGroup = nav.find((group) => group.label === panelLabel) ?? null
+  const roots = useMemo(() => toNodes(nav), [nav])
+
+  /** A closed drawer can never reopen onto a stale panel. */
+  const depth = open ? stack.length : 0
+  const panels: MenuNode[] = [
+    { key: 'root', label: 'Menu', children: roots },
+    ...(open ? stack : []),
+  ]
 
   const setOpen = (next: boolean) => {
     setOpenedAt(next ? pathname : null)
-    setSubmenu(null)
-  }
-
-  const openSubmenu = (label: string) => {
-    setPanelLabel(label)
-    setSubmenu(label)
+    setStack([])
   }
 
   // Drive the native dialog from that derived value, so the two cannot
@@ -116,12 +185,14 @@ export function MobileMenu({
     const dialog = dialogRef.current
     if (!dialog) return
 
-    if (activeLabel) {
-      dialog.querySelector<HTMLElement>('[data-panel] [data-back]')?.focus()
+    if (depth > 0) {
+      dialog
+        .querySelector<HTMLElement>(`[data-panel="${depth}"] [data-back]`)
+        ?.focus()
     } else {
-      lastTriggerRef.current?.focus()
+      triggerRefs.current[0]?.focus()
     }
-  }, [open, activeLabel])
+  }, [open, depth])
 
   return (
     <>
@@ -151,13 +222,18 @@ export function MobileMenu({
         // in sync however the dialog was dismissed.
         onClose={() => setOpen(false)}
         onCancel={(event) => {
-          // Escape backs out of a submenu before it closes the drawer.
-          if (activeLabel) {
+          // Escape backs out one level before it closes the drawer.
+          if (depth > 0) {
             event.preventDefault()
-            setSubmenu(null)
+            setStack((s) => s.slice(0, -1))
           }
         }}
-        className="drawer m-0 ml-auto h-dvh w-full max-w-sm bg-surface shadow-(--shadow-modal) backdrop:bg-brand-teal-950/55"
+        /* ⚠️  `w-[90%]`, NOT `w-full`, ON INSTRUCTION. The strip of dimmed
+           page left showing is what makes the drawer read as a layer over
+           the site rather than as a new screen, and it gives a thumb
+           somewhere to tap to dismiss. `max-w-sm` still caps it, so the
+           drawer does not become a half-metre of empty list on a tablet. */
+        className="drawer m-0 ml-auto h-dvh w-[90%] max-w-sm bg-surface shadow-(--shadow-modal) backdrop:bg-brand-teal-950/55"
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-border px-5 py-3">
@@ -175,178 +251,101 @@ export function MobileMenu({
           {/* The sliding area. `overflow-hidden` clips the panels parked to
               either side; each panel scrolls on its own. */}
           <div className="relative flex-1 overflow-hidden">
-            {/* ── Root list ─────────────────────────────────────────── */}
-            <nav
-              aria-label="Main"
-              inert={activeLabel !== null || undefined}
-              className={`absolute inset-0 overflow-y-auto overscroll-contain px-5 py-4 transition-transform duration-300 ease-(--ease-out-settle) ${
-                activeLabel ? '-translate-x-full' : 'translate-x-0'
-              }`}
+            <div
+              className="absolute inset-0 transition-transform duration-300 ease-(--ease-out-settle) motion-reduce:transition-none"
+              style={{ transform: `translateX(-${depth * 100}%)` }}
             >
-              <ul className="space-y-1">
-                {nav.map((group) =>
-                  /* `mega` counts as having children too — the expertise
-                     group keeps `links` empty and puts everything there. */
-                  group.links.length > 0 || group.mega?.length ? (
-                    <li key={group.label}>
+              {panels.map((panel, index) => (
+                <nav
+                  key={`${index}-${panel.key}`}
+                  data-panel={index}
+                  aria-label={index === 0 ? 'Main' : panel.label}
+                  inert={index !== depth || undefined}
+                  className="absolute inset-y-0 w-full overflow-y-auto overscroll-contain bg-surface px-5 py-4"
+                  style={{ left: `${index * 100}%` }}
+                >
+                  {index > 0 ? (
+                    <>
                       <button
                         type="button"
-                        onClick={(event) => {
-                          lastTriggerRef.current = event.currentTarget
-                          openSubmenu(group.label)
-                        }}
-                        /* `aria-expanded` would be wrong: the children are not
-                           revealed in place, they replace this view. */
-                        className="flex min-h-14 w-full cursor-pointer items-center justify-between gap-3 rounded-(--radius-button) px-3 text-left text-lg font-semibold text-text hover:bg-surface-subtle"
+                        data-back
+                        onClick={() => setStack((s) => s.slice(0, index - 1))}
+                        className="flex min-h-12 w-full cursor-pointer items-center gap-2 rounded-(--radius-button) px-3 text-sm font-bold uppercase tracking-[0.08em] text-accent-dark hover:bg-surface-subtle"
                       >
-                        {group.label}
-                        <Icon
-                          name="chevron-right"
-                          className="size-5 shrink-0 text-text-muted"
-                        />
+                        <Icon name="arrow-left" className="size-4 shrink-0" />
+                        Back
                       </button>
-                    </li>
-                  ) : (
-                    <li key={group.label}>
-                      <Link
-                        href={group.href ?? '#'}
-                        className="flex min-h-14 items-center rounded-(--radius-button) px-3 text-lg font-semibold text-text hover:bg-surface-subtle"
-                      >
-                        {group.label}
-                      </Link>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </nav>
 
-            {/* ── The one submenu panel ─────────────────────────────── */}
-            {panelGroup ? (
-              <nav
-                data-panel={panelGroup.label}
-                aria-label={panelGroup.label}
-                inert={activeLabel === null || undefined}
-                className={`absolute inset-0 overflow-y-auto overscroll-contain bg-surface px-5 py-4 transition-transform duration-300 ease-(--ease-out-settle) ${
-                  activeLabel ? 'translate-x-0' : 'translate-x-full'
-                }`}
-              >
-                <button
-                  type="button"
-                  data-back
-                  onClick={() => setSubmenu(null)}
-                  className="flex min-h-12 w-full cursor-pointer items-center gap-2 rounded-(--radius-button) px-3 text-sm font-bold uppercase tracking-[0.08em] text-accent-dark hover:bg-surface-subtle"
-                >
-                  <Icon name="arrow-left" className="size-4 shrink-0" />
-                  Back
-                </button>
-
-                <p className="mt-3 px-3 text-h6">{panelGroup.label}</p>
-
-                <ul className="mt-2 space-y-0.5">
-                  {/* The section's own page, which the drill-down would
-                      otherwise bury — tapping the parent row now opens this
-                      list instead of navigating. */}
-                  {panelGroup.href ? (
-                    <li>
-                      <Link
-                        href={panelGroup.href}
-                        className="flex min-h-12 items-center rounded-(--radius-button) px-3 font-semibold text-accent-dark hover:bg-surface-subtle"
-                      >
-                        All of {panelGroup.label}
-                      </Link>
-                    </li>
+                      <p className="mt-3 px-3 text-h6">{panel.label}</p>
+                    </>
                   ) : null}
 
-                  {panelGroup.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="flex min-h-12 flex-col justify-center rounded-(--radius-button) px-3 py-2 text-text hover:bg-surface-subtle hover:text-primary-dark"
-                      >
-                        {link.label}
-                        {link.description ? (
-                          <span className="mt-0.5 text-xs text-text-muted">
-                            {link.description}
-                          </span>
-                        ) : null}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className={index > 0 ? 'mt-2 space-y-0.5' : 'space-y-1'}>
+                    {/* The section's own page, which the drill-down would
+                        otherwise bury — tapping the parent row now opens
+                        this list instead of navigating to it. */}
+                    {index > 0 && panel.href ? (
+                      <li>
+                        <Link
+                          href={panel.href}
+                          className="flex min-h-12 items-center rounded-(--radius-button) px-3 font-semibold text-accent-dark hover:bg-surface-subtle"
+                        >
+                          All of {panel.label}
+                        </Link>
+                      </li>
+                    ) : null}
 
-                {/**
-                 * ── The expertise menu ──────────────────────────────────
-                 * Sections rather than a third drill-down level.
-                 *
-                 * The drawer slides one panel at a time, and the desktop
-                 * menu is three deep — Centre of Excellence, then blood
-                 * malignancies, then leukemia. Carrying that through would
-                 * mean a second sliding level and a stack to get back out
-                 * of; forty-odd links are not worth that.
-                 *
-                 * `<details>` instead: the browser owns the open state,
-                 * the keyboard behaviour and the ARIA, only one column is
-                 * open at a time by the reader's choice, and every link is
-                 * in the HTML whether or not JavaScript ran.
-                 */}
-                {panelGroup.mega?.length ? (
-                  <div className="mt-2 divide-y divide-border border-t border-border">
-                    {panelGroup.mega.map((column) => (
-                      <details key={column.label} className="group/col">
-                        <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-3 text-left font-semibold text-text [&::-webkit-details-marker]:hidden">
-                          {column.label}
-                          {column.links.length > 0 ? (
+                    {panel.children?.map((node) =>
+                      node.children?.length ? (
+                        <li key={node.key}>
+                          <button
+                            type="button"
+                            ref={(el) => {
+                              if (index === depth && index === 0) {
+                                triggerRefs.current[0] ??= el
+                              }
+                            }}
+                            onClick={() =>
+                              setStack((s) => [...s.slice(0, index), node])
+                            }
+                            /* `aria-expanded` would be wrong: the children
+                               are not revealed in place, they replace this
+                               view. */
+                            className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-(--radius-button) px-3 text-left font-semibold text-text hover:bg-surface-subtle ${
+                              index === 0 ? 'min-h-14 text-lg' : 'min-h-12'
+                            }`}
+                          >
+                            {node.label}
                             <Icon
-                              name="chevron-down"
-                              className="size-5 shrink-0 text-text-muted transition-transform group-open/col:rotate-180"
+                              name="chevron-right"
+                              className="size-5 shrink-0 text-text-muted"
                             />
-                          ) : null}
-                        </summary>
-
-                        <ul className="pb-2">
-                          {column.href ? (
-                            <li>
-                              <Link
-                                href={column.href}
-                                className="flex min-h-11 items-center rounded-(--radius-button) px-3 text-sm font-semibold text-accent-dark hover:bg-surface-subtle"
-                              >
-                                All of {column.label}
-                              </Link>
-                            </li>
-                          ) : null}
-
-                          {column.links.map((link) => (
-                            <li key={link.href}>
-                              <Link
-                                href={link.href}
-                                className="flex min-h-11 items-center rounded-(--radius-button) px-3 text-sm text-text hover:bg-surface-subtle hover:text-primary-dark"
-                              >
-                                {link.label}
-                              </Link>
-
-                              {link.links?.length ? (
-                                <ul className="ml-3 border-l border-border pl-3">
-                                  {link.links.map((child) => (
-                                    <li key={child.href}>
-                                      <Link
-                                        href={child.href}
-                                        className="flex min-h-11 items-center rounded-(--radius-button) px-3 text-sm text-text-muted hover:bg-surface-subtle hover:text-primary-dark"
-                                      >
-                                        {child.label}
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
-                    ))}
-                  </div>
-                ) : null}
-              </nav>
-            ) : null}
+                          </button>
+                        </li>
+                      ) : (
+                        <li key={node.key}>
+                          <Link
+                            href={node.href ?? '#'}
+                            className={`flex flex-col justify-center rounded-(--radius-button) px-3 text-text hover:bg-surface-subtle hover:text-primary-dark ${
+                              index === 0
+                                ? 'min-h-14 text-lg font-semibold'
+                                : 'min-h-12 py-2'
+                            }`}
+                          >
+                            {node.label}
+                            {node.description ? (
+                              <span className="mt-0.5 text-xs text-text-muted">
+                                {node.description}
+                              </span>
+                            ) : null}
+                          </Link>
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </nav>
+              ))}
+            </div>
           </div>
 
           <div className="border-t border-border p-5">
