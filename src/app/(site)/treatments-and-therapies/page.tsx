@@ -161,7 +161,9 @@ export default function TreatmentsPage() {
                 <h2 className="font-display text-xl font-bold leading-snug text-text">
                   {safety.title}
                 </h2>
-                <p className="mt-3 max-w-4xl text-base font-bold leading-relaxed text-text">
+                {/* Full width: a notice in a box of its own does not take
+                    the reading measure — see `ChecklistSection`. */}
+                <p className="mt-3 text-base font-bold leading-relaxed text-text">
                   {safety.body}
                 </p>
               </div>

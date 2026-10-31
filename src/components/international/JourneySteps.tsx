@@ -139,7 +139,10 @@ export function JourneySteps({
                           name="alert-triangle"
                           className="mt-0.5 size-5 shrink-0 text-accent-dark"
                         />
-                        <p className="max-w-(--measure) text-sm font-bold leading-relaxed text-text">
+                        {/* Full width: a notice in a box of its own does
+                            not take the reading measure — see
+                            `ChecklistSection`. */}
+                        <p className="text-sm font-bold leading-relaxed text-text">
                           {step.caution}
                         </p>
                       </div>

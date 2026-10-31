@@ -121,7 +121,9 @@ export function DisciplineGrid({
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-primary-dark">
                 <Icon name="info" className="size-5" />
               </span>
-              <p className="max-w-5xl self-center text-base leading-relaxed text-neutral-700">
+              {/* Full width: a notice in a box of its own does not take the
+                  reading measure — see the note in `ChecklistSection`. */}
+              <p className="self-center text-base leading-relaxed text-neutral-700">
                 {outro}
               </p>
             </div>

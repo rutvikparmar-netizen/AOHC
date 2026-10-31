@@ -126,7 +126,9 @@ export default function TreatmentCostsPage() {
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
                   <Icon name="shield-check" className="size-5" />
                 </span>
-                <p className="max-w-(--measure) self-center text-base font-bold leading-relaxed text-text">
+                {/* Full width: a notice in a box of its own does not take
+                    the reading measure — see `ChecklistSection`. */}
+                <p className="self-center text-base font-bold leading-relaxed text-text">
                   {guarantees.emphasis}
                 </p>
               </div>

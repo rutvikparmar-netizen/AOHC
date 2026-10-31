@@ -116,8 +116,12 @@ export function EntryGrid({
 
                   Boxed: the chip takes its own line, which is the
                   reference's arrangement and the only one that works in a
-                  360px card — inline, "Liver Cancer and Cancer Involving
-                  the Liver" wraps to three lines beside it. Ruled: the
+                  360px card — inline, a long entry name wraps to three
+                  lines beside it. The case that forced this was "Liver
+                  Cancer and Cancer Involving the Liver", since shortened
+                  to "Liver Cancer"; the constraint still holds for the
+                  next long name, which is why it has not been relaxed.
+                  Ruled: the
                   chip stays beside the name, because a row that opens with
                   a 44px disc on its own line reads as a card that has lost
                   its border.

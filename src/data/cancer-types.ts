@@ -128,7 +128,12 @@ export const cancerTypes: CancerTypesContent = {
       },
       {
         icon: 'liver',
-        name: 'Liver Cancer and Cancer Involving the Liver',
+        /* Renamed from "Liver Cancer and Cancer Involving the Liver" on
+           instruction. The distinction that title carried has not been
+           lost — the first body line still makes it: primary liver cancer
+           and cancer that has spread to the liver are different clinical
+           situations. The heading no longer has to carry it alone. */
+        name: 'Liver Cancer',
         body: [
           'Primary liver cancer and cancer that has spread to the liver are different clinical situations.',
           'Assessment should clarify the origin of the cancer, the extent of disease, liver function, other sites of involvement, previous treatment, and whether specialist local or systemic treatments may be relevant.',

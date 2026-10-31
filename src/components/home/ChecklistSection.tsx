@@ -150,9 +150,17 @@ export function ChecklistSection({
                 >
                   <Icon name="info" className="size-4" />
                 </span>
-                <p className="max-w-(--measure) text-base leading-relaxed text-text">
-                  {outro}
-                </p>
+                {/* ⚠️  NO `max-w-(--measure)` ON A NOTICE PANEL, AND THAT IS
+                    A DELIBERATE DEPARTURE FROM THE RULE THE REST OF THE
+                    SITE FOLLOWS. Body prose is capped at a reading measure
+                    because 150-character lines are hard to track. A notice
+                    is one or two sentences in a box of its own, and the cap
+                    there buys nothing: it leaves half the panel empty, so
+                    the box reads as a mistake rather than as emphasis — the
+                    thing AOHC asked to have fixed across the whole site.
+                    Short text filling its container looks intended; the
+                    same text in a column with a void beside it does not. */}
+                <p className="text-base leading-relaxed text-text">{outro}</p>
               </div>
             ) : null}
           </div>
@@ -175,7 +183,8 @@ export function ChecklistSection({
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
                 <Icon name="alert-triangle" className="size-5" />
               </span>
-              <p className="max-w-(--measure) self-center text-base font-bold leading-relaxed text-text">
+              {/* Full width, like the outro above — see the note there. */}
+              <p className="self-center text-base font-bold leading-relaxed text-text">
                 {warning}
               </p>
             </div>
