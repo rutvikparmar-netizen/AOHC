@@ -53,15 +53,26 @@ export function NetworkMarquee({
       >
         {/* The lift pairs with `.marquee:hover`, which already stops the
             strip — so pointing at a card holds it still and raises it,
-            rather than raising something that keeps sliding away. Same
-            card hover as the rest of the site. */}
-        <span className="flex h-24 w-44 items-center justify-center rounded-(--radius-xl) border border-border bg-surface p-5 shadow-(--shadow-xs) transition duration-300 hover:-translate-y-0.5 hover:border-border-brand hover:shadow-(--shadow-card-hover) sm:h-28 sm:w-52">
+            rather than raising something that keeps sliding away.
+
+            ⚠️  NO BRAND-TEAL BORDER ON HOVER. The card hover used elsewhere
+            on the site turns the border `border-border-brand`, which on a
+            card whose entire content is somebody else's logo reads as a
+            selection outline drawn around their mark rather than as a
+            hover. It darkens to the neutral `border-border-strong`
+            instead; the lift and the shadow carry the state. */}
+        <span className="flex h-28 w-48 items-center justify-center rounded-(--radius-xl) border border-border bg-surface p-4 shadow-(--shadow-xs) transition duration-300 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-(--shadow-card-hover) sm:h-32 sm:w-56 sm:p-5">
+          {/* ⚠️  `max-w-full` AS WELL AS `max-h-full`. The supplied set was
+              a uniform 252x126 canvas and has been trimmed to each mark's
+              own ink, so the aspect ratios now run from 5.9:1 (Medharbour)
+              to 0.7:1 (Living Light). Constrained on one axis only, a wide
+              wordmark would overflow the card it is centred in. */}
           <Image
             src={partner.logo.src}
             alt={duplicate ? '' : partner.logo.alt}
             width={partner.logo.width}
             height={partner.logo.height}
-            className="max-h-full w-auto object-contain"
+            className="max-h-full max-w-full object-contain"
           />
         </span>
       </li>

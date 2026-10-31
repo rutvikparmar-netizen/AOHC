@@ -1320,8 +1320,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/hcah-transition-care.webp',
           alt: 'HCAH Transition Care Center',
-          width: 252,
-          height: 126,
+          width: 207,
+          height: 44,
         },
       },
       {
@@ -1329,8 +1329,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/ck-birla-hospital.webp',
           alt: 'CK Birla Hospital',
-          width: 252,
-          height: 126,
+          width: 199,
+          height: 79,
         },
       },
       {
@@ -1338,8 +1338,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/rgcc.webp',
           alt: 'RGCC',
-          width: 252,
-          height: 126,
+          width: 121,
+          height: 78,
         },
       },
       {
@@ -1347,8 +1347,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/medharbour.webp',
           alt: 'Medharbour',
-          width: 252,
-          height: 126,
+          width: 189,
+          height: 32,
         },
       },
       {
@@ -1356,8 +1356,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/molecular-imaging-therapy.webp',
           alt: 'Molecular Imaging & Therapy, a unit of Vitrana Healthcare LLP',
-          width: 252,
-          height: 126,
+          width: 228,
+          height: 64,
         },
       },
       {
@@ -1365,8 +1365,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/neeli-genetic-services.webp',
           alt: 'Neeli Genetic Services',
-          width: 252,
-          height: 126,
+          width: 216,
+          height: 78,
         },
       },
       {
@@ -1374,8 +1374,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/hbot-india.webp',
           alt: 'HBOT India',
-          width: 252,
-          height: 126,
+          width: 170,
+          height: 96,
         },
       },
       {
@@ -1383,8 +1383,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/house-of-healing.webp',
           alt: 'The House of Healing',
-          width: 252,
-          height: 126,
+          width: 112,
+          height: 112,
         },
       },
       {
@@ -1392,7 +1392,7 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/living-light.webp',
           alt: 'Living Light',
-          width: 252,
+          width: 90,
           height: 126,
         },
       },
@@ -1401,8 +1401,8 @@ export const home: HomeContent = {
         logo: {
           src: '/images/network/guru-harikrishn-foundation.webp',
           alt: 'Guru Harikrishn Foundation, a non-profit entity',
-          width: 252,
-          height: 126,
+          width: 218,
+          height: 44,
         },
       },
     ],
