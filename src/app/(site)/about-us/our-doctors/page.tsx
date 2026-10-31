@@ -12,7 +12,7 @@ import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
 import { Passage } from '@/components/shared/Passage'
 import { ChecklistSection } from '@/components/home/ChecklistSection'
-import { TeamRoster } from '@/components/doctors/TeamRoster'
+import { DoctorDirectory } from '@/components/doctors/DoctorDirectory'
 
 /**
  * DOCTORS AND SPECIALISTS — `/about-us/our-doctors`
@@ -74,11 +74,20 @@ export default function DoctorsPage() {
       <ChecklistSection content={doctorsPage.disciplines} />
 
       {/* ── 2. The team ─────────────────────────────────────────────
-          Fifteen real people. See the component before changing any
-          field: every one renders only when present, on purpose. */}
-      <TeamRoster
+          Fifteen real people, searchable and filterable by discipline.
+          See the component before changing any field: every one renders
+          only when present, on purpose — and read the note there on why
+          there is no city filter before adding one.
+
+          IT STAYS DIRECTLY BELOW THE MULTIDISCIPLINARY SECTION, which is
+          both the supplied document's order and the one that reads: that
+          section names the disciplines a case may involve, and this one
+          is who covers them. Nothing goes between the question and the
+          answer. */}
+      <DoctorDirectory
         eyebrow={doctorsPage.team.eyebrow}
         title={doctorsPage.team.title}
+        intro={doctorsPage.team.intro}
         members={home.team.members}
         cta={doctorsPage.team.cta}
         surface

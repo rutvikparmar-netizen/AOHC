@@ -896,6 +896,8 @@ export interface DoctorsPageContent {
   team: {
     eyebrow: string
     title: string
+    /** One line under the heading. Written, not supplied — see the data. */
+    intro: string
     cta: NavLink
   }
 

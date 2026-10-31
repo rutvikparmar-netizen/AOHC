@@ -105,6 +105,16 @@ export const doctorsPage: DoctorsPageContent = {
   team: {
     eyebrow: 'Meet our team',
     title: 'The Specialists Behind Your Care',
+    /**
+     * ⚠️  WRITTEN HERE, NOT SUPPLIED — and deliberately says nothing about
+     * the team beyond what the records themselves prove. It describes the
+     * controls below it and counts the roster; it makes no claim about
+     * availability, seniority or where anyone consults, because none of
+     * that is in the data. Replace it with AOHC's own wording when there
+     * is some; do not extend it from inference.
+     */
+    intro:
+      'Search by name, or filter by discipline to see who works in that field.',
     /* The call to action the draft's per-doctor template specifies. */
     cta: { label: APPOINTMENT_CTA, href: routes.consultation },
   },

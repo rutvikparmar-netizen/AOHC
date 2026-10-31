@@ -36,6 +36,7 @@ const paths: Record<string, string> = {
   play: 'M6 3l14 9-14 9V3Z',
   pause: 'M8 4v16M16 4v16',
   menu: 'M3 6h18M3 12h18M3 18h18',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM21 21l-4.3-4.3',
   x: 'M18 6 6 18M6 6l12 12',
   'chevron-down': 'M6 9l6 6 6-6',
   'chevron-right': 'M9 6l6 6-6 6',
