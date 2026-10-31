@@ -51,7 +51,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  */
 export const doctorsPage: DoctorsPageContent = {
   hero: {
-    eyebrow: 'Doctors and specialists',
     title: 'The Right Expertise for the Clinical Question',
     /**
      * Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the

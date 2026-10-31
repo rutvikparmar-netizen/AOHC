@@ -39,7 +39,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  */
 export const cancerTypes: CancerTypesContent = {
   hero: {
-    eyebrow: 'Cancer types',
     title: 'Understanding Your Diagnosis',
     /* Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the
        note on `PageHeroContent.image`. A laboratory frame, because this

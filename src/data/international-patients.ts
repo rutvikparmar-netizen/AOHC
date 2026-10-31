@@ -48,7 +48,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  */
 export const internationalPatients: InternationalPatientsContent = {
   hero: {
-    eyebrow: 'International patients',
     title: 'Helping Patients Navigate Cancer Care Across Borders',
     /**
      * Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the

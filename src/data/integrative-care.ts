@@ -36,7 +36,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  */
 export const integrativeCare: IntegrativeCareContent = {
   hero: {
-    eyebrow: 'Integrative cancer care',
     title: 'Considering Cancer Care From More Than One Perspective',
     /* Decoration, rendered `alt=""` and `aria-hidden` at 45 per cent opacity —
        see the note on `PageHeroContent.image`. The alt is kept accurate

@@ -41,7 +41,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
 
 export const about: AboutContent = {
   hero: {
-    eyebrow: 'About us',
     title: 'Our Purpose, Our Story, Our Commitment',
     standfirst:
       'At Art of Healing Cancer (AOHC), we recognise that every cancer journey is different. Each patient has a unique medical history, diagnosis, treatment experience, personal priorities, and concerns about the future.',

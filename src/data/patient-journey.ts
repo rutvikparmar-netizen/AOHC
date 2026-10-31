@@ -32,7 +32,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  */
 export const patientJourney: PatientJourneyContent = {
   hero: {
-    eyebrow: 'Your patient journey',
     title: 'A Clearer Process From First Enquiry to Follow-Up',
     /**
      * ONE PARAGRAPH, WHICH IS ALL THE DRAFT SUPPLIES. `PageHero` sets a

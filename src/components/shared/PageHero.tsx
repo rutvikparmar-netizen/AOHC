@@ -81,7 +81,7 @@ export function PageHero({
   trail: Breadcrumb[]
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-brand-teal-950 pb-14 pt-24 text-white lg:pb-20 lg:pt-44">
+    <section className="relative isolate overflow-hidden bg-brand-teal-950 pb-14 pt-24 text-white lg:flex lg:min-h-[45.5rem] lg:flex-col lg:justify-center lg:pb-20 lg:pt-44">
       {/* ⚠️  DECORATION ONLY — see the note above. `alt=""` and
           `aria-hidden`, because it is a stock photograph of models and at
           this opacity it is texture rather than a picture of anything. */}
@@ -117,13 +117,16 @@ export function PageHero({
 
       <Container>
         <Reveal>
+          {/* ⚠️  NO EYEBROW ABOVE THE HEADLINE, ON REQUEST, AND THE
+              BREADCRUMB IS WHY. The trail's last crumb already names the
+              page — "Home › Cancer Types" over an eyebrow reading "Cancer
+              types" was the same words twice, 4px apart, in two different
+              treatments. `PageHeroContent.eyebrow` is gone with it; if a
+              label is ever wanted here again it has to say something the
+              breadcrumb does not. */}
           <Breadcrumbs trail={trail} onDark className="mb-8" />
 
-          <p className="text-eyebrow uppercase text-brand-teal-300">
-            {content.eyebrow}
-          </p>
-
-          <h1 className="mt-4 max-w-5xl font-display text-[clamp(2.25rem,4.6vw,3.75rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white">
+          <h1 className="max-w-5xl font-display text-[clamp(2.25rem,4.6vw,3.75rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white">
             {content.title}
           </h1>
         </Reveal>

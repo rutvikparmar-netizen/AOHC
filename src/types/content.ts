@@ -158,7 +158,6 @@ export interface ClosingPanel {
  * paragraph makes that row look short, and three make the hero a wall.
  */
 export interface PageHeroContent {
-  eyebrow: string
   title: string
   body: string[]
   /**
@@ -536,7 +535,6 @@ export interface HomeContent {
  */
 export interface AboutContent {
   hero: {
-    eyebrow: string
     title: string
     standfirst: string
     /** Shown beneath the hero as the page's opening statement. */

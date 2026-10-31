@@ -36,7 +36,6 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  */
 export const treatmentsPage: TreatmentsContent = {
   hero: {
-    eyebrow: 'Treatments and therapies',
     title: 'Evaluating Treatment Options in the Context of Your Case',
     /* Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the
        note on `PageHeroContent.image`. */
