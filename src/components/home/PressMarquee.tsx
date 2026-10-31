@@ -67,35 +67,29 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
                */
               unoptimized={outlet.logo.src.endsWith('.svg')}
               /**
-               * ⚠️  SIZED BY ASPECT RATIO, NOT ONE HEIGHT FOR EVERYTHING.
+               * ⚠️  NOT ONE HEIGHT FOR EVERYTHING. Ten of these are
+               * newspaper mastheads — long, single-line wordmarks from
+               * 3.4:1 to 10:1 — and a fixed height suits them exactly. The
+               * IPM congress mark is a three-line lockup; at the mastheads'
+               * 32px each of its lines would be about 10px tall, which is a
+               * blob rather than a logo. A stacked lockup gets roughly
+               * double the height, which lands it at a similar optical
+               * WEIGHT rather than the same measured height. Mixed heights
+               * are normal in a logo strip; identical heights across wildly
+               * different shapes are what look wrong.
                *
-               * Nine of these are newspaper mastheads — long, single-line
-               * wordmarks around 10:1 — and a fixed height is exactly right
-               * for them. The IPM congress mark is not: it is a stacked
-               * lockup at 239x126, nearly square, with three lines of type
-               * and a date beneath. Given the mastheads' 32px it would be
-               * 61px wide with each line about 9px tall, which is a blob
-               * rather than a logo.
-               *
-               * So a genuinely stacked lockup gets roughly double the
-               * height, which lands it at a similar optical WEIGHT to its
-               * neighbours rather than the same measured height. Mixed
-               * heights are normal in a logo strip; identical heights
-               * across wildly different ratios are what look wrong.
-               *
-               * ⚠️  THE THRESHOLD IS 2.2, AND IT WAS 3 FOR ONE MEASUREMENT
-               * BEFORE THAT. At 3 it also caught Zee News (2.65), NDTV
-               * (2.81) and Industry Outlook (2.89) — three logos that read
-               * perfectly well at 32px — and jumped them to 60, where they
-               * dominated the row. Measured ratios of the current set:
-               * IPM 1.90, then a clear gap to Zee 2.65, and everything
-               * else from 3.39 to 10.00. Anything added here should be
-               * checked against that spread rather than against the number.
+               * ⚠️  `stacked` IS DECLARED PER LOGO, AND THAT REPLACED AN
+               * ASPECT-RATIO TEST THAT DID NOT SURVIVE CONTACT. The ratio
+               * version was tried at two thresholds. At 3 it swept up Zee
+               * News (2.65), NDTV (2.81) and Industry Outlook (2.89), which
+               * read fine at 32px, and blew them up to 60. Tightened to
+               * 2.2 it worked — until a revised IPM mark arrived at 237x94,
+               * ratio 2.52, still three lines of type, while Zee at 2.65 is
+               * a single line. No threshold between 2.52 and 2.65 is worth
+               * trusting, so the shape is now stated rather than guessed.
                */
               className={`w-auto object-contain mix-blend-multiply opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 ${
-                outlet.logo.width / outlet.logo.height >= 2.2
-                  ? 'h-7 sm:h-8'
-                  : 'h-13 sm:h-15'
+                outlet.stacked ? 'h-13 sm:h-15' : 'h-7 sm:h-8'
               }`}
             />
           ) : (

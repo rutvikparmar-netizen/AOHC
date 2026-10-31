@@ -665,23 +665,29 @@ export const home: HomeContent = {
      *     against a 2026 appearance implies a booking that page does not
      *     show.
      *
-     * ⚠️  THE IPM MARK IS A STACKED LOCKUP, NOT A MASTHEAD, which is why
-     * `PressMarquee` sizes by aspect ratio rather than giving every logo
-     * the same height. At 239x126 it is nearly square; at the 32px the
-     * newspaper wordmarks use it would be 61px wide with three lines of
-     * type inside it. See the note in that component before touching the
-     * sizing.
+     * ⚠️  THE IPM MARK IS A STACKED LOCKUP, NOT A MASTHEAD, which is what
+     * `stacked` below is for: at the 32px the newspaper wordmarks use, its
+     * three lines would be about 10px each. See the note in `PressMarquee`
+     * before touching the sizing — the aspect ratio is NOT a reliable test
+     * for this and was tried twice.
      */
     {
       name: 'Integrative & Personalised Medicine',
       href: 'https://ipmcongress.com/speakers/arpan-talwar',
-      /* Supplied with real transparency, so only trimmed to its ink. */
+      /**
+       * The wordmark on its own. The first file supplied carried
+       * "10 - 12 June 2027 • London UK" beneath it, which put the 2027
+       * congress against a link to a June 2026 session; this one states no
+       * date, so the mark no longer implies a booking the page does not
+       * show. Supplied with real transparency, so only trimmed to its ink.
+       */
       logo: {
         src: '/images/press/ipm-congress.png',
-        alt: 'Integrative & Personalised Medicine 2027',
-        width: 239,
-        height: 126,
+        alt: 'Integrative & Personalised Medicine',
+        width: 237,
+        height: 94,
       },
+      stacked: true,
     },
     {
       name: 'TEDx',

@@ -235,6 +235,18 @@ export interface PressMention {
   /** Supplied once real logo files exist; the strip falls back to a wordmark. */
   logo?: ImageAsset
   /**
+   * A multi-line lockup rather than a single-line masthead, which the strip
+   * gives roughly double the height so it carries the same optical weight.
+   *
+   * ⚠️  DECLARED, NOT INFERRED FROM THE ASPECT RATIO, BECAUSE THE RATIO DOES
+   * NOT SEPARATE THEM. `PressMarquee` worked this out from width/height for
+   * one commit; then a revised IPM mark arrived at 237x94 — ratio 2.52,
+   * still three lines of type — while Zee News sits at 2.65 as a single
+   * line that reads perfectly at the masthead height. There is no threshold
+   * between 2.52 and 2.65 worth trusting, so the fact is stated per logo.
+   */
+  stacked?: boolean
+  /**
    * The article itself, where the URL has been verified. A name without a
    * link is still a claim that the outlet covered AOHC — see the provenance
    * note on each entry in `src/data/home.ts`.
