@@ -51,7 +51,11 @@ export function NetworkMarquee({
         aria-hidden={duplicate || undefined}
         className="flex shrink-0 items-center"
       >
-        <span className="flex h-24 w-44 items-center justify-center rounded-(--radius-xl) border border-border bg-surface p-5 shadow-(--shadow-xs) sm:h-28 sm:w-52">
+        {/* The lift pairs with `.marquee:hover`, which already stops the
+            strip — so pointing at a card holds it still and raises it,
+            rather than raising something that keeps sliding away. Same
+            card hover as the rest of the site. */}
+        <span className="flex h-24 w-44 items-center justify-center rounded-(--radius-xl) border border-border bg-surface p-5 shadow-(--shadow-xs) transition duration-300 hover:-translate-y-0.5 hover:border-border-brand hover:shadow-(--shadow-card-hover) sm:h-28 sm:w-52">
           <Image
             src={partner.logo.src}
             alt={duplicate ? '' : partner.logo.alt}
@@ -76,18 +80,21 @@ export function NetworkMarquee({
         </Reveal>
       </Container>
 
-      {/* OUTSIDE THE CONTAINER, UNLIKE THE HEADING ABOVE IT. A strip that
-          stops at the container's gutter reads as a finished row that
-          happens to be moving; running to both edges of the window is what
-          says there is more of it than fits. */}
-      <Reveal className="mt-10 lg:mt-12">
-        <div className="marquee">
-          <ul className="marquee-track items-center gap-x-5 sm:gap-x-6">
-            {lap(false)}
-            {lap(true)}
-          </ul>
-        </div>
-      </Reveal>
+      {/* ⚠️  INSIDE THE CONTAINER, ON REQUEST — the strip is the same width
+          as the heading above it and every other section on the page, not
+          bled to the window. `.marquee` is `overflow: hidden`, so it now
+          clips at the container's edge instead of the viewport's and the
+          fade masks land on the gutter. */}
+      <Container>
+        <Reveal className="mt-10 lg:mt-12">
+          <div className="marquee">
+            <ul className="marquee-track items-center gap-x-5 sm:gap-x-6">
+              {lap(false)}
+              {lap(true)}
+            </ul>
+          </div>
+        </Reveal>
+      </Container>
     </section>
   )
 }

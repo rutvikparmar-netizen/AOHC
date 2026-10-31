@@ -1308,8 +1308,12 @@ export const home: HomeContent = {
   network: {
     eyebrow: 'Our care network',
     title: 'The Organisations We Work With',
+    /* Shortened from four lines to two, on request. The clause dropped —
+       that patients are told which facility and which clinician are
+       responsible — is not lost: `partners.intro`, in the section directly
+       beneath this one, already says it in AOHC's own supplied words. */
     intro:
-      'Diagnostics, treatment and supportive care may involve partner hospitals, laboratories and specialist providers. Which of them is involved depends on the individual case, and patients are told which facility and which clinician are responsible for each part of their care.',
+      'Diagnostics, treatment and supportive care may involve partner hospitals, laboratories and specialist providers, depending on the individual case.',
     items: [
       {
         name: 'HCAH Transition Care Center',
