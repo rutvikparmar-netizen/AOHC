@@ -108,7 +108,14 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
         <li
           key={`${outlet.name}-${duplicate ? 'b' : 'a'}`}
           aria-hidden={duplicate || undefined}
-          className="shrink-0"
+          /* ⚠️  `flex` ON THE ITEM, NOT JUST `shrink-0`. The anchor inside
+             is `inline-flex`, so as an inline-level box it sat on the
+             item's line box and carried its descender space below —
+             every logo ended up a few pixels above centre with the slack
+             underneath, even once the track itself was centred. Making
+             the item a flex container takes the line box out of it, so
+             the item is exactly as tall as the anchor. */
+          className="flex shrink-0 items-center"
         >
           {outlet.href && !duplicate ? (
             <a
@@ -134,7 +141,15 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
 
   return (
     <div className="marquee mt-8 border-y border-border py-6">
-      <ul className="marquee-track gap-x-12 sm:gap-x-16">
+      {/* ⚠️  `items-center` IS LOAD-BEARING, NOT TIDYING. `.marquee-track`
+          is `display: flex` and was inheriting the default
+          `align-items: stretch`, so every `<li>` stretched to the row's
+          full height and the INLINE-flex anchor inside it then sat on that
+          line box's baseline — near the top. With one 60px stacked lockup
+          in a row of 32px mastheads, the row was tall and the short logos
+          hung off the top of it with all the slack underneath. Centring
+          the track puts every logo on one axis whatever its height. */}
+      <ul className="marquee-track items-center gap-x-12 sm:gap-x-16">
         {lap(false)}
         {lap(true)}
       </ul>
