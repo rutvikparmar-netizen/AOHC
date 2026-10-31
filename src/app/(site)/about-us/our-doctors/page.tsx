@@ -9,7 +9,7 @@ import { ClosingSection } from '@/components/home/ClosingSection'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { PageHero } from '@/components/shared/PageHero'
 import { Passage } from '@/components/shared/Passage'
-import { ChecklistSection } from '@/components/home/ChecklistSection'
+import { DisciplineGrid } from '@/components/doctors/DisciplineGrid'
 import { TeamRoster } from '@/components/doctors/TeamRoster'
 
 /**
@@ -82,7 +82,6 @@ export default function DoctorsPage() {
         title={doctorsPage.team.title}
         intro={doctorsPage.team.intro}
         members={home.team.members}
-        cta={doctorsPage.team.cta}
       />
 
       {/* ── 2. A multidisciplinary perspective ──────────────────────
@@ -90,7 +89,7 @@ export default function DoctorsPage() {
           component. Its outro — "not all disciplines may be available
           through AOHC directly" — is what keeps the ten specialties a
           description rather than a roster of staffed services. */}
-      <ChecklistSection content={doctorsPage.disciplines} />
+      <DisciplineGrid content={doctorsPage.disciplines} surface />
 
       {/* ── 3. Clinical responsibility and collaboration ───────────
           Through the shared passage component — heading beside the prose

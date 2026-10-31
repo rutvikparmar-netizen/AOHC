@@ -198,17 +198,46 @@ export default function AboutPage() {
       {/* ── 6. Our commitment ─────────────────────────────────────────── */}
       <section className="bg-surface py-(--spacing-section)">
         <Container>
-          <div className="grid gap-6 lg:grid-cols-12 lg:gap-14">
+          {/* ⚠️  THE PHOTOGRAPH IS AOHC'S OWN, AND THAT IS WHY IT IS HERE
+              RATHER THAN ANYWHERE ELSE. This page ran ten sections with
+              five pictures between them, and four of the five were stock.
+              `aohc-consultation.webp` is one of two frames AOHC supplied of
+              their actual consulting room; it had been orphaned when the
+              closing panel moved to a single backdrop. A section headed
+              "our commitment" is the one place on the page where a picture
+              of the real room is doing work rather than filling space.
+
+              The remaining stock frames on this page should be replaced as
+              AOHC sends their own — see the note on `about.personalised`. */}
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
             <Reveal className="lg:col-span-7">
               <SectionHeader
                 eyebrow={about.commitment.eyebrow}
                 title={about.commitment.title}
               />
-            </Reveal>
-            <Reveal delay={80} className="lg:col-span-5 lg:self-end">
-              <p className="max-w-(--measure) text-base leading-relaxed text-neutral-700">
+              <p className="mt-6 max-w-(--measure) text-base leading-relaxed text-neutral-700">
                 {about.commitment.intro}
               </p>
+            </Reveal>
+
+            <Reveal direction="right" delay={80} className="lg:col-span-5">
+              {/* ⚠️  A BOUNDED ASPECT, NOT `lg:h-full`. This file is PORTRAIT
+                  — 1024x1536 — and `h-full` on a grid row whose other column
+                  is three lines of text has nothing to measure against, so
+                  it fell back to the picture's own proportions and rendered
+                  about 800px tall beside 300px of copy. A declared ratio
+                  makes the slot the same shape whatever is dropped into it;
+                  `object-cover` takes care of the crop. */}
+              <div className="aspect-16/10 overflow-hidden rounded-(--radius-3xl) bg-surface-subtle lg:aspect-4/3">
+                <Image
+                  src="/images/aohc-consultation.webp"
+                  alt="A clinician with a tablet talking to two people across a table in a consulting area"
+                  width={1024}
+                  height={1536}
+                  sizes="(min-width: 1024px) 480px, 100vw"
+                  className="size-full object-cover object-center"
+                />
+              </div>
             </Reveal>
           </div>
 

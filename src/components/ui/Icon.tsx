@@ -37,6 +37,10 @@ const paths: Record<string, string> = {
   pause: 'M8 4v16M16 4v16',
   menu: 'M3 6h18M3 12h18M3 18h18',
   search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM21 21l-4.3-4.3',
+  /* A monitor trace — real-time guidance, as in interventional imaging. */
+  activity: 'M22 12h-4l-3 9L9 3l-3 9H2',
+  /* Nutrition and rehabilitation. */
+  leaf: 'M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6',
   x: 'M18 6 6 18M6 6l12 12',
   'chevron-down': 'M6 9l6 6 6-6',
   'chevron-right': 'M9 6l6 6-6 6',

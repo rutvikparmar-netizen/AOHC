@@ -240,11 +240,18 @@ export const about: AboutContent = {
      * the conversation: "discussing treatment options with qualified
      * healthcare professionals" is what the copy either side of it says.
      */
+    /**
+     * ⚠️  AOHC SUPPLIED THIS FRAME AND ASKED FOR IT HERE, replacing a stock
+     * photograph of a scan on a laptop. It is the same picture the closing
+     * panel uses across the site; the repetition is deliberate on their
+     * instruction, and this section is far enough up the page that the two
+     * are never on screen together.
+     */
     image: {
-      src: '/images/scan-discussion.jpg',
-      alt: 'A patient seated at a desk while a scan is displayed on a laptop beside them',
-      width: 1400,
-      height: 788,
+      src: '/images/cta-backdrop.webp',
+      alt: 'A clinician resting a hand on a patient’s arm during treatment',
+      width: 1942,
+      height: 809,
     },
   },
 

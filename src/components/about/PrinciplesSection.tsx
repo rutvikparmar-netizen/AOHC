@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { AboutContent } from '@/types'
 import { Container } from '@/components/ui/Container'
 import { Reveal } from '@/components/motion/Reveal'
@@ -23,14 +24,40 @@ export function PrinciplesSection({
   return (
     <section className="bg-surface py-(--spacing-section)">
       <Container>
-        <div className="grid gap-6 lg:grid-cols-12 lg:gap-14">
+        {/* ⚠️  A PICTURE IN THE HEADER ROW, because what follows it is the
+            longest unbroken run of prose on the page: three principles of
+            three paragraphs each, with no border, fill or shadow anywhere
+            in the section by design. That restraint is right for the rows
+            and was wrong for the section as a whole — AOHC's note was that
+            the page is all text, and this was the worst of it.
+
+            The frame is stock and should be replaced when AOHC sends one
+            of their own. It is reused here rather than retired: it was
+            freed when they asked for their own photograph to take its
+            place in "Why a personalised approach matters". */}
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
           <Reveal className="lg:col-span-7">
             <SectionHeader eyebrow={content.eyebrow} title={content.title} />
-          </Reveal>
-          <Reveal delay={80} className="lg:col-span-5 lg:self-end">
-            <p className="max-w-(--measure) text-base leading-relaxed text-neutral-700">
+            <p className="mt-6 max-w-(--measure) text-base leading-relaxed text-neutral-700">
               {content.intro}
             </p>
+          </Reveal>
+
+          <Reveal direction="right" delay={80} className="lg:col-span-5">
+            {/* A declared ratio rather than `lg:h-full`: the row's other
+                column is a heading and one sentence, so a stretched slot
+                has nothing to measure against and falls back to whatever
+                proportions the file happens to have. */}
+            <div className="aspect-16/10 overflow-hidden rounded-(--radius-3xl) bg-surface-subtle lg:aspect-4/3">
+              <Image
+                src="/images/scan-discussion.jpg"
+                alt="A patient seated at a desk while a scan is displayed on a laptop beside them"
+                width={1400}
+                height={788}
+                sizes="(min-width: 1024px) 480px, 100vw"
+                className="size-full object-cover"
+              />
+            </div>
           </Reveal>
         </div>
 

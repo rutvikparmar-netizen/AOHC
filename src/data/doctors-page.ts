@@ -14,7 +14,7 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  * empty `Doctor[]` that the demo repository reads. The same collision was hit
  * once already with `treatments.ts`; this file is named to avoid repeating it.
  *
- * âš ï¸  THE ROSTER IS NOT HERE. It is `home.team.members` â€” the transcription of
+ * ⚠️  THE ROSTER IS NOT HERE. It is `home.team.members` — the transcription of
  * artofhealingcancer.com/our-doctors, already rendered as a preview on the
  * home page, whose "Meet the full team" link points at this page. One list,
  * two views. Copying fifteen real people's names and credentials into a
@@ -45,7 +45,7 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  * some qualifications and a few experience figures, and carries NO biography,
  * areas of focus, registration or availability. Those four fields are the
  * gap, and the draft is explicit that only the doctor or AOHC may supply
- * them â€” "include only information that has been verified and approved".
+ * them — "include only information that has been verified and approved".
  *
  * The template's own call to action is the one on the roster section below.
  */
@@ -53,7 +53,7 @@ export const doctorsPage: DoctorsPageContent = {
   hero: {
     title: 'The Right Expertise for the Clinical Question',
     /**
-     * Decoration â€” `alt=""` and `aria-hidden` at 45 per cent opacity. See the
+     * Decoration — `alt=""` and `aria-hidden` at 45 per cent opacity. See the
      * note on `PageHeroContent.image`.
      *
      * âš ï¸  THESE ARE MODELS, NOT THE AOHC TEAM, and on this page of all
@@ -78,7 +78,7 @@ export const doctorsPage: DoctorsPageContent = {
     eyebrow: 'A multidisciplinary perspective',
     title: 'A Multidisciplinary Perspective',
     intro: [
-      'Depending on the patientâ€™s needs and the services confirmed by AOHC, relevant expertise may include:',
+      'Depending on the patient’s needs and the services confirmed by AOHC, relevant expertise may include:',
     ],
     items: [
       'Medical oncology.',
@@ -106,7 +106,7 @@ export const doctorsPage: DoctorsPageContent = {
     eyebrow: 'Meet our team',
     title: 'The Specialists Behind Your Care',
     /**
-     * âš ï¸  WRITTEN HERE, NOT SUPPLIED â€” and deliberately says nothing about
+     * ⚠️  WRITTEN HERE, NOT SUPPLIED — and deliberately says nothing about
      * the team beyond what the records themselves prove. Every discipline
      * it names is one a member of this roster is actually filed under; it
      * makes no claim about availability, seniority or where anyone
@@ -131,7 +131,7 @@ export const doctorsPage: DoctorsPageContent = {
 
   closing: {
     title: 'Connect With the Appropriate Clinical Team',
-    /* `routes.contact` is the home page's enquiry form â€” see the note in
+    /* `routes.contact` is the home page's enquiry form — see the note in
        `routes.ts`. Every CTA on the site lands there until the real contact
        page ships. */
     cta: { label: APPOINTMENT_CTA, href: routes.contact },
