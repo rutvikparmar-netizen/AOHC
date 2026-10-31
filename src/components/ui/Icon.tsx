@@ -118,9 +118,28 @@ export interface IconProps {
   /** Supply only when the icon is the sole content of its container. */
   label?: string
   strokeWidth?: number
+  /**
+   * Draw the glyph solid instead of as an outline.
+   *
+   * Only for the handful of paths that are closed shapes — `play`, `droplet`
+   * — where an outline reads as a hollow arrow rather than a button. Filling
+   * an open path like `check` or `arrow-right` produces a smear, so this is
+   * opt-in per use rather than per icon.
+   *
+   * The stroke stays on and keeps its round joins, so a filled glyph gets
+   * the same softened corners as the outlined set rather than the sharp
+   * points the raw path would give.
+   */
+  filled?: boolean
 }
 
-export function Icon({ name, className, label, strokeWidth = 2 }: IconProps) {
+export function Icon({
+  name,
+  className,
+  label,
+  strokeWidth = 2,
+  filled = false,
+}: IconProps) {
   const path = paths[name]
   // A missing name renders nothing rather than an empty box — a typo should
   // not leave a mystery square in the middle of a page.
@@ -129,7 +148,7 @@ export function Icon({ name, className, label, strokeWidth = 2 }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
-      fill="none"
+      fill={filled ? 'currentColor' : 'none'}
       stroke="currentColor"
       strokeWidth={strokeWidth}
       strokeLinecap="round"

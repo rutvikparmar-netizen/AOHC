@@ -101,7 +101,16 @@ export function PatientStoriesBadge({
           The negative inline spacing is the overlap from the supplied strip;
           later siblings paint over earlier ones, so the stack fans to the
           right exactly as it does in the source. */}
-      <span aria-hidden className="flex shrink-0 -space-x-2 sm:-space-x-2.5">
+      {/* ⚠️  THE FACES ARE `sm` AND UP, AND THAT IS THE WIDTH BUDGET TALKING.
+          A 360px screen leaves 328px inside the gutter. The title measures
+          198px, the subtitle 297px, and with the stack, the rule, the play
+          mark and four gaps the fixed parts came to 159px — which left the
+          title 169px and wrapped it, standing the badge four lines tall.
+          Dropping the stack below `sm` leaves 266px, so the title holds one
+          line and only the subtitle wraps. The play mark is the part that
+          earns its place on a phone: it is the only thing in the badge that
+          says "video", since the copy no longer counts the testimonials. */}
+      <span aria-hidden className="hidden shrink-0 -space-x-2.5 sm:flex">
         {FACES.map((src) => (
           <Image
             key={src}
@@ -109,15 +118,35 @@ export function PatientStoriesBadge({
             alt=""
             width={128}
             height={128}
-            className="size-6 rounded-full object-cover ring-2 ring-white/90 sm:size-9"
+            className="size-9 rounded-full object-cover ring-2 ring-white/90"
           />
         ))}
       </span>
 
       {/* The divider the stack is separated from the copy by. A rule rather
           than a typed "|", so it keeps its weight and its height whatever
-          the text does. */}
-      <span aria-hidden className="h-7 w-px shrink-0 bg-white/25 sm:h-8" />
+          the text does. It goes with the stack: a rule with nothing on its
+          left is just a line. */}
+      <span aria-hidden className="hidden h-8 w-px shrink-0 bg-white/25 sm:block" />
+
+      {/* ⚠️  THE RED IS NOT `--color-danger`, AND MUST NOT BECOME IT. That
+          token is #c2453f, reserved in `tokens.css` for one job — the risks
+          and side-effects block — and borrowing it for a button would put
+          clinical-warning red on an invitation to watch a video. This is
+          #fa0212, sampled from the supplied reference and the colour every
+          video player on the internet uses. It is the one non-palette
+          colour on the site and it is here because it is a universally
+          read affordance rather than a decision about brand.
+
+          `filled` because the `play` path is a closed triangle that the
+          icon set otherwise draws as an outline — a hollow arrow in a red
+          disc reads as a mistake. */}
+      <span
+        aria-hidden
+        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#fa0212] text-white transition-transform duration-200 group-hover:scale-105 sm:size-10"
+      >
+        <Icon name="play" filled className="ml-0.5 size-4" />
+      </span>
 
       <span className="min-w-0">
         <span className="block text-sm font-bold leading-tight text-white">
