@@ -282,28 +282,7 @@ export default function HomePage() {
               short spine under the prose they summarise rather than
               competing with it across the row. */}
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* ⚠️  AOHC NAMED THIS FRAME FOR THIS SLOT. It is their own
-                consulting room, and it is the SAME FILE the About page's
-                commitment section uses — supplied twice, once for each
-                place, rather than as two assets. Reusing the one already
-                in the repo keeps a 1.9MB PNG out of it.
-
-                `lg:h-full` against a stretched grid row makes the picture
-                exactly as tall as the column beside it, whatever that
-                column ends up holding. */}
-            <Reveal direction="left" className="min-w-0">
-              <div className="relative h-80 overflow-hidden rounded-(--radius-3xl) bg-surface-subtle sm:h-[26rem] lg:h-full lg:min-h-[32rem]">
-                <Image
-                  src="/images/aohc-consultation.webp"
-                  alt="A clinician with a tablet talking to two people across a table in a consulting area"
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-            </Reveal>
-
-            <Reveal direction="right" delay={100} className="min-w-0 lg:self-center">
+            <Reveal direction="left" className="min-w-0 lg:self-center">
               <SectionHeader
                 eyebrow={home.international.eyebrow}
                 title={home.international.title}
@@ -347,6 +326,41 @@ export default function HomePage() {
               >
                 {home.international.cta.label}
               </Button>
+            </Reveal>
+
+            {/* ⚠️  AOHC NAMED THIS FRAME FOR THIS SLOT. It is their own
+                consulting room, and it is the SAME FILE the About page's
+                commitment section uses — supplied twice, once for each
+                place, rather than as two assets. Reusing the one already
+                in the repo keeps a 1.9MB PNG out of it.
+
+                `lg:h-full` against a stretched grid row makes the picture
+                exactly as tall as the column beside it, whatever that
+                column ends up holding. */}
+            <Reveal direction="right" delay={100} className="min-w-0">
+              <div className="relative h-80 overflow-hidden rounded-(--radius-3xl) bg-surface-subtle sm:h-[26rem] lg:h-full lg:min-h-[32rem]">
+                <Image
+                  src="/images/aohc-consultation.webp"
+                  alt="A clinician with a tablet talking to two people across a table in a consulting area"
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  /**
+                   * ⚠️  `object-top`, AND IT IS WHAT KEEPS AOHC'S LOGO
+                   * INTACT. The source is portrait, 1024x1536, in a slot
+                   * whose height is set by the column of text beside it —
+                   * so `object-cover` always has vertical crop to spend.
+                   * `object-center` spent half of it at the top, which cut
+                   * roughly 240px off the source and took the lotus off
+                   * the top of the wall mark. Anchored to the top, the
+                   * whole crop comes off the bottom, where the foreground
+                   * is empty chairs.
+                   *
+                   * If this slot is ever made shorter, re-check the logo
+                   * rather than assuming the anchor still covers it.
+                   */
+                  className="object-cover object-top"
+                />
+              </div>
             </Reveal>
           </div>
         </Container>
