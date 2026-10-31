@@ -117,11 +117,30 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
              the item is exactly as tall as the anchor. */
           className="flex shrink-0 items-center"
         >
-          {outlet.href && !duplicate ? (
+          {outlet.href ? (
             <a
               href={outlet.href}
               target="_blank"
               rel="noopener noreferrer"
+              /**
+               * ⚠️  THE DUPLICATE LAP IS A REAL LINK TOO, AND IT HAS TO BE.
+               *
+               * The track holds the list twice so the loop is seamless.
+               * This used to render the second copy as a plain `<span>`,
+               * which meant that at any moment roughly half the logos on
+               * screen were dead: a reader aiming at TEDx or IPM as it
+               * drifted past clicked a span and nothing happened. The
+               * links were all present in the markup, which is exactly
+               * why the fault looked like they had been removed.
+               *
+               * `tabIndex={-1}` is not optional. The `<li>` carries
+               * `aria-hidden` on the duplicate, and a focusable element
+               * inside `aria-hidden` content is a genuine accessibility
+               * fault — a keyboard user would land on a control screen
+               * readers have been told to ignore. Out of the tab order it
+               * stays mouse-clickable and announced exactly once.
+               */
+              tabIndex={duplicate ? -1 : undefined}
               /* `min-h-11` because the mastheads are 28px tall and these are
                  real links to the articles — on a phone that is the whole
                  target. The strip's own height is unchanged; the extra is
