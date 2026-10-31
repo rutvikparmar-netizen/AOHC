@@ -462,23 +462,34 @@ export default function HomePage() {
                   {/* The mark sits on a white plate, because these logos are
                       supplied flat on white and would otherwise sit in a
                       tinted box that is not theirs. `object-contain` so no
-                      third party's logo is ever cropped or stretched. */}
-                  <div className="flex h-20 items-center justify-center rounded-(--radius-lg) bg-white p-3">
+                      third party's logo is ever cropped or stretched.
+
+                      ⚠️  CAPPED ON BOTH AXES, AND THE PLATE IS TALLER THAN
+                      IT LOOKS IT NEEDS TO BE. Height alone was the only
+                      limit here, which is the right rule for two long
+                      wordmarks and the wrong one the moment a round seal
+                      arrives: at the old 56px of plate, CK Birla rendered
+                      153x56 and the NABH roundel 58x56 — a third of the
+                      area, with ring type far too small to read, even
+                      though 366px of plate width was going spare. Raising
+                      the plate lets a compact mark earn its height, and the
+                      width cap stops the wordmarks ballooning to match.
+                      Measured after: 192x70, 136x88, 91x88. */}
+                  <div className="flex h-28 items-center justify-center rounded-(--radius-lg) bg-white p-3">
                     {partner.logo ? (
                       <Image
                         src={partner.logo.src}
                         alt={partner.logo.alt}
                         width={partner.logo.width}
                         height={partner.logo.height}
-                        sizes="200px"
-                        className="max-h-full w-auto object-contain"
+                        sizes="192px"
+                        className="max-h-full max-w-48 object-contain"
                       />
                     ) : (
                       <span className="font-display text-base font-bold text-text-muted">
                         {partner.name}
                       </span>
                     )}
-                    <Todo>Logo</Todo>
                   </div>
                   <h3 className="text-lg font-bold text-text">{partner.name}</h3>
                   {partner.relationship ? (
@@ -635,21 +646,6 @@ export default function HomePage() {
                   />
                 </div>
               ) : null}
-
-              <div className="mt-6 rounded-(--radius-2xl) border border-border-brand bg-primary-subtle p-5">
-                <p className="text-base font-bold text-text">
-                  {home.contact.afterSubmit.title}
-                </p>
-                <ol className="mt-3 space-y-2">
-                  {home.contact.afterSubmit.steps.map((step, index) => (
-                    <li key={step} className="flex gap-2.5 text-sm text-neutral-700">
-                      <span className="font-bold text-primary-dark">{index + 1}.</span>
-                      {step}
-                    </li>
-                  ))}
-                </ol>
-                <Todo className="mt-4">Confirm against the real process</Todo>
-              </div>
             </Reveal>
 
             <Reveal direction="right" delay={100} className="min-w-0">
