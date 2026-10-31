@@ -66,7 +66,37 @@ export function PressMarquee({ items }: { items: PressMention[] }) {
                * flag would apply to every image the optimiser ever serves.
                */
               unoptimized={outlet.logo.src.endsWith('.svg')}
-              className="h-7 w-auto object-contain mix-blend-multiply opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 sm:h-8"
+              /**
+               * ⚠️  SIZED BY ASPECT RATIO, NOT ONE HEIGHT FOR EVERYTHING.
+               *
+               * Nine of these are newspaper mastheads — long, single-line
+               * wordmarks around 10:1 — and a fixed height is exactly right
+               * for them. The IPM congress mark is not: it is a stacked
+               * lockup at 239x126, nearly square, with three lines of type
+               * and a date beneath. Given the mastheads' 32px it would be
+               * 61px wide with each line about 9px tall, which is a blob
+               * rather than a logo.
+               *
+               * So a genuinely stacked lockup gets roughly double the
+               * height, which lands it at a similar optical WEIGHT to its
+               * neighbours rather than the same measured height. Mixed
+               * heights are normal in a logo strip; identical heights
+               * across wildly different ratios are what look wrong.
+               *
+               * ⚠️  THE THRESHOLD IS 2.2, AND IT WAS 3 FOR ONE MEASUREMENT
+               * BEFORE THAT. At 3 it also caught Zee News (2.65), NDTV
+               * (2.81) and Industry Outlook (2.89) — three logos that read
+               * perfectly well at 32px — and jumped them to 60, where they
+               * dominated the row. Measured ratios of the current set:
+               * IPM 1.90, then a clear gap to Zee 2.65, and everything
+               * else from 3.39 to 10.00. Anything added here should be
+               * checked against that spread rather than against the number.
+               */
+              className={`w-auto object-contain mix-blend-multiply opacity-90 transition-opacity duration-200 group-hover/outlet:opacity-100 ${
+                outlet.logo.width / outlet.logo.height >= 2.2
+                  ? 'h-7 sm:h-8'
+                  : 'h-13 sm:h-15'
+              }`}
             />
           ) : (
             <span>{outlet.name}</span>

@@ -665,18 +665,38 @@ export const home: HomeContent = {
      *     against a 2026 appearance implies a booking that page does not
      *     show.
      *
-     * NEITHER CARRIES A LOGO YET. The supplied files did not reach the
-     * repository, so both fall back to their name set as a wordmark, which
-     * `PressMarquee` does by design. Drop the two images in and add a
-     * `logo` block to each.
+     * ⚠️  THE IPM MARK IS A STACKED LOCKUP, NOT A MASTHEAD, which is why
+     * `PressMarquee` sizes by aspect ratio rather than giving every logo
+     * the same height. At 239x126 it is nearly square; at the 32px the
+     * newspaper wordmarks use it would be 61px wide with three lines of
+     * type inside it. See the note in that component before touching the
+     * sizing.
      */
     {
       name: 'Integrative & Personalised Medicine',
       href: 'https://ipmcongress.com/speakers/arpan-talwar',
+      /* Supplied with real transparency, so only trimmed to its ink. */
+      logo: {
+        src: '/images/press/ipm-congress.png',
+        alt: 'Integrative & Personalised Medicine 2027',
+        width: 239,
+        height: 126,
+      },
     },
     {
       name: 'TEDx',
       href: 'https://www.ted.com/tedx/events/67810',
+      /* Supplied as red on opaque white and knocked out against it. The
+         red-channel shortcut used for Business Today does not work here —
+         TEDx red is rgb(230,43,30), whose red channel is nearly white — so
+         the alpha comes from the channel furthest from white and every
+         channel is unpremultiplied back. */
+      logo: {
+        src: '/images/press/tedx.png',
+        alt: 'TEDx',
+        width: 716,
+        height: 211,
+      },
     },
     {
       name: 'The Times of India',
