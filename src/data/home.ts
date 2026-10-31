@@ -1268,10 +1268,20 @@ export const home: HomeContent = {
         },
       },
       {
-        /** ⚠️  Logo still outstanding — see the note in the README. */
         name: 'NABH-accredited partner clinics',
         relationship: 'Accredited partner network',
         location: 'India',
+        /* Supplied as an SVG, but a vector only on the outside: the file was
+           a 101x79 wrapper around a 400x314 base64 PNG. The payload is what
+           is stored here, knocked off its white background like the others
+           and trimmed to the seal, so it renders on the white plate at full
+           resolution instead of at an eighth of it. */
+        logo: {
+          src: '/images/partners/nabh.webp',
+          alt: 'NABH — National Accreditation Board for Hospitals & Healthcare Providers',
+          width: 287,
+          height: 276,
+        },
       },
     ],
     cta: { label: 'All partnering institutions', href: routes.partners },
@@ -1444,17 +1454,24 @@ export const home: HomeContent = {
    *
    *   location      the reach panel — HCAH Transition Care Centre, Gurugram
    *   international `international.body`, on confirming availability first
-   *   next steps    `contact.afterSubmit.steps`, near-verbatim
-   *   records       the enquiry form's own note about not attaching scans
    *   second op.    `complexJourney.outro`, verbatim on what a consultation
    *                 cannot guarantee
    *   no phone      `src/lib/site.ts`, where the absence is a decision
    *   not advice    the disclaimer beside the enquiry form
    *
-   * ⚠️  NOTHING HERE MAY STATE A RESPONSE TIME. The note on
-   * `contact.afterSubmit` is explicit that any implied turnaround is an
-   * operational commitment nobody has made, so "replies with the next
-   * steps" stays unqualified until someone commits to a number.
+   * ⚠️  TWO QUESTIONS WERE REMOVED WITH THE COPY THEY ECHOED, DELIBERATELY.
+   * AOHC asked for the "What happens after you submit" panel beside the
+   * contact form and the "please do not send scans or reports" note inside
+   * the enquiry form to come off the page. "What happens after I send an
+   * enquiry?" and "Should I attach my scans and reports?" restated those
+   * two almost word for word, on the same page — left in, they would have
+   * gone on saying the thing that was asked to be taken down, and with
+   * nothing left to echo they would have been the site making the claim
+   * rather than summarising it. Both answers are in git history if the
+   * decision was only about the panels.
+   *
+   * ⚠️  NOTHING HERE MAY STATE A RESPONSE TIME. Any implied turnaround is
+   * an operational commitment nobody has made.
    *
    * These also feed a `FAQPage` JSON-LD node, so an answer that drifts from
    * the page drifts in Google's rich result too — edit both or neither.
@@ -1474,16 +1491,6 @@ export const home: HomeContent = {
         question: 'Do you accept patients from outside India?',
         answer:
           'Yes. Patients and enquiries reach us from across Europe, the Middle East, Africa, Asia and the Americas. The availability of remote consultations, in-person assessments, travel assistance and other services has to be confirmed with the team before any arrangements are made.',
-      },
-      {
-        question: 'What happens after I send an enquiry?',
-        answer:
-          'Your enquiry reaches the care team and you receive a reference number. The team reviews what you have sent and replies with the next steps. If a review is appropriate, you are sent a secure channel for your records.',
-      },
-      {
-        question: 'Should I attach my scans and reports to the first message?',
-        answer:
-          'No — please do not send scans or reports through the enquiry form. If a review is needed, the team will tell you how to share them securely and exactly which documents are wanted.',
       },
       {
         question: 'Can I ask for a second opinion if treatment has stopped working?',
@@ -1714,24 +1721,6 @@ export const home: HomeContent = {
     title: 'You’re Not Alone, We’re Here to Help',
     subtitle:
       'Tell us where you are in this. A member of the care team will read your message and reply.',
-    /**
-     * ⚠️  TODO — COPY NOT SUPPLIED.
-     *
-     * These three lines are the most reassuring thing on the page: somebody
-     * who has just written about their diagnosis wants to know whether
-     * anyone will read it and when. They are drafted here from the content
-     * draft's §14 ("What Happens Next?") and MUST be confirmed against the
-     * practice's real process — especially anything implying a response
-     * time, which is an operational commitment nobody has made.
-     */
-    afterSubmit: {
-      title: 'What happens after you submit',
-      steps: [
-        'Your enquiry reaches the care team and you receive a reference number.',
-        'The team reviews what you have sent and replies with the next steps.',
-        'If a review is appropriate, you are sent a secure channel for your records.',
-      ],
-    },
   },
 }
 

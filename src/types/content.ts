@@ -539,8 +539,6 @@ export interface HomeContent {
   contact: {
     title: string
     subtitle: string
-    /** "What happens after you submit" — reassurance beside the form. */
-    afterSubmit: { title: string; steps: string[] }
   }
 }
 

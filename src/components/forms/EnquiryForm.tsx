@@ -269,11 +269,6 @@ export function EnquiryForm({
         store the details I have given here in order to do so.
       </CheckboxField>
 
-      <p className="rounded-(--radius-md) border border-border bg-surface-subtle p-4 text-sm text-neutral-700">
-        Please do not send scans or reports through this form. If a review is needed,
-        the team will tell you how to share them securely.
-      </p>
-
       <SubmitButton />
     </form>
   )
