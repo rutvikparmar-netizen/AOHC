@@ -145,22 +145,58 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
         className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 min-[85rem]:gap-4"
       >
         <Link href={routes.home} className="shrink-0" aria-label={`${site.name} — home`}>
-          {/* The lockup is reversed out over the hero with a filter and
-              returns to its own colours once the bar is frosted — the
-              wordmark is dark teal and would vanish into it otherwise. */}
-          <Image
-            src="/aohc-logo.svg"
-            alt={site.name}
-            width={212}
-            height={131}
-            priority
+          {/**
+           * ⚠️  TWO REAL FILES, CROSS-FADED — NOT ONE FILE UNDER A FILTER.
+           *
+           * This used to be the colour lockup with `brightness-0 invert`
+           * applied over the hero. That is a cheap reversal and it is the
+           * wrong mark: the filter flattens the teal CANCER, the grey
+           * script and the tonal lotus into one solid white shape. AOHC
+           * supplied a proper reversed lockup, which keeps the lotus's
+           * shading and the weight difference between the lines.
+           *
+           * Both are rendered and swapped on opacity because the scrolled
+           * state is driven by `group-data-[scrolled]` — a CSS condition.
+           * CSS cannot change an `src`, so the only way to keep the
+           * transition declarative is to have both present and fade
+           * between them. The one underneath is `aria-hidden` and the
+           * wrapper carries no text, so a screen reader hears the link's
+           * `aria-label` once rather than the site name twice.
+           *
+           * Off the overlay — a page whose header is solid from the start
+           * — only the colour mark is rendered. There is nothing to fade.
+           */}
+          <span
             data-header-logo
-            className={`h-12 w-auto transition-[height,filter] duration-300 group-data-[scrolled]/header:h-9 lg:h-16 lg:group-data-[scrolled]/header:h-11 ${
-              overlay
-                ? 'brightness-0 invert group-data-[scrolled]/header:brightness-100 group-data-[scrolled]/header:invert-0'
-                : ''
-            }`}
-          />
+            className="relative block h-12 w-auto transition-[height] duration-300 group-data-[scrolled]/header:h-9 lg:h-16 lg:group-data-[scrolled]/header:h-11"
+          >
+            <Image
+              src="/images/logo-colour.webp"
+              alt={site.name}
+              width={720}
+              height={444}
+              priority
+              sizes="180px"
+              className={
+                overlay
+                  ? 'h-full w-auto opacity-0 transition-opacity duration-300 group-data-[scrolled]/header:opacity-100'
+                  : 'h-full w-auto'
+              }
+            />
+
+            {overlay ? (
+              <Image
+                src="/images/logo-white.webp"
+                alt=""
+                aria-hidden
+                width={720}
+                height={436}
+                priority
+                sizes="180px"
+                className="absolute left-0 top-0 h-full w-auto transition-opacity duration-300 group-data-[scrolled]/header:opacity-0"
+              />
+            ) : null}
+          </span>
         </Link>
 
         {/* An earlier version put `mr-auto` here to push the actions right.

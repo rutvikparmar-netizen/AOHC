@@ -48,12 +48,20 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_2fr]">
           <div className="space-y-5">
             <Link href={routes.home} className="inline-block">
+              {/* ⚠️  AOHC'S OWN REVERSED ARTWORK, NOT A FILTER. This was
+                  the colour lockup under `brightness-0 invert`, which
+                  flattens everything to pure white — the teal CANCER, the
+                  grey script and the lotus all became one solid shape.
+                  The supplied white version keeps the lotus's tonal
+                  shading and the weight relationship between the lines.
+                  Do not reintroduce the filter; it is not the same mark. */}
               <Image
-                src="/aohc-logo.svg"
+                src="/images/logo-white.webp"
                 alt={site.name}
-                width={212}
-                height={131}
-                className="h-14 w-auto brightness-0 invert"
+                width={720}
+                height={436}
+                sizes="150px"
+                className="h-14 w-auto"
               />
             </Link>
 
