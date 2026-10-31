@@ -835,6 +835,55 @@ export interface JourneyStage {
  * what any particular patient will be offered, and rewriting a "may" into
  * a "will" turns a description into a commitment.
  */
+/**
+ * TREATMENT COSTS — `/treatment-costs`.
+ *
+ * ⚠️  EVERY SENTENCE ABOUT MONEY ON THIS PAGE IS HEDGED, AND THE HEDGES ARE
+ * THE CONTENT. "Costs VARY according to", "AOHC AIMS to explain", "WHEREVER
+ * those costs can be reasonably estimated", "WHERE APPROPRIATE, patients
+ * SHOULD receive a written estimate", "actual costs MAY change". A page
+ * that quotes no figure and promises no total is doing that on purpose:
+ * naming a number, or turning a "should" into a "will", converts a
+ * description of good practice into a commercial undertaking.
+ *
+ * ⚠️  NO PRICES, NO RANGES, NO "STARTING FROM". None are supplied, and none
+ * may be inferred from anything else on the site.
+ */
+export interface TreatmentCostsContent {
+  hero: PageHeroContent
+
+  /** "What Can Affect the Cost?" — the nine possible items. */
+  factors: ListSection
+
+  /** "Individualized Cost Estimates". */
+  estimates: TitledPassage
+
+  /** "Questions to Ask" — the seven the reader is invited to put. */
+  questions: ListSection
+
+  /**
+   * "No Treatment Guarantees".
+   *
+   * ⚠️  `emphasis` IS A PATIENT-PROTECTION STATEMENT, NOT A PULL QUOTE.
+   * "Treatment decisions should be based on clinical appropriateness and
+   * informed consent, not financial pressure" is the only sentence on the
+   * page addressed to someone being sold to. It gets its own panel for
+   * that reason and must not be folded back into the prose, softened, or
+   * moved below the call to action.
+   */
+  guarantees: {
+    eyebrow: string
+    title: string
+    body: string[]
+    emphasis: string
+  }
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
 export interface PatientJourneyContent {
   hero: PageHeroContent
 

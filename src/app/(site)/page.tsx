@@ -263,12 +263,52 @@ export default function HomePage() {
           page — the two are one topic and were adjacent before the move. */}
       <section className="bg-surface py-(--spacing-section)">
         <Container>
+          {/* ⚠️  THE PICTURE TAKES A WHOLE COLUMN AND EVERYTHING ELSE TAKES
+              THE OTHER — the same shape as "Pioneers in Integrative &
+              Precision Oncology" further up, which AOHC pointed at as the
+              one to match. Worth recording what this replaced, because the
+              earlier arrangement looked reasonable and was not:
+
+              The steps used to sit in the second column, opposite the
+              paragraphs — two versions of one argument side by side, with
+              no picture of the care being described. Moving them to a
+              three-across strip underneath fixed that and created a new
+              problem: the photograph was then in a landscape slot, and it
+              is PORTRAIT (1024x1536), so `object-cover` threw away the top
+              and bottom of AOHC's own consulting room to fit.
+
+              A full-height column is the slot this frame was shot for.
+              Nothing is cropped away that matters, and the steps read as a
+              short spine under the prose they summarise rather than
+              competing with it across the row. */}
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <Reveal direction="left">
+            {/* ⚠️  AOHC NAMED THIS FRAME FOR THIS SLOT. It is their own
+                consulting room, and it is the SAME FILE the About page's
+                commitment section uses — supplied twice, once for each
+                place, rather than as two assets. Reusing the one already
+                in the repo keeps a 1.9MB PNG out of it.
+
+                `lg:h-full` against a stretched grid row makes the picture
+                exactly as tall as the column beside it, whatever that
+                column ends up holding. */}
+            <Reveal direction="left" className="min-w-0">
+              <div className="relative h-80 overflow-hidden rounded-(--radius-3xl) bg-surface-subtle sm:h-[26rem] lg:h-full lg:min-h-[32rem]">
+                <Image
+                  src="/images/aohc-consultation.webp"
+                  alt="A clinician with a tablet talking to two people across a table in a consulting area"
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            </Reveal>
+
+            <Reveal direction="right" delay={100} className="min-w-0 lg:self-center">
               <SectionHeader
                 eyebrow={home.international.eyebrow}
                 title={home.international.title}
               />
+
               <div className="mt-6 max-w-(--measure) space-y-4">
                 {home.international.body.map((paragraph) => (
                   <p key={paragraph.slice(0, 32)} className="text-base text-neutral-700">
@@ -276,6 +316,29 @@ export default function HomePage() {
                   </p>
                 ))}
               </div>
+
+              {/* ⚠️  TITLES ONLY — THE DESCRIPTIONS ARE NOT RENDERED HERE,
+                  on AOHC's instruction. They are still in
+                  `home.international.steps` and must stay: that is supplied
+                  copy, and the paragraphs above already say all of it at
+                  length. What is left is a spine — enquire, share, plan.
+
+                  A rule between rows rather than three bordered cards:
+                  stacked in a column, boxes would turn three short lines
+                  into three heavy blocks under the prose they belong to. */}
+              <ol className="mt-8 divide-y divide-border border-y border-border">
+                {home.international.steps.map((step, index) => (
+                  <li key={step.title} className="flex items-center gap-4 py-3.5">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-subtle font-display text-sm font-bold text-accent-dark">
+                      {index + 1}
+                    </span>
+                    <h3 className="min-w-0 text-base font-bold text-text">
+                      {step.title}
+                    </h3>
+                  </li>
+                ))}
+              </ol>
+
               <Button
                 href={home.international.cta.href}
                 variant="accent"
@@ -285,52 +348,7 @@ export default function HomePage() {
                 {home.international.cta.label}
               </Button>
             </Reveal>
-
-            {/* ⚠️  A PHOTOGRAPH HERE, NOT THE THREE STEPS. The steps used
-                to sit in this column, which made the row read as prose
-                beside a summary of the same prose — the reader had two
-                versions of one thing side by side and no picture of the
-                care being described. The steps are a sequence and belong
-                on one line underneath, where they read left to right as
-                first, second, third rather than as a stack competing with
-                the paragraphs. */}
-            <Reveal direction="right" delay={100} className="min-w-0">
-              <div className="relative h-64 overflow-hidden rounded-(--radius-3xl) sm:h-80 lg:h-full lg:min-h-[22rem]">
-                <Image
-                  src="/images/cta-backdrop.webp"
-                  alt="A clinician resting a hand on a patient's arm during treatment"
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-            </Reveal>
           </div>
-
-          {/* The three steps, full width under both columns. A numbered
-              sequence reads as a sequence when it runs along a line; in a
-              narrow column it is just a list. */}
-          <ol className="mt-10 grid gap-5 sm:grid-cols-3 lg:mt-14">
-            {home.international.steps.map((step, index) => (
-              <Reveal
-                as="li"
-                key={step.title}
-                direction="up"
-                delay={index * 70}
-                className="flex gap-4 rounded-(--radius-2xl) border border-border bg-background p-5"
-              >
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-subtle font-display text-sm font-bold text-accent-dark">
-                  {index + 1}
-                </span>
-                <div className="min-w-0">
-                  <h3 className="text-base font-bold text-text">{step.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-neutral-700">
-                    {step.description}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
         </Container>
       </section>
 

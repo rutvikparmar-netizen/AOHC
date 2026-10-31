@@ -82,6 +82,11 @@ const cancerCareNav: MegaNavColumn[] = [
         href: routes.integrativeCare,
         description: 'How supportive care fits alongside treatment',
       },
+      {
+        label: 'Treatment Costs',
+        href: routes.costs,
+        description: 'What affects the cost, and what to ask',
+      },
     ],
   },
 ]

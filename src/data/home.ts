@@ -479,7 +479,16 @@ export const home: HomeContent = {
       'Patients and families may need help organizing records, understanding the consultation process, coordinating appointments, and preparing questions for their clinical team.',
       'AOHC aims to make the process clearer for patients seeking care from outside India. The availability of remote consultations, in-person assessments, travel assistance, and other services must be confirmed with our team before arrangements are made.',
     ],
-    /** The same copy, broken into three steps so it can be scanned. */
+    /**
+     * The same copy, broken into three steps so it can be scanned.
+     *
+     * ⚠️  ONLY THE TITLES ARE ON SCREEN. AOHC asked for the descriptions
+     * off the home page, so the strip renders a spine — enquire, share,
+     * plan — under the paragraphs that already say all of this at length.
+     * The descriptions stay here because they are supplied copy and the
+     * international-patients page may yet want them; they are not dead
+     * data, they are unrendered data. Do not "tidy" them away.
+     */
     steps: [
       {
         title: 'Send an enquiry',
