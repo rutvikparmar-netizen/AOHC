@@ -387,6 +387,27 @@
     animation-play-state: paused;
   }
 
+  /* HELD STILL UNTIL THE SECTION HAS BEEN SCROLLED TO.
+     The strip sits well below the fold, and an animation that has been
+     running since page load arrives mid-stride — the reader meets a logo
+     already halfway out of the frame and has no idea it is a sequence.
+     Paused until then, it starts from its first frame when the reader
+     gets there.
+
+     It reuses the `Reveal` wrapper that is already around the strip on
+     the home page rather than adding a second observer: that component
+     sets `data-revealed` when the element enters the viewport and never
+     unsets it, so this is one selector and no JavaScript.
+
+     ⚠️  SCOPED TO AN UNREVEALED `Reveal`, NOT A BARE DEFAULT. Written as
+     `.marquee-track { animation-play-state: paused }` with a separate
+     rule to resume it, a marquee used anywhere WITHOUT a `Reveal` ancestor
+     would sit frozen for ever and look like a rendering bug. This way the
+     pause only exists while something is waiting to be revealed. */
+  [data-reveal]:not([data-revealed]) .marquee-track {
+    animation-play-state: paused;
+  }
+
   @keyframes marquee-run {
     to {
       transform: translate3d(-50%, 0, 0);
