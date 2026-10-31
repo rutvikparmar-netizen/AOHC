@@ -10,32 +10,32 @@ import { APPOINTMENT_CTA } from '@/lib/site'
  * editorial review, and rewording it would mean reviewers signing off on text
  * the site does not actually show.
  *
- * ⚠️  THE LIST IS NOT IN THIS FILE. It is `home.partners.items`, which is
- * what the home page's affiliations section already renders. One list, two
- * views: duplicating three named organisations and their trademarks into a
- * second file is how the two copies start to disagree about who AOHC works
- * with, which is not a disagreement to have in public.
+ * ⚠️  THE LIST IS NOT IN THIS FILE. It is `home.network.items` — the ten
+ * organisations in AOHC's care network, the same array the home page's
+ * logo strip renders, shown here as a grid instead of a marquee.
  *
- * ⚠️  TWO THINGS THE SUPPLIED COPY SAYS THAT THE DATA DOES NOT BEAR OUT.
- * Neither is fixed here, because the copy is AOHC's and reproduced as
- * given — but whoever reviews this page should see both:
+ * ⚠️  IT IS NOT `home.partners.items`, AND THAT WAS THE FIRST MISTAKE ON
+ * THIS PAGE. Those three — CK Birla, RGCC, NABH — are affiliations and
+ * accreditations, and AOHC corrected the page when it showed them here.
+ * The two lists overlap and are not the same list.
  *
- *   1. IT SAYS "HOSPITALS", AND ONLY ONE OF THE THREE IS A HOSPITAL. CK
- *      Birla is a hospital; RGCC is a laboratory in Greece; the NABH entry
- *      is an accreditation network rather than a named institution at all.
- *      "Partnering hospitals help Art of Healing Cancer by providing
- *      cutting edge treatment" therefore describes one of the three.
+ * ⚠️  THE SUPPLIED COPY SAYS "HOSPITALS", AND THE LIST IS BROADER THAN
+ * THAT. The ten include hospitals, a genetics laboratory, an imaging unit,
+ * a hyperbaric-oxygen provider and a non-profit foundation. Not fixed
+ * here, because the copy is AOHC's and reproduced as given, but whoever
+ * reviews this page should see it: "partnering hospitals help Art of
+ * Healing Cancer by providing cutting edge treatment" describes some of
+ * them.
  *
- *   2. THE HEADING ENDS IN A COLON AND PROMISES A LIST — "Some partnering
- *      Institutions for Art of Healing Cancer are:". Three entries follow
- *      it, which is the whole set the site has. If AOHC has more, they
- *      belong in `home.partners.items` and will appear here and on the
- *      home page at once.
+ * The heading ends in a colon and promises a list, and the list is the
+ * whole care network. More belong in `home.network.items`, where they
+ * appear here and on the home page's strip at once.
  *
  * ⚠️  §7 OF THE DRAFT GOVERNS THIS PAGE MORE THAN ANY OTHER: "a referral
  * relationship must not be described as a formal partnership unless that
- * relationship exists". Each entry states its own relationship and they are
- * not synonyms. Nothing may be added here that AOHC has not confirmed.
+ * relationship exists". Nothing may be added to the network that AOHC has
+ * not confirmed a relationship with — this page states, in a heading, that
+ * every logo on it is a partner.
  *
  * ⚠️  THE HERO TITLE IS THE SITE'S OWN EXISTING LABEL, NOT AN INVENTION.
  * "Partnering Institutions" is what the About Us menu and the footer have

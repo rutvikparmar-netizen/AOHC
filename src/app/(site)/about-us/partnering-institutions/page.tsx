@@ -11,7 +11,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
-import { InstitutionGrid } from '@/components/shared/InstitutionGrid'
+import { PartnerLogoGrid } from '@/components/shared/PartnerLogoGrid'
 
 /**
  * PARTNERING INSTITUTIONS — `/about-us/partnering-institutions`
@@ -21,22 +21,26 @@ import { InstitutionGrid } from '@/components/shared/InstitutionGrid'
  * 404 reachable from all nine pages until now.
  *
  * ──────────────────────────────────────────────────────────────────────────
- * ⚠️  THE LIST COMES FROM `home.partners.items`, NOT FROM THIS PAGE'S DATA
- * FILE. The home page's affiliations section renders the same three
- * organisations, and `InstitutionGrid` is the same component in both
- * places. One list, two views: duplicating three named institutions and
- * their trademarks into a second file is how the two copies start to
- * disagree in public about who AOHC works with.
+ * ⚠️  THE LIST IS `home.network.items`, NOT `home.partners.items`, AND THE
+ * DIFFERENCE IS THE WHOLE POINT OF THIS PAGE.
  *
- * ⚠️  TWO THINGS IN THE SUPPLIED COPY THAT THE DATA DOES NOT BEAR OUT, left
- * as written because the words are AOHC's, and flagged here and in the data
- * file so a reviewer sees them:
+ * It was built against `partners.items` first and AOHC corrected it: those
+ * three — CK Birla, RGCC, NABH — are AFFILIATIONS AND ACCREDITATIONS, and
+ * they belong to the home page's "Certified. Accredited. Globally
+ * Connected." section. The partnering institutions are the ten
+ * organisations in the care network, the logos running along the home
+ * page's own strip. The two lists overlap (CK Birla and RGCC appear in
+ * both) and are not the same list. Do not merge them, and do not point
+ * this page back at `partners.items`.
  *
- *   1. It says "hospitals", and one of the three is a hospital. CK Birla is
- *      a hospital; RGCC is a laboratory in Greece; the NABH entry is an
- *      accreditation network rather than a named institution.
- *   2. The heading ends in a colon and promises a list. Three entries
- *      follow, which is the whole set the site has.
+ * Still not duplicated into this page's data file: it is the same array
+ * the home page's strip renders, shown as a grid instead of a marquee.
+ *
+ * ⚠️  THE SUPPLIED COPY SAYS "HOSPITALS", AND THE LIST IS BROADER THAN
+ * THAT. The ten include hospitals, a genetics laboratory, an imaging
+ * unit, a hyperbaric-oxygen provider and a non-profit foundation. Left as
+ * written because the words are AOHC's, and flagged here and in the data
+ * file so a reviewer sees it.
  *
  * ⚠️  §7 OF THE DRAFT GOVERNS THIS PAGE MORE THAN ANY OTHER: "a referral
  * relationship must not be described as a formal partnership unless that
@@ -83,7 +87,7 @@ export default function PartneringInstitutionsPage() {
             />
           </Reveal>
 
-          <InstitutionGrid items={home.partners.items} className="mt-10 lg:mt-12" />
+          <PartnerLogoGrid items={home.network.items} className="mt-10 lg:mt-12" />
         </Container>
       </section>
 
