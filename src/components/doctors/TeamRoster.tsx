@@ -89,7 +89,29 @@ export function TeamRoster({
           <SectionHeader eyebrow={eyebrow} title={title} intro={intro} />
         </Reveal>
 
-        <ul className="mt-10 grid gap-5 lg:mt-12 lg:grid-cols-2">
+        {/* ⚠️  `auto-rows-fr` IS WHAT MAKES EVERY CARD THE SAME HEIGHT, and
+            it is a grid fix rather than a card fix. A grid already
+            stretches items to their own ROW, so the two cards beside each
+            other always matched — but each row sized itself to its own
+            tallest card and the rows came out at 221, 238, 300, 278, 252,
+            253 and 197px. Nothing on screen was misaligned, which is why
+            it is easy to miss and was reported as simply looking wrong.
+
+            The cost lands on the portrait, which is the real tell: the
+            image column is `self-stretch`, so a doctor in a short row got
+            a 221px-tall crop of their photograph and the same person in a
+            tall row would have got 300px. Fifteen portraits at seven
+            different scales reads as fifteen different kinds of card.
+
+            `1fr` on every implicit row makes them all as tall as the
+            tallest, so every crop is identical and the grid is one shape.
+
+            ⚠️  `lg:` ONLY, DELIBERATELY. Below that the grid is a single
+            column: there is no neighbour to be ragged against, and
+            equalising there would pad every card out to the worst case in
+            the set — on a phone that is a screen of blank card per
+            doctor, to fix a misalignment nobody can see. */}
+        <ul className="mt-10 grid gap-5 lg:mt-12 lg:auto-rows-fr lg:grid-cols-2">
           {members.map((member, index) => (
             <Reveal
               as="li"
