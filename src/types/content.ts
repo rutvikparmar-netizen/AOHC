@@ -836,6 +836,30 @@ export interface JourneyStage {
  * a "will" turns a description into a commitment.
  */
 /**
+ * PARTNERING INSTITUTIONS — `/about-us/partnering-institutions`.
+ *
+ * ⚠️  THE LIST OF INSTITUTIONS IS NOT IN THIS TYPE. It is
+ * `home.partners.items`, which the home page's affiliations section already
+ * renders — one list, two views. Three named organisations and their
+ * trademarks duplicated into a second file is how two copies start to
+ * disagree in public about who AOHC works with.
+ *
+ * ⚠️  §7 OF THE DRAFT GOVERNS THIS PAGE: "a referral relationship must not
+ * be described as a formal partnership unless that relationship exists".
+ */
+export interface PartneringInstitutionsContent {
+  hero: PageHeroContent
+
+  /** The supplied lead-in, set over the list it introduces. */
+  listTitle: string
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
+/**
  * TREATMENT COSTS — `/treatment-costs`.
  *
  * ⚠️  EVERY SENTENCE ABOUT MONEY ON THIS PAGE IS HEDGED, AND THE HEDGES ARE

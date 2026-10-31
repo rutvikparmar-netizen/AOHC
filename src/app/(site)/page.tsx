@@ -24,6 +24,7 @@ import { FaqSection } from '@/components/home/FaqSection'
 import { ChecklistSection } from '@/components/home/ChecklistSection'
 import { ApproachSection } from '@/components/home/ApproachSection'
 import { CaseReviewSection } from '@/components/home/CaseReviewSection'
+import { InstitutionGrid } from '@/components/shared/InstitutionGrid'
 import { ClosingSection } from '@/components/home/ClosingSection'
 import { Reveal } from '@/components/motion/Reveal'
 import { Cta } from '@/components/home/Cta'
@@ -511,58 +512,14 @@ export default function HomePage() {
             />
           </Reveal>
 
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {institutions.map((partner, index) => (
-              <Reveal as="li" key={partner.name} direction="up" delay={index * 60}>
-                <article className="flex h-full flex-col gap-3 rounded-(--radius-2xl) border border-border bg-background p-6">
-                  {/* The mark sits on a white plate, because these logos are
-                      supplied flat on white and would otherwise sit in a
-                      tinted box that is not theirs. `object-contain` so no
-                      third party's logo is ever cropped or stretched.
-
-                      ⚠️  CAPPED ON BOTH AXES, AND THE PLATE IS TALLER THAN
-                      IT LOOKS IT NEEDS TO BE. Height alone was the only
-                      limit here, which is the right rule for two long
-                      wordmarks and the wrong one the moment a round seal
-                      arrives: at the old 56px of plate, CK Birla rendered
-                      153x56 and the NABH roundel 58x56 — a third of the
-                      area, with ring type far too small to read, even
-                      though 366px of plate width was going spare. Raising
-                      the plate lets a compact mark earn its height, and the
-                      width cap stops the wordmarks ballooning to match.
-                      Measured after: 192x70, 136x88, 91x88. */}
-                  <div className="flex h-28 items-center justify-center rounded-(--radius-lg) bg-white p-3">
-                    {partner.logo ? (
-                      <Image
-                        src={partner.logo.src}
-                        alt={partner.logo.alt}
-                        width={partner.logo.width}
-                        height={partner.logo.height}
-                        sizes="192px"
-                        className="max-h-full max-w-48 object-contain"
-                      />
-                    ) : (
-                      <span className="font-display text-base font-bold text-text-muted">
-                        {partner.name}
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-lg font-bold text-text">{partner.name}</h3>
-                  {partner.relationship ? (
-                    <p className="text-sm font-medium text-primary-dark">
-                      {partner.relationship}
-                    </p>
-                  ) : null}
-                  {partner.location ? (
-                    <p className="inline-flex items-center gap-1.5 text-sm text-text-muted">
-                      <Icon name="map-pin" className="size-4" />
-                      {partner.location}
-                    </p>
-                  ) : null}
-                </article>
-              </Reveal>
-            ))}
-          </ul>
+          {/* ⚠️  THE CARD LIVES IN `InstitutionGrid` NOW, NOT HERE, because
+              `/about-us/partnering-institutions` shows the same
+              organisations. The plate height and the two-axis logo cap
+              were measured rather than guessed, and a second copy of that
+              markup would have drifted from this one within a change or
+              two. The merge above is still this page's own: only the home
+              page shows both lists at once. */}
+          <InstitutionGrid items={institutions} className="mt-10" />
 
           <Reveal>
             <Button
