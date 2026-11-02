@@ -51,10 +51,11 @@ const trail: Breadcrumb[] = [
 ]
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Integrative Cancer Care',
+  title: 'Integrative Cancer Care | Art of Healing Cancer',
   description:
-    'How AOHC approaches integrative cancer care: conventional oncology alongside appropriate supportive approaches, and a careful assessment of emerging or non-standard therapies.',
+    'Explore how conventional oncology and appropriate supportive approaches may be considered together based on individual clinical needs.',
   canonicalPath: routes.integrativeCare,
+  absoluteTitle: true,
 })
 
 export default function IntegrativeCancerCarePage() {

@@ -58,10 +58,11 @@ const trail: Breadcrumb[] = [
 ]
 
 export const metadata: Metadata = buildMetadata({
-  title: 'International Patients',
+  title: 'International Patient Enquiries | Art of Healing Cancer',
   description:
-    'How an enquiry from outside India is handled — initial contact, medical records, preliminary review, consultation, planning a visit and follow-up — and what to consider before travelling for cancer care.',
+    'Learn about the enquiry process, medical records, consultation arrangements, and considerations for patients seeking cancer care from abroad.',
   canonicalPath: routes.international,
+  absoluteTitle: true,
 })
 
 export default function InternationalPatientsPage() {

@@ -110,6 +110,18 @@ export interface SeoMeta {
   canonicalPath?: string
   ogImage?: ImageAsset
   noIndex?: boolean
+  /**
+   * Treat `title` as the complete `<title>`, instead of a fragment for the
+   * root layout's `%s | Art of Healing Cancer` template.
+   *
+   * ⚠️  NEEDED BECAUSE THE SUPPLIED SEO TITLES CARRY THEIR OWN BRAND. The
+   * approved title for the integrative page is "Integrative Cancer Care |
+   * Art of Healing Cancer"; through the template that renders the brand
+   * twice. Pages with a hand-written, signed-off title set this; pages
+   * whose title is just a page name ("Treatment Costs") leave it off and
+   * let the template do its job.
+   */
+  absoluteTitle?: boolean
 }
 
 /** Envelope returned by any list query that supports pagination. */

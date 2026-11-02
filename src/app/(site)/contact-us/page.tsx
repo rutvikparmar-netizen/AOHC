@@ -105,10 +105,11 @@ function withSoftBreaks(value: string) {
 }
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Contact Art of Healing Cancer',
+  title: 'Contact Art of Healing Cancer | AOHC',
   description:
-    'How to reach the Art of Healing Cancer team about a consultation, medical records, or an international patient enquiry — and what not to send through an ordinary contact message.',
+    'Contact AOHC with questions about the consultation process, available services, or international patient enquiries.',
   canonicalPath: routes.contact,
+  absoluteTitle: true,
 })
 
 export default function ContactPage() {

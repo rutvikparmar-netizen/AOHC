@@ -67,10 +67,11 @@ const trail: Breadcrumb[] = [
 ]
 
 export const metadata: Metadata = buildMetadata({
-  title: 'About Us',
+  title: 'About AOHC | Our Approach to Personalized Cancer Care',
   description:
-    'The story behind Art of Healing Cancer, our purpose and philosophy, how we approach cancer-care discussions, and what we do and do not promise.',
+    'Learn about Art of Healing Cancer and our patient-centred approach to understanding clinical information and evaluating cancer care options.',
   canonicalPath: routes.about,
+  absoluteTitle: true,
 })
 
 export default function AboutPage() {

@@ -46,10 +46,11 @@ const trail: Breadcrumb[] = [
 ]
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Cancer Types',
+  title: 'Cancer Types and Patient Information | AOHC',
   description:
-    'The cancer types AOHC may be asked to review, what a clinical review of each may consider, and the medical information that helps in understanding a case.',
+    'Explore educational information about cancer diagnoses, medical records, and the clinical factors that may inform treatment discussions.',
   canonicalPath: routes.cancerTypes,
+  absoluteTitle: true,
 })
 
 export default function CancerTypesPage() {

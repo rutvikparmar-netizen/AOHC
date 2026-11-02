@@ -15,12 +15,19 @@ export function buildMetadata({
   canonicalPath,
   ogImage,
   noIndex,
+  absoluteTitle,
 }: SeoMeta): Metadata {
   const url = canonicalPath ? absoluteUrl(canonicalPath) : site.url
   const image = ogImage?.src ? absoluteUrl(ogImage.src) : absoluteUrl('/aohc-logo.png')
 
   return {
-    title,
+    /**
+     * `{ absolute }` is Next's opt-out from the parent layout's title
+     * template. Only the `<title>` goes through that template — the OG and
+     * Twitter titles below never did — so a page that opts out is the one
+     * place the three can disagree. They do not: all three take `title`.
+     */
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: canonicalPath ? { canonical: canonicalPath } : undefined,
     openGraph: {

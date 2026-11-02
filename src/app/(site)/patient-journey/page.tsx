@@ -43,10 +43,11 @@ const trail: Breadcrumb[] = [
 ]
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Your Patient Journey',
+  title: 'Your Patient Journey | Art of Healing Cancer',
   description:
-    'The seven stages of an AOHC review — enquiry, sharing records securely, review of your medical history, identifying gaps, discussing options, agreeing next steps and follow-up — and how to prepare for a consultation.',
+    'Understand the stages of an enquiry, medical-record review, consultation, treatment discussion, and follow-up.',
   canonicalPath: routes.patientJourney,
+  absoluteTitle: true,
 })
 
 export default function PatientJourneyPage() {

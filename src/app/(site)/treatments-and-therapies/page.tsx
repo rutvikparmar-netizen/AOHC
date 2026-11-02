@@ -57,10 +57,11 @@ const trail: Breadcrumb[] = [
 ]
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Treatments and Therapies',
+  title: 'Cancer Treatments and Therapies | AOHC',
   description:
-    'The treatment categories a clinical discussion may cover, how molecular findings and investigational approaches are weighed, and how options are evaluated against an individual case.',
+    'Learn about cancer treatment categories, diagnostic considerations, evidence, risks, and the importance of individualized medical assessment.',
   canonicalPath: routes.treatments,
+  absoluteTitle: true,
 })
 
 export default function TreatmentsPage() {
