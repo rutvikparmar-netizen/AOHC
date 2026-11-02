@@ -836,6 +836,86 @@ export interface JourneyStage {
  * a "will" turns a description into a commitment.
  */
 /**
+ * RESOURCES AND BLOG — `/knowledge`.
+ *
+ * ⚠️  BOTH LISTS ARE HEADED "SUGGESTED" IN THE DRAFT, AND NOTHING ON THEM
+ * EXISTS YET. The categories describe what the library will cover; the ten
+ * article titles are a commissioning list. Neither may be rendered as
+ * links until there is something behind them — ten clickable titles that
+ * go nowhere is ten dead ends on a page whose purpose is to be useful.
+ *
+ * `status` is the one sentence on the page that is not AOHC's: it says the
+ * library is still being written, because without it a reader meets two
+ * lists they cannot open and concludes the site is broken.
+ */
+export interface ResourcesPageContent {
+  hero: PageHeroContent
+
+  /** Written, not supplied — see the data file. */
+  status: string
+
+  categories: {
+    eyebrow: string
+    title: string
+    items: Array<{ title: string; body: string }>
+  }
+
+  /** Titles only. NOT links — see the warning above. */
+  articles: {
+    eyebrow: string
+    title: string
+    items: string[]
+  }
+
+  standards: {
+    eyebrow: string
+    title: string
+    intro: string[]
+    items: string[]
+    outro: string
+  }
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
+/** One numbered clause of a legal document. The number comes from the index. */
+export interface LegalSection {
+  title: string
+  body?: string[]
+  items?: string[]
+  /** Paragraphs that follow the list. */
+  outro?: string[]
+}
+
+/**
+ * A NUMBERED LEGAL DOCUMENT — `/privacy-policy` and `/terms-of-use`.
+ *
+ * ⚠️  BOTH DRAFTS ARE SPECIFICATIONS AS MUCH AS COPY, AND NEITHER HAS BEEN
+ * THROUGH LEGAL REVIEW. They are written in the conditional throughout —
+ * "information MAY be collected", "AOHC SHOULD implement appropriate
+ * measures" — and they contain sentences addressed to whoever finishes
+ * them ("the final policy must specify the lawful basis…") plus
+ * placeholders for the legal entity, address and contact email.
+ *
+ * What is rendered is the substantive copy. The drafting instructions are
+ * not: a live privacy page telling a reader what the final policy must
+ * specify is worse than one short section. Every omission is listed in the
+ * data file for each page — read it before publishing either.
+ *
+ * ⚠️  NEITHER PAGE CARRIES AN EFFECTIVE DATE OR A LAST-UPDATED DATE, which
+ * both drafts say the published version should display. None was supplied,
+ * and a date on a legal document is a legal fact, not a formatting detail.
+ * Add them when the reviewed text lands.
+ */
+export interface LegalPageContent {
+  hero: PageHeroContent
+  sections: LegalSection[]
+}
+
+/**
  * REQUEST A CONSULTATION — `/request-a-consultation`.
  *
  * ⚠️  THE DRAFT'S "Suggested Enquiry Form Fields" IS NOT IN THIS TYPE. It
