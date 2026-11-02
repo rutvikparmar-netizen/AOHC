@@ -22,6 +22,11 @@ const paths: Record<string, string> = {
   'shield-check': 'M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3v8ZM9 12l2 2 4-4',
   scale: 'M12 3v18M7 7l-4 7h8L7 7ZM17 7l-4 7h8l-4-7ZM7 21h10',
   'message-circle': 'M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-4-.8L3 21l1.9-5a8.4 8.4 0 0 1 16.1-4.5Z',
+  /* Two opening quote marks, for the testimonial cards. Drawn rather
+     than set as a “ character so it keeps the stroke weight of the set
+     and does not change with the display font. */
+  quote:
+    'M10 7H6a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a3 3 0 0 1-3 3M21 7h-4a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a3 3 0 0 1-3 3',
   target: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
   'file-search': 'M14 2v6h6M15.5 21 19 17.5M4 8V4a2 2 0 0 1 2-2h8l6 6v4M11.5 18a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z',
   presentation: 'M2 3h20M4 3v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3M8 21l4-5 4 5',

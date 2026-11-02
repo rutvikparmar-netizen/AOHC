@@ -929,6 +929,18 @@ export interface ArticlePageContent {
   sections: ArticleSection[]
   /** Numbered by the `<ol>`, not stored with numbers. */
   references?: ArticleReference[]
+  /**
+   * BCP-47 tag, when the article is not in the site's language.
+   *
+   * ⚠️  SET THIS ON EVERY NON-ENGLISH ARTICLE. The document is
+   * `<html lang="en">`, so without it a screen reader pronounces Hindi
+   * with English phonetics — unintelligible rather than merely wrong —
+   * and search engines index the page as bad English. `ArticleShell`
+   * puts it on a wrapper around the hero and body, which is the whole of
+   * the translated content; the header, footer and disclaimer stay
+   * English and stay outside it, because they are.
+   */
+  lang?: string
 }
 
 /** One numbered clause of a legal document. The number comes from the index. */

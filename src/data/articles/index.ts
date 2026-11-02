@@ -1,10 +1,12 @@
 import type { ArticlePageContent } from '@/types'
 import { ayurvedicCancerCareGopala } from './ayurvedic-cancer-care-gopala'
 import { breastCancerDiagnosis } from './breast-cancer-diagnosis'
+import { breastCancerStagesHindi } from './breast-cancer-stages-hindi'
 import { deoxyglucose2dg } from './deoxyglucose-2dg'
 import { deoxyglucose2dgBlog } from './deoxyglucose-2dg-blog'
 import { ecct } from './ecct'
 import { hydrogenInhalationTherapy } from './hydrogen-inhalation-therapy'
+import { hydrogenTherapyAntiCancerArsenal } from './hydrogen-therapy-anti-cancer-arsenal'
 import { integrativeOncologyBadiDhaulpur } from './integrative-oncology-badi-dhaulpur'
 import { ivVitaminC } from './iv-vitamin-c'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
@@ -106,12 +108,31 @@ export const migratedArticles: MigratedArticle[] = [
     content: deoxyglucose2dgBlog,
   },
   {
+    slug: 'breast-cancer-stages',
+    href: '/breast-cancer-stages',
+    title: 'स्तन कैंसर ग्रेडिंग और स्टेजिंग (Breast Cancer Grading and Staging)',
+    summary:
+      'विशिष्ट कोशिकाओं की तुलना में कैंसर कोशिकाएं कितनी असामान्य हैं, इसका वर्णन ग्रेड द्वारा किया जाता है। — In Hindi.',
+    content: breastCancerStagesHindi,
+  },
+  /* ⚠️  THE TWO HYDROGEN PAGES, listed next to each other so the overlap
+     is visible on the index. The long one is the better article by a
+     distance; see the warning in its data file. */
+  {
     slug: 'hydrogen-inhalation-therapy',
     href: '/hydrogen-inhalation-therapy',
     title: 'Hydrogen Inhalation Therapy',
     summary:
       'Hydrogen is administered in a controlled concentration for a specific period of time to reduce the proliferation of in situ tumors.',
     content: hydrogenInhalationTherapy,
+  },
+  {
+    slug: 'hydrogen-therapy-a-recent-addition-to-anti-cancer-arsenal',
+    href: '/hydrogen-therapy-a-recent-addition-to-anti-cancer-arsenal',
+    title: 'Hydrogen Therapy — A Recent Addition to Anti-Cancer Arsenal',
+    summary:
+      'The three routes of administration, the balance between reactive oxygen species and antioxidants, and what hydrogen has been reported to do in cell lines, animal models and case reports.',
+    content: hydrogenTherapyAntiCancerArsenal,
   },
   {
     slug: 'ecct',

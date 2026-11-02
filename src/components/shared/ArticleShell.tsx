@@ -35,13 +35,23 @@ export function ArticleShell({
     <>
       <JsonLd nodes={[breadcrumbSchema(trail)]} />
 
-      <PageHero content={content.hero} trail={trail} />
+      {/* ⚠️  THE `lang` WRAPPER COVERS THE HERO AND THE BODY AND NOTHING
+          ELSE. Those are the translated parts. The breadcrumb inside the
+          hero is English, which is a small inaccuracy and the lesser one:
+          splitting the wrapper to exclude it would mean two wrappers
+          around a heading and its own article, and a screen reader
+          mispronouncing "Home › Blogs" matters far less than it
+          mispronouncing a page of Hindi. The closing CTA and the medical
+          disclaimer are outside it because they really are English. */}
+      <div lang={content.lang}>
+        <PageHero content={content.hero} trail={trail} />
 
-      <Article
-        lead={content.lead}
-        sections={content.sections}
-        references={content.references}
-      />
+        <Article
+          lead={content.lead}
+          sections={content.sections}
+          references={content.references}
+        />
+      </div>
 
       {/* ⚠️  THE CTA GOES TO THE CONTACT PAGE, NOT THE CONSULTATION FORM.
           Someone who has just read an explainer on an unproven therapy is
