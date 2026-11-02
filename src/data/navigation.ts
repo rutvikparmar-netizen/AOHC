@@ -331,6 +331,11 @@ export const primaryNav: NavGroup[] = [
     label: 'Knowledge',
     href: routes.knowledge,
     links: [
+      /* ⚠️  THE ONLY ONE OF THESE FOUR THAT EXISTS. Videos, Blogs and
+         Documents are declared routes with no pages behind them yet; FAQs
+         is built. It is listed first so the group leads with something
+         that works. */
+      { label: 'FAQs', href: routes.faqs, description: 'Answers to the questions people ask first' },
       { label: 'Videos', href: routes.videos, description: 'Patient stories and explainers' },
       { label: 'Blogs', href: routes.blogs, description: 'Articles from the care team' },
       { label: 'Documents', href: routes.documents, description: 'Guides and downloads' },
@@ -366,6 +371,7 @@ export const footerNav: NavGroup[] = [
   {
     label: 'Knowledge',
     links: [
+      { label: 'FAQs', href: routes.faqs },
       { label: 'Videos', href: routes.videos },
       { label: 'Blogs', href: routes.blogs },
       { label: 'Documents', href: routes.documents },

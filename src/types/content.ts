@@ -836,6 +836,99 @@ export interface JourneyStage {
  * a "will" turns a description into a commitment.
  */
 /**
+ * REQUEST A CONSULTATION — `/request-a-consultation`.
+ *
+ * ⚠️  THE DRAFT'S "Suggested Enquiry Form Fields" IS NOT IN THIS TYPE. It
+ * is a specification of what the form should collect, not copy to render:
+ * a reader shown that list would be looking at a description of a form
+ * instead of a form. The page renders the real `EnquiryForm`, and the gap
+ * between it and the spec is recorded in the data file.
+ */
+export interface ConsultationPageContent {
+  hero: PageHeroContent
+
+  /** "What Happens Next?" — the five steps, unnumbered in the data. */
+  steps: {
+    eyebrow: string
+    title: string
+    items: string[]
+  }
+
+  /**
+   * ⚠️  ADDRESSED TO SOMEONE WHO MAY BE ABOUT TO USE A WEB FORM IN AN
+   * EMERGENCY, which is why the page puts it above the form. It must not
+   * be moved below the submit button.
+   */
+  notice: { title: string; body: string }
+
+  /** The draft specifies the submit button's words. */
+  submitLabel: string
+}
+
+/**
+ * CONTACT — `/contact-us`.
+ *
+ * ⚠️  THE CONTACT DETAILS ARE NOT IN THIS TYPE. They live on
+ * `site.contact`, which the footer, the home page's contact row and the
+ * `PostalAddress` schema all read from. The draft's "Contact Information"
+ * block is five placeholders — "[Insert verified contact number]" and the
+ * like — which are instructions to whoever fills the page in, not copy.
+ * A placeholder on a live contact page is worse than no page at all.
+ */
+export interface ContactPageContent {
+  hero: PageHeroContent
+
+  /** "Enquiry Categories" — what the team handles, not form options. */
+  categories: {
+    eyebrow: string
+    title: string
+    items: string[]
+  }
+
+  /**
+   * ⚠️  BOTH OF THESE ARE ADDRESSED TO SOMEONE ABOUT TO DO THE THING THEY
+   * WARN AGAINST — pasting records into a contact box, or using it in an
+   * emergency. Neither may be shortened, folded into the intro, or moved
+   * below the form.
+   */
+  privacy: { title: string; body: string[] }
+  emergency: { title: string; body: string }
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
+/**
+ * FREQUENTLY ASKED QUESTIONS — `/faqs`.
+ *
+ * ⚠️  THE GROUPS ARE THE DRAFT'S OWN and the order within them is too.
+ * Four answers begin with "No" — no guaranteed cure, do not stop your
+ * current treatment, not every patient needs molecular testing, no test
+ * identifies the treatment that will definitely work. Those four are the
+ * most valuable thing on the page and must not be softened, reordered out
+ * of their group, or folded into longer answers.
+ *
+ * ⚠️  THE HOME PAGE HAS ITS OWN SHORTER FAQ (`home.faqs`) and the two
+ * overlap. They are deliberately separate lists; do not merge them without
+ * being asked.
+ */
+export interface FaqsPageContent {
+  hero: PageHeroContent
+
+  groups: Array<{
+    title: string
+    items: FaqItem[]
+  }>
+
+  closing: {
+    title: string
+    cta: NavLink
+  }
+}
+
+/**
  * PARTNERING INSTITUTIONS — `/about-us/partnering-institutions`.
  *
  * ⚠️  THE LIST OF INSTITUTIONS IS NOT IN THIS TYPE. It is

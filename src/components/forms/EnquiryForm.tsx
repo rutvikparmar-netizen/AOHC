@@ -56,7 +56,14 @@ const HEARD_FROM = [
   { value: 'Other', label: 'Other' },
 ]
 
-function SubmitButton() {
+/**
+ * ⚠️  THE LABEL IS A PROP WITH A DEFAULT, NOT A CONSTANT. The consultation
+ * page's draft specifies its own words for this button — "Submit
+ * Consultation Enquiry" — and the home page keeps "Schedule Meeting". The
+ * pending state is not overridable: "Sending…" is a status, not a label,
+ * and it should read the same wherever the form is used.
+ */
+function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus()
 
   return (
@@ -68,7 +75,7 @@ function SubmitButton() {
       icon={pending ? undefined : 'arrow-right'}
       className="w-full rounded-(--radius-pill) sm:w-auto"
     >
-      {pending ? 'Sending…' : 'Schedule Meeting'}
+      {pending ? 'Sending…' : label}
     </Button>
   )
 }
@@ -76,10 +83,17 @@ function SubmitButton() {
 export function EnquiryForm({
   source = 'contact-page',
   captcha,
+  submitLabel = 'Schedule Meeting',
 }: {
   source?: LeadSource
   /** Server-generated challenge: the two addends and a signed token. */
   captcha: { a: number; b: number; token: string }
+  /**
+   * The words on the submit button. The consultation page's draft
+   * specifies its own — "Submit Consultation Enquiry" — and the home page
+   * keeps the default.
+   */
+  submitLabel?: string
 }) {
   const [state, formAction] = useActionState(submitEnquiry, initialEnquiryState)
 
@@ -269,7 +283,7 @@ export function EnquiryForm({
         store the details I have given here in order to do so.
       </CheckboxField>
 
-      <SubmitButton />
+      <SubmitButton label={submitLabel} />
     </form>
   )
 }

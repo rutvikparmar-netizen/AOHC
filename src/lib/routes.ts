@@ -53,14 +53,22 @@ export const routes = {
   documents: '/knowledge/documents',
 
   /**
-   * CONVERSION ROUTES POINT AT THE HOME PAGE'S ENQUIRY FORM for now.
+   * ⚠️  THE CONVERSION ROUTES ARE REAL PAGES NOW. They pointed at the home
+   * page's enquiry form anchor — `/#appointment` — for as long as neither
+   * page existed, on the reasoning that sending a patient to a 404 at the
+   * one moment they decide to act is the worst failure on the site. Both
+   * have shipped, so both are pointed at themselves.
    *
-   * `/contact-us` and `/request-an-appointment` are not built, and every CTA
-   * on the site leads here — sending a patient to a 404 at the one moment
-   * they decide to act is the worst failure on the page. Swap these back to
-   * the real paths when those pages ship.
+   * This moves EVERY CALL TO ACTION ON THE SITE, which is the point of
+   * having them in one place. `consultation` and `internationalEnquiry`
+   * are the "Request an Appointment" buttons; `contact` is the quieter
+   * second action and the footer link.
+   *
+   * ⚠️  `/#appointment` STILL EXISTS and still works. The home page keeps
+   * its own enquiry form, and anything already linking to that anchor —
+   * an old email, a printed card — still lands on a working form.
    */
-  contact: '/#appointment',
+  contact: '/contact-us',
 
   /* Our expertise --------------------------------------------------------
      The mega menu's forty-odd entries all hang off this one base, so the
@@ -98,8 +106,11 @@ export const routes = {
   faqs: '/faqs',
 
   /* Conversion ----------------------------------------------------------- */
-  consultation: '/#appointment',
-  internationalEnquiry: '/#appointment',
+  consultation: '/request-a-consultation',
+  /* The same page. International enquiries go through the same form; the
+     separate name exists so it can be split later without hunting down
+     every international CTA. */
+  internationalEnquiry: '/request-a-consultation',
 
   /* Legal ---------------------------------------------------------------- */
   privacy: '/privacy-policy',

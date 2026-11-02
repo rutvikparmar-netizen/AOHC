@@ -19,6 +19,9 @@ import type { Id, IsoDateTime, Slug } from './common'
 /** Where the enquiry came from, for follow-up context. */
 export type LeadSource =
   | 'contact-page'
+  /* `/request-a-consultation`, so the team can tell an enquiry that came
+     from the dedicated page from one left on the home page's form. */
+  | 'consultation-page'
   | 'treatment-page'
   | 'doctor-page'
   | 'webinar-page'
