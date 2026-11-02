@@ -118,8 +118,17 @@ export default function ContactPage() {
                 </>
               )
 
+              /* ⚠️  `w-full min-w-0` IS LOAD-BEARING, NOT TIDYING. This
+                 element is a flex item of the `<li>`, so it gets
+                 `min-width: auto` and will not shrink below its own
+                 min-content — 368px, set by the email address, which is
+                 one unbreakable 27-character token. `break-words` does
+                 not help: `overflow-wrap: break-word` wraps an
+                 overflowing word but does not lower min-content, so the
+                 card stayed 368 wide inside a 343 column and took the
+                 document to scrollWidth 385 at a 375 viewport. */
               const shell =
-                'group/ch flex h-full items-start gap-4 rounded-(--radius-2xl) border border-border bg-surface p-5 shadow-(--shadow-card) transition duration-300'
+                'group/ch flex h-full w-full min-w-0 items-start gap-4 rounded-(--radius-2xl) border border-border bg-surface p-5 shadow-(--shadow-card) transition duration-300'
 
               return (
                 <Reveal
@@ -127,7 +136,12 @@ export default function ContactPage() {
                   key={row.label}
                   direction="up"
                   delay={index * 60}
-                  className="flex"
+                  /* ⚠️  `min-w-0` HERE IS HALF THE OVERFLOW FIX; the other
+                     half is on `shell` below, and neither works alone. A
+                     grid track defaults to `minmax(auto, 1fr)`, and
+                     `auto` resolves to the item's min-content width, so
+                     without this the cell itself refuses to shrink. */
+                  className="flex min-w-0"
                 >
                   {/* Only two of the four go anywhere. The others are
                       facts, and dressing a fact as a link promises that
