@@ -881,6 +881,56 @@ export interface ResourcesPageContent {
   }
 }
 
+/* ───────────────────────────────────────────────────────────────────────────
+   MIGRATED ARTICLES
+   ───────────────────────────────────────────────────────────────────────────
+   Long-form clinical writing carried over from the WordPress site at
+   artofhealingcancer.com, each kept at its original URL.
+
+   ⚠️  THE SOURCE PAGES ARE NOT UNIFORM AND THIS TYPE DOES NOT PRETEND THEY
+   ARE. One carries 26 numbered references; one is a single paragraph
+   printed twice; one is a topic hub with no references at all. Every field
+   below except `hero` and `sections` is optional for that reason, and a
+   page that has nothing to put in a slot omits it rather than being given
+   filler.
+
+   ⚠️  NOTHING HERE HAS BEEN THROUGH CLINICAL REVIEW ON THIS SITE. It was
+   published on the old one; that is not the same thing. Each data file
+   records what its page actually claims, so a reviewer can find the
+   sentences that need checking without reading all seven. */
+
+/** One section of a migrated article. */
+export interface ArticleSection {
+  title?: string
+  /**
+   * Heading level. 2 by default.
+   *
+   * Articles that nest — the Ayurveda page runs `h2` topics with `h3`
+   * sub-topics — set 3 on the children. It never skips a level.
+   */
+  level?: 2 | 3
+  body?: string[]
+  items?: string[]
+  /** Paragraphs after the list. */
+  outro?: string[]
+}
+
+/** One entry in an article's reference list. */
+export interface ArticleReference {
+  text: string
+  /** Present only where the source page actually linked out. */
+  href?: string
+}
+
+export interface ArticlePageContent {
+  hero: PageHeroContent
+  /** Paragraphs before the first heading. */
+  lead?: string[]
+  sections: ArticleSection[]
+  /** Numbered by the `<ol>`, not stored with numbers. */
+  references?: ArticleReference[]
+}
+
 /** One numbered clause of a legal document. The number comes from the index. */
 export interface LegalSection {
   title: string

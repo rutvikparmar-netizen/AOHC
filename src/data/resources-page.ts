@@ -64,9 +64,16 @@ export const resourcesPage: ResourcesPageContent = {
    * they cannot open. It states the position and claims nothing else.
    * Replace it with AOHC's wording, or delete it once the articles are
    * live and the lists become links.
+   *
+   * ⚠️  IT NOW HAS TO DISTINGUISH TWO THINGS, because seven articles
+   * migrated from the WordPress site went live at `/knowledge/blogs`.
+   * Until then this read "none of them is published yet", which became
+   * false the moment those shipped — a page telling a reader there is
+   * nothing to read, one click from seven articles. The sentence draws
+   * the line instead: these ten titles are unwritten, the blogs are not.
    */
   status:
-    'These are the resources and articles AOHC is preparing. They are listed here so you can see what is coming; none of them is published yet.',
+    'The categories and titles on this page are what AOHC is preparing, listed so you can see what is coming; none of them is written yet. The articles that are already published are in Blogs.',
 
   categories: {
     eyebrow: 'What the library will cover',

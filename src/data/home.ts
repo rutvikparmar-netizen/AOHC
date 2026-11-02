@@ -1775,9 +1775,9 @@ export const home: HomeContent = {
   },
 
   contact: {
-    title: 'You’re Not Alone, We’re Here to Help',
+    title: 'You Are More Than Your Diagnosis.',
     subtitle:
-      'Tell us where you are in this. A member of the care team will read your message and reply.',
+      'Your journey deserves understanding, compassion, and personalised care. Our team is here to listen, guide, and support you at every step.',
   },
 }
 
