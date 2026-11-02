@@ -1,18 +1,20 @@
 import type { Metadata } from 'next'
 import type { Breadcrumb } from '@/types'
+import Link from 'next/link'
 import { contactPage } from '@/data/contact-page'
 import { contactRows } from '@/data/home'
 import { site } from '@/lib/site'
 import { routes } from '@/lib/routes'
 import { buildMetadata } from '@/lib/seo'
 import { breadcrumbSchema } from '@/lib/structured-data'
-import { ClosingSection } from '@/components/home/ClosingSection'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
+import { EnquiryForm } from '@/components/forms/EnquiryForm'
+import { makeCaptcha } from '@/lib/forms/captcha'
 
 /**
  * CONTACT — `/contact-us`
@@ -58,7 +60,7 @@ export const metadata: Metadata = buildMetadata({
 })
 
 export default function ContactPage() {
-  const { categories, privacy, emergency, closing } = contactPage
+  const { categories, privacy, emergency, form } = contactPage
 
   return (
     <>
@@ -149,36 +151,40 @@ export default function ContactPage() {
               ) : null}
             </Reveal>
 
-            <Reveal direction="right" delay={80} className="lg:col-span-7">
-              <SectionHeader
-                eyebrow={categories.eyebrow}
-                title={categories.title}
-              />
+            {/* ── The enquiry form ──────────────────────────────────
+                Beside the ways of reaching the team, not below them.
+                This is what most people came to do, and on a contact
+                page the form should not be something you scroll past
+                two columns to find. */}
+            <Reveal
+              direction="right"
+              delay={80}
+              className="min-w-0 lg:col-span-7"
+            >
+              <SectionHeader eyebrow={form.eyebrow} title={form.title} />
 
-              <ul className="mt-6 overflow-hidden rounded-(--radius-2xl) border border-border">
-                {categories.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-4 border-b border-border bg-surface p-4 last:border-b-0 sm:p-5"
-                  >
-                    <span
-                      aria-hidden
-                      className="flex size-7 shrink-0 items-center justify-center rounded-(--radius-md) bg-primary-subtle text-accent-dark"
-                    >
-                      <Icon name="check" className="size-4" />
-                    </span>
-                    <span className="min-w-0 text-base leading-relaxed text-neutral-700">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              {/* ⚠️  THE SECOND SENTENCE IS THE ONE THAT EARNS ITS PLACE.
+                  This page and `/request-a-consultation` both render the
+                  same `EnquiryForm`, so without a line telling them
+                  apart a reader has two identical forms and no way to
+                  choose. It links rather than buttons: a button here
+                  would compete with the form directly beneath it. */}
+              <p className="mt-5 max-w-(--measure) text-base leading-relaxed text-neutral-700">
+                {form.intro}{' '}
+                <Link
+                  href={routes.consultation}
+                  className="font-semibold text-accent-dark underline underline-offset-2"
+                >
+                  Request a consultation
+                </Link>
+                .
+              </p>
 
-              {/* ── Privacy reminder ──────────────────────────────────
+              {/* ── Privacy reminder, above the form ─────────────────
                   Addressed to someone about to paste a scan into a
-                  message box, which is why it sits with the categories
-                  rather than at the foot of the page. */}
-              <div className="mt-8 flex items-start gap-4 rounded-(--radius-2xl) border border-border-brand bg-primary-subtle p-6 sm:gap-5 sm:p-7">
+                  message box — so it has to arrive before they reach
+                  the box, not after they have filled it. */}
+              <div className="mt-7 flex items-start gap-4 rounded-(--radius-2xl) border border-border-brand bg-primary-subtle p-5 sm:gap-5 sm:p-6">
                 <span
                   aria-hidden
                   className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-primary-dark"
@@ -197,14 +203,66 @@ export default function ContactPage() {
                   ))}
                 </div>
               </div>
+
+              <div
+                id="enquiry"
+                className="mt-7 scroll-mt-32 rounded-(--radius-3xl) border border-border bg-surface p-6 sm:p-9"
+              >
+                {/* A fresh challenge per render. The expected answer never
+                    reaches the browser — only an HMAC of it. */}
+                <EnquiryForm source="contact-page" captcha={makeCaptcha()} />
+
+                <p className="mt-6 border-t border-border pt-5 text-sm text-text-muted">
+                  Information on this site is general education, not medical
+                  advice.{' '}
+                  <Link
+                    href={routes.disclaimer}
+                    className="font-semibold text-accent-dark underline underline-offset-2"
+                  >
+                    Read the medical disclaimer
+                  </Link>
+                  .
+                </p>
+              </div>
             </Reveal>
           </div>
         </Container>
       </section>
 
-      <ClosingSection
-        content={{ title: closing.title, primaryCta: closing.cta }}
-      />
+      {/* ── Enquiry categories ─────────────────────────────────────────
+          Below the form rather than beside it. They describe what the
+          team handles, which is useful context and not a step in
+          getting in touch — it should not sit between the reader and
+          the form. */}
+      <section className="bg-surface py-(--spacing-section)">
+        <Container>
+          <Reveal className="max-w-3xl">
+            <SectionHeader
+              eyebrow={categories.eyebrow}
+              title={categories.title}
+            />
+          </Reveal>
+
+          <ul className="mt-8 grid gap-x-10 border-t border-border sm:grid-cols-2 lg:grid-cols-3">
+            {categories.items.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-3.5 border-b border-border py-4"
+              >
+                <span
+                  aria-hidden
+                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-(--radius-md) bg-primary-subtle text-accent-dark"
+                >
+                  <Icon name="check" className="size-3.5" />
+                </span>
+                <span className="min-w-0 text-base leading-relaxed text-neutral-700">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
     </>
   )
 }

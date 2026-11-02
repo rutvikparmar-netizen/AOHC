@@ -1,5 +1,4 @@
 import type { ContactPageContent } from '@/types'
-import { routes } from '@/lib/routes'
 
 /**
  * CONTACT PAGE COPY
@@ -82,15 +81,32 @@ export const contactPage: ContactPageContent = {
   },
 
   /**
-   * ⚠️  THE CLOSING HEADING IS BORROWED, NOT WRITTEN. The draft supplies no
-   * closing copy for this page, and every other page ends with the shared
-   * panel. Rather than invent a line, this is the Request a Consultation
-   * page's own supplied heading — AOHC's words, for the thing the button
-   * does. Replace it the moment there is a supplied closing for this page,
-   * and do not write a new one in the meantime.
+   * The enquiry form's own heading.
+   *
+   * ⚠️  WRITTEN, NOT SUPPLIED — the draft gives this page contact details
+   * and categories but no form copy. These two lines name the control and
+   * claim nothing else; the second says what the form is NOT for, which
+   * is the only thing a reader needs to decide between this and the
+   * consultation page. Replace with AOHC's wording when there is some.
    */
-  closing: {
-    title: 'Start With a Review of Your Situation',
-    cta: { label: 'Request a Consultation', href: routes.consultation },
+  form: {
+    eyebrow: 'Send an enquiry',
+    title: 'Write to the Team',
+    intro:
+      'For general questions. If you would like a clinical review of your diagnosis, use the consultation request instead.',
   },
+
+  /**
+   * ⚠️  THERE IS NO CLOSING PANEL ON THIS PAGE, AND THAT IS DELIBERATE.
+   * It had one, borrowed from the consultation page's heading, back when
+   * this page carried no form. Now that the form is here, a closing
+   * panel sending the reader to a different form is a second action
+   * competing with the one they are already looking at. The draft
+   * supplies no closing copy for this page either, so its absence is
+   * also the faithful reading.
+   *
+   * The route to the consultation page is kept as a sentence beside the
+   * form, where it helps someone choose, rather than as a button under
+   * it, where it competes.
+   */
 }

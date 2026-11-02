@@ -974,9 +974,18 @@ export interface ContactPageContent {
   privacy: { title: string; body: string[] }
   emergency: { title: string; body: string }
 
-  closing: {
+  /**
+   * The enquiry form's heading. Written, not supplied — see the data file.
+   *
+   * ⚠️  NO `closing` ON THIS TYPE. The page carries the enquiry form, so a
+   * closing panel pointing at the consultation form would be a second
+   * action competing with the one in front of the reader. The draft
+   * supplies no closing copy for this page either.
+   */
+  form: {
+    eyebrow: string
     title: string
-    cta: NavLink
+    intro: string
   }
 }
 
