@@ -2,8 +2,12 @@ import type { ArticlePageContent } from '@/types'
 import { ayurvedicCancerCareGopala } from './ayurvedic-cancer-care-gopala'
 import { breastCancerDiagnosis } from './breast-cancer-diagnosis'
 import { deoxyglucose2dg } from './deoxyglucose-2dg'
+import { deoxyglucose2dgBlog } from './deoxyglucose-2dg-blog'
 import { ecct } from './ecct'
 import { hydrogenInhalationTherapy } from './hydrogen-inhalation-therapy'
+import { integrativeOncologyBadiDhaulpur } from './integrative-oncology-badi-dhaulpur'
+import { ivVitaminC } from './iv-vitamin-c'
+import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
 import { vitaminCG6pd } from './vitamin-c-g6pd'
 
@@ -65,12 +69,41 @@ export const migratedArticles: MigratedArticle[] = [
     content: breastCancerDiagnosis,
   },
   {
+    slug: 'iv-vitamin-c',
+    href: '/iv-vitamin-c',
+    title: 'What Is High-Dose Intravenous Vitamin C Treatment for Cancer?',
+    summary:
+      'Vitamin C in high concentrations given intravenously can act as a pro-oxidant, activating hydrogen-peroxide-dependent cytotoxicity in cancer cells but not in normal cells.',
+    content: ivVitaminC,
+  },
+  {
+    slug: 'human-trials-of-mistletoe-therapy',
+    href: '/human-trials-of-mistletoe-therapy',
+    title: 'Human Trials of Mistletoe Therapy',
+    summary:
+      'The results of clinical trials of mistletoe therapy have been mixed. Some trials have found benefits in quality of life and survival, while others have found none.',
+    content: mistletoeHumanTrials,
+  },
+  {
     slug: '2-deoxyglucose-2dg',
     href: '/2-deoxyglucose-2dg',
     title: '2-Deoxyglucose (2DG)',
     summary:
       '2DG is a glucose analogue, having an almost similar structure to glucose. It can mimic glucose in cancer microenvironment.',
     content: deoxyglucose2dg,
+  },
+  /* ⚠️  THE SECOND 2DG ENTRY. These two are near-duplicates of each
+     other and are listed next to each other so the duplication is
+     impossible to miss on the index page. Neither is a superset of the
+     other — see the warning in `deoxyglucose-2dg-blog.ts` — so neither
+     can simply be deleted. They want merging. */
+  {
+    slug: '2-deoxyglucose-2dg-blog',
+    href: '/2-deoxyglucose-2dg-blog',
+    title: '2-Deoxyglucose (2DG) — Mechanisms and Lysosomal Recycling',
+    summary:
+      'Cancer cells can divert unfolded proteins to the lysosome, degrade them and recycle the components. 2DG interferes with that recycling.',
+    content: deoxyglucose2dgBlog,
   },
   {
     slug: 'hydrogen-inhalation-therapy',
@@ -95,5 +128,13 @@ export const migratedArticles: MigratedArticle[] = [
     summary:
       'Discover the ancient wisdom of Ayurveda through innovative techniques for cancer treatment.',
     content: ayurvedicCancerCareGopala,
+  },
+  {
+    slug: 'empowering-integrative-oncology-treatment-hub-badi-dhaulpur-rajasthan-india',
+    href: '/empowering-integrative-oncology-treatment-hub-badi-dhaulpur-rajasthan-india',
+    title: 'Integrative Oncology Treatment Hub — Badi, Dhaulpur, Rajasthan',
+    summary:
+      'Integrative oncology blends traditional cancer treatments with evidence-based complementary therapies, aiming to support and optimise them rather than replace them.',
+    content: integrativeOncologyBadiDhaulpur,
   },
 ]

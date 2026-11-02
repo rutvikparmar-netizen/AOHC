@@ -146,12 +146,31 @@ export const site: SiteConfig = {
     url: '',
   },
 
+  /**
+   * AOHC's public profiles.
+   *
+   * ⚠️  TAKEN FROM THE LIVE SITE'S OWN CONTACT PAGE, not guessed. They
+   * were five empty strings until then, which meant `structured-data.ts`
+   * filtered them all out and the Organization schema shipped with no
+   * `sameAs` — the field search engines use to tie a website to the
+   * accounts that belong to it.
+   *
+   * ⚠️  THE LINKEDIN URL IS TRIMMED AND THAT IS NOT COSMETIC. The live
+   * site links `/company/art-of-healing-cancer/mycompany/?viewAsMember=true`,
+   * which is the ADMIN view — a page URL that only makes sense while
+   * signed in as a page admin, published by someone who copied it out of
+   * their own browser. The public URL is the company page itself.
+   *
+   * ⚠️  `x` HOLDS A twitter.com URL because that is what AOHC publishes
+   * and the handle is `@AOHC_`. It redirects to x.com; left as the
+   * account's own published form rather than rewritten.
+   */
   social: {
-    facebook: '',
-    instagram: '',
-    youtube: '',
-    linkedin: '',
-    x: '',
+    facebook: 'https://www.facebook.com/ArtOfHealingCancer',
+    instagram: 'https://www.instagram.com/artofhealingcancer/',
+    youtube: 'https://www.youtube.com/channel/UCltG4iKJPFuuNxbi7PGgQQg',
+    linkedin: 'https://www.linkedin.com/company/art-of-healing-cancer/',
+    x: 'https://twitter.com/AOHC_',
   },
 }
 
