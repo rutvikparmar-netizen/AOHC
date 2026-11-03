@@ -54,7 +54,19 @@ export function DoctorsGrid({ members }: { members: TeamMember[] }) {
             className="w-[72vw] max-w-xs sm:w-[44vw] lg:w-[21rem]"
           >
             <Link
-              href={routes.doctor(member.slug)}
+              /* ⚠️  THE ROSTER, ANCHORED — NOT A PROFILE PAGE. This was
+                 `routes.doctor(member.slug)`, which 404s for all fifteen
+                 of the team: seven dead links straight off the home
+                 page, and the single worst thing on it. `TeamRoster`
+                 had already stopped linking its own cards for exactly
+                 that reason; this one had not caught up.
+
+                 It points at the doctor's card on the roster rather
+                 than nowhere, so the tap still lands on that person.
+                 When real profile pages exist — they need bios, which
+                 AOHC has not supplied — put `routes.doctor(slug)` back
+                 and drop the hash. */
+              href={`${routes.doctors}#${member.slug}`}
               className="group relative block overflow-hidden rounded-(--radius-2xl) bg-brand-teal-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <div className="aspect-4/5 overflow-hidden">

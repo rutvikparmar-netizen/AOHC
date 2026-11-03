@@ -120,7 +120,19 @@ export function TeamRoster({
               delay={(index % 2) * 70}
               className="flex"
             >
-              <article className="flex w-full overflow-hidden rounded-(--radius-card) border border-border bg-surface shadow-(--shadow-xs) transition duration-300 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-(--shadow-card-hover)">
+              {/* ⚠️  THE `id` IS A LINK TARGET, NOT DECORATION. The home
+                  page's doctor rail links each card to
+                  `/about-us/our-doctors#<slug>` so a reader who taps a
+                  face lands on that person rather than the top of a list
+                  of fifteen. Those links were pointing at
+                  `/about-us/our-doctors/<slug>`, which 404s for every one
+                  of them. Removing or renaming this id breaks seven links
+                  on the home page. `:target` in `globals.css` supplies
+                  the scroll offset for the fixed header. */}
+              <article
+                id={member.slug}
+                className="flex w-full scroll-mt-32 overflow-hidden rounded-(--radius-card) border border-border bg-surface shadow-(--shadow-xs) transition duration-300 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-(--shadow-card-hover)"
+              >
                 {member.photo ? (
                   <div className="relative w-2/5 shrink-0 self-stretch bg-surface-subtle">
                     <Image
