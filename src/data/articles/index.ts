@@ -35,8 +35,58 @@ import { vitaminCG6pd } from './vitamin-c-g6pd'
  * that characterises an article makes a claim about it; a quotation from
  * it does not.
  */
+/**
+ * The topics the blog index groups articles under.
+ *
+ * ⚠️  LABELS, NOT CLAIMS. These are shelf names for the index at
+ * `/blogs` — written for the redesign, not supplied by AOHC — and they
+ * deliberately say only what an article is about, never that a therapy
+ * works. "Supportive and Investigational Therapies" puts the word
+ * "investigational" on the shelf that holds hydrogen, ECCT and
+ * mistletoe for exactly that reason.
+ *
+ * Order here is the order on the page.
+ */
+export const articleTopics = [
+  { id: 'diagnosis', title: 'Understanding a Diagnosis' },
+  { id: 'vitamin-c', title: 'High-Dose Vitamin C' },
+  { id: 'metabolic', title: 'Metabolic Approaches' },
+  { id: 'therapies', title: 'Supportive and Investigational Therapies' },
+  { id: 'integrative', title: 'Integrative Care in India' },
+] as const
+
+export type ArticleTopicId = (typeof articleTopics)[number]['id']
+
+/**
+ * Facts about an article computed from its own content, for the index
+ * cards — so a card can say something true and specific without an image,
+ * a date or an author, none of which the migration captured.
+ *
+ * Reading time assumes 200 words a minute, a common figure for careful
+ * reading of technical prose, and rounds up so nothing reads "0 min".
+ */
+export function articleStats(content: ArticlePageContent) {
+  const text = [
+    ...(content.lead ?? []),
+    ...content.sections.flatMap((s) => [
+      s.title ?? '',
+      ...(s.body ?? []),
+      ...(s.items ?? []),
+      ...(s.outro ?? []),
+    ]),
+  ].join(' ')
+  const words = text.split(/\s+/).filter(Boolean).length
+  return {
+    minutes: Math.max(1, Math.ceil(words / 200)),
+    references: content.references?.length ?? 0,
+    lang: content.lang,
+  }
+}
+
 export interface MigratedArticle {
   slug: string
+  /** Which shelf of the `/blogs` index it sits on. */
+  topic: ArticleTopicId
   /** The original live URL. See the warning above. */
   href: string
   /** Index-page title. Matches the article's own `hero.title`. */
@@ -48,6 +98,7 @@ export interface MigratedArticle {
 export const migratedArticles: MigratedArticle[] = [
   {
     slug: 'vitamin-c-infusion-and-g6pd-deficiency',
+    topic: 'vitamin-c',
     href: '/vitamin-c-infusion-and-g6pd-deficiency',
     title: 'High-Dose Vitamin C Infusion and G6PD Deficiency',
     summary:
@@ -56,6 +107,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'myeloproliferative-neoplasms',
+    topic: 'diagnosis',
     href: '/myeloproliferative-neoplasms',
     title: 'Myeloproliferative Neoplasms',
     summary:
@@ -64,6 +116,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'breast-cancer-diagnosis',
+    topic: 'diagnosis',
     href: '/breast-cancer-diagnosis',
     title: 'Radiology Methods for Breast Cancer Diagnosis',
     summary:
@@ -72,6 +125,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'iv-vitamin-c',
+    topic: 'vitamin-c',
     href: '/iv-vitamin-c',
     title: 'What Is High-Dose Intravenous Vitamin C Treatment for Cancer?',
     summary:
@@ -80,6 +134,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'human-trials-of-mistletoe-therapy',
+    topic: 'therapies',
     href: '/human-trials-of-mistletoe-therapy',
     title: 'Human Trials of Mistletoe Therapy',
     summary:
@@ -88,6 +143,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: '2-deoxyglucose-2dg',
+    topic: 'metabolic',
     href: '/2-deoxyglucose-2dg',
     title: '2-Deoxyglucose (2DG)',
     summary:
@@ -101,6 +157,7 @@ export const migratedArticles: MigratedArticle[] = [
      can simply be deleted. They want merging. */
   {
     slug: '2-deoxyglucose-2dg-blog',
+    topic: 'metabolic',
     href: '/2-deoxyglucose-2dg-blog',
     title: '2-Deoxyglucose (2DG) — Mechanisms and Lysosomal Recycling',
     summary:
@@ -109,6 +166,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'breast-cancer-stages',
+    topic: 'diagnosis',
     href: '/breast-cancer-stages',
     title: 'स्तन कैंसर ग्रेडिंग और स्टेजिंग (Breast Cancer Grading and Staging)',
     summary:
@@ -120,6 +178,7 @@ export const migratedArticles: MigratedArticle[] = [
      distance; see the warning in its data file. */
   {
     slug: 'hydrogen-inhalation-therapy',
+    topic: 'therapies',
     href: '/hydrogen-inhalation-therapy',
     title: 'Hydrogen Inhalation Therapy',
     summary:
@@ -128,6 +187,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'hydrogen-therapy-a-recent-addition-to-anti-cancer-arsenal',
+    topic: 'therapies',
     href: '/hydrogen-therapy-a-recent-addition-to-anti-cancer-arsenal',
     title: 'Hydrogen Therapy — A Recent Addition to Anti-Cancer Arsenal',
     summary:
@@ -136,6 +196,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'ecct',
+    topic: 'therapies',
     href: '/ecct',
     title: 'What Is ECCT?',
     summary:
@@ -144,6 +205,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'discover-the-healing-power-of-ayurvedic-cancer-care-gopala-shimoga-karnataka-india',
+    topic: 'integrative',
     href: '/discover-the-healing-power-of-ayurvedic-cancer-care-gopala-shimoga-karnataka-india',
     title: 'Ayurvedic Cancer Care at Gopala, Shimoga, Karnataka',
     summary:
@@ -152,6 +214,7 @@ export const migratedArticles: MigratedArticle[] = [
   },
   {
     slug: 'empowering-integrative-oncology-treatment-hub-badi-dhaulpur-rajasthan-india',
+    topic: 'integrative',
     href: '/empowering-integrative-oncology-treatment-hub-badi-dhaulpur-rajasthan-india',
     title: 'Integrative Oncology Treatment Hub — Badi, Dhaulpur, Rajasthan',
     summary:
