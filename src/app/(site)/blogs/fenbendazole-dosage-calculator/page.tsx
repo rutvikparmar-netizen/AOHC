@@ -25,11 +25,13 @@ import { FenbendazoleCalculator } from '@/components/tools/FenbendazoleCalculato
  * supplied the source, so it is here. The formula is theirs, unchanged —
  * see `FenbendazoleCalculator.tsx`.
  *
- * ⚠️  THE SAFETY NOTICE COMES BEFORE THE CALCULATOR, NOT AFTER IT. On the
- * live page it was the fourth card, below the results. Somebody using a
- * dose calculator reads the result and stops; a warning beneath it is a
- * warning they will not reach. Every line of the original notice is
- * here, word for word — only its position changed.
+ * ⚠️  THE FULL SAFETY NOTICE IS BELOW THE CALCULATOR, ON AOHC'S REQUEST.
+ * It was first placed above, on the reasoning that someone using a dose
+ * calculator reads the result and stops. AOHC asked for it below, with
+ * the live page's meta chips and Key Takeaways above instead. Key
+ * Takeaways repeats the essentials — not FDA-approved, liver toxicity,
+ * rapid progression — so a reader still meets them before the first
+ * input. Every line of the notice is word for word.
  *
  * ⚠️  THE REFERENCES ARE UNVERIFIED, AND THE "[web:33]" TOKENS ARE GONE.
  * The live table cites "[PMC Case Series 2025, Fenbendazole.org 2025]
@@ -120,9 +122,64 @@ export default function FenbendazoleCalculatorPage() {
         trail={trail}
       />
 
-      {/* ── 1. Before anything else ───────────────────────────────────
-          ⚠️  ABOVE THE CALCULATOR. See the note at the top. */}
+      {/* ── 1. Meta and key takeaways ─────────────────────────────────
+          From the live page's header. The title and description it also
+          carried are already the hero above, word for word, so they are
+          not repeated here.
+
+          ⚠️  KEY TAKEAWAYS NOW CARRIES THE WARNING ABOVE THE CALCULATOR.
+          The full safety notice moved below the calculator on AOHC's
+          request; this callout still states, before any input, that the
+          drug is not FDA-approved and that liver toxicity and rapid
+          progression are risks. Do not remove it without moving the
+          notice back up. */}
       <section className="pt-(--spacing-section)">
+        <Container>
+          <Reveal>
+            <ul className="flex flex-wrap gap-2" aria-label="About this tool">
+              <li className="inline-flex items-center gap-1.5 rounded-(--radius-pill) bg-primary-subtle px-3.5 py-1.5 text-sm font-semibold text-primary-dark">
+                <Icon name="target" className="size-4" />
+                AOHC Tools
+              </li>
+              <li className="inline-flex items-center gap-1.5 rounded-(--radius-pill) bg-primary-subtle px-3.5 py-1.5 text-sm font-semibold text-primary-dark">
+                <Icon name="clock" className="size-4" />
+                Updated: <time dateTime="2025-08-29">29 Aug 2025</time>
+              </li>
+              <li className="inline-flex items-center gap-1.5 rounded-(--radius-pill) bg-primary-subtle px-3.5 py-1.5 text-sm font-semibold text-primary-dark">
+                <Icon name="book-open" className="size-4" />
+                ≈ 3 min
+              </li>
+            </ul>
+
+            <div className="mt-6 flex items-start gap-4 rounded-(--radius-2xl) border border-border-brand bg-surface p-6 shadow-(--shadow-card) sm:gap-5 sm:p-7">
+              <span
+                aria-hidden
+                className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-primary-dark"
+              >
+                <Icon name="info" className="size-5" />
+              </span>
+              <p className="min-w-0 self-center text-base leading-relaxed text-text">
+                <strong>Key Takeaways:</strong> Cancer patients report using
+                222mg–2000mg daily with regular liver monitoring. NOT
+                FDA-approved for humans. Requires medical supervision due to
+                liver toxicity risk and potential for rapid cancer progression
+                in some cases.
+              </p>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ── 2. The calculator ──────────────────────────────────────── */}
+      <section className="py-(--spacing-section)">
+        <Container>
+          <FenbendazoleCalculator />
+        </Container>
+      </section>
+
+      {/* ── 3. Critical safety notice ─────────────────────────────────
+          Below the calculator on AOHC's request. See section 1. */}
+      <section className="pb-(--spacing-section)">
         <Container>
           <Reveal className="rounded-(--radius-3xl) border-2 border-accent bg-accent-subtle p-6 sm:p-8">
             <div className="flex items-start gap-4 sm:gap-5">
@@ -165,14 +222,7 @@ export default function FenbendazoleCalculatorPage() {
         </Container>
       </section>
 
-      {/* ── 2. The calculator ──────────────────────────────────────── */}
-      <section className="py-(--spacing-section)">
-        <Container>
-          <FenbendazoleCalculator />
-        </Container>
-      </section>
-
-      {/* ── 3. References & patient experiences ───────────────────── */}
+      {/* ── 4. References & patient experiences ───────────────────── */}
       <section className="bg-surface py-(--spacing-section)">
         <Container>
           <Reveal className="max-w-4xl">
@@ -213,7 +263,7 @@ export default function FenbendazoleCalculatorPage() {
         </Container>
       </section>
 
-      {/* ── 4. Medical disclaimer ──────────────────────────────────── */}
+      {/* ── 5. Medical disclaimer ──────────────────────────────────── */}
       <section className="py-(--spacing-section)">
         <Container>
           <Reveal className="border-t border-border pt-8">
