@@ -170,7 +170,7 @@ export const migratedArticles: MigratedArticle[] = [
     href: '/breast-cancer-stages',
     title: 'स्तन कैंसर ग्रेडिंग और स्टेजिंग (Breast Cancer Grading and Staging)',
     summary:
-      'विशिष्ट कोशिकाओं की तुलना में कैंसर कोशिकाएं कितनी असामान्य हैं, इसका वर्णन ग्रेड द्वारा किया जाता है। — In Hindi.',
+      'विशिष्ट कोशिकाओं की तुलना में कैंसर कोशिकाएं कितनी असामान्य हैं, इसका वर्णन ग्रेड द्वारा किया जाता है।',
     content: breastCancerStagesHindi,
   },
   /* ⚠️  THE TWO HYDROGEN PAGES, listed next to each other so the overlap

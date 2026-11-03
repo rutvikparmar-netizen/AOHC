@@ -46,7 +46,7 @@ export const metadata: Metadata = buildMetadata({
 export default function BlogsPage() {
   /* Card fields only — the full articles never reach the browser. */
   const cards: BlogCard[] = migratedArticles.map((a) => {
-    const { minutes, references, lang } = articleStats(a.content)
+    const { minutes, lang } = articleStats(a.content)
     return {
       slug: a.slug,
       href: a.href,
@@ -54,7 +54,6 @@ export default function BlogsPage() {
       summary: a.summary,
       topic: a.topic,
       minutes,
-      references,
       lang,
     }
   })

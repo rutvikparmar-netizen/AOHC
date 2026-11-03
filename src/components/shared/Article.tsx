@@ -1,247 +1,266 @@
-import type { ArticleReference, ArticleSection } from '@/types'
+import Image from 'next/image'
+import type { ArticleReference, ArticleSection, ImageAsset } from '@/types'
 import { Container } from '@/components/ui/Container'
+import { Icon } from '@/components/ui/Icon'
 import { Reveal } from '@/components/motion/Reveal'
+import { TableOfContents, type TocEntry } from '@/components/shared/TableOfContents'
 
 /**
- * Long-form article body — the seven pages migrated from the WordPress site.
+ * Long-form article body — the migrated WordPress articles.
  *
- * ⚠️  READING MEASURE, NOT FULL WIDTH, for the same reason `LegalDocument`
- * is measured: these are three thousand words of clinical prose, and a
- * 150-character line is genuinely hard to track. The site's rule that
- * notice panels run full width applies to one- and two-sentence panels,
- * not to this.
+ * LAYOUT, ON AOHC'S BRIEF: a table-of-contents sidebar, and in the main
+ * column the featured image (centred, where the article has one), then a
+ * short overview, then the whole article.
  *
- * ⚠️  HEADINGS CARRY NO NUMBERS AND NO EYEBROWS. `LegalDocument` numbers
- * its clauses from the index because a policy is read by jumping between
- * them; an article is read top to bottom, and numbering it would invent a
- * structure the source pages do not have.
+ * ⚠️  THE MAIN COLUMN IS THE READING MEASURE: 48rem, about 75 characters.
+ * Image, overview and prose share that one width so their edges line up;
+ * capping only the prose at 65ch left a ragged gap beside the image. These are thousands of
+ * words of clinical prose, and a 150-character line is hard to track.
  *
- * ⚠️  THE REFERENCE LIST IS AN `<ol>` AND ITS NUMBERS COME FROM THE LIST,
- * never from the data — same reasoning as the legal pages. The G6PD
- * article's prose cites "(15–17)" against its own numbering, so the order
- * of that array is load-bearing: reordering it silently breaks every
- * inline citation on the page. Append, never insert.
+ * ⚠️  THE REFERENCE LIST IS AN `<ol>` AND ITS NUMBERS COME FROM THE LIST.
+ * The G6PD article's prose cites "(15–17)" against its own numbering, so
+ * the order of that array is load-bearing: append, never insert.
  */
-/** `On this page` anchors — lower-cased, punctuation dropped, spaces hyphenated. */
-function anchorId(title: string) {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+
+/**
+ * Stable, unique anchor ids for every titled section.
+ *
+ * ⚠️  TWO CASES BROKE THE NAIVE VERSION, BOTH REAL:
+ *   • Hindi headings slug to an empty string, because the slug keeps only
+ *     a–z and 0–9 — every heading on the Hindi page got the same id.
+ *     They fall back to `section-<n>`.
+ *   • The mistletoe article has two headings with identical text (the
+ *     second "cancer of the throat" is really about testicular cancer —
+ *     see its data file). Duplicates get `-2`, `-3`.
+ * Two links to one id means one heading can never be reached from the
+ * table of contents.
+ */
+function anchorIds(sections: ArticleSection[]): (string | null)[] {
+  const used = new Map<string, number>()
+  return sections.map((s, i) => {
+    if (!s.title) return null
+    let base = s.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+    if (!base) base = `section-${i + 1}`
+    const n = (used.get(base) ?? 0) + 1
+    used.set(base, n)
+    return n === 1 ? base : `${base}-${n}`
+  })
 }
 
 export function Article({
   lead,
   sections,
   references,
+  image,
+  overview,
 }: {
   lead?: string[]
   sections: ArticleSection[]
   references?: ArticleReference[]
+  image?: ImageAsset
+  overview?: string[]
 }) {
-  /**
-   * ⚠️  THE CONTENTS RAIL IS EARNED, NOT DECORATION. Below three top-level
-   * headings there is nothing to navigate and the rail becomes furniture;
-   * `/ecct` has one section and gets none. Above it, a measured column of
-   * prose leaves a third of a 1440 viewport empty, which is the same
-   * emptiness the contact page's sidebar was rebuilt to fix.
-   */
-  const contents = sections.filter((s) => s.title && s.level !== 3)
-  const showRail = contents.length >= 3
+  const ids = anchorIds(sections)
+
+  const toc: TocEntry[] = sections.flatMap((s, i) => {
+    const id = ids[i]
+    return s.title && id ? [{ id, title: s.title, level: s.level === 3 ? 3 : 2 } as const] : []
+  })
+  if (references?.length) toc.push({ id: 'references', title: 'References', level: 2 })
+
+  /* One entry is not a table of contents. `/ecct` has a single section
+     and gets the full-width column instead. */
+  const showToc = toc.length >= 2
+
+  const body = (
+    <>
+      {/* ── Featured image ─────────────────────────────────────────── */}
+      {image ? (
+        <Reveal className="overflow-hidden rounded-(--radius-2xl) border border-border bg-surface">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            priority
+            sizes="(min-width: 1024px) 66vw, 100vw"
+            className="mx-auto h-auto w-full"
+          />
+        </Reveal>
+      ) : null}
+
+      {/* ── Short overview ─────────────────────────────────────────── */}
+      {overview?.length ? (
+        <Reveal
+          className={`rounded-(--radius-2xl) border border-border-brand bg-primary-subtle p-6 sm:p-7 ${
+            image ? 'mt-8' : ''
+          }`}
+        >
+          <h2 className="flex items-center gap-2.5 font-display text-h4 font-bold leading-snug text-text">
+            <Icon name="info" className="size-5 shrink-0 text-primary-dark" />
+            Overview
+          </h2>
+          <div className="mt-3 space-y-3">
+            {overview.map((p) => (
+              <p key={p.slice(0, 32)} className="text-base leading-relaxed text-text">
+                {p}
+              </p>
+            ))}
+          </div>
+        </Reveal>
+      ) : null}
+
+      {/* ── Table of contents on a phone ───────────────────────────────
+          The sidebar does not exist below `lg`, and a contents list you
+          reach by scrolling past everything it lists is useless — so on
+          a phone it sits here, closed, and opens on a tap. */}
+      {showToc ? (
+        <details className="group/toc mt-8 rounded-(--radius-2xl) border border-border bg-surface lg:hidden">
+          <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-5 font-display text-lg font-bold text-text">
+            Table of Contents
+            <Icon
+              name="chevron-down"
+              className="size-5 text-text-subtle transition-transform group-open/toc:rotate-180"
+            />
+          </summary>
+          <div className="border-t border-border px-2 py-3">
+            <TableOfContents entries={toc} />
+          </div>
+        </details>
+      ) : null}
+
+      {/* ── The article ────────────────────────────────────────────── */}
+      {lead?.length ? (
+        <Reveal className="mt-10 space-y-5">
+          {lead.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)} className="text-lg leading-relaxed text-neutral-700">
+              {paragraph}
+            </p>
+          ))}
+        </Reveal>
+      ) : null}
+
+      {sections.map((section, index) => {
+        const id = ids[index] ?? undefined
+        return (
+          <Reveal
+            key={id ?? `section-${index}`}
+            delay={Math.min(index, 4) * 50}
+            className="mt-10 lg:mt-12"
+          >
+            {section.title ? (
+              section.level === 3 ? (
+                <h3
+                  id={id}
+                  className="scroll-mt-32 font-display text-h4 font-bold leading-snug text-text"
+                >
+                  {section.title}
+                </h3>
+              ) : (
+                <h2
+                  id={id}
+                  className="scroll-mt-32 font-display text-h3 font-bold leading-snug tracking-[-0.02em] text-text"
+                >
+                  {section.title}
+                </h2>
+              )
+            ) : null}
+
+            {section.body?.length ? (
+              <div className={`space-y-4 ${section.title ? 'mt-4' : ''}`}>
+                {section.body.map((paragraph) => (
+                  <p key={paragraph.slice(0, 32)} className="text-base leading-relaxed text-neutral-700">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            ) : null}
+
+            {section.items?.length ? (
+              <ul className="mt-5 space-y-2.5">
+                {section.items.map((item) => (
+                  <li key={item.slice(0, 32)} className="flex gap-3 text-base leading-relaxed text-neutral-700">
+                    <span aria-hidden className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent" />
+                    <span className="min-w-0">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+
+            {section.outro?.length ? (
+              <div className="mt-5 space-y-4">
+                {section.outro.map((paragraph) => (
+                  <p key={paragraph.slice(0, 32)} className="text-base leading-relaxed text-neutral-700">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            ) : null}
+          </Reveal>
+        )
+      })}
+
+      {references?.length ? (
+        <Reveal className="mt-14 border-t border-border pt-10 lg:mt-16">
+          <h2 id="references" className="scroll-mt-32 font-display text-h4 font-bold leading-snug text-text">
+            References
+          </h2>
+          {/* `break-words` because a bare NCBI URL is one unbreakable token
+              wide enough to push the page sideways on a phone. */}
+          <ol className="mt-5 space-y-3">
+            {references.map((reference, index) => (
+              <li key={reference.text.slice(0, 48)} className="flex gap-3 text-sm leading-relaxed text-text-muted">
+                <span aria-hidden className="w-6 shrink-0 text-right font-semibold tabular-nums text-text-subtle">
+                  {index + 1}.
+                </span>
+                <span className="min-w-0 break-words">
+                  {reference.href ? (
+                    <a
+                      href={reference.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 hover:text-accent-dark"
+                    >
+                      {reference.text}
+                    </a>
+                  ) : (
+                    reference.text
+                  )}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+      ) : null}
+    </>
+  )
 
   return (
     <section className="py-(--spacing-section)">
       <Container>
-        <div
-          className={
-            showRail
-              ? 'grid gap-10 lg:grid-cols-12 lg:gap-14'
-              : 'max-w-4xl'
-          }
-        >
-          <div className={showRail ? 'min-w-0 lg:col-span-8' : ''}>
-          {lead?.length ? (
-            <Reveal className="max-w-(--measure) space-y-5">
-              {lead.map((paragraph) => (
-                <p
-                  key={paragraph.slice(0, 32)}
-                  /* The lead is set a step larger than the body so the
-                     article opens with something, these pages having no
-                     standfirst, pull quote or byline to open with. */
-                  className="text-lg leading-relaxed text-neutral-700"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </Reveal>
-          ) : null}
+        {showToc ? (
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,48rem)_minmax(16rem,20rem)] lg:justify-between lg:gap-12">
+            <div className="min-w-0">{body}</div>
 
-          <div className="space-y-10 lg:space-y-12">
-            {sections.map((section, index) => (
-              <Reveal
-                key={section.title ?? `section-${index}`}
-                delay={Math.min(index, 4) * 50}
-                className={lead?.length || index > 0 ? 'mt-10 lg:mt-12' : ''}
+            {/* ── Sidebar: table of contents ───────────────────────── */}
+            <aside className="hidden min-w-0 lg:block">
+              <nav
+                aria-label="Table of contents"
+                className="sticky top-28 rounded-(--radius-2xl) border border-border bg-surface p-5 shadow-(--shadow-xs)"
               >
-                {section.title ? (
-                  section.level === 3 ? (
-                    <h3 className="font-display text-h4 font-bold leading-snug text-text">
-                      {section.title}
-                    </h3>
-                  ) : (
-                    /* `scroll-mt-32` clears the fixed header when the rail
-                       jumps here. The site-wide `:target` rule does the
-                       same job, but only for the heading that was actually
-                       requested — this one is hit repeatedly. */
-                    <h2
-                      id={anchorId(section.title)}
-                      className="scroll-mt-32 font-display text-h3 font-bold leading-snug tracking-[-0.02em] text-text"
-                    >
-                      {section.title}
-                    </h2>
-                  )
-                ) : null}
-
-                {section.body?.length ? (
-                  <div
-                    className={`max-w-(--measure) space-y-4 ${section.title ? 'mt-4' : ''}`}
-                  >
-                    {section.body.map((paragraph) => (
-                      <p
-                        key={paragraph.slice(0, 32)}
-                        className="text-base leading-relaxed text-neutral-700"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                ) : null}
-
-                {section.items?.length ? (
-                  <ul className="mt-5 max-w-(--measure) space-y-2.5">
-                    {section.items.map((item) => (
-                      <li
-                        key={item.slice(0, 32)}
-                        className="flex gap-3 text-base leading-relaxed text-neutral-700"
-                      >
-                        <span
-                          aria-hidden
-                          className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent"
-                        />
-                        <span className="min-w-0">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-
-                {section.outro?.length ? (
-                  <div className="mt-5 max-w-(--measure) space-y-4">
-                    {section.outro.map((paragraph) => (
-                      <p
-                        key={paragraph.slice(0, 32)}
-                        className="text-base leading-relaxed text-neutral-700"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                ) : null}
-              </Reveal>
-            ))}
-          </div>
-
-          {references?.length ? (
-            <Reveal className="mt-14 border-t border-border pt-10 lg:mt-16">
-              <h2
-                id="references"
-                className="scroll-mt-32 font-display text-h4 font-bold leading-snug text-text"
-              >
-                References
-              </h2>
-
-              {/* `break-words` because a bare NCBI URL is one unbreakable
-                  token wide enough to push the page sideways on a phone —
-                  the same failure the contact page's email caused. */}
-              <ol className="mt-5 space-y-3">
-                {references.map((reference, index) => (
-                  <li
-                    key={reference.text.slice(0, 48)}
-                    className="flex gap-3 text-sm leading-relaxed text-text-muted"
-                  >
-                    <span
-                      aria-hidden
-                      className="w-6 shrink-0 text-right font-semibold tabular-nums text-text-subtle"
-                    >
-                      {index + 1}.
-                    </span>
-                    <span className="min-w-0 break-words">
-                      {reference.href ? (
-                        <a
-                          href={reference.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="underline underline-offset-2 hover:text-accent-dark"
-                        >
-                          {reference.text}
-                        </a>
-                      ) : (
-                        reference.text
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </Reveal>
-          ) : null}
-          </div>
-
-          {/* ── On this page ───────────────────────────────────────────
-              ⚠️  `hidden lg:block`, AND IT IS SECOND IN SOURCE ORDER ON
-              PURPOSE. Columns stack in source order, so on a phone this
-              would arrive AFTER the article it indexes — a contents list
-              you reach by scrolling past everything it lists. There is
-              no good place for it on a narrow screen, so it is not
-              rendered there at all. Nothing is lost: the headings are
-              still headings, and a screen reader lands on them directly.
-
-              It is `aria-hidden` for the same reason — every link in it
-              duplicates a heading that assistive technology already
-              offers in its own landmarks list. */}
-          {showRail ? (
-            <aside
-              aria-hidden
-              className="hidden min-w-0 lg:col-span-4 lg:block"
-            >
-              <div className="lg:sticky lg:top-28">
-                <h2 className="text-eyebrow uppercase text-primary-dark">
-                  On this page
-                </h2>
-                <ul className="mt-4 space-y-px border-l-2 border-border">
-                  {contents.map((section) => (
-                    <li key={section.title}>
-                      <a
-                        href={`#${anchorId(section.title as string)}`}
-                        className="-ml-0.5 block border-l-2 border-transparent py-2 pl-4 text-sm leading-snug text-text-muted transition-colors hover:border-accent hover:text-accent-dark"
-                      >
-                        {section.title}
-                      </a>
-                    </li>
-                  ))}
-                  {references?.length ? (
-                    <li>
-                      <a
-                        href="#references"
-                        className="-ml-0.5 block border-l-2 border-transparent py-2 pl-4 text-sm leading-snug text-text-muted transition-colors hover:border-accent hover:text-accent-dark"
-                      >
-                        References
-                      </a>
-                    </li>
-                  ) : null}
-                </ul>
-              </div>
+                <h2 className="px-1 font-display text-lg font-bold text-text">Table of Contents</h2>
+                <div className="mt-3">
+                  <TableOfContents entries={toc} />
+                </div>
+              </nav>
             </aside>
-          ) : null}
-        </div>
+          </div>
+        ) : (
+          <div className="mx-auto max-w-3xl">{body}</div>
+        )}
       </Container>
     </section>
   )

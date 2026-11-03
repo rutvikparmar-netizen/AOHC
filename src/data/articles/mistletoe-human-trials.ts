@@ -74,6 +74,13 @@ import type { ArticlePageContent } from '@/types'
  * the evidence is mixed and "more research is needed".
  */
 export const mistletoeHumanTrials: ArticlePageContent = {
+  image: {
+    src: '/images/articles/mistletoe-trials.png',
+    alt: 'A dropper bottle and sliced wood beside a surgeon’s gloved hands, with the title "Human trials of Mistletoe Therapy"',
+    width: 702,
+    height: 352,
+  },
+
   hero: {
     title: 'Human Trials of Mistletoe Therapy',
     body: [

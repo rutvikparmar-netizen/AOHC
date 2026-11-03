@@ -27,7 +27,6 @@ export type BlogCard = {
   summary: string
   topic: string
   minutes: number
-  references: number
   lang?: string
 }
 
@@ -112,10 +111,7 @@ export function BlogGrid({
                     <Icon name="clock" className="size-4" />
                     {card.minutes} min read
                   </li>
-                  <li className="inline-flex items-center gap-1.5">
-                    <Icon name="book-open" className="size-4" />
-                    {card.references} {card.references === 1 ? 'reference' : 'references'}
-                  </li>
+
                   {card.lang === 'hi' ? (
                     <li className="rounded-(--radius-pill) bg-primary-subtle px-2.5 py-0.5 text-xs font-semibold text-primary-dark">
                       <span lang="hi">हिन्दी</span> · Hindi

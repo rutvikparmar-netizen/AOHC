@@ -38,6 +38,13 @@ import type { ArticlePageContent } from '@/types'
  * should be checked before this is held out as fact.
  */
 export const vitaminCG6pd: ArticlePageContent = {
+  image: {
+    src: '/images/articles/g6pd.png',
+    alt: 'Illustration of red blood cells beside the title "Role of IV Vitamin C in G6PD Deficiency"',
+    width: 702,
+    height: 352,
+  },
+
   hero: {
     title: 'High-Dose Vitamin C Infusion and G6PD Deficiency',
     body: [

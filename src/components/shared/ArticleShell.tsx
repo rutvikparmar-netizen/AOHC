@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { PageHero } from '@/components/shared/PageHero'
 import { Article } from '@/components/shared/Article'
 import { ClosingSection } from '@/components/home/ClosingSection'
+import { migratedArticles } from '@/data/articles'
 
 /**
  * The frame every migrated article shares — hero, body, closing CTA and
@@ -31,6 +32,15 @@ export function ArticleShell({
   content: ArticlePageContent
   trail: Breadcrumb[]
 }) {
+  /**
+   * The short overview is the article's own summary sentence from the
+   * blog index — itself taken from the article — so the overview box says
+   * nothing the article does not. Matched by object identity: every
+   * route passes the same object the index holds.
+   */
+  const summary = migratedArticles.find((a) => a.content === content)?.summary
+  const overview = summary ? [summary] : undefined
+
   return (
     <>
       <JsonLd nodes={[breadcrumbSchema(trail)]} />
@@ -50,6 +60,8 @@ export function ArticleShell({
           lead={content.lead}
           sections={content.sections}
           references={content.references}
+          image={content.image}
+          overview={overview}
         />
       </div>
 

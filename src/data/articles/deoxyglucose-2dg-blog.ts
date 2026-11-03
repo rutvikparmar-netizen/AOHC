@@ -55,6 +55,13 @@ import type { ArticlePageContent } from '@/types'
  * edit to the content.
  */
 export const deoxyglucose2dgBlog: ArticlePageContent = {
+  image: {
+    src: '/images/articles/2dg.png',
+    alt: 'Chemical structure of 2-deoxyglucose beside the title "2-DeoxyGlucose (2DG)"',
+    width: 1600,
+    height: 802,
+  },
+
   hero: {
     title: '2-Deoxyglucose (2DG)',
     body: [

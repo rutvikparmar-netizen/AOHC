@@ -68,6 +68,15 @@ import type { ArticlePageContent } from '@/types'
  * ⚠️  THE HERO IS THE PAGE'S OWN OPENING SENTENCES, as everywhere else.
  */
 export const breastCancerStagesHindi: ArticlePageContent = {
+  /* Alt text in Hindi, because the page is lang="hi" and a screen
+     reader would otherwise read an English sentence in a Hindi voice. */
+  image: {
+    src: '/images/articles/breast-cancer-stages.png',
+    alt: 'स्तन कैंसर ग्रेडिंग और स्टेजिंग — 1 से 3 तक क्रमांकित तीन स्तनों का चित्र, हर एक में ट्यूमर दिखाया गया है',
+    width: 702,
+    height: 351,
+  },
+
   lang: 'hi',
 
   hero: {

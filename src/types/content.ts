@@ -924,6 +924,16 @@ export interface ArticleReference {
 
 export interface ArticlePageContent {
   hero: PageHeroContent
+  /**
+   * The article's featured image, centred above the overview.
+   *
+   * ⚠️  ONLY WHERE THE LIVE SITE HAD A REAL ONE. Four articles carried a
+   * genuine featured image on WordPress; the rest fell back to the logo,
+   * which is not a featured image, so they have none here and the slot
+   * simply does not render. Do not fill the gap with stock photography:
+   * a photograph beside a clinical article reads as evidence.
+   */
+  image?: ImageAsset
   /** Paragraphs before the first heading. */
   lead?: string[]
   sections: ArticleSection[]
