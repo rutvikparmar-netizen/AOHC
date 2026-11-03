@@ -12,6 +12,11 @@ export interface SiteContact {
   whatsapp: string
   /** Where patients are seen. This is the one to show on a map. */
   address: string
+  /**
+   * The same address broken into the three lines the footer shows.
+   * Keep it in step with `address` — they are two layouts of one fact.
+   */
+  addressLines: [string, string, string]
   /** The company's registered office — a legal address, not a clinic. */
   registeredAddress: string
   /** Operating hours. */
@@ -107,10 +112,10 @@ export const site: SiteConfig = {
      */
     whatsapp: '919056330977',
     /**
-     * ⚠️  SUPPLIED VERBATIM, INCLUDING THE CAPITALS. AOHC gave this exact
-     * string; the capitalised portion is how the address reads on the
-     * official record. It is not a mistake to tidy away — ask before
-     * title-casing it.
+     * ⚠️  AOHC'S CURRENT WORDING, SUPPLIED NOVEMBER 2026. It replaces the
+     * all-capitals "PLOT NUMBER 219P, 226, SECTOR-51, URBAN ESTATE
+     * GURGAON" version. As supplied it read "…Gurgaon,Haryana122413";
+     * the two missing spaces are restored and nothing else is changed.
      *
      * ⚠️  THE HOST FACILITY IS NO LONGER NAMED HERE. The previous version
      * began "Art of Healing Cancer — HCAH Transition Care Centre, …". The
@@ -124,7 +129,13 @@ export const site: SiteConfig = {
      * else.
      */
     address:
-      'Art of Healing Cancer - PLOT NUMBER 219P, 226, SECTOR-51, URBAN ESTATE GURGAON, Gurgaon, Haryana, 122413',
+      'Art of Healing Cancer - Sector-51, Urban Estate Plot Number 219P, 226, Gurgaon, Haryana 122413',
+    /* The footer's three-line layout of the address above. */
+    addressLines: [
+      'Art of Healing Cancer',
+      'Sector-51, Urban Estate Plot Number 219P, 226',
+      'Gurgaon, Haryana 122413',
+    ],
     registeredAddress: '1421, Sector 34 C, Chandigarh 160022',
     hours: 'Mon–Sat: 10 AM – 6 PM | Sunday by appointment',
     gstin: '06ABVFA1555E1ZF',

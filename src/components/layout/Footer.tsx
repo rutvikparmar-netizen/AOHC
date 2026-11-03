@@ -2,9 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { footerNav, legalNav } from '@/data/navigation'
 import { whatsappHref } from '@/lib/format'
-import { APPOINTMENT_CTA, site } from '@/lib/site'
+import { site } from '@/lib/site'
 import { routes } from '@/lib/routes'
-import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 
@@ -31,13 +30,8 @@ export function Footer() {
       label: 'WhatsApp',
       href: whatsappHref('Hello, I would like to ask about a consultation.'),
     },
-    site.contact.address && {
-      icon: 'map-pin' as const,
-      label: site.contact.address,
-      href: '',
-    },
   ].filter(Boolean) as Array<{
-    icon: 'mail' | 'message-circle' | 'map-pin'
+    icon: 'mail' | 'message-circle'
     label: string
     href: string
   }>
@@ -90,43 +84,30 @@ export function Footer() {
               </ul>
             ) : null}
 
+            {/* Three lines, as AOHC asked: name, street, city. `<address>`
+                is the element for an organisation's contact address, and
+                `not-italic` undoes the browser default that comes with it. */}
+            {site.contact.address ? (
+              <address className="flex items-start gap-2.5 text-sm not-italic leading-relaxed">
+                <Icon name="map-pin" className="mt-1 size-4 shrink-0 text-brand-teal-300" />
+                <span>
+                  {site.contact.addressLines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </span>
+              </address>
+            ) : null}
+
             {site.contact.hours ? (
               <p className="text-sm text-brand-teal-300">{site.contact.hours}</p>
             ) : null}
 
-            <Button
-              href={routes.consultation}
-              variant="accent"
-              icon="arrow-right"
-              className="rounded-(--radius-pill)"
-            >
-              {APPOINTMENT_CTA}
-            </Button>
-
-            {/* WhatsApp and email belong here too — the footer is where
-                people look once they have stopped reading and want to act.
-                There is no "Call us": see the note in `src/lib/site.ts`. */}
-            <div className="flex flex-wrap gap-3">
-              {whatsappHref() ? (
-                <a
-                  href={whatsappHref('Hello, I would like to ask about a consultation.')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-(--radius-pill) border border-white/30 px-4 text-sm font-semibold hover:border-brand-teal-300 hover:text-white"
-                >
-                  <Icon name="message-circle" className="size-4" />
-                  Chat on WhatsApp
-                </a>
-              ) : null}
-
-              <a
-                href={`mailto:${site.contact.email}`}
-                className="inline-flex min-h-11 items-center gap-2 rounded-(--radius-pill) border border-white/30 px-4 text-sm font-semibold hover:border-brand-teal-300 hover:text-white"
-              >
-                <Icon name="mail" className="size-4" />
-                Email us
-              </a>
-            </div>
+            {/* ⚠️  THE APPOINTMENT, WHATSAPP AND EMAIL BUTTONS WERE REMOVED
+                HERE ON AOHC'S REQUEST. Email and WhatsApp stay reachable
+                from the contact rows just above, and "Request an
+                Appointment" from the header on every page. */}
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
