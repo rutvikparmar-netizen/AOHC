@@ -39,7 +39,13 @@ export function Footer() {
   return (
     <footer className="mt-auto bg-brand-teal-950 text-brand-teal-100">
       <Container className="py-14 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_2fr]">
+        {/* Brand column at a fixed measure, the menus taking the rest.
+            The menus were four equal grid tracks, so a short column (Tools)
+            sat in a track as wide as the longest and the gaps between
+            columns looked random — wide here, cramped there, with links
+            wrapping mid-phrase. At `xl` they become four `auto` tracks that hug
+            each column's content and spreads the spare room evenly. */}
+        <div className="grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[23rem_minmax(0,1fr)] xl:gap-12">
           <div className="space-y-5">
             <Link href={routes.home} className="inline-block">
               {/* ⚠️  AOHC'S OWN REVERSED ARTWORK, NOT A FILTER. This was
@@ -110,15 +116,17 @@ export function Footer() {
                 Appointment" from the header on every page. */}
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 xl:grid-cols-[repeat(4,auto)] xl:justify-between xl:gap-x-6">
             {footerNav.map((group) => (
-              <nav key={group.label} aria-label={group.label}>
-                <p className="text-eyebrow mb-3 uppercase text-brand-teal-300">{group.label}</p>
+              <nav key={group.label} aria-label={group.label} className="min-w-0">
+                <p className="text-eyebrow mb-4 uppercase text-brand-teal-300">
+                  {group.label}
+                </p>
                 {/* 44px rows until the layout is wide enough to be a mouse.
                     These links were 19px tall with a 10px gap — a 29px pitch
                     for the site's whole secondary navigation, on a page read
                     largely by older people on phones. */}
-                <ul className="space-y-1 text-sm lg:space-y-2.5">
+                <ul className="space-y-1 text-sm lg:space-y-3">
                   {group.links.map((link) => (
                     <li key={link.href}>
                       <Link
