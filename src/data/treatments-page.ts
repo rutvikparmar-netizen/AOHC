@@ -148,6 +148,36 @@ export const treatmentsPage: TreatmentsContent = {
           'No specific metabolic or repurposed treatment should be represented as an established cancer therapy unless that claim is supported for the relevant indication.',
         ],
       },
+      /**
+       * ⚠️  CYTOTRON IS HERE AND NOT IN `conventional`, AND THAT IS THE
+       * SUPPLIED COPY'S OWN INSTRUCTION RATHER THAN A SECOND OPINION.
+       * It was asked for "instead of Chemotherapy", which would have put
+       * it in the list headed "Conventional Cancer Treatments" under the
+       * eyebrow "Established options" — while its own third paragraph
+       * says it "remains investigational and should not be presented as
+       * an established or proven cancer treatment". The two cannot both
+       * hold. This section exists for precisely this category and its
+       * first topic already explains what "investigational" means, so
+       * the copy lands next to its own definition.
+       *
+       * ⚠️  CHEMOTHERAPY WAS NOT REMOVED. Deleting it would leave a
+       * patient-education page listing surgery, radiation, hormonal,
+       * targeted and immunotherapy as the conventional treatments for
+       * cancer and omitting the most widely used one — which a reader
+       * would reasonably take to mean chemotherapy is not standard care.
+       * If AOHC's point is that it does not itself deliver chemotherapy,
+       * that belongs in the hero's availability note, which already says
+       * these are categories "and their availability through AOHC must
+       * be confirmed individually".
+       */
+      {
+        title: 'Cytotron Therapy',
+        body: [
+          'Cytotron therapy is an investigational, non-invasive treatment approach that uses specialised radiofrequency technology. It is being explored for its potential role in supporting cancer care.',
+          'Treatment considerations may include cancer type and stage, tumour characteristics, previous treatments, overall health, and the available clinical evidence.',
+          'For patient safety and medical accuracy, it is important to clarify that Cytotron therapy remains investigational and should not be presented as an established or proven cancer treatment.',
+        ],
+      },
     ],
   },
 
