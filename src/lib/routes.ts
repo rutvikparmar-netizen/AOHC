@@ -52,6 +52,10 @@ export const routes = {
   blog: (slug: Slug) => `/knowledge/blogs/${slug}`,
   documents: '/knowledge/documents',
 
+  /* Tools ---------------------------------------------------------------
+     Kept at the WordPress path so the indexed URL survives the migration. */
+  fenbendazoleCalculator: '/blogs/fenbendazole-dosage-calculator',
+
   /**
    * ⚠️  THE CONVERSION ROUTES ARE REAL PAGES NOW. They pointed at the home
    * page's enquiry form anchor — `/#appointment` — for as long as neither

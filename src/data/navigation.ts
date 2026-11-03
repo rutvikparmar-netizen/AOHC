@@ -382,6 +382,12 @@ export const footerNav: NavGroup[] = [
       { label: 'Media', href: routes.media },
     ],
   },
+  {
+    label: 'Tools',
+    links: [
+      { label: 'Fenbendazole Dosage Calculator', href: routes.fenbendazoleCalculator },
+    ],
+  },
 ]
 
 /** Footer small print. */

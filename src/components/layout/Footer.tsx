@@ -129,7 +129,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
             {footerNav.map((group) => (
               <nav key={group.label} aria-label={group.label}>
                 <p className="text-eyebrow mb-3 uppercase text-brand-teal-300">{group.label}</p>
