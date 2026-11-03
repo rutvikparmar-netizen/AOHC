@@ -16,6 +16,17 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
 
+  /**
+   * ⚠️  `/knowledge/blogs` IS STILL LINKED FROM OUTSIDE THIS CODEBASE. It
+   * was the blog index's URL until it moved to `/blogs`, and it was
+   * deployed to staging in the meantime — so a bookmark, a shared link or
+   * a crawler may already hold it. Permanent, so search engines move
+   * whatever they have indexed to the new path.
+   */
+  async redirects() {
+    return [{ source: '/knowledge/blogs', destination: '/blogs', permanent: true }]
+  },
+
   async headers() {
     return [
       {

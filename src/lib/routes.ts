@@ -48,8 +48,10 @@ export const routes = {
   /* Knowledge ------------------------------------------------------------ */
   knowledge: '/knowledge',
   videos: '/knowledge/videos',
-  blogs: '/knowledge/blogs',
-  blog: (slug: Slug) => `/knowledge/blogs/${slug}`,
+  /* `/blogs`, not `/knowledge/blogs`: Knowledge is a dropdown, not a
+     parent section, and the WordPress posts already live under /blogs/. */
+  blogs: '/blogs',
+  blog: (slug: Slug) => `/blogs/${slug}`,
   documents: '/knowledge/documents',
 
   /* Tools ---------------------------------------------------------------
@@ -135,7 +137,7 @@ export const routes = {
   stories: '/testimonials',
   story: (slug: Slug) => `/testimonials/${slug}`,
   resources: '/knowledge',
-  article: (slug: Slug) => `/knowledge/blogs/${slug}`,
+  article: (slug: Slug) => `/blogs/${slug}`,
 } as const
 
 /** True for hrefs that leave the site and must not use `next/link` routing. */

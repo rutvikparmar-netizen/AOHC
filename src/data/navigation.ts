@@ -336,7 +336,7 @@ export const primaryNav: NavGroup[] = [
          first and the group leads with things that work.
 
          Blogs became real when the seven articles were migrated from the
-         WordPress site; its index is at `/knowledge/blogs`, though the
+         WordPress site; its index is at `/blogs`, though the
          articles themselves sit at their original root-level URLs. */
       { label: 'FAQs', href: routes.faqs, description: 'Answers to the questions people ask first' },
       { label: 'Blogs', href: routes.blogs, description: 'Articles from the care team' },

@@ -13,7 +13,11 @@ import { PageHero } from '@/components/shared/PageHero'
 import { ClosingSection } from '@/components/home/ClosingSection'
 
 /**
- * BLOGS — `/knowledge/blogs`
+ * BLOGS — `/blogs`
+ *
+ * ⚠️  NOT UNDER `/knowledge`. It was `/knowledge/blogs` until AOHC pointed
+ * out that Knowledge is a dropdown, not a parent section. The old path
+ * 301s here — see `next.config.ts`.
  *
  * THE ROUTE ALREADY EXISTED AND WAS A 404. `routes.blogs` is in the
  * Knowledge dropdown and the footer on every page of the site; until now
@@ -26,7 +30,7 @@ import { ClosingSection } from '@/components/home/ClosingSection'
  * and `/knowledge` now says so.
  *
  * ⚠️  THE HREFS ARE ROOT-LEVEL AND DO NOT LIVE UNDER THIS PAGE. An article
- * listed here is at `/ecct`, not `/knowledge/blogs/ecct`, because that is
+ * listed here is at `/ecct`, not `/blogs/ecct`, because that is
  * the URL Google has indexed. This index is a way in, not a parent. See
  * the warning in `src/data/articles/index.ts` before "fixing" that.
  *
@@ -41,7 +45,6 @@ import { ClosingSection } from '@/components/home/ClosingSection'
 
 const trail: Breadcrumb[] = [
   { label: 'Home', href: routes.home },
-  { label: 'Knowledge', href: routes.knowledge },
   { label: 'Blogs' },
 ]
 

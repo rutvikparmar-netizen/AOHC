@@ -1578,7 +1578,7 @@ export const home: HomeContent = {
    * that do not print one simply have no `readingTime`, rather than an
    * estimate.
    *
-   * ⚠️  THE LINKS POINT AT THE LIVE SITE, not at this one. `/knowledge/blogs`
+   * ⚠️  THE LINKS POINT AT THE LIVE SITE, not at this one. `/blogs`
    * exists in `routes` but has no page in this app yet. When these articles
    * are brought across, swap each `href` for `routes.blog(slug)` and the
    * section needs no other change.

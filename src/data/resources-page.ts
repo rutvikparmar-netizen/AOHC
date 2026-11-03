@@ -66,7 +66,7 @@ export const resourcesPage: ResourcesPageContent = {
    * live and the lists become links.
    *
    * ⚠️  IT NOW HAS TO DISTINGUISH TWO THINGS, because seven articles
-   * migrated from the WordPress site went live at `/knowledge/blogs`.
+   * migrated from the WordPress site went live at `/blogs`.
    * Until then this read "none of them is published yet", which became
    * false the moment those shipped — a page telling a reader there is
    * nothing to read, one click from seven articles. The sentence draws
