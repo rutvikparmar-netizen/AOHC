@@ -6,7 +6,7 @@ import { Reveal } from '@/components/motion/Reveal'
 
 /**
  * "A Multidisciplinary Perspective" — the ten disciplines a cancer review
- * may involve, on `/about-us/our-doctors`.
+ * may involve, on `/our-doctors`.
  *
  * ⚠️  THIS EXISTS BECAUSE `ChecklistSection` WAS WRONG FOR THIS CONTENT, NOT
  * BECAUSE IT IS BROKEN. That component renders eight other sections and

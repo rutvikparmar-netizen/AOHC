@@ -55,6 +55,7 @@ const PATH = routes.fenbendazoleCalculator
 const trail: Breadcrumb[] = [
   { label: 'Home', href: routes.home },
   { label: 'Blogs', href: routes.blogs },
+  { label: 'Dosing Calculator', href: routes.dosingCalculators },
   { label: 'Fenbendazole Dosage Calculator' },
 ]
 

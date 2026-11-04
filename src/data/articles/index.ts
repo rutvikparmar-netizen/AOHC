@@ -9,6 +9,7 @@ import { hydrogenInhalationTherapy } from './hydrogen-inhalation-therapy'
 import { hydrogenTherapyAntiCancerArsenal } from './hydrogen-therapy-anti-cancer-arsenal'
 import { integrativeOncologyBadiDhaulpur } from './integrative-oncology-badi-dhaulpur'
 import { ivVitaminC } from './iv-vitamin-c'
+import { lungCancerAyurvedaHarrai, lungCancerAyurvedaNeemrana } from './lung-cancer-ayurveda-hindi'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
 import { vitaminCG6pd } from './vitamin-c-g6pd'
@@ -220,5 +221,25 @@ export const migratedArticles: MigratedArticle[] = [
     summary:
       'Integrative oncology blends traditional cancer treatments with evidence-based complementary therapies, aiming to support and optimise them rather than replace them.',
     content: integrativeOncologyBadiDhaulpur,
+  },
+  /* ⚠️  THE TWO HINDI LUNG-CANCER PAGES share one English body and differ
+     only in their Hindi headings — see their data file, which also lists
+     the machine-translation errors a Hindi speaker must fix. Listed next
+     to each other so the duplication is visible. */
+  {
+    slug: 'फेफड़ों-के-कैंसर-के-लिए-अभ-6',
+    topic: 'integrative',
+    href: '/फेफड़ों-के-कैंसर-के-लिए-अभ-6',
+    title: lungCancerAyurvedaNeemrana.hero.title,
+    summary: 'नीमराना, अलवर, राजस्थान में प्राचीन आयुर्वेदिक उपचारों के साथ फेफड़ों के कैंसर से निपटने के लिए एक उन्नत दृष्टिकोण की खोज करें।',
+    content: lungCancerAyurvedaNeemrana,
+  },
+  {
+    slug: 'आयुर्वेदिक-जादू-उजागर-सा-2',
+    topic: 'integrative',
+    href: '/आयुर्वेदिक-जादू-उजागर-सा-2',
+    title: lungCancerAyurvedaHarrai.hero.title,
+    summary: 'स्वास्थ्य और कल्याण की दिशा में अपनी यात्रा को सशक्त बनाने के लिए शक्तिशाली आयुर्वेदिक उपचारों और पारंपरिक ज्ञान के माध्यम से फेफड़ों के कैंसर के लिए समग्र उपचार की प्राचीन कला की खोज करें।',
+    content: lungCancerAyurvedaHarrai,
   },
 ]

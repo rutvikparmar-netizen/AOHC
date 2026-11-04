@@ -909,6 +909,15 @@ export interface ArticleSection {
    * sub-topics — set 3 on the children. It never skips a level.
    */
   level?: 2 | 3
+  /**
+   * Language of the body, list and outro when it differs from the page's
+   * (`ArticlePageContent.lang`). The Hindi lung-cancer pages are English
+   * prose under Hindi headings; without this a screen reader reads the
+   * English in a Hindi voice.
+   */
+  lang?: string
+  /** Language of the heading, when it differs from the page's. */
+  titleLang?: string
   body?: string[]
   items?: string[]
   /** Paragraphs after the list. */
@@ -1207,7 +1216,7 @@ export interface TitledPassage {
 }
 
 /**
- * DOCTORS AND SPECIALISTS — `/about-us/our-doctors`.
+ * DOCTORS AND SPECIALISTS — `/our-doctors`.
  *
  * ⚠️  THE ROSTER IS NOT IN THIS TYPE. It lives on `home.team.members`,
  * which is the transcription of artofhealingcancer.com/our-doctors and is

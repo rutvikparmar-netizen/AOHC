@@ -1,5 +1,11 @@
 import type { NextConfig } from 'next'
 
+/** [original Hindi URL segment, ASCII route folder under `src/app/(site)`]. */
+const HINDI_PAGES: [string, string][] = [
+  ['फेफड़ों-के-कैंसर-के-लिए-अभ-6', 'hi-lung-cancer-neemrana'],
+  ['आयुर्वेदिक-जादू-उजागर-सा-2', 'hi-lung-cancer-harrai'],
+]
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
@@ -24,7 +30,35 @@ const nextConfig: NextConfig = {
    * whatever they have indexed to the new path.
    */
   async redirects() {
-    return [{ source: '/knowledge/blogs', destination: '/blogs', permanent: true }]
+    return [
+      { source: '/knowledge/blogs', destination: '/blogs', permanent: true },
+      /* The WordPress site served the team at /our-doctors and that is
+         the URL Google holds, so the page moved back there. */
+      { source: '/about-us/our-doctors', destination: '/our-doctors', permanent: true },
+      { source: '/about-us/who-we-are', destination: '/who-we-are', permanent: true },
+      /* The ASCII folders behind the Hindi URLs (see `rewrites`) are not
+         addresses anyone should land on — send them to the real one, so
+         there is only ever one URL for each page. Redirects run before
+         rewrites and only on the incoming request, so this cannot loop. */
+      ...HINDI_PAGES.map(([hindi, folder]) => ({
+        source: `/${folder}`,
+        destination: `/${encodeURI(hindi)}`,
+        permanent: true,
+      })),
+    ]
+  },
+
+  /**
+   * ⚠️  DEVANAGARI URLS FROM THE WORDPRESS SITE. Next does not route a
+   * folder named in Devanagari — it 404s — so each page lives in an ASCII
+   * folder and is served at its original Hindi URL from here. The source
+   * is the percent-encoded form, which is what arrives on the wire.
+   */
+  async rewrites() {
+    return HINDI_PAGES.map(([hindi, folder]) => ({
+      source: `/${encodeURI(hindi)}`,
+      destination: `/${folder}`,
+    }))
   },
 
   async headers() {

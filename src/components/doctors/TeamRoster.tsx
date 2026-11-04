@@ -6,7 +6,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/motion/Reveal'
 
 /**
- * The team roster on `/about-us/our-doctors`.
+ * The team roster on `/our-doctors`.
  *
  * ⚠️  THESE ARE REAL PEOPLE AND THEIR CREDENTIALS. Every field renders only
  * when present, and that is deliberate: a blank qualification or a missing
@@ -122,10 +122,10 @@ export function TeamRoster({
             >
               {/* ⚠️  THE `id` IS A LINK TARGET, NOT DECORATION. The home
                   page's doctor rail links each card to
-                  `/about-us/our-doctors#<slug>` so a reader who taps a
+                  `/our-doctors#<slug>` so a reader who taps a
                   face lands on that person rather than the top of a list
                   of fifteen. Those links were pointing at
-                  `/about-us/our-doctors/<slug>`, which 404s for every one
+                  `/our-doctors/<slug>`, which 404s for every one
                   of them. Removing or renaming this id breaks seven links
                   on the home page. `:target` in `globals.css` supplies
                   the scroll offset for the fixed header. */}

@@ -231,7 +231,7 @@ export const expertiseNav: MegaNavColumn[] = [
  * the button. Adding one means checking the header at 1280 before shipping
  * it — swapping Media for Cancer Types cost about 50px on its own.
  *
- * `/`, `/about-us`, `/about-us/our-doctors`, `/cancer-types`,
+ * `/`, `/about-us`, `/our-doctors`, `/cancer-types`,
  * `/integrative-cancer-care`, `/international-patients` and
  * `/treatments-and-therapies` are built. Every other target will 404 until
  * written — including all seven children of International Patients, which
@@ -385,7 +385,10 @@ export const footerNav: NavGroup[] = [
   {
     label: 'Tools',
     links: [
+      { label: 'Breast Cancer Chemotherapy Calculator', href: routes.breastChemoCalculator },
       { label: 'Fenbendazole Dosage Calculator', href: routes.fenbendazoleCalculator },
+      { label: 'Ivermectin Dosing Calculator', href: routes.ivermectinCalculator },
+      { label: 'All Dosing Calculators', href: routes.dosingCalculators },
     ],
   },
 ]

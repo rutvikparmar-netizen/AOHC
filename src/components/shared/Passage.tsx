@@ -15,7 +15,7 @@ import { Reveal } from '@/components/motion/Reveal'
  *
  * SHARED BY FOUR SECTIONS ACROSS THREE PAGES: the molecular, procedures and
  * supportive passages on `/treatments-and-therapies`, clinical
- * responsibility on `/about-us/our-doctors`, and support for caregivers on
+ * responsibility on `/our-doctors`, and support for caregivers on
  * `/international-patients`. It was a local helper on the treatments page and
  * a hand-copy of the same JSX on the doctors page; the third use is what
  * moved it here, the same way `TypeIndex` became `EntryGrid`.

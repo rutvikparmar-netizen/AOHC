@@ -179,7 +179,7 @@ export const home: HomeContent = {
      * stays on what is happening rather than naming anyone — no "our
      * team", no "our specialists". Nothing on the page may caption these
      * figures as members of staff. The real roster is at
-     * `/about-us/our-doctors`, fifteen named people with their own
+     * `/our-doctors`, fifteen named people with their own
      * portraits, and that is where a claim about who works here belongs.
      */
     image: {

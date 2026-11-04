@@ -155,6 +155,7 @@ export function Article({
               section.level === 3 ? (
                 <h3
                   id={id}
+                  lang={section.titleLang}
                   className="scroll-mt-32 font-display text-h4 font-bold leading-snug text-text"
                 >
                   {section.title}
@@ -162,6 +163,7 @@ export function Article({
               ) : (
                 <h2
                   id={id}
+                  lang={section.titleLang}
                   className="scroll-mt-32 font-display text-h3 font-bold leading-snug tracking-[-0.02em] text-text"
                 >
                   {section.title}
@@ -169,6 +171,7 @@ export function Article({
               )
             ) : null}
 
+            <div lang={section.lang}>
             {section.body?.length ? (
               <div className={`space-y-4 ${section.title ? 'mt-4' : ''}`}>
                 {section.body.map((paragraph) => (
@@ -199,6 +202,7 @@ export function Article({
                 ))}
               </div>
             ) : null}
+            </div>
           </Reveal>
         )
       })}

@@ -13,7 +13,7 @@ import { DisciplineGrid } from '@/components/doctors/DisciplineGrid'
 import { TeamRoster } from '@/components/doctors/TeamRoster'
 
 /**
- * DOCTORS AND SPECIALISTS — `/about-us/our-doctors`
+ * DOCTORS AND SPECIALISTS — `/our-doctors`
  *
  * ORDER, which is the supplied document's own: hero → a multidisciplinary
  * perspective → the team → clinical responsibility → closing.

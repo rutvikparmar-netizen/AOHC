@@ -22,9 +22,9 @@ export const routes = {
 
   /* About us ------------------------------------------------------------ */
   about: '/about-us',
-  whoWeAre: '/about-us/who-we-are',
-  doctors: '/about-us/our-doctors',
-  doctor: (slug: Slug) => `/about-us/our-doctors/${slug}`,
+  whoWeAre: '/who-we-are',
+  doctors: '/our-doctors',
+  doctor: (slug: Slug) => `/our-doctors/${slug}`,
   partners: '/about-us/partnering-institutions',
   accreditations: '/about-us/accreditations',
   rgcc: '/about-us/accreditations/rgcc',
@@ -57,6 +57,10 @@ export const routes = {
   /* Tools ---------------------------------------------------------------
      Kept at the WordPress path so the indexed URL survives the migration. */
   fenbendazoleCalculator: '/blogs/fenbendazole-dosage-calculator',
+  ivermectinCalculator: '/blogs/ivermectin-dosing-calculator',
+  breastChemoCalculator: '/blogs/aohc-breast-cancer-chemotherapy-dosage-calculator',
+  /** The WordPress category page that lists the three calculators. */
+  dosingCalculators: '/blogs/category/dosing-calculator',
 
   /**
    * ⚠️  THE CONVERSION ROUTES ARE REAL PAGES NOW. They pointed at the home

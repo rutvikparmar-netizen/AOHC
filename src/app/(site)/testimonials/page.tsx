@@ -12,7 +12,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { PageHero } from '@/components/shared/PageHero'
-import { VideoCarousel } from '@/components/home/VideoCarousel'
+import { VideoGrid } from '@/components/shared/VideoGrid'
 import { ClosingSection } from '@/components/home/ClosingSection'
 
 /**
@@ -147,11 +147,12 @@ export default function TestimonialsPage() {
               title={home.testimonials.title}
             />
           </Reveal>
-        </Container>
 
-        <div className="mt-10 lg:mt-12">
-          <VideoCarousel items={home.testimonials.items} />
-        </div>
+          {/* A grid, not the home page's slider — see `VideoGrid`. */}
+          <div className="mt-10 lg:mt-12">
+            <VideoGrid items={home.testimonials.items} />
+          </div>
+        </Container>
       </section>
 
       <ClosingSection
