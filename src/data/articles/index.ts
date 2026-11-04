@@ -10,6 +10,7 @@ import { hydrogenTherapyAntiCancerArsenal } from './hydrogen-therapy-anti-cancer
 import { integrativeOncologyBadiDhaulpur } from './integrative-oncology-badi-dhaulpur'
 import { ivVitaminC } from './iv-vitamin-c'
 import { lungCancerAyurvedaHarrai, lungCancerAyurvedaNeemrana } from './lung-cancer-ayurveda-hindi'
+import { cityPages } from './city-pages'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
 import { vitaminCG6pd } from './vitamin-c-g6pd'
@@ -242,4 +243,15 @@ export const migratedArticles: MigratedArticle[] = [
     summary: 'स्वास्थ्य और कल्याण की दिशा में अपनी यात्रा को सशक्त बनाने के लिए शक्तिशाली आयुर्वेदिक उपचारों और पारंपरिक ज्ञान के माध्यम से फेफड़ों के कैंसर के लिए समग्र उपचार की प्राचीन कला की खोज करें।',
     content: lungCancerAyurvedaHarrai,
   },
+  /* ⚠️  THE EIGHT CITY LANDING PAGES — one template per therapy with the
+     town swapped. See `city-pages.ts` before adding a ninth. Each summary
+     is the page's own first sentence. */
+  ...cityPages.map((p) => ({
+    slug: p.slug,
+    topic: p.topic,
+    href: `/${p.slug}`,
+    title: p.title,
+    summary: p.summary,
+    content: p.content,
+  })),
 ]
