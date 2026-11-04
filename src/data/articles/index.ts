@@ -19,6 +19,7 @@ import {
 } from './lung-cancer-ayurveda-hindi'
 import { cityPages } from './city-pages'
 import { cityPages2 } from './city-pages-2'
+import { batch3Pages } from './wordpress-batch-3'
 import { breastCancerBurari, glioblastoma, vitaminCDoctors } from './landing-pages'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
@@ -296,6 +297,16 @@ export const migratedArticles: MigratedArticle[] = [
   /* ⚠️  THE 22 CITY LANDING PAGES — one template per therapy with the
      town swapped. See `city-pages.ts` before adding another. Each summary
      is the page's own first sentence. */
+  /* Sixteen articles and service pages migrated in one pass; see the
+     header of `wordpress-batch-3.ts`. */
+  ...batch3Pages.map((p) => ({
+    slug: p.slug,
+    topic: p.topic,
+    href: `/${p.slug}`,
+    title: p.title,
+    summary: p.summary,
+    content: p.content,
+  })),
   ...[...cityPages, ...cityPages2].map((p) => ({
     slug: p.slug,
     topic: p.topic,
