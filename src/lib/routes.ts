@@ -28,8 +28,12 @@ export const routes = {
   partners: '/about-us/partnering-institutions',
   accreditations: '/about-us/accreditations',
   rgcc: '/about-us/accreditations/rgcc',
-  /** Ruchika Jaiswal's story — §8 of the content draft. */
-  memorial: '/about-us/in-loving-memory-of-ruchika-jaiswal',
+  /**
+   * Ruchika Jaiswal's story. The WordPress page, migrated at its own URL
+   * (the content draft's planned `/about-us/in-loving-memory-of-ruchika-jaiswal`
+   * was never a live URL, so nothing links to it from outside).
+   */
+  memorial: '/in-the-loving-memory',
 
   media: '/media',
 

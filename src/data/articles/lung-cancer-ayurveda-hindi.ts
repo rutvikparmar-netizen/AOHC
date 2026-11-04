@@ -1,18 +1,30 @@
 import type { ArticlePageContent, ArticleSection } from '@/types'
 
 /**
- * फेफड़ों के कैंसर — THE TWO HINDI LUNG-CANCER LOCATION PAGES
+ * फेफड़ों के कैंसर — THE LUNG-CANCER LOCATION PAGES (FIVE HINDI, ONE ENGLISH)
  * ----------------------------------------------------------------------------
  * Migrated from, and kept at:
  *   /फेफड़ों-के-कैंसर-के-लिए-अभ-6/   (Neemrana, Alwar, Rajasthan)
  *   /आयुर्वेदिक-जादू-उजागर-सा-2/     (Harrai, Chhindwara, Madhya Pradesh)
+ *   /आयुर्वेदिक-फेफड़ों-के-कै-57/    (Vidya Nagar, Bhilwara, Rajasthan)
+ *   /आयुर्वेदिक-उपचार-से-फेफड-6/     (Mandawa, Jhunjhunu, Rajasthan)
+ *   /नवीनीकृत-जीवन-शक्ति-आयुर/       (Charkhi Dadri, Bhiwani, Haryana)
+ *   /empower-your-journey-lung-cancer-ayurvedic-healing-r-k-colony-bhilwara-rajasthan-india/
+ *                                     (the same template, published in English)
  *
- * ⚠️  ONE TEMPLATE, TWO PAGES. Both are location landing pages from the
+ * ⚠️  ONE TEMPLATE, SIX PAGES. All are location landing pages from the
  * same WordPress template. Their English body is identical word for word;
- * only the title, description and seven Hindi section headings (three of
- * them with a Hindi paragraph) differ. So the English is written once
- * here and each page supplies its Hindi parts. The Hindi was copied out
- * of the live HTML by script, not retyped.
+ * only the title, description and seven section headings (three of them
+ * with a paragraph) differ. So the English is written once here and each
+ * page supplies its own parts. Those were copied out of the live HTML by
+ * script (`hindi-parts.js`, then `lung-parts2.js`), not retyped.
+ *
+ * ⚠️  ONE UNFILLED PLACEHOLDER WAS REPAIRED. On Vidya Nagar the team
+ * paragraph opens "*वेबसाइट नाम* पर डॉक्टरों की हमारी टीम…" — the literal
+ * "*website name*" was never replaced. It now reads "आर्ट ऑफ हीलिंग कैंसर
+ * में", the clinic's name as the other pages write it. The heading above
+ * it was published wrapped in stray quotes with a trailing "|"; those are
+ * removed. A Hindi speaker should confirm both.
  *
  * ⚠️  THE PAGES ARE MOSTLY ENGLISH UNDER HINDI HEADINGS. `lang: 'hi'` is
  * set for the page, and every English block carries `lang: 'en'` so a
@@ -53,6 +65,8 @@ import type { ArticlePageContent, ArticleSection } from '@/types'
  */
 
 type HindiParts = {
+  /** 'hi' unless given. Bhilwara is the same template published in English. */
+  lang?: 'hi' | 'en'
   title: string
   description: string
   intro: { title: string; body: string | null }
@@ -72,7 +86,7 @@ function hindiSection(title: string, body: string | null): ArticleSection {
 
 function build(p: HindiParts): ArticlePageContent {
   return {
-    lang: 'hi',
+    lang: p.lang ?? 'hi',
     hero: { title: p.title, body: [p.description] },
     sections: [
       hindiSection(p.intro.title, p.intro.body),
@@ -366,11 +380,72 @@ const ayurParts: HindiParts = {
   integrative: "फेफड़ों की घातकता के लिए साहसपूर्वक सम्मिश्रण उपचार- इंटीग्रेटिव ऑन्कोलॉजी",
 }
 
+/** /आयुर्वेदिक-फेफड़ों-के-कै-57/ — Vidya Nagar, Bhilwara, Rajasthan */
+const vidyaNagarParts: HindiParts = {
+  title: "आयुर्वेदिक फेफड़ों के कैंसर के उपचार से पुनर्जीवित करें | विद्या नगर, भीलवाड़ा, राजस्थान, भारत",
+  description: "आयुर्वेदिक फेफड़ों के कैंसर उपचार के साथ ऐसे परिवर्तन का अनुभव करें जो पहले कभी नहीं हुआ। प्राचीन आयुर्वेदिक पद्धतियों के माध्यम से फेफड़ों के कैंसर के समग्र उपचार की दिशा में अपनी यात्रा शुरू करते समय विद्या नगर, भीलवाड़ा, राजस्थान, भारत में जीवन शक्ति और जोश को अपनाएं। सर्वोत्तम स्वास्थ्य और कल्याण के लिए प्रकृति के उपचारों की शक्ति को अनलॉक करें।",
+  intro: { title: "फेफड़ों के कैंसर के लिए सटीक आयुर्वेद की जटिलताओं की खोज करें।", body: "आर्ट ऑफ हीलिंग कैंसर में जीवंत स्वास्थ्य की दिशा में एक परिवर्तनकारी यात्रा शुरू करें, जहां जीवंतता का सार फेफड़ों के कैंसर से निपटने के लिए अत्याधुनिक प्रिसिजन ऑन्कोलॉजी और समग्र आयुर्वेदिक उपचारों के साथ जुड़ा हुआ है। हमारा दृष्टिकोण आधुनिक चिकित्सा प्रगति के साथ प्राचीन ज्ञान का सामंजस्य स्थापित करता है, व्यक्तिगत देखभाल प्रदान करता है जो आशा को प्रज्वलित करता है और आत्मा को फिर से जीवंत करता है। आपके शरीर, मन और आत्मा का समग्र रूप से पोषण करते हुए आपकी विशिष्ट आवश्यकताओं को पूरा करने के लिए तैयार किए गए विशेष उपचारों की खोज करें। आइए हम आपको एक प्रतिमान-परिवर्तनकारी अनुभव के माध्यम से मार्गदर्शन करें जो भीतर से उपचार की क्षमता को अनलॉक करते हुए व्यक्तित्व को गले लगाता है। एक ऐसे अभयारण्य का अनुभव करें जहां विपरीत परिस्थितियों के बीच भी जीवन शक्ति पनपती है; जहां हर सांस अनिश्चितता की स्थिति में लचीलेपन का प्रतीक है - आर्ट ऑफ हीलिंग कैंसर के विज्ञान और प्रकृति के अभिनव संलयन में आपका स्वागत है कि कैसे खुद पर महारत हासिल की जाती है।" },
+  approach: { title: "आयुर्वेदिक फेफड़ों के कैंसर देखभाल के साथ जीवन शक्ति की ओर यात्रा शुरू करें।", body: "फेफड़ों के कैंसर के इलाज के लिए हमारे नवोन्मेषी दृष्टिकोण के साथ नई जीवंतता और आशा का अनुभव करें। आधुनिक उपचार के लिए तैयार किए गए प्राचीन आयुर्वेदिक उपचारों की शक्ति का अन्वेषण करें। हमारे समग्र उपचारों का लक्ष्य प्राकृतिक, टिकाऊ तरीकों के माध्यम से फेफड़ों के कैंसर पर काबू पाने की दिशा में आपकी यात्रा में संतुलन, जीवन शक्ति और भलाई को बहाल करना है जो आपके स्वास्थ्य और कल्याण को बाकी सभी चीजों से ऊपर प्राथमिकता देते हैं।" },
+  team: { title: "पल्मोनरी मैलिग्नेंसी के लिए गतिशील ऑन्कोलॉजी उत्साही", body: "आर्ट ऑफ हीलिंग कैंसर में डॉक्टरों की हमारी टीम सटीक ऑन्कोलॉजी और एकीकृत उपचार में विशेषज्ञता का एक अनूठा मिश्रण लाती है, जो फेफड़ों के कैंसर के रोगियों के लिए व्यापक देखभाल सुनिश्चित करती है। आयुर्वेदिक उपचार के लाभों के साथ-साथ पारंपरिक उपचारों की गहरी समझ के साथ, हम समग्र दृष्टिकोण प्रदान करते हैं जो आपकी उपचार यात्रा के दौरान कल्याण और जीवंतता को प्राथमिकता देते हैं।" },
+  daycare: "फेफड़े के कैंसर का पुनर्जीवन: एक गतिशील देखभाल केंद्र- डेकेयर सुविधा",
+  robotic: "कैंसर ठीक करने की कला: फेफड़ों के ट्यूमर के इलाज के लिए नवोन्मेषी साइबरनेटिक प्रक्रिया",
+  overview: "पुनर्जीवित करें: नवीन तकनीकों के साथ फेफड़ों के कैंसर का दृष्टिकोण",
+  integrative: "पल्मोनरी मैलिग्नेंसी के लिए सिनर्जिस्टिक हीलिंग दृष्टिकोण- इंटीग्रेटिव ऑन्कोलॉजी",
+}
+
+/** /आयुर्वेदिक-उपचार-से-फेफड-6/ — Mandawa, Jhunjhunu, Rajasthan */
+const mandawaParts: HindiParts = {
+  title: "आयुर्वेदिक उपचार से फेफड़ों के कैंसर को पुनर्जीवित करें | मंडावा, झुंझुनूं, राजस्थान, भारत",
+  description: "भारत के राजस्थान में हमारी मंडावा, झुंझुनूं सुविधा में फेफड़ों के कैंसर के लिए आयुर्वेदिक उपचार की पुनर्जीवन शक्ति की खोज करें। स्वाभाविक रूप से संतुलन और कल्याण को बहाल करने के लिए तैयार किए गए समग्र दृष्टिकोण के साथ अपनी उपचार यात्रा में जीवंतता और जीवन शक्ति को अपनाएं। आज आप नए सिरे से स्वास्थ्य और कल्याण की राह पर आगे बढ़ते हुए निराशा को अलविदा कहें!",
+  intro: { title: "उपचार की दिशा में एक यात्रा शुरू करना: जीवंतता का उपयोग करके सटीक ऑन्कोलॉजी और समग्र दृष्टिकोण के साथ कैंसर को ठीक करने की कला में आयुर्वेदिक फेफड़ों के कैंसर उपचार का अनावरण।", body: "आशा और उपचार की जीवंतता को प्रकट करते हुए, आर्ट ऑफ हीलिंग कैंसर आयुर्वेदिक सिद्धांतों के प्राचीन ज्ञान के माध्यम से फेफड़ों के कैंसर के उपचार के लिए एक समग्र दृष्टिकोण प्रदान करता है। हमारी सटीक ऑन्कोलॉजी सेवाएँ प्रत्येक व्यक्ति के अनुरूप हैं, जो न केवल शारीरिक लक्षणों को संबोधित करती हैं बल्कि भावनात्मक कल्याण का भी पोषण करती हैं। आर्ट ऑफ हीलिंग कैंसर में, हम समझते हैं कि फेफड़ों के कैंसर से लड़ने के लिए पारंपरिक चिकित्सा से कहीं अधिक की आवश्यकता होती है; यह समय-सम्मानित प्रथाओं के साथ आधुनिक विज्ञान के मिश्रण के लिए एक व्यक्तिगत स्पर्श की मांग करता है। फेफड़ों के कैंसर के खिलाफ आपके शरीर की जन्मजात उपचार शक्तियों को प्रज्वलित करने के लिए डिज़ाइन किए गए हमारे एकीकृत आयुर्वेदिक उपचारों के साथ कल्याण और जीवन शक्ति की दिशा में एक परिवर्तनकारी यात्रा की खोज करें - Artofhealingcancer.Com पर पारंपरिक तरीकों से परे व्यापक देखभाल चाहने वालों के लिए स्वास्थ्य देखभाल वितरण में एक अभिनव प्रतिमान।" },
+  approach: { title: "अपनी जीवन शक्ति बढ़ाएं: फेफड़ों के कैंसर से बचाव के लिए आयुर्वेद को अपनाएं", body: "आयुर्वेदिक तरीकों के माध्यम से फेफड़ों के कैंसर के इलाज के लिए हमारे अभिनव दृष्टिकोण के साथ जीवंतता के नवीनीकरण का अनुभव करें। समग्र उपचार और समग्र कल्याण पर ध्यान केंद्रित करते हुए, इस बीमारी से लड़ने में आधुनिक विज्ञान के साथ मिलकर प्राचीन उपचारों की शक्ति की खोज करें। फेफड़ों के कैंसर के लिए आज ही हमारे वैयक्तिकृत आयुर्वेदिक उपचारों से आशा और उपचार को अपनाएँ!" },
+  team: { title: "फेफड़ों के कैंसर के लिए असाधारण कुशल कैंसर देखभाल करने वाले स्क्वाड्रन का अनुभव करें।", body: "डॉक्टरों की हमारी समर्पित टीम फेफड़ों के कैंसर के रोगियों को व्यक्तिगत देखभाल प्रदान करने के लिए पारंपरिक उपचारों में दशकों के अनुभव को सटीक ऑन्कोलॉजी और एकीकृत उपचारों में विशेषज्ञता के साथ जोड़ती है। प्राचीन आयुर्वेदिक पद्धतियों के साथ-साथ अत्याधुनिक तकनीकों को शामिल करके, हम एक समग्र दृष्टिकोण प्रदान करते हैं जो जीवन शक्ति को बढ़ाने और उपचार को बढ़ावा देने के लिए मन, शरीर और आत्मा को संबोधित करता है।" },
+  daycare: "पल्मोनरी वेलनेस के लिए डायनेमिक हीलिंग सैंक्चुअरी- डेकेयर सुविधा",
+  robotic: "कैंसर ठीक करने की कला: फेफड़ों के कैंसर के लिए स्वचालित सर्जरी में साहसिक प्रगति।",
+  overview: "फुफ्फुसीय घातकता के लिए अग्रणी दृष्टिकोण",
+  integrative: "फेफड़ों की घातकता के लिए सिनर्जिस्टिक थेरेपी- इंटीग्रेटिव ऑन्कोलॉजी",
+}
+
+/** /नवीनीकृत-जीवन-शक्ति-आयुर/ — Charkhi Dadri, Bhiwani, Haryana */
+const charkhiDadriParts: HindiParts = {
+  title: "नवीनीकृत जीवन शक्ति: आयुर्वेदिक फेफड़ों के कैंसर का इलाज | चरखी दादरी, भिवानी, हरियाणा, भारत",
+  description: "चरखी दादरी, भिवानी, हरियाणा में हमारे अभयारण्य में फेफड़ों के कैंसर के लिए आयुर्वेदिक उपचार की कायाकल्प शक्ति का अनुभव करें। आधुनिक विशेषज्ञता के साथ प्राचीन आयुर्वेदिक सिद्धांतों का उपयोग करके इस भयानक बीमारी से निपटने के लिए तेज, नवीनीकृत जीवन शक्ति और समग्र उपचार प्रदान करने वाले एक शांत नखलिस्तान की खोज करें। फेफड़ों के कैंसर के लिए प्राकृतिक उपचार आज ही अनलॉक करें!",
+  intro: { title: "कैंसर को ठीक करने की कला: शीघ्रता के साथ सटीक चिकित्सा और आयुर्वेदिक फेफड़ों के कैंसर की देखभाल का अनावरण।", body: "तेजी और सटीकता के साथ, आर्ट ऑफ हीलिंग कैंसर आयुर्वेद के प्राचीन ज्ञान के माध्यम से फेफड़ों के कैंसर के इलाज के लिए एक समग्र दृष्टिकोण अपनाता है। हमारे नवोन्मेषी तरीके आधुनिक तकनीक को समय-सम्मानित आयुर्वेदिक सिद्धांतों के साथ जोड़कर वैयक्तिकृत उपचार बनाते हैं जो न केवल शारीरिक लक्षणों को बल्कि हमारे रोगियों के भावनात्मक और आध्यात्मिक कल्याण को भी संबोधित करते हैं। प्राकृतिक उपचारों के साथ अत्याधुनिक चिकित्सा प्रगति को एकीकृत करके, हम अद्वितीय देखभाल प्रदान करते हैं जो केवल बीमारी ही नहीं, बल्कि पूरे व्यक्ति को ठीक करने पर केंद्रित है। आयुर्वेदिक ऑन्कोलॉजी थेरेपी में उत्कृष्टता के लिए आर्ट ऑफ हीलिंग कैंसर के केंद्र में स्वास्थ्य देखभाल में एक नए प्रतिमान का अनुभव करें जहां विज्ञान फेफड़ों के कैंसर के उपचार में इष्टतम परिणामों के लिए परंपरा को पूरा करता है।" },
+  approach: { title: "नवीनीकृत स्वास्थ्य के लिए आयुर्वेदिक फेफड़ों के कैंसर देखभाल की जीवन शक्ति की खोज करें।", body: "फेफड़ों के कैंसर के उपचार के क्षेत्र में प्राचीन आयुर्वेदिक ज्ञान की शक्ति को उजागर करते हुए, हमारा परिवर्तनकारी दृष्टिकोण पारंपरिक तरीकों से आगे निकल जाता है। समग्र उपचार पद्धतियों और प्राकृतिक उपचारों को एकीकृत करके, हम इस निरंतर बीमारी से जूझ रहे लोगों के लिए आशा की किरण प्रदान करने का प्रयास करते हैं। आयुर्वेद के साथ फेफड़ों के कैंसर की देखभाल में एक नया क्षितिज खोजें।" },
+  team: { title: "अग्रणी चिकित्सा दल फेफड़ों की घातकता में उत्कृष्टता प्राप्त करता है।", body: "प्रतिष्ठित डॉक्टरों की हमारी टीम न केवल फेफड़ों के कैंसर के लिए पारंपरिक उपचारों में बल्कि अत्याधुनिक सटीक ऑन्कोलॉजी और आयुर्वेदिक उपचार जैसे एकीकृत दृष्टिकोण में भी विशेषज्ञता रखती है। समग्र देखभाल पर ध्यान देने के साथ, हम व्यापक उपचार और सहायता के लिए प्रत्येक रोगी की विशिष्ट आवश्यकताओं के अनुसार अपनी रणनीतियाँ तैयार करते हैं।" },
+  daycare: "ट्विस्ट-डेकेयर सुविधा के साथ पल्मोनरी थेरेपी के लिए विवासिटी हब",
+  robotic: "कैंसर ठीक करने की कला: फेफड़े के ट्यूमर के लिए स्वचालित ऑपरेशन में साहसिक सफलता",
+  overview: "फुफ्फुसीय घातकता के लिए प्रेरक दृष्टिकोण",
+  integrative: "फेफड़ों की घातकता के लिए सिनर्जिस्टिक थेरेपी- इंटीग्रेटिव ऑन्कोलॉजी",
+}
+
+/** /empower-your-journey-lung-cancer-ayurvedic-healing-r-k-colony-bhilwara-rajasthan-india/ — the same template in English */
+const bhilwaraParts: HindiParts = {
+  lang: "en",
+  title: "Empower Your Journey: Lung Cancer Ayurvedic Healing | R.K. Colony, Bhilwara, Rajasthan, India",
+  description: "Embark on a transformative path towards healing with our avant-garde Lung Cancer Ayurvedic treatment at R.K. Colony, Bhilwara, nestled in the verdant landscape of Rajasthan, India. Discover ancient remedies harmonizing nature's bounties to combat lung cancer as you embrace holistic wellness like never before.",
+  intro: { title: "Discover Art of Healing Cancer's Cutting-edge Lung Cancer Ayurvedic Therapy.", body: "Embark on a transformative journey towards healing at Art of Healing Cancer, where precision oncology meets the holistic spunk to combat Lung Cancer with ayurvedic treatment. Dive into a realm where cutting-edge medical innovation intertwines seamlessly with ancient wisdom, offering tailored remedies and compassionate care for those seeking solace in their battle against this relentless ailment. Let our team ignite hope and vitality within you through personalized strategies that honor your individuality while embracing the power of natural therapies rooted in centuries-old traditions. Experience a paradigm shift in healthcare as we redefine conventional approaches to fighting Lung Cancer by harmonizing science and spirituality at its core, paving the way for profound restoration unlike any other institution can offer." },
+  approach: { title: "Unleash the vigor of Ayurvedic elixirs for Lung Cancer healing.", body: "Unleash the power of nature's remedies with our groundbreaking ayurvedic treatment for Lung Cancer. Discover a holistic approach that nurtures your body and soul, offering hope and healing where it is needed most. Embrace a path to wellness rooted in ancient wisdom and supported by modern science - because you deserve nothing less." },
+  team: { title: "Innovative, pioneering thoracic oncology specialists rise above mediocrity.", body: "Our team of doctors brings a unique blend of expertise to the table, specializing not only in conventional therapies for Lung Cancer but also in precision oncology and integrative approaches like ayurvedic treatments. With years of experience under their belt, they offer comprehensive care that prioritizes personalized treatment plans tailored to each individual." },
+  daycare: "Bold Cancer Care Center: a unique approach to healing- Daycare Facility",
+  robotic: "Art of Healing Cancer: Innovative Automated Procedure Elevates Lung Cancer Treatment",
+  overview: "Unveiling Novel Approach for Lung Carcinoma Care",
+  integrative: "Synergistic approach to lung malignancy therapy- Integrative Oncology",
+}
+
 export const lungCancerAyurvedaNeemrana = build(lungParts)
 export const lungCancerAyurvedaHarrai = build(ayurParts)
+export const lungCancerAyurvedaVidyaNagar = build(vidyaNagarParts)
+export const lungCancerAyurvedaMandawa = build(mandawaParts)
+export const lungCancerAyurvedaCharkhiDadri = build(charkhiDadriParts)
+export const lungCancerAyurvedaBhilwara = build(bhilwaraParts)
 
 /** Titles and descriptions for the routes' metadata. */
 export const lungCancerHindiMeta = {
   neemrana: { title: lungParts.title, description: lungParts.description },
   harrai: { title: ayurParts.title, description: ayurParts.description },
+  vidyaNagar: { title: vidyaNagarParts.title, description: vidyaNagarParts.description },
+  mandawa: { title: mandawaParts.title, description: mandawaParts.description },
+  charkhiDadri: { title: charkhiDadriParts.title, description: charkhiDadriParts.description },
+  bhilwara: { title: bhilwaraParts.title, description: bhilwaraParts.description },
 }

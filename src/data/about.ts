@@ -88,13 +88,9 @@ export const about: AboutContent = {
     ],
     dedication: 'AOHC is dedicated to the patient community in her memory.',
     /**
-     * AN IN-PAGE JUMP, NOT `routes.memorial`.
-     *
-     * The dedicated memorial page is not built yet — `routes.ts` is explicit
-     * that everything but `/` still 404s — and the memorial section lower
-     * down this page is the thing this link is promising. When
-     * `/about-us/in-loving-memory-of-ruchika-jaiswal` ships, point this at
-     * `routes.memorial` instead.
+     * AN IN-PAGE JUMP, NOT `routes.memorial`: the memorial section lower
+     * down this page is the thing this link promises. That section's own
+     * "Read Her Story" goes on to the full page.
      */
     cta: { label: 'Read In Loving Memory of Ruchika Jaiswal', href: '#in-memory' },
     /**
@@ -370,13 +366,7 @@ export const about: AboutContent = {
       'AOHC is dedicated to the patient community in her memory.',
       "Her story is a reminder of why compassion, honest communication, and respect for each patient's circumstances matter throughout the cancer-care journey.",
     ],
-    /**
-     * ⚠️  THIS LINK 404s TODAY. `/about-us/in-loving-memory-of-ruchika-jaiswal`
-     * is in `routes` but has no page yet, which `routes.ts` says is expected
-     * during build-out. It is kept pointing at the real path rather than
-     * swapped for a placeholder so that the page, once written, needs no
-     * edit here — but it should ship before this page goes live.
-     */
+    /** The migrated WordPress memorial page, `/in-the-loving-memory`. */
     cta: { label: 'Read Her Story', href: routes.memorial },
     /**
      * RUCHIKA JAISWAL, SUPPLIED BY AOHC. The only photograph of a named

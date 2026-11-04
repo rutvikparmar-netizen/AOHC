@@ -43,11 +43,8 @@ import { MemorialPanel } from '@/components/about/MemorialPanel'
  * The full set of rules is at the top of `src/data/about.ts`; read it before
  * editing either section.
  *
- * ⚠️  ONE LINK ON THIS PAGE 404s. The memorial's "Read Her Story" points at
- * `routes.memorial`, which has no page yet. The story section's CTA jumps to
- * `#in-memory` on this page instead, so only the one link is dangling — it
- * is kept pointing at the real path so no edit is needed once that page
- * ships, but it should ship before this page goes live.
+ * The memorial's "Read Her Story" goes to `routes.memorial`; the story
+ * section's CTA jumps to `#in-memory` on this page.
  *
  * NOTHING HERE IS A CARD. The page is long and almost entirely prose, so the
  * grouping is done with rules, numerals and one dark band rather than with

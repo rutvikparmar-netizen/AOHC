@@ -4,6 +4,9 @@ import type { NextConfig } from 'next'
 const HINDI_PAGES: [string, string][] = [
   ['फेफड़ों-के-कैंसर-के-लिए-अभ-6', 'hi-lung-cancer-neemrana'],
   ['आयुर्वेदिक-जादू-उजागर-सा-2', 'hi-lung-cancer-harrai'],
+  ['आयुर्वेदिक-फेफड़ों-के-कै-57', 'hi-lung-cancer-vidya-nagar'],
+  ['आयुर्वेदिक-उपचार-से-फेफड-6', 'hi-lung-cancer-mandawa'],
+  ['नवीनीकृत-जीवन-शक्ति-आयुर', 'hi-lung-cancer-charkhi-dadri'],
 ]
 
 const nextConfig: NextConfig = {

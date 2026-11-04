@@ -9,8 +9,17 @@ import { hydrogenInhalationTherapy } from './hydrogen-inhalation-therapy'
 import { hydrogenTherapyAntiCancerArsenal } from './hydrogen-therapy-anti-cancer-arsenal'
 import { integrativeOncologyBadiDhaulpur } from './integrative-oncology-badi-dhaulpur'
 import { ivVitaminC } from './iv-vitamin-c'
-import { lungCancerAyurvedaHarrai, lungCancerAyurvedaNeemrana } from './lung-cancer-ayurveda-hindi'
+import {
+  lungCancerAyurvedaBhilwara,
+  lungCancerAyurvedaCharkhiDadri,
+  lungCancerAyurvedaHarrai,
+  lungCancerAyurvedaMandawa,
+  lungCancerAyurvedaNeemrana,
+  lungCancerAyurvedaVidyaNagar,
+} from './lung-cancer-ayurveda-hindi'
 import { cityPages } from './city-pages'
+import { cityPages2 } from './city-pages-2'
+import { breastCancerBurari, glioblastoma, vitaminCDoctors } from './landing-pages'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
 import { vitaminCG6pd } from './vitamin-c-g6pd'
@@ -243,10 +252,51 @@ export const migratedArticles: MigratedArticle[] = [
     summary: 'स्वास्थ्य और कल्याण की दिशा में अपनी यात्रा को सशक्त बनाने के लिए शक्तिशाली आयुर्वेदिक उपचारों और पारंपरिक ज्ञान के माध्यम से फेफड़ों के कैंसर के लिए समग्र उपचार की प्राचीन कला की खोज करें।',
     content: lungCancerAyurvedaHarrai,
   },
-  /* ⚠️  THE EIGHT CITY LANDING PAGES — one template per therapy with the
-     town swapped. See `city-pages.ts` before adding a ninth. Each summary
+  /* The same template again: three more Hindi towns and one English one.
+     Summaries are each page's own first sentence. */
+  ...(
+    [
+      ['आयुर्वेदिक-फेफड़ों-के-कै-57', lungCancerAyurvedaVidyaNagar],
+      ['आयुर्वेदिक-उपचार-से-फेफड-6', lungCancerAyurvedaMandawa],
+      ['नवीनीकृत-जीवन-शक्ति-आयुर', lungCancerAyurvedaCharkhiDadri],
+      ['empower-your-journey-lung-cancer-ayurvedic-healing-r-k-colony-bhilwara-rajasthan-india', lungCancerAyurvedaBhilwara],
+    ] as const
+  ).map(([slug, content]) => ({
+    slug,
+    topic: 'integrative' as const,
+    href: `/${slug}`,
+    title: content.hero.title,
+    summary: (content.hero.body?.[0] ?? '').match(/^.*?[.!?।](\s|$)/)?.[0].trim() ?? '',
+    content,
+  })),
+  {
+    slug: 'glioblastoma',
+    topic: 'therapies',
+    href: '/glioblastoma',
+    title: glioblastoma.hero.title,
+    summary: 'Precision oncology and integrative care for glioblastoma, glioma and brain cancer: 2-DG, gene-guided immunotherapy, metronomic chemotherapy, ECCT and more.',
+    content: glioblastoma,
+  },
+  {
+    slug: 'insight/leading-accessible-wellness-package-and-trusted-precision-experts-in-india-innovative-precision-metabolic-end-stage-breast-cancer-care-for-kaushik-enclave-burari-delhi-india-patients',
+    topic: 'integrative',
+    href: '/insight/leading-accessible-wellness-package-and-trusted-precision-experts-in-india-innovative-precision-metabolic-end-stage-breast-cancer-care-for-kaushik-enclave-burari-delhi-india-patients',
+    title: breastCancerBurari.hero.title,
+    summary: breastCancerBurari.hero.body?.[0] ?? '',
+    content: breastCancerBurari,
+  },
+  {
+    slug: 'best-doctors-for-high-dose-vitamin-c-for-cancer-treatment-in',
+    topic: 'vitamin-c',
+    href: '/best-doctors-for-high-dose-vitamin-c-for-cancer-treatment-in',
+    title: vitaminCDoctors.hero.title,
+    summary: vitaminCDoctors.hero.body?.[0] ?? '',
+    content: vitaminCDoctors,
+  },
+  /* ⚠️  THE 22 CITY LANDING PAGES — one template per therapy with the
+     town swapped. See `city-pages.ts` before adding another. Each summary
      is the page's own first sentence. */
-  ...cityPages.map((p) => ({
+  ...[...cityPages, ...cityPages2].map((p) => ({
     slug: p.slug,
     topic: p.topic,
     href: `/${p.slug}`,

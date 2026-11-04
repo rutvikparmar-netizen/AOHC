@@ -27,9 +27,7 @@ import { Reveal } from '@/components/motion/Reveal'
  * better than a caption repeating it; the icon was standing in for an image
  * that did not exist yet, and a gold filigree frame needs no second ornament.
  *
- * ⚠️  THE LINK 404s TODAY. `routes.memorial` has no page yet. It is left
- * pointing at the real path — see the note on `memorial.cta` in
- * `src/data/about.ts` — but that page should ship before this one goes live.
+ * "Read Her Story" goes to `routes.memorial`, the migrated WordPress page.
  *
  * DARK, NARROW, CENTRED, AND SHORT. The section before it is a seven-item
  * grid and the one after is a statement; this needs to stop the page rather
