@@ -51,7 +51,9 @@ export const routes = {
 
   /* Knowledge ------------------------------------------------------------ */
   knowledge: '/knowledge',
-  videos: '/knowledge/videos',
+  /* /videos, the WordPress URL (it has the search impressions);
+     /knowledge/videos redirects to it. */
+  videos: '/videos',
   /* `/blogs`, not `/knowledge/blogs`: Knowledge is a dropdown, not a
      parent section, and the WordPress posts already live under /blogs/. */
   blogs: '/blogs',

@@ -35,6 +35,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: '/knowledge/blogs', destination: '/blogs', permanent: true },
+      /* The menu linked /knowledge/videos before /videos (the WordPress URL) was built. */
+      { source: '/knowledge/videos', destination: '/videos', permanent: true },
       /* The WordPress site served the team at /our-doctors and that is
          the URL Google holds, so the page moved back there. */
       { source: '/about-us/our-doctors', destination: '/our-doctors', permanent: true },

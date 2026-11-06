@@ -64,7 +64,7 @@ import type { ArticlePageContent, ArticleSection } from '@/types'
  *     "Gliobalstoma" to "Glioblastoma" — spelling only.
  */
 
-type HindiParts = {
+export type HindiParts = {
   /** 'hi' unless given. Bhilwara is the same template published in English. */
   lang?: 'hi' | 'en'
   title: string
@@ -84,7 +84,7 @@ function hindiSection(title: string, body: string | null): ArticleSection {
   return { title, ...(body ? { body: [body] } : {}) }
 }
 
-function build(p: HindiParts): ArticlePageContent {
+export function build(p: HindiParts): ArticlePageContent {
   return {
     lang: p.lang ?? 'hi',
     hero: { title: p.title, body: [p.description] },

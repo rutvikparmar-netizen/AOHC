@@ -19,7 +19,10 @@ import {
 } from './lung-cancer-ayurveda-hindi'
 import { cityPages } from './city-pages'
 import { cityPages2 } from './city-pages-2'
+import { cityPages3 } from './city-pages-3'
+import { lungLocationPages } from './lung-cancer-locations'
 import { batch3Pages } from './wordpress-batch-3'
+import { batch4Pages } from './wordpress-batch-4'
 import { breastCancerBurari, glioblastoma, vitaminCDoctors } from './landing-pages'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
@@ -307,12 +310,32 @@ export const migratedArticles: MigratedArticle[] = [
     summary: p.summary,
     content: p.content,
   })),
-  ...[...cityPages, ...cityPages2].map((p) => ({
+  /* Nineteen more; see the header of `wordpress-batch-4.ts`. */
+  ...batch4Pages.map((p) => ({
     slug: p.slug,
     topic: p.topic,
     href: `/${p.slug}`,
     title: p.title,
     summary: p.summary,
+    content: p.content,
+  })),
+  ...[...cityPages, ...cityPages2, ...cityPages3].map((p) => ({
+    slug: p.slug,
+    topic: p.topic,
+    href: `/${p.slug}`,
+    title: p.title,
+    summary: p.summary,
+    content: p.content,
+  })),
+  /* Eight English lung-cancer location pages on the Bhilwara template; see
+     `lung-cancer-locations.ts`. The summary is the page's description, as
+     for Bhilwara. */
+  ...lungLocationPages.map((p) => ({
+    slug: p.slug,
+    topic: 'integrative' as const,
+    href: `/${p.slug}`,
+    title: p.title,
+    summary: p.description,
     content: p.content,
   })),
 ]

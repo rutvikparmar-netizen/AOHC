@@ -331,9 +331,9 @@ export const primaryNav: NavGroup[] = [
     label: 'Knowledge',
     href: routes.knowledge,
     links: [
-      /* ⚠️  VIDEOS AND DOCUMENTS ARE STILL 404s — declared routes with no
-         page behind them. FAQs and Blogs are built, so they are listed
-         first and the group leads with things that work.
+      /* ⚠️  DOCUMENTS IS STILL A 404 — a declared route with no page behind
+         it. FAQs, Blogs and Videos are built, so they are listed first and
+         the group leads with things that work.
 
          Blogs became real when the seven articles were migrated from the
          WordPress site; its index is at `/blogs`, though the
