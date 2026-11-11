@@ -12,6 +12,15 @@ const HINDI_PAGES: [string, string][] = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  /* ⚠️  HOSTINGER'S BUILD BOX CANNOT SPAWN A WORKER PER CORE. Next sized
+     the static-generation pool from the machine's CPU count ("Collecting
+     page data using 63 workers") and the build died with "OS can't spawn
+     worker thread: Resource temporarily unavailable". Two workers is plenty
+     for ~120 static pages and stays inside the host's thread limit. */
+  experimental: {
+    cpus: 2,
+  },
+
   // Fail the production build on type errors rather than shipping them.
   // Next 16 no longer runs ESLint during `next build` — lint is a separate
   // `npm run lint` step (and belongs in CI).
