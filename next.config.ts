@@ -7,6 +7,9 @@ const HINDI_PAGES: [string, string][] = [
   ['आयुर्वेदिक-फेफड़ों-के-कै-57', 'hi-lung-cancer-vidya-nagar'],
   ['आयुर्वेदिक-उपचार-से-फेफड-6', 'hi-lung-cancer-mandawa'],
   ['नवीनीकृत-जीवन-शक्ति-आयुर', 'hi-lung-cancer-charkhi-dadri'],
+  ['आयुर्वेदिक-जादू-उजागर-सा', 'hi-lung-cancer-mulana'],
+  ['आयुर्वेदिक-फेफड़ों-के-कै-19', 'hi-lung-cancer-jwalapur'],
+  ['आयुर्वेदिक-चमत्कार-खोजें', 'hi-breast-cancer-aravali'],
 ]
 
 const nextConfig: NextConfig = {
@@ -46,6 +49,8 @@ const nextConfig: NextConfig = {
       { source: '/knowledge/blogs', destination: '/blogs', permanent: true },
       /* The menu linked /knowledge/videos before /videos (the WordPress URL) was built. */
       { source: '/knowledge/videos', destination: '/videos', permanent: true },
+      /* The footer linked /media before /press-release (the WordPress URL) was built. */
+      { source: '/media', destination: '/press-release', permanent: true },
       /* The WordPress site served the team at /our-doctors and that is
          the URL Google holds, so the page moved back there. */
       { source: '/about-us/our-doctors', destination: '/our-doctors', permanent: true },

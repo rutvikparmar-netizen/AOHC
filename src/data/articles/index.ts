@@ -20,9 +20,11 @@ import {
 import { cityPages } from './city-pages'
 import { cityPages2 } from './city-pages-2'
 import { cityPages3 } from './city-pages-3'
+import { cityPages4 } from './city-pages-4'
 import { lungLocationPages } from './lung-cancer-locations'
 import { batch3Pages } from './wordpress-batch-3'
 import { batch4Pages } from './wordpress-batch-4'
+import { batch5Pages } from './wordpress-batch-5'
 import { breastCancerBurari, glioblastoma, vitaminCDoctors } from './landing-pages'
 import { mistletoeHumanTrials } from './mistletoe-human-trials'
 import { myeloproliferativeNeoplasms } from './myeloproliferative-neoplasms'
@@ -319,7 +321,16 @@ export const migratedArticles: MigratedArticle[] = [
     summary: p.summary,
     content: p.content,
   })),
-  ...[...cityPages, ...cityPages2, ...cityPages3].map((p) => ({
+  /* Twenty-nine more; see the header of `wordpress-batch-5.ts`. */
+  ...batch5Pages.map((p) => ({
+    slug: p.slug,
+    topic: p.topic,
+    href: `/${p.slug}`,
+    title: p.title,
+    summary: p.summary,
+    content: p.content,
+  })),
+  ...[...cityPages, ...cityPages2, ...cityPages3, ...cityPages4].map((p) => ({
     slug: p.slug,
     topic: p.topic,
     href: `/${p.slug}`,

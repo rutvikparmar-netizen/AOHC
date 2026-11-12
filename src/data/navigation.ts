@@ -380,6 +380,7 @@ export const footerNav: NavGroup[] = [
       { label: 'Documents', href: routes.documents },
       { label: 'Testimonials', href: routes.testimonials },
       { label: 'Media', href: routes.media },
+      { label: 'Research', href: routes.research },
     ],
   },
   {

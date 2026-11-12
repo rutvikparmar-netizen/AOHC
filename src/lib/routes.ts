@@ -35,7 +35,10 @@ export const routes = {
    */
   memorial: '/in-the-loving-memory',
 
-  media: '/media',
+  /* /press-release, the WordPress URL; /media redirects to it. */
+  media: '/press-release',
+  /* /research-2, the WordPress URL (WordPress's duplicate-slug suffix). */
+  research: '/research-2',
 
   /* International patients ---------------------------------------------- */
   international: '/international-patients',
