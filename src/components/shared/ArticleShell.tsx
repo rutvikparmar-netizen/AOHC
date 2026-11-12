@@ -1,14 +1,17 @@
 import type { ArticlePageContent, Breadcrumb } from '@/types'
 import { EMERGENCY_NOTICE, MEDICAL_DISCLAIMER } from '@/lib/site'
 import { routes } from '@/lib/routes'
-import { breadcrumbSchema } from '@/lib/structured-data'
+import { breadcrumbSchema, faqSchema, migratedArticleSchema } from '@/lib/structured-data'
 import { Container } from '@/components/ui/Container'
 import { Reveal } from '@/components/motion/Reveal'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { PageHero } from '@/components/shared/PageHero'
 import { Article } from '@/components/shared/Article'
+import { ArticleEnquiry } from '@/components/shared/ArticleEnquiry'
+import { RelatedArticles } from '@/components/shared/RelatedArticles'
 import { ClosingSection } from '@/components/home/ClosingSection'
 import { migratedArticles } from '@/data/articles'
+import { heroImageFor } from '@/data/hero-images'
 
 /**
  * The frame every migrated article shares — hero, body, closing CTA and
@@ -38,12 +41,31 @@ export function ArticleShell({
    * nothing the article does not. Matched by object identity: every
    * route passes the same object the index holds.
    */
-  const summary = migratedArticles.find((a) => a.content === content)?.summary
+  const entry = migratedArticles.find((a) => a.content === content)
+  const summary = entry?.summary
   const overview = summary ? [summary] : undefined
+  /* Every article hero has a background: the page's own if it has one,
+     otherwise its topic's (see data/hero-images.ts). */
+  const hero = { ...content.hero, image: content.hero.image ?? heroImageFor(entry?.href.slice(1) ?? '') }
+
+  /* Structured data: the page itself, and — where the page has a FAQ —
+     its own questions and answers (an h3 ending in "?" under a heading
+     that says FAQ / Frequently Asked / Questions). Nothing is written for
+     schema that the page does not say. */
+  const faq: { question: string; answer: string }[] = []
+  let inFaq = false
+  for (const s of content.sections) {
+    if (s.level !== 3) inFaq = /faq|frequently asked|questions/i.test(s.title ?? '')
+    else if (inFaq && s.title?.trim().endsWith('?') && s.body?.length) faq.push({ question: s.title.trim(), answer: s.body.join(' ') })
+  }
+  const schema = [
+    ...(entry ? [migratedArticleSchema({ path: entry.href, title: entry.title, description: entry.summary, lang: content.lang })] : []),
+    ...(faq.length >= 2 ? [faqSchema(faq)] : []),
+  ]
 
   return (
     <>
-      <JsonLd nodes={[breadcrumbSchema(trail)]} />
+      <JsonLd nodes={[breadcrumbSchema(trail), ...schema]} />
 
       {/* ⚠️  THE `lang` WRAPPER COVERS THE HERO AND THE BODY AND NOTHING
           ELSE. Those are the translated parts. The breadcrumb inside the
@@ -54,7 +76,7 @@ export function ArticleShell({
           mispronouncing a page of Hindi. The closing CTA and the medical
           disclaimer are outside it because they really are English. */}
       <div lang={content.lang}>
-        <PageHero content={content.hero} trail={trail} />
+        <PageHero content={hero} trail={trail} />
 
         <Article
           lead={content.lead}
@@ -62,8 +84,11 @@ export function ArticleShell({
           references={content.references}
           image={content.image}
           overview={overview}
+          enquiry={<ArticleEnquiry />}
         />
       </div>
+
+      {entry ? <RelatedArticles href={entry.href} /> : null}
 
       {/* ⚠️  THE CTA GOES TO THE CONTACT PAGE, NOT THE CONSULTATION FORM.
           Someone who has just read an explainer on an unproven therapy is

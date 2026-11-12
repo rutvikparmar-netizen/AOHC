@@ -3,7 +3,6 @@ import type { Breadcrumb, PageHeroContent } from '@/types'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
-import { Reveal } from '@/components/motion/Reveal'
 
 /**
  * The dark, type-only hero at the top of an inner page.
@@ -116,7 +115,10 @@ export function PageHero({
       />
 
       <Container>
-        <Reveal>
+        {/* No fade-in on the hero: its text is the largest thing on screen
+            (the LCP element), and waiting for JavaScript to reveal it cost
+            ~3 s on mobile. Content further down still animates. */}
+        <div>
           {/* ⚠️  NO EYEBROW ABOVE THE HEADLINE, ON REQUEST, AND THE
               BREADCRUMB IS WHY. The trail's last crumb already names the
               page — "Home › Cancer Types" over an eyebrow reading "Cancer
@@ -129,7 +131,7 @@ export function PageHero({
           <h1 className="max-w-5xl font-display text-[clamp(2.25rem,4.6vw,3.75rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white">
             {content.title}
           </h1>
-        </Reveal>
+        </div>
 
         {/* ⚠️  ONE PARAGRAPH IS NOT SET AS A ONE-COLUMN GRID. Two columns
             with the right half empty is the exact failure this hero was
@@ -137,8 +139,7 @@ export function PageHero({
             sentence. It runs as one wide lead instead, capped at a
             reading measure so it does not stretch to 1280px. Two or more
             still take the columns. */}
-        <Reveal
-          delay={80}
+        <div
           className={`mt-10 border-t border-white/15 pt-8 ${
             content.body.length > 1
               ? 'grid gap-x-14 gap-y-5 lg:grid-cols-2'
@@ -153,7 +154,7 @@ export function PageHero({
               {paragraph}
             </p>
           ))}
-        </Reveal>
+        </div>
 
         {/* ⚠️  THE LINE THAT SAYS WHAT THE PAGE IS NOT. Quiet, but in the
             hero rather than at the foot: a reader who acts on an
@@ -161,12 +162,12 @@ export function PageHero({
             disclaimer. It is not styled as a third paragraph, because it
             is not making the page's case — it is limiting it. */}
         {content.note ? (
-          <Reveal delay={140}>
+          <div>
             <p className="mt-8 flex max-w-3xl gap-3 text-sm leading-relaxed text-brand-teal-200">
               <Icon name="info" className="mt-0.5 size-4 shrink-0" />
               {content.note}
             </p>
-          </Reveal>
+          </div>
         ) : null}
       </Container>
     </section>

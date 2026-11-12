@@ -28,6 +28,12 @@
    re-renders when the face arrives, rather than leaving headings invisible.
    ========================================================================== */
 
+/* ⚠️  SWITCHED OFF UNTIL THE FILES EXIST. With no files in public/fonts/, every
+   page requested P22Mackinac-*.woff2, got a 404 (a console error and a wasted
+   request on each page view) and fell back to Fraunces anyway. Once the four
+   licensed files are in public/fonts/, delete this comment's opening and
+   closing markers to turn the rules back on. */
+/*
 @font-face {
   font-family: 'P22 Mackinac Pro';
   src: url('/fonts/P22Mackinac-Book.woff2') format('woff2');
@@ -59,3 +65,4 @@
   font-style: normal;
   font-display: swap;
 }
+*/

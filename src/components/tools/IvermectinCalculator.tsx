@@ -238,7 +238,7 @@ export function IvermectinCalculator() {
           </div>
 
           <div className="rounded-(--radius-3xl) border border-border bg-surface p-6 shadow-(--shadow-card) sm:p-7">
-            <h3 className="font-display text-lg font-bold text-text">Tablet combinations</h3>
+            <h2 className="font-display text-lg font-bold text-text">Tablet combinations</h2>
             {!Number.isFinite(target) ? (
               <p className="mt-2 text-sm text-text-muted">No target yet.</p>
             ) : denoms.length === 0 ? (

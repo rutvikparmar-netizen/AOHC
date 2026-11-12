@@ -38,6 +38,8 @@ import type { EnquiryFormState } from '@/lib/forms/state'
 
 const SOURCES: LeadSource[] = [
   'contact-page',
+  'consultation-page',
+  'article-page',
   'treatment-page',
   'doctor-page',
   'webinar-page',

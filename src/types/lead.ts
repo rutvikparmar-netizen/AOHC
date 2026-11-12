@@ -22,6 +22,8 @@ export type LeadSource =
   /* `/request-a-consultation`, so the team can tell an enquiry that came
      from the dedicated page from one left on the home page's form. */
   | 'consultation-page'
+  /* The enquiry form beside / after every migrated article. */
+  | 'article-page'
   | 'treatment-page'
   | 'doctor-page'
   | 'webinar-page'

@@ -12,6 +12,50 @@ const HINDI_PAGES: [string, string][] = [
   ['आयुर्वेदिक-चमत्कार-खोजें', 'hi-breast-cancer-aravali'],
 ]
 
+/**
+ * ⚠️  TEMPORARY (307) REDIRECTS FOR MENU LINKS WITH NO PAGE YET.
+ * The Our Expertise mega-menu and the International Patients menu link ~37
+ * pages that were declared but never built; every one was a 404 on every
+ * page of the site. Each now goes to the closest page that exists — the
+ * matching migrated article where there is one (leukaemia → haematological
+ * malignancies, antisense → /aot), otherwise its section. 307, not 308, so
+ * nothing is cached for good: when a real page is built at one of these
+ * paths, delete its line here and it takes over.
+ */
+const MENU_FALLBACKS: [string, string][] = [
+  ['/international-patients/:sub+', '/international-patients'],
+  ['/our-expertise', '/treatments-and-therapies'],
+  ['/centre-of-excellence', '/about-us'],
+  ['/advanced-breast-cancer-program', '/cancer-types'],
+  ['/multiple-myeloma', '/hematological-malignancies'],
+  ['/non-hodgkins-lymphoma', '/hematological-malignancies'],
+  ['/leukemia', '/hematological-malignancies'],
+  ['/antisense-oligonucleotide-therapy', '/aot'],
+  ['/diagnosis', '/cancer-types'],
+  ['/head-and-neck-cancer', '/cancer-types'],
+  ['/imaging', '/advanced-diagnostics'],
+  ['/hypoxia-mapping', '/advanced-diagnostics'],
+  ['/blood-based-tests-and-markers', '/circulating-tumor-cell'],
+  ['/treatment', '/treatments-and-therapies'],
+  ['/surgery', '/treatments-and-therapies'],
+  ['/targeted-therapy', '/targeted-therapy-in-cancer'],
+  ['/immunotherapy', '/treatments-and-therapies'],
+  ['/radiation-therapy', '/treatments-and-therapies'],
+  ['/supportive-therapy', '/integrative-cancer-care'],
+  ['/diet-and-nutrition', '/integrative-cancer-care'],
+  ['/spiritual-healing', '/yoga-and-meditation'],
+  ['/precision-oncology', '/next-generation-sequencing-ngs'],
+  ['/genomic-sequencing-ngs', '/next-generation-sequencing-ngs'],
+  ['/chemosensitivity', '/advanced-diagnostics'],
+  ['/tissue-banking', '/advanced-diagnostics'],
+  ['/metabolic-therapy', '/metabolomics'],
+  ['/research', '/research-2'],
+  ['/integrative-oncology', '/integrative-cancer-care'],
+  ['/mistletoe-therapy', '/mistletoe_therapy'],
+  ['/hyperthermia', '/treatments-and-therapies'],
+  ['/knowledge/documents', '/knowledge'],
+]
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
@@ -51,6 +95,7 @@ const nextConfig: NextConfig = {
       { source: '/knowledge/videos', destination: '/videos', permanent: true },
       /* The footer linked /media before /press-release (the WordPress URL) was built. */
       { source: '/media', destination: '/press-release', permanent: true },
+      ...MENU_FALLBACKS.map(([source, destination]) => ({ source, destination, permanent: false })),
       /* The WordPress site served the team at /our-doctors and that is
          the URL Google holds, so the page moved back there. */
       { source: '/about-us/our-doctors', destination: '/our-doctors', permanent: true },
@@ -88,6 +133,11 @@ const nextConfig: NextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          /* HTTPS only, for a year, subdomains included. Not preload: the
+             preload list is hard to leave, and that is a decision for the
+             domain owner, not a build. Hostinger redirects http to https;
+             this stops a browser ever trying http again. */
+          { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
         ],
       },
       {

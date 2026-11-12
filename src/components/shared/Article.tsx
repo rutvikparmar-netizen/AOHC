@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import type { ArticleReference, ArticleSection, ImageAsset } from '@/types'
 import { Container } from '@/components/ui/Container'
@@ -56,12 +57,21 @@ export function Article({
   references,
   image,
   overview,
+  enquiry,
 }: {
   lead?: string[]
   sections: ArticleSection[]
   references?: ArticleReference[]
   image?: ImageAsset
   overview?: string[]
+  /**
+   * The enquiry form. Desktop: the top of the sidebar, above the sticky
+   * table of contents — not sticky itself, because it is taller than the
+   * viewport and a sticky block that tall would hide focused fields.
+   * Mobile and pages without a table of contents: after the article.
+   * Rendered once and placed by the grid, so field ids never repeat.
+   */
+  enquiry?: ReactNode
 }) {
   const ids = anchorIds(sections)
 
@@ -246,11 +256,13 @@ export function Article({
     <section className="py-(--spacing-section)">
       <Container>
         {showToc ? (
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,48rem)_minmax(16rem,20rem)] lg:justify-between lg:gap-12">
-            <div className="min-w-0">{body}</div>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,48rem)_minmax(16rem,22rem)] lg:grid-rows-[auto_1fr] lg:justify-between lg:gap-x-12 lg:gap-y-8">
+            <div className="min-w-0 lg:row-span-2">{body}</div>
+
+            {enquiry ? <div className="min-w-0 lg:col-start-2 lg:row-start-1">{enquiry}</div> : null}
 
             {/* ── Sidebar: table of contents ───────────────────────── */}
-            <aside className="hidden min-w-0 lg:block">
+            <aside className="hidden min-w-0 lg:col-start-2 lg:row-start-2 lg:block">
               <nav
                 aria-label="Table of contents"
                 className="sticky top-28 rounded-(--radius-2xl) border border-border bg-surface p-5 shadow-(--shadow-xs)"
@@ -263,7 +275,10 @@ export function Article({
             </aside>
           </div>
         ) : (
-          <div className="mx-auto max-w-3xl">{body}</div>
+          <div className="mx-auto max-w-3xl">
+            {body}
+            {enquiry ? <div className="mt-12">{enquiry}</div> : null}
+          </div>
         )}
       </Container>
     </section>

@@ -331,9 +331,8 @@ export const primaryNav: NavGroup[] = [
     label: 'Knowledge',
     href: routes.knowledge,
     links: [
-      /* ⚠️  DOCUMENTS IS STILL A 404 — a declared route with no page behind
-         it. FAQs, Blogs and Videos are built, so they are listed first and
-         the group leads with things that work.
+      /* Documents was removed: a declared route with no page behind it, a
+         404 in the menu of every page. Add it back with the page.
 
          Blogs became real when the seven articles were migrated from the
          WordPress site; its index is at `/blogs`, though the
@@ -341,7 +340,6 @@ export const primaryNav: NavGroup[] = [
       { label: 'FAQs', href: routes.faqs, description: 'Answers to the questions people ask first' },
       { label: 'Blogs', href: routes.blogs, description: 'Articles from the care team' },
       { label: 'Videos', href: routes.videos, description: 'Patient stories and explainers' },
-      { label: 'Documents', href: routes.documents, description: 'Guides and downloads' },
     ],
   },
   { label: 'Contact Us', href: routes.contact, links: [] },
@@ -377,7 +375,6 @@ export const footerNav: NavGroup[] = [
       { label: 'FAQs', href: routes.faqs },
       { label: 'Videos', href: routes.videos },
       { label: 'Blogs', href: routes.blogs },
-      { label: 'Documents', href: routes.documents },
       { label: 'Testimonials', href: routes.testimonials },
       { label: 'Media', href: routes.media },
       { label: 'Research', href: routes.research },

@@ -139,7 +139,7 @@ export function EnquiryForm({
   }
 
   return (
-    <form action={formAction} className="space-y-5" noValidate>
+    <form action={formAction} className="@container space-y-5" noValidate>
       <input type="hidden" name="source" value={source} />
       <input type="hidden" name="captchaToken" value={captcha.token} />
 
@@ -163,7 +163,7 @@ export function EnquiryForm({
           phones: the phone group is itself two controls, and splitting a
           320px column in two leaves a dial-code picker about 140px wide
           beside a number field that cannot show a number. */}
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-5 @md:grid-cols-2">
         <TextField
           name="email"
           label="Email"
@@ -195,7 +195,7 @@ export function EnquiryForm({
               field 94px at the 640px breakpoint — too narrow to show a phone
               number. The picker truncates the country name instead, which
               costs nothing once it has been chosen. */}
-          <div className="grid gap-3 sm:grid-cols-[minmax(0,7.5rem)_1fr]">
+          <div className="grid gap-3 @md:grid-cols-[minmax(0,7.5rem)_1fr]">
             <SelectField
               name="dialCode"
               label="Country code"
@@ -219,7 +219,7 @@ export function EnquiryForm({
         </fieldset>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid gap-5 @xl:grid-cols-3">
         <SelectField
           name="country"
           label="Country"

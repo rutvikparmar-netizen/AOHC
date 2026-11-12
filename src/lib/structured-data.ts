@@ -145,6 +145,33 @@ export function articleSchema(post: BlogPost): JsonLdNode {
   }
 }
 
+/**
+ * A migrated WordPress article or location page.
+ *
+ * ⚠️  NO `author`, NO `reviewedBy`. The migrated pages carry no byline and
+ * nothing records a clinical review; schema that named one would be a
+ * claim the page cannot back. The publisher is the organisation.
+ */
+export function migratedArticleSchema(page: {
+  path: string
+  title: string
+  description?: string
+  lang?: string
+}): JsonLdNode {
+  const url = absoluteUrl(page.path.split('/').map(encodeURIComponent).join('/'))
+  return {
+    '@type': 'MedicalWebPage',
+    '@id': `${url}#webpage`,
+    url,
+    headline: page.title,
+    name: page.title,
+    ...(page.description ? { description: page.description } : {}),
+    inLanguage: page.lang ?? 'en',
+    publisher: { '@id': ORG_ID },
+    isPartOf: { '@type': 'WebSite', url: absoluteUrl('/') },
+  }
+}
+
 export function webinarSchema(webinar: Webinar): JsonLdNode {
   return {
     '@type': 'Event',

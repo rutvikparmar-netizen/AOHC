@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { SeoMeta } from '@/types'
 import { absoluteUrl, site } from './site'
+import { seoFor } from '@/data/seo-meta'
 
 /**
  * Page metadata, built from one record.
@@ -17,8 +18,21 @@ export function buildMetadata({
   noIndex,
   absoluteTitle,
 }: SeoMeta): Metadata {
+  /* The migrated pages' search titles and descriptions come from one table
+     (data/seo-meta.ts), so they can be tuned for click-through in one place
+     without touching ~185 route files. */
+  const tuned = canonicalPath ? seoFor(canonicalPath) : undefined
+  if (tuned) {
+    if (tuned.title) {
+      title = tuned.title
+      absoluteTitle = true
+    }
+    description = tuned.description
+  }
   const url = canonicalPath ? absoluteUrl(canonicalPath) : site.url
-  const image = ogImage?.src ? absoluteUrl(ogImage.src) : absoluteUrl('/aohc-logo.png')
+  /* Pages without their own image get one drawn from their title (app/og). */
+  const ogTitle = title.replace(/\s*\|\s*Art of Healing Cancer\s*$/i, '')
+  const image = ogImage?.src ? absoluteUrl(ogImage.src) : absoluteUrl(`/og?title=${encodeURIComponent(ogTitle)}`)
 
   return {
     /**
@@ -42,7 +56,7 @@ export function buildMetadata({
           url: image,
           width: ogImage?.width ?? 1200,
           height: ogImage?.height ?? 630,
-          alt: ogImage?.alt ?? site.name,
+          alt: ogImage?.alt ?? ogTitle,
         },
       ],
     },
