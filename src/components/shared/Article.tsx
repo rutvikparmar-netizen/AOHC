@@ -13,10 +13,12 @@ import { TableOfContents, type TocEntry } from '@/components/shared/TableOfConte
  * column the featured image (centred, where the article has one), then a
  * short overview, then the whole article.
  *
- * ⚠️  THE MAIN COLUMN IS THE READING MEASURE: 48rem, about 75 characters.
- * Image, overview and prose share that one width so their edges line up;
- * capping only the prose at 65ch left a ragged gap beside the image. These are thousands of
- * words of clinical prose, and a 150-character line is hard to track.
+ * THE MAIN COLUMN FILLS THE SPACE BESIDE THE SIDEBAR (on request). It was
+ * capped at 48rem with the sidebar pushed to the far edge, which left a
+ * wide empty gutter between them on large screens. Image, overview and
+ * prose still share one width so their edges line up. With the 1280px
+ * container and a 22rem sidebar the column tops out near 55rem, about 95
+ * characters a line — longer than the classic 75, short enough to track.
  *
  * ⚠️  THE REFERENCE LIST IS AN `<ol>` AND ITS NUMBERS COME FROM THE LIST.
  * The G6PD article's prose cites "(15–17)" against its own numbering, so
@@ -256,7 +258,7 @@ export function Article({
     <section className="py-(--spacing-section)">
       <Container>
         {showToc ? (
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,48rem)_minmax(16rem,22rem)] lg:grid-rows-[auto_1fr] lg:justify-between lg:gap-x-12 lg:gap-y-8">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-8">
             <div className="min-w-0 lg:row-span-2">{body}</div>
 
             {enquiry ? <div className="min-w-0 lg:col-start-2 lg:row-start-1">{enquiry}</div> : null}
