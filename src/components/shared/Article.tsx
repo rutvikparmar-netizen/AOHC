@@ -205,6 +205,35 @@ export function Article({
               </ul>
             ) : null}
 
+            {/* Scrolls inside its own box on a phone rather than widening
+                the page. */}
+            {section.table ? (
+              <div className="mt-6 overflow-x-auto rounded-(--radius-2xl) border border-border">
+                <table className="w-full min-w-[32rem] border-collapse text-left text-sm leading-relaxed">
+                  <thead className="bg-primary-subtle text-text">
+                    <tr>
+                      {section.table.head.map((h, i) => (
+                        <th key={i} scope="col" className="px-4 py-3 font-semibold">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {section.table.rows.map((row, r) => (
+                      <tr key={r} className="border-t border-border align-top">
+                        {row.map((cell, c) =>
+                          c === 0 ? (
+                            <th key={c} scope="row" className="px-4 py-3 font-semibold text-text">{cell}</th>
+                          ) : (
+                            <td key={c} className="px-4 py-3 text-neutral-700">{cell}</td>
+                          ),
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+
             {section.outro?.length ? (
               <div className="mt-5 space-y-4">
                 {section.outro.map((paragraph) => (

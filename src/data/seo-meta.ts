@@ -38,6 +38,14 @@ const SUFFIX = ' | AOHC'
 
 /* ── Hand-written: articles and one-off pages ─────────────────────────── */
 const HAND: Record<string, [string, string]> = {
+  /* International-patient guides */
+  '/payments-and-invoices': ['Invoicing & Payments for International Patients', 'How AOHC bills international patients: the 16th / 1st invoice cycle, paying in USD, GBP, EUR, CAD or AUD, card fees and your final invoice.'],
+  '/accommodation': ['Hotels Near AOHC Gurugram for Cancer Patients', 'Two Hilton partner hotels minutes from AOHC in Gurugram, with daily transfers to the centre and diet support arranged by our team.'],
+  '/india-phone-sim': ['Indian SIM Card for Medical Visa Patients', 'Get a local Airtel or Jio SIM for the length of your medical visa, or roam on your home SIM. Costs, documents and how our team helps.'],
+  '/insight/cash-to-carry': ['Cash to Carry in India: Guide for Patients', 'What currency to bring to India, where to exchange it into rupees, when you need cash and how cards and ATMs work for international patients.'],
+  '/insight/local-sight-seeing-shopping': ['Gentle Sightseeing Near Gurugram for Patients', 'Accessible, low-exertion outings from AOHC Sector 51: Gurugram malls, Delhi heritage sites, travel times, half-day plans and places to eat.'],
+  '/insight/airport-pickup-and-local-travel': ['Delhi Airport Pickup & Local Travel for Patients', 'AOHC meets you at Delhi airport, takes you to your hotel and arranges all treatment travel. See what is included and what is optional.'],
+  '/insight/medical-visa-for-india': ['Medical Visa for India: 2-Step Process', 'How to get an Indian medical visa for cancer treatment at AOHC: invitation letter, documents, the ~10–11 day timeline and FRRO extension.'],
   '/vitamin-c-infusion-and-g6pd-deficiency': ['High-Dose Vitamin C Infusion and G6PD Deficiency', 'Why G6PD deficiency matters before high-dose IV vitamin C: how the infusion can cause haemolysis, who should be screened and what to ask.'],
   '/myeloproliferative-neoplasms': ['Myeloproliferative Neoplasms: Types and Treatment', 'A guide to myeloproliferative neoplasms: polycythaemia vera, essential thrombocythaemia and myelofibrosis — symptoms, diagnosis and treatment.'],
   '/breast-cancer-diagnosis': ['Breast Cancer Diagnosis: Mammogram, Ultrasound, MRI', 'How breast cancer is diagnosed with imaging — mammography, ultrasound, MRI and more — what each test shows and when doctors use it.'],

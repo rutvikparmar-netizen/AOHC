@@ -920,7 +920,13 @@ export interface ArticleSection {
   titleLang?: string
   body?: string[]
   items?: string[]
-  /** Paragraphs after the list. */
+  /**
+   * A table after the list, for pages that had one on the live site (the
+   * international-patient guides: invoicing schedule, visa summary). The
+   * first column is the row heading.
+   */
+  table?: { head: string[]; rows: string[][] }
+  /** Paragraphs after the list (and table). */
   outro?: string[]
 }
 

@@ -22,6 +22,7 @@ import { cityPages2 } from './city-pages-2'
 import { cityPages3 } from './city-pages-3'
 import { cityPages4 } from './city-pages-4'
 import { lungLocationPages } from './lung-cancer-locations'
+import { internationalGuides } from './international-guides'
 import { batch3Pages } from './wordpress-batch-3'
 import { batch4Pages } from './wordpress-batch-4'
 import { batch5Pages } from './wordpress-batch-5'
@@ -70,6 +71,7 @@ export const articleTopics = [
   { id: 'metabolic', title: 'Metabolic Approaches' },
   { id: 'therapies', title: 'Supportive and Investigational Therapies' },
   { id: 'integrative', title: 'Integrative Care in India' },
+  { id: 'international', title: 'Travelling to AOHC from Abroad' },
 ] as const
 
 export type ArticleTopicId = (typeof articleTopics)[number]['id']
@@ -347,6 +349,16 @@ export const migratedArticles: MigratedArticle[] = [
     href: `/${p.slug}`,
     title: p.title,
     summary: p.description,
+    content: p.content,
+  })),
+  /* The seven international-patient guides, at their live URLs; see
+     `international-guides.ts`. */
+  ...internationalGuides.map((p) => ({
+    slug: p.slug,
+    topic: 'international' as const,
+    href: p.href,
+    title: p.title,
+    summary: p.summary,
     content: p.content,
   })),
 ]

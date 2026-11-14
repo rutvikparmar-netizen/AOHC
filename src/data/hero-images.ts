@@ -46,7 +46,17 @@ export interface HeroTopic {
 }
 
 export const heroTopics: HeroTopic[] = [
+  /* First, so a guide's slug ("medical-visa-for-india") is never caught by
+     a clinical topic below. These are the seven international-patient
+     guides; see data/articles/international-guides.ts. */
   {
+    id: 'travel',
+    match: /^(payments-and-invoices|accommodation|india-phone-sim|insight\/(cash-to-carry|local-sight-seeing-shopping|airport-pickup-and-local-travel|medical-visa-for-india))$/,
+    alt: 'A passport, boarding pass and folded hotel key card on a table by a window',
+    prompt: `A passport, a boarding pass and a hotel key card laid on a light wooden table beside a large window, a small travel bag out of focus behind, calm arrival-day mood. ${STYLE}`,
+    ready: false,
+    fallback: existing('international-patients', 'An airport walkway before dawn, aircraft on a wet apron beyond the glass'),
+  },  {
     id: 'lung',
     match: /lung|breathe|pulmonary|फेफड़/,
     alt: 'A pair of backlit chest X-ray films on a lightbox in a dim room',

@@ -8,11 +8,10 @@ import type { Slug } from '@/types'
  * far: `home`, `about`, `doctors`, `cancerTypes`, `integrativeCare`,
  * `international` and `treatments`.
  *
- * ⚠️  `international` IS BUILT BUT ITS SEVEN CHILDREN ARE NOT — payments,
- * accommodation, sim, cashToCarry, sightseeing, airportPickup, medicalVisa.
- * The header renders them as a dropdown under the parent, and the parent
- * page deliberately does not link to them; see the note at the top of
- * `src/data/international-patients.ts`.
+ * The seven International Patients children (payments, accommodation, sim,
+ * cashToCarry, sightseeing, airportPickup, medicalVisa) are the migrated
+ * WordPress guides at their original URLs — see
+ * `src/data/articles/international-guides.ts`.
  *
  * Components link via `routes.doctor(slug)` rather than an inline template
  * string, so a routing change is one edit here instead of a grep.
@@ -42,13 +41,13 @@ export const routes = {
 
   /* International patients ---------------------------------------------- */
   international: '/international-patients',
-  payments: '/international-patients/payments-and-invoices',
-  accommodation: '/international-patients/accommodation',
-  sim: '/international-patients/india-phone-sim',
-  cashToCarry: '/international-patients/cash-to-carry',
-  sightseeing: '/international-patients/local-sightseeing-and-shopping',
-  airportPickup: '/international-patients/airport-pickup-and-local-travel',
-  medicalVisa: '/international-patients/medical-visa-for-india',
+  payments: '/payments-and-invoices',
+  accommodation: '/accommodation',
+  sim: '/india-phone-sim',
+  cashToCarry: '/insight/cash-to-carry',
+  sightseeing: '/insight/local-sight-seeing-shopping',
+  airportPickup: '/insight/airport-pickup-and-local-travel',
+  medicalVisa: '/insight/medical-visa-for-india',
 
   testimonials: '/testimonials',
 
