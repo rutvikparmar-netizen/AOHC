@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { useFormText } from './FormText'
 
 /**
  * Form field primitives.
@@ -48,6 +49,7 @@ export function Label({
   hint?: string
   labelHidden?: boolean
 }) {
+  const tr = useFormText()
   return (
     <span className={labelHidden ? 'sr-only' : 'mb-1.5 block'}>
       <label htmlFor={htmlFor} className="text-sm font-bold text-text">
@@ -60,11 +62,11 @@ export function Label({
             <span aria-hidden className="ml-1 text-accent-dark">
               *
             </span>
-            <span className="sr-only"> (required)</span>
+            <span className="sr-only"> ({tr('required')})</span>
           </>
         ) : null}
         {optional ? (
-          <span className="ml-1.5 font-normal text-text-muted">(optional)</span>
+          <span className="ml-1.5 font-normal text-text-muted">({tr('optional')})</span>
         ) : null}
       </label>
       {hint ? <span className="mt-0.5 block text-sm text-text-muted">{hint}</span> : null}

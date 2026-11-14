@@ -2,6 +2,7 @@ import { routes } from '@/lib/routes'
 import { whatsappHref } from '@/lib/format'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
+import { t } from '@/i18n/request'
 
 /**
  * A section's single call to action.
@@ -45,7 +46,7 @@ export function Cta({
         iconPosition="start"
         className={shared}
       >
-        Connect to an Expert
+        {t('Connect to an Expert')}
       </Button>
     )
   }
@@ -59,7 +60,7 @@ export function Cta({
         iconPosition="start"
         className={shared}
       >
-        Contact Us
+        {t('Contact Us')}
       </Button>
     )
   }
@@ -72,7 +73,7 @@ export function Cta({
       iconPosition="start"
       className={shared}
     >
-      Schedule a Free Meeting
+      {t('Schedule a Free Meeting')}
     </Button>
   )
 }

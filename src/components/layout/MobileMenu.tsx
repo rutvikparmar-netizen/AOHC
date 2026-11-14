@@ -124,10 +124,13 @@ function toNodes(nav: NavGroup[]): MenuNode[] {
 export function MobileMenu({
   nav,
   onDark = false,
+  ctaLabel = APPOINTMENT_CTA,
 }: {
   nav: NavGroup[]
   /** White trigger, for use over the dark hero. */
   onDark?: boolean
+  /** The primary action's label, in the page's language (from the header). */
+  ctaLabel?: string
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   /** The row that opened the current panel, so Back can return focus to it. */
@@ -206,12 +209,12 @@ export function MobileMenu({
         /* Over the hero the trigger is white; once the header frosts it has
            to come back to ink or it disappears into the bar.
 
-           ⚠️  85rem, MATCHING THE DESKTOP NAV in `Header.tsx` — the row of
+           ⚠️  90rem, MATCHING THE DESKTOP NAV in `Header.tsx` — the row of
            eight items plus the logo and the button does not fit below it,
            and the reasoning is written out there. The two breakpoints must
            move together, or a band of widths gets both the drawer and the
            nav, or neither. */
-        className={`inline-flex size-11 items-center justify-center rounded-(--radius-button) transition-colors min-[85rem]:hidden ${
+        className={`inline-flex size-11 items-center justify-center rounded-(--radius-button) transition-colors min-[90rem]:hidden ${
           onDark ? 'text-white group-data-[scrolled]/header:text-text' : 'text-text'
         }`}
         aria-label="Open menu"
@@ -386,7 +389,7 @@ export function MobileMenu({
               className="w-full"
               icon="arrow-right"
             >
-              {APPOINTMENT_CTA}
+              {ctaLabel}
             </Button>
           </div>
         </div>

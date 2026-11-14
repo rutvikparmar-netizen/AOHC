@@ -6,6 +6,9 @@ import { site } from '@/lib/site'
 import { routes } from '@/lib/routes'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
+import { getLocale, t } from '@/i18n/request'
+import { localizeNav } from '@/i18n/nav'
+import { localizedPath } from '@/i18n/locales'
 
 /**
  * Site footer.
@@ -19,6 +22,10 @@ import { Icon } from '@/components/ui/Icon'
  * so the block shrinks rather than showing an empty label or a dead `tel:`.
  */
 export function Footer() {
+  /* Menus and the home link in the current language (English by default). */
+  const groups = localizeNav(footerNav)
+  const legal = localizeNav(legalNav)
+  const home = localizedPath(routes.home, getLocale())
   const contactRows = [
     site.contact.email && {
       icon: 'mail' as const,
@@ -47,7 +54,7 @@ export function Footer() {
             each column's content and spreads the spare room evenly. */}
         <div className="grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[23rem_minmax(0,1fr)] xl:gap-12">
           <div className="space-y-5">
-            <Link href={routes.home} className="inline-block">
+            <Link href={home} className="inline-block">
               {/* ⚠️  AOHC'S OWN REVERSED ARTWORK, NOT A FILTER. This was
                   the colour lockup under `brightness-0 invert`, which
                   flattens everything to pure white — the teal CANCER, the
@@ -107,7 +114,7 @@ export function Footer() {
             ) : null}
 
             {site.contact.hours ? (
-              <p className="text-sm text-brand-teal-300">{site.contact.hours}</p>
+              <p className="text-sm text-brand-teal-300">{t(site.contact.hours)}</p>
             ) : null}
 
             {/* ⚠️  THE APPOINTMENT, WHATSAPP AND EMAIL BUTTONS WERE REMOVED
@@ -117,7 +124,7 @@ export function Footer() {
           </div>
 
           <div className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 xl:grid-cols-[repeat(4,auto)] xl:justify-between xl:gap-x-6">
-            {footerNav.map((group) => (
+            {groups.map((group) => (
               <nav key={group.label} aria-label={group.label} className="min-w-0">
                 <p className="text-eyebrow mb-4 uppercase text-brand-teal-300">
                   {group.label}
@@ -160,7 +167,7 @@ export function Footer() {
         <div className="mt-12 grid gap-4 border-t border-white/10 pt-6 text-sm sm:grid-cols-2">
           {site.contact.registeredAddress ? (
             <div>
-              <p className="text-brand-teal-300">Registered address</p>
+              <p className="text-brand-teal-300">{t('Registered address')}</p>
               <p className="mt-1 text-brand-teal-100">
                 {site.contact.registeredAddress}
               </p>
@@ -179,10 +186,10 @@ export function Footer() {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. {t('All rights reserved.')}
           </p>
           <ul className="flex flex-wrap gap-x-5">
-            {legalNav.map((link) => (
+            {legal.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}

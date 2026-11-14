@@ -48,6 +48,7 @@ const paths: Record<string, string> = {
   leaf: 'M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6',
   x: 'M18 6 6 18M6 6l12 12',
   'chevron-down': 'M6 9l6 6 6-6',
+  globe: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z',
   'chevron-right': 'M9 6l6 6-6 6',
   'external-link': 'M15 3h6v6M10 14 21 3M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6',
   printer: 'M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6v-8Z',
@@ -167,6 +168,7 @@ export function Icon({
       aria-hidden={label ? undefined : true}
       role={label ? 'img' : undefined}
       aria-label={label}
+      data-icon={name}
     >
       <path d={path} />
     </svg>

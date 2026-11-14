@@ -3,6 +3,8 @@ import { Container } from '@/components/ui/Container'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/motion/Reveal'
 import { ReachExplorer } from './ReachExplorer'
+import { localize, t } from '@/i18n/request'
+import { APPOINTMENT_CTA } from '@/lib/site'
 
 /**
  * "Our Patients Come From" — a draggable globe beside the country list.
@@ -22,6 +24,7 @@ import { ReachExplorer } from './ReachExplorer'
  * the hover state the globe reads.
  */
 export function ReachSection() {
+  const content = localize(reach)
   return (
     <section className="relative overflow-hidden bg-brand-teal-950 py-(--spacing-section) text-white">
       <div
@@ -34,15 +37,15 @@ export function ReachSection() {
           <SectionHeader
             onDark
             align="center"
-            eyebrow={reach.eyebrow}
-            title={reach.title}
-            intro={reach.intro}
+            eyebrow={content.eyebrow}
+            title={content.title}
+            intro={content.intro}
             className="max-w-3xl"
           />
         </Reveal>
 
         <Reveal direction="scale" delay={120}>
-          <ReachExplorer />
+          <ReachExplorer ctaLabel={t(APPOINTMENT_CTA)} />
         </Reveal>
       </Container>
     </section>

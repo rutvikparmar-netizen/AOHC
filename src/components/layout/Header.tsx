@@ -8,6 +8,10 @@ import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { MobileMenu } from './MobileMenu'
+import { getLocale, t } from '@/i18n/request'
+import { localizeNav } from '@/i18n/nav'
+import { localizedPath } from '@/i18n/locales'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 /**
  * Groups the flat column list into one stack per grid cell.
@@ -74,6 +78,9 @@ function stackMegaColumns(
  */
 export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' }) {
   const overlay = variant === 'overlay'
+  /* The menu and the home link in the current language (English by default). */
+  const nav = localizeNav(primaryNav)
+  const home = localizedPath(routes.home, getLocale())
 
   return (
     <header
@@ -142,9 +149,9 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
           into from the shell. */}
       <Container
         data-header-row
-        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 min-[85rem]:gap-4"
+        className="flex min-h-(--spacing-header-mobile) items-center gap-8 transition-[min-height] duration-300 group-data-[scrolled]/header:min-h-14 lg:min-h-(--spacing-header) lg:group-data-[scrolled]/header:min-h-16 min-[90rem]:gap-4"
       >
-        <Link href={routes.home} className="shrink-0" aria-label={`${site.name} — home`}>
+        <Link href={home} className="shrink-0" aria-label={`${site.name} — home`}>
           {/**
            * ⚠️  TWO REAL FILES, CROSS-FADED — NOT ONE FILE UNDER A FILTER.
            *
@@ -235,7 +242,9 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
          * and no reader will measure it.
          */}
         {/**
-         * ⚠️  THE SWITCH IS AT 85rem (1360px), NOT AT `xl`. THIS IS A FIT
+         * ⚠️  THE SWITCH IS AT 90rem (1440px) — it was 85rem (1360px) until the
+         * language switcher joined the row and the translated menus (French,
+         * Spanish, Russian) ran longer; 90rem is where all five fit. NOT AT `xl`. THIS IS A FIT
          * MEASUREMENT, NOT A PREFERENCE.
          *
          * Logo, nav and button come to 1240px of content before any gaps.
@@ -259,11 +268,11 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
          * only shows up in a narrow band of widths.
          */}
         <nav
-          aria-label="Main"
-          className="hidden shrink-0 self-stretch min-[85rem]:mx-auto min-[85rem]:block"
+          aria-label={t('Main')}
+          className="hidden shrink-0 self-stretch min-[90rem]:mx-auto min-[90rem]:block"
         >
           <ul className="flex h-full items-stretch gap-0.5">
-            {primaryNav.map((group) => {
+            {nav.map((group) => {
               const mega = group.mega
               const hasChildren = mega ? mega.length > 0 : group.links.length > 0
 
@@ -547,11 +556,11 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
         </nav>
 
         {/* `ml-auto` holds the actions at the right edge while the nav is
-            hidden. From 85rem the nav's own auto margins do that job, and a
+            hidden. From 90rem the nav's own auto margins do that job, and a
             second auto margin here would split the free space three ways
             and pull the actions back inward. The breakpoint matches the
             nav's — see the note on it. */}
-        <div className="ml-auto flex items-center gap-2 min-[85rem]:ml-0">
+        <div className="ml-auto flex items-center gap-2 min-[90rem]:ml-0">
           {/**
            * THE BREAKPOINT LIVES ON THIS WRAPPER, NOT ON THE BUTTON.
            *
@@ -567,6 +576,9 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
            * hidden. Anything else that needs to hide a `<Button>`
            * responsively should wrap it the same way.
            */}
+          {/* Language switcher — beside the primary action, on every page. */}
+          <LanguageSwitcher overlay={overlay} />
+
           <div className="hidden sm:block">
             <Button
               href={routes.consultation}
@@ -577,11 +589,11 @@ export function Header({ variant = 'solid' }: { variant?: 'overlay' | 'solid' })
               className="rounded-(--radius-pill) whitespace-nowrap"
             >
               {/* ONE primary label across the whole site. */}
-              {APPOINTMENT_CTA}
+              {t(APPOINTMENT_CTA)}
             </Button>
           </div>
 
-          <MobileMenu nav={primaryNav} onDark={overlay} />
+          <MobileMenu nav={nav} onDark={overlay} ctaLabel={t(APPOINTMENT_CTA)} />
         </div>
       </Container>
     </header>

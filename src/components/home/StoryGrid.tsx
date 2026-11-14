@@ -3,6 +3,7 @@ import type { VideoItem } from '@/types'
 import { CardRail } from '@/components/ui/CardRail'
 import { Icon } from '@/components/ui/Icon'
 import { Todo } from '@/components/ui/Todo'
+import { t } from '@/i18n/request'
 
 /**
  * Patient stories — a slider, matching the doctors rail.
@@ -23,7 +24,7 @@ export function StoryGrid({ items }: { items: VideoItem[] }) {
   return (
     <div>
       <CardRail
-        label="Patient stories"
+        label={t('Patient stories')}
         onDark
         autoplay
         aside={

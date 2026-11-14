@@ -1,5 +1,6 @@
 import { whatsappHref } from '@/lib/format'
 import { WhatsAppGlyph } from '@/components/ui/WhatsAppGlyph'
+import { t } from '@/i18n/request'
 
 /**
  * Floating "chat on WhatsApp" button, pinned to the bottom-right corner.
@@ -40,7 +41,7 @@ export function WhatsAppFab() {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with us on WhatsApp"
+      aria-label={t('Chat with us on WhatsApp')}
       /**
        * `right-5` (20px), not 16. The pulse ring reaches 16.8px past the
        * button at the end of its keyframes, so at 16px the far side of the

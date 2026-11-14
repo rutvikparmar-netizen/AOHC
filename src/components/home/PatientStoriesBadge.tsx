@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Icon } from '@/components/ui/Icon'
+import { t } from '@/i18n/request'
 
 /**
  * Hero trust badge: the patient stories, as a frosted panel over the video.
@@ -150,10 +151,10 @@ export function PatientStoriesBadge({
 
       <span className="min-w-0">
         <span className="block text-sm font-bold leading-tight text-white">
-          Stories That Inspire Hope
+          {t('Stories That Inspire Hope')}
         </span>
         <span className="mt-0.5 block text-sm leading-tight text-brand-teal-100">
-          Discover journeys shared by our patients
+          {t('Discover journeys shared by our patients')}
         </span>
       </span>
 

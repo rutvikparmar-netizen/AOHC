@@ -10,6 +10,7 @@ import { Callout } from '@/components/ui/Callout'
 import { Icon } from '@/components/ui/Icon'
 import { dialCodes } from '@/data/dial-codes'
 import { CheckboxField, SelectField, TextArea, TextField } from './Field'
+import { FormTextContext } from './FormText'
 
 /**
  * The patient enquiry form.
@@ -63,7 +64,7 @@ const HEARD_FROM = [
  * pending state is not overridable: "Sending…" is a status, not a label,
  * and it should read the same wherever the form is used.
  */
-function SubmitButton({ label }: { label: string }) {
+function SubmitButton({ label, sending }: { label: string; sending: string }) {
   const { pending } = useFormStatus()
 
   return (
@@ -75,7 +76,7 @@ function SubmitButton({ label }: { label: string }) {
       icon={pending ? undefined : 'arrow-right'}
       className="w-full rounded-(--radius-pill) sm:w-auto"
     >
-      {pending ? 'Sending…' : label}
+      {pending ? sending : label}
     </Button>
   )
 }
@@ -84,6 +85,7 @@ export function EnquiryForm({
   source = 'contact-page',
   captcha,
   submitLabel = 'Schedule Meeting',
+  dict,
 }: {
   source?: LeadSource
   /** Server-generated challenge: the two addends and a signed token. */
@@ -94,8 +96,17 @@ export function EnquiryForm({
    * keeps the default.
    */
   submitLabel?: string
+  /**
+   * Translations, English → this page's language (see `src/i18n`). Every
+   * visible string, the select labels and the server's error messages go
+   * through it; the VALUES sent (country, heard-from) stay English so the
+   * team's records are uniform. Absent on English pages.
+   */
+  dict?: Record<string, string>
 }) {
   const [state, formAction] = useActionState(submitEnquiry, initialEnquiryState)
+  const tr = (text?: string) => (text ? (dict?.[text] ?? text) : text) as string
+  const options = (list: { value: string; label: string }[]) => list.map((o) => ({ ...o, label: tr(o.label) }))
 
   /* Success. The form is replaced rather than cleared, so nobody re-submits. */
   if (state.status === 'success') {
@@ -105,12 +116,12 @@ export function EnquiryForm({
           <Icon name="check" className="size-6" />
         </span>
 
-        <h3 className="text-h3 mb-2">Your enquiry has been received</h3>
+        <h3 className="text-h3 mb-2">{tr('Your enquiry has been received')}</h3>
 
         <p className="mb-4 text-neutral-700">
-          Your reference is{' '}
-          <strong className="font-bold text-text">{state.reference}</strong>. Please
-          quote it if you write again.
+          {tr('Your reference is')}{' '}
+          <strong className="font-bold text-text">{state.reference}</strong>.{' '}
+          {tr('Please quote it if you write again.')}
         </p>
 
         {/**
@@ -120,42 +131,40 @@ export function EnquiryForm({
          */}
         {state.emailSent ? (
           <p className="mb-5 text-neutral-700">
-            A confirmation has been emailed to you. If it has not arrived in a few
-            minutes, please check your spam folder.
+            {tr('A confirmation has been emailed to you. If it has not arrived in a few minutes, please check your spam folder.')}
           </p>
         ) : (
           <p className="mb-5 text-neutral-700">
-            Your enquiry is safely with the care team, but we could not send you a
-            confirmation email. Please keep the reference above — it is the only copy.
+            {tr('Your enquiry is safely with the care team, but we could not send you a confirmation email. Please keep the reference above — it is the only copy.')}
           </p>
         )}
 
-        <Callout tone="warning" title="If things change before we reach you">
-          Contact your treating hospital or your nearest emergency department. This
-          mailbox is not monitored around the clock.
+        <Callout tone="warning" title={tr('If things change before we reach you')}>
+          {tr('Contact your treating hospital or your nearest emergency department. This mailbox is not monitored around the clock.')}
         </Callout>
       </div>
     )
   }
 
   return (
+    <FormTextContext.Provider value={(s) => tr(s)}>
     <form action={formAction} className="@container space-y-5" noValidate>
       <input type="hidden" name="source" value={source} />
       <input type="hidden" name="captchaToken" value={captcha.token} />
 
       {state.status === 'error' && state.message ? (
-        <Callout tone="warning" title="Your enquiry was not sent">
-          {state.message}
+        <Callout tone="warning" title={tr('Your enquiry was not sent')}>
+          {tr(state.message)}
         </Callout>
       ) : null}
 
       <TextField
         name="name"
-        label="Full Name"
-        placeholder="Enter name"
+        label={tr('Full Name')}
+        placeholder={tr('Enter name')}
         required
         autoComplete="name"
-        error={state.errors?.name}
+        error={tr(state.errors?.name)}
         defaultValue={state.values?.name}
       />
 
@@ -166,13 +175,13 @@ export function EnquiryForm({
       <div className="grid gap-5 @md:grid-cols-2">
         <TextField
           name="email"
-          label="Email"
+          label={tr('Email')}
           type="email"
           inputMode="email"
-          placeholder="Enter Email"
+          placeholder={tr('Enter Email')}
           required
           autoComplete="email"
-          error={state.errors?.email}
+          error={tr(state.errors?.email)}
           defaultValue={state.values?.email}
         />
 
@@ -181,11 +190,11 @@ export function EnquiryForm({
             screen reader announces two unrelated fields. */}
         <fieldset className="min-w-0">
           <legend className="mb-1.5 text-sm font-bold text-text">
-            Phone
+            {tr('Phone')}
             <span aria-hidden className="ml-1 text-accent-dark">
               *
             </span>
-            <span className="sr-only"> (required)</span>
+            <span className="sr-only"> ({tr('required')})</span>
           </legend>
 
           {/* `minmax(0,…)` rather than a fixed column: inside half a row the
@@ -198,21 +207,21 @@ export function EnquiryForm({
           <div className="grid gap-3 @md:grid-cols-[minmax(0,7.5rem)_1fr]">
             <SelectField
               name="dialCode"
-              label="Country code"
+              label={tr('Country code')}
               labelHidden
               options={dialCodes}
               defaultValue={state.values?.dialCode ?? '+91'}
             />
             <TextField
               name="phone"
-              label="Phone number"
+              label={tr('Phone number')}
               labelHidden
               type="tel"
               inputMode="tel"
               placeholder="(201) 555-0123"
               required
               autoComplete="tel"
-              error={state.errors?.phone}
+              error={tr(state.errors?.phone)}
               defaultValue={state.values?.phone}
             />
           </div>
@@ -222,24 +231,24 @@ export function EnquiryForm({
       <div className="grid gap-5 @xl:grid-cols-3">
         <SelectField
           name="country"
-          label="Country"
-          options={COUNTRIES}
+          label={tr('Country')}
+          options={options(COUNTRIES)}
           required
-          error={state.errors?.country}
+          error={tr(state.errors?.country)}
           defaultValue={state.values?.country}
         />
         <TextField
           name="state"
-          label="State"
-          placeholder="Enter State"
+          label={tr('State')}
+          placeholder={tr('Enter State')}
           optional
           autoComplete="address-level1"
           defaultValue={state.values?.state}
         />
         <TextField
           name="city"
-          label="City"
-          placeholder="Enter City"
+          label={tr('City')}
+          placeholder={tr('Enter City')}
           optional
           autoComplete="address-level2"
           defaultValue={state.values?.city}
@@ -248,18 +257,18 @@ export function EnquiryForm({
 
       <SelectField
         name="heardFrom"
-        label="How did you hear about us?"
-        options={HEARD_FROM}
+        label={tr('How did you hear about us?')}
+        options={options(HEARD_FROM)}
         defaultValue={state.values?.heardFrom}
       />
 
       <TextArea
         name="message"
-        label="Message"
+        label={tr('Message')}
         required
         rows={5}
-        hint="What you have been told so far, and what you would like to know."
-        error={state.errors?.message}
+        hint={tr('What you have been told so far, and what you would like to know.')}
+        error={tr(state.errors?.message)}
         defaultValue={state.values?.message}
       />
 
@@ -269,21 +278,21 @@ export function EnquiryForm({
           the spam it prevented. */}
       <TextField
         name="captcha"
-        label={`Verification: what is ${captcha.a} + ${captcha.b}?`}
+        label={tr('Verification: what is {a} + {b}?').replace('{a}', String(captcha.a)).replace('{b}', String(captcha.b))}
         inputMode="numeric"
         required
         autoComplete="off"
-        placeholder="Enter the answer"
-        error={state.errors?.captcha}
+        placeholder={tr('Enter the answer')}
+        error={tr(state.errors?.captcha)}
         className="sm:max-w-xs"
       />
 
-      <CheckboxField name="consent" error={state.errors?.consent}>
-        I agree that Art of Healing Cancer may contact me about this enquiry, and may
-        store the details I have given here in order to do so.
+      <CheckboxField name="consent" error={tr(state.errors?.consent)}>
+        {tr('I agree that Art of Healing Cancer may contact me about this enquiry, and may store the details I have given here in order to do so.')}
       </CheckboxField>
 
-      <SubmitButton label={submitLabel} />
+      <SubmitButton label={tr(submitLabel)} sending={tr('Sending…')} />
     </form>
+    </FormTextContext.Provider>
   )
 }

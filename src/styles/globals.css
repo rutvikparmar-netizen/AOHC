@@ -639,3 +639,10 @@
     color: #000;
   }
 }
+
+/* Right-to-left pages (Arabic): arrows that mean "forward" point left. */
+[dir='rtl'] svg[data-icon='arrow-right'],
+[dir='rtl'] svg[data-icon='chevron-right'],
+[dir='rtl'] svg[data-icon='arrow-up-right'] {
+  transform: scaleX(-1);
+}

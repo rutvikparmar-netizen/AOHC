@@ -6,6 +6,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { Reveal } from '@/components/motion/Reveal'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Cta } from '@/components/home/Cta'
+import { t } from '@/i18n/request'
 
 /**
  * The questions people ask before they write.
@@ -55,10 +56,10 @@ export function FaqSection({
             {/* The answer to "my question is not here" is a person, not a
                 longer list. */}
             <p className="mt-8 text-base font-bold text-text">
-              Not the question you had?
+              {t('Not the question you had?')}
             </p>
             <p className="mt-2 max-w-(--measure) text-sm leading-relaxed text-neutral-700">
-              Send it to the care team and someone will write back.
+              {t('Send it to the care team and someone will write back.')}
             </p>
             <Cta kind="expert" className="mt-5" />
           </Reveal>

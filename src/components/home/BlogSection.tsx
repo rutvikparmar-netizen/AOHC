@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/motion/Reveal'
+import { t } from '@/i18n/request'
 
 /**
  * The knowledge section — a wide lead card and three below it.
@@ -123,7 +124,7 @@ export function BlogSection({
                   </p>
 
                   <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-bold text-accent-dark">
-                    Read it
+                    {t('Read it')}
                     <Icon
                       name="arrow-right"
                       className="size-4 transition-transform duration-300 group-hover:translate-x-1"

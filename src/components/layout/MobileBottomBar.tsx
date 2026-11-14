@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { APPOINTMENT_CTA, site } from '@/lib/site'
 import { routes } from '@/lib/routes'
 import { Icon } from '@/components/ui/Icon'
+import { t } from '@/i18n/request'
 
 /**
  * Sticky action bar, phones only.
@@ -36,7 +37,7 @@ export function MobileBottomBar() {
         {site.contact.email ? (
           <a
             href={`mailto:${site.contact.email}`}
-            aria-label="Email the care team"
+            aria-label={t('Email the care team')}
             className="flex min-h-14 w-16 shrink-0 items-center justify-center border-r border-border text-primary-dark focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
           >
             <Icon name="mail" className="size-6" />
@@ -48,7 +49,7 @@ export function MobileBottomBar() {
           className="flex min-h-14 flex-1 items-center justify-center gap-2.5 bg-accent text-base font-semibold text-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white"
         >
           <Icon name="calendar" className="size-5" />
-          {APPOINTMENT_CTA}
+          {t(APPOINTMENT_CTA)}
         </Link>
       </div>
     </div>

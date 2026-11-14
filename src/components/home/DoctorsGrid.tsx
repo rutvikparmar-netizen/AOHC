@@ -4,6 +4,7 @@ import type { TeamMember } from '@/types'
 import { routes } from '@/lib/routes'
 import { CardRail } from '@/components/ui/CardRail'
 import { Icon } from '@/components/ui/Icon'
+import { t } from '@/i18n/request'
 
 /**
  * The doctors slider on the home page.
@@ -31,7 +32,7 @@ export function DoctorsGrid({ members }: { members: TeamMember[] }) {
   return (
     <div className="mt-10">
       <CardRail
-        label="Our doctors"
+        label={t('Our doctors')}
         autoplay
         aside={
           members.length > shown.length ? (
@@ -41,7 +42,7 @@ export function DoctorsGrid({ members }: { members: TeamMember[] }) {
                 href={routes.doctors}
                 className="font-semibold text-accent-dark underline-offset-4 hover:underline"
               >
-                See the full team
+                {t('See the full team')}
               </Link>
               .
             </p>

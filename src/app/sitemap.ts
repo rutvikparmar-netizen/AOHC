@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { migratedArticles } from '@/data/articles'
 import { routes } from '@/lib/routes'
 import { absoluteUrl } from '@/lib/site'
+import { OTHER_LOCALES, TRANSLATED_PATHS, hreflangFor, localizedPath } from '@/i18n/locales'
 
 /**
  * sitemap.xml — every public page.
@@ -61,5 +62,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
   for (const m of MAIN) add(m.path, m.priority)
   for (const a of migratedArticles) add(a.href, 0.6)
+  /* Translated pages, each with its hreflang alternates (and the English
+     original gets them too). */
+  const languages = (path: string) => Object.fromEntries(Object.entries(hreflangFor(path)).map(([l, p]) => [l, absoluteUrl(p)]))
+  for (const path of TRANSLATED_PATHS) {
+    const english = out.find((e) => e.url === absoluteUrl(path))
+    if (english) english.alternates = { languages: languages(path) }
+    for (const l of OTHER_LOCALES) out.push({ url: absoluteUrl(localizedPath(path, l)), changeFrequency: 'monthly', priority: 0.8, alternates: { languages: languages(path) } })
+  }
   return out
 }

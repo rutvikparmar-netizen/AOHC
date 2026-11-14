@@ -29,7 +29,8 @@ import { RealGlobe } from './RealGlobe'
  * Hover and focus never overwrite a pinned country — that would take control
  * back off someone who deliberately chose one.
  */
-export function ReachExplorer() {
+/** ctaLabel: the primary action in the page's language (from the server). */
+export function ReachExplorer({ ctaLabel = APPOINTMENT_CTA }: { ctaLabel?: string }) {
   /** Set by tap/click and held until released. Wins over hover. */
   const [pinned, setPinned] = useState<ReachMarker | null>(null)
   /** Transient — whatever the pointer or keyboard focus is on right now. */
@@ -195,7 +196,7 @@ export function ReachExplorer() {
             icon="arrow-right"
             className="w-full rounded-(--radius-pill) sm:w-fit"
           >
-            {APPOINTMENT_CTA}
+            {ctaLabel}
           </Button>
         </div>
       </div>
