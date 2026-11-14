@@ -15,17 +15,16 @@ import type { ArticlePageContent } from '@/types'
  *
  * The copy is the live pages' own (checked 14 Nov 2026). What changed:
  *
- *   - THE BILLING CONTACT. The live payments page printed a staff member's
- *     personal mailbox in four places. It is replaced with "reply to your
- *     invoice email" or the enquiry form, which is how every other page on
- *     this site takes questions (see `lib/site.ts`).
+ *   - The billing desk email on the payments page is kept as on the live
+ *     page (confirmed by AOHC, 14 Nov 2026).
  *   - Page furniture dropped: "Updated" dates, reading times, "On this page"
  *     lists (the article has its own table of contents), button labels such
- *     as "View Hotel", the operator logos on the SIM page, and the emoji in
+ *     as "View Hotel", and the emoji in
  *     front of list items.
- *   - The live tables are tables here (`ArticleSection.table`). The payments
- *     page's Day 0 / 3 / 6 / 7 timeline graphic duplicated the list above it
- *     and is not repeated.
+ *   - The live tables are tables here (`ArticleSection.table`), and the
+ *     payments page's Day 0 / 3 / 6 / 7 timeline graphic is a small table.
+ *   - The hotel photos and the Airtel / Jio logos are the live page's own
+ *     files, resized to WebP in `public/images/guides/`.
  *   - FAQs are `h3` questions under a FAQ heading, so ArticleShell writes
  *     them into FAQPage schema.
  *
@@ -42,6 +41,7 @@ export const paymentsAndInvoices: ArticlePageContent = {
     title: 'Invoicing & Payments',
     body: ['A calm, clear guide to billing—so you can focus on healing while we keep finances predictable and transparent.'],
   },
+  lead: ['Contact: subhasish.banerjee@artofhealingcancer.com (cc: connect@artofhealingcancer.com)'],
   sections: [
     {
       title: 'Overview',
@@ -49,6 +49,7 @@ export const paymentsAndInvoices: ArticlePageContent = {
         'Our billing process is designed to reduce stress. You’ll always know what is billed, when to expect an invoice, and how to pay—no last-minute surprises.',
         'Invoices are always issued in Indian Rupees (INR). You may pay the equivalent in your local currency using our regional bank accounts. Any shortfall from currency conversion (typically ~1%) is adjusted in your next invoice.',
       ],
+      items: ['Transparent', 'Predictable', 'Patient-first'],
     },
     {
       title: 'Invoicing Schedule (bi-monthly)',
@@ -125,6 +126,15 @@ export const paymentsAndInvoices: ArticlePageContent = {
         'Automated reminders on Day 3 and Day 6.',
         'For the final invoice (issued 2 days before departure), please share proof of payment before leaving India.',
       ],
+      table: {
+        head: ['Day', 'Step'],
+        rows: [
+          ['0', 'Invoice (Day 0)'],
+          ['3', 'Reminder (Day 3)'],
+          ['6', 'Reminder (Day 6)'],
+          ['7', 'Payment Due (Day 7)'],
+        ],
+      },
     },
     {
       title: 'Receipts & Insurance Letters',
@@ -139,7 +149,7 @@ export const paymentsAndInvoices: ArticlePageContent = {
       items: [
         'If a pre-scheduled service is clinically deferred or cancelled, it will be credited in your next invoice.',
         'Any currency conversion shortfall (~1%) that we receive is added as an adjustment line item in the next invoice.',
-        'For disputes or questions, reply to your invoice email—we aim to resolve within 2 business days.',
+        'For disputes or questions, write to subhasish.banerjee@artofhealingcancer.com (cc connect@artofhealingcancer.com)—we aim to resolve within 2 business days.',
       ],
     },
     { title: 'FAQs' },
@@ -177,6 +187,7 @@ export const paymentsAndInvoices: ArticlePageContent = {
       title: 'Need help with billing?',
       body: [
         'We know finances can feel overwhelming during cancer care. You’re not alone—we’ll walk you through each step.',
+        'Email Billing Desk — Primary: subhasish.banerjee@artofhealingcancer.com | CC: connect@artofhealingcancer.com',
         'Disclaimer: Bank details are shared securely on your invoice. Payment partners and processing times can vary by country. Policies may be updated; this page reflects the current AOHC process.',
       ],
     },
@@ -208,6 +219,7 @@ export const accommodation: ArticlePageContent = {
     {
       title: 'DoubleTree by Hilton Gurugram Baani Square (Sector 50)',
       level: 3,
+      figures: [{ image: { src: '/images/guides/doubletree-baani-square.webp', alt: 'Exterior view of DoubleTree by Hilton Gurugram Baani Square in Sector 50', width: 474, height: 316 } }],
       body: [
         '~1.2 km from AOHC · ≈ 6 min by car',
         'Practically next door — the most convenient choice for daily visits. International Hilton standards, calm environment, and flexible kitchen for medical diets.',
@@ -217,6 +229,7 @@ export const accommodation: ArticlePageContent = {
     {
       title: 'Hilton Gurugram Baani City Centre (Sector 63)',
       level: 3,
+      figures: [{ image: { src: '/images/guides/hilton-baani-city-centre.webp', alt: 'Modern facade of Hilton Gurugram Baani City Centre in Sector 63', width: 474, height: 265 } }],
       body: [
         '~7 km from AOHC · ≈ 17–18 min by car',
         'A newer, larger property suitable for longer stays or families wanting extra space — with patient-friendly services and quiet, business-class ambience.',
@@ -243,6 +256,7 @@ export const accommodation: ArticlePageContent = {
     },
     {
       title: 'Quick Comparison',
+      body: ['Key Differences at a Glance'],
       table: {
         head: ['Feature', 'DoubleTree (Sec 50)', 'Hilton (Sec 63)'],
         rows: [
@@ -253,7 +267,10 @@ export const accommodation: ArticlePageContent = {
           ['Commute', 'AOHC arranges transfers', 'AOHC arranges transfers'],
         ],
       },
-      outro: ['Distances and travel times are approximate and may vary with traffic. Amenities listed are representative and may change per hotel policy.'],
+      outro: [
+        'Distances and travel times are approximate and may vary with traffic. Amenities listed are representative and may change per hotel policy.',
+        'Note: Hotel reservations and payments are handled directly between the patient and the hotel. Art of Healing Cancer provides coordination support, dietary communication, and commute arrangements to simplify your stay.',
+      ],
     },
   ],
 }
@@ -272,6 +289,12 @@ export const indiaPhoneSim: ArticlePageContent = {
       body: [
         'Use your home-country SIM on roaming (connects to Airtel/Jio) or get a local prepaid SIM for the duration of your medical visa. We help with the entire process.',
       ],
+      figureStyle: 'logo',
+      figures: [
+        { image: { src: '/images/guides/airtel-logo.webp', alt: 'Airtel logo', width: 320, height: 335 }, caption: 'Airtel 5G' },
+        { image: { src: '/images/guides/jio-logo.webp', alt: 'Jio logo', width: 320, height: 320 }, caption: 'Jio 5G' },
+      ],
+      outro: ['Logos are trademarks of their respective owners and used for identification only.'],
     },
     {
       title: 'Option A — Use Your Home SIM (Roaming)',
@@ -350,6 +373,11 @@ export const indiaPhoneSim: ArticlePageContent = {
       title: 'Who do I contact for help?',
       level: 3,
       body: ['Your assigned AOHC coordinator is your single point of contact for issuance, plan selection, recharges, and troubleshooting.'],
+    },
+    {
+      body: [
+        'Note: Network logos are for reference only; AOHC has no commercial affiliation unless explicitly stated. Plans, speeds, and pricing are operator-controlled and may change.',
+      ],
     },
   ],
 }
@@ -476,6 +504,13 @@ export const cashToCarry: ArticlePageContent = {
       level: 3,
       items: ['Depend solely on cash for large payments.', 'Accept help at ATMs from strangers.'],
     },
+    {
+      title: 'Disclaimer',
+      body: [
+        'This page provides general guidance for international patients regarding currency use in India. It does not prescribe fixed cash amounts. Practices can vary by bank and exchange provider; please follow official instructions and keep exchange receipts.',
+        'Exact text preserved for patient clarity and accessibility.',
+      ],
+    },
   ],
 }
 
@@ -487,6 +522,7 @@ export const localSightseeing: ArticlePageContent = {
       'A gentle, practical guide for patients and families to explore Gurugram, Delhi and nearby getaways between treatment days — prioritising comfort, shade, seating and accessible facilities.',
     ],
   },
+  lead: ['AOHC Centre, Sector 51, Gurugram · Best: Oct–Mar · Wheelchair-aware, low exertion'],
   sections: [
     {
       title: 'At a glance',
@@ -504,10 +540,8 @@ export const localSightseeing: ArticlePageContent = {
       ],
     },
     {
-      title: 'Quick distance & time guide',
-      body: [
-        'Typical off-peak by car from AOHC, Sector 51. Times are conservative off-peak estimates; add buffer for weekends, festivals or adverse weather.',
-      ],
+      title: 'Quick distance & time guide (typical off-peak by car from AOHC, Sector 51)',
+      body: ['Times are conservative off-peak estimates; add buffer for weekends, festivals or adverse weather.'],
       table: {
         head: ['Destination', 'Approx. one-way', 'Notes'],
         rows: [
@@ -780,6 +814,7 @@ export const medicalVisa: ArticlePageContent = {
       body: [
         'Visa issuance and validity are at the discretion of the Government of India. AOHC provides documentation and process support but cannot guarantee approval or timelines in cases of embassy backlogs or compliance issues.',
       ],
+      outro: ['© Art of Healing Cancer — Patient Logistics • Medical Visa. All information provided for patient assistance only.'],
     },
   ],
 }

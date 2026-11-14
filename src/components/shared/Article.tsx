@@ -148,7 +148,7 @@ export function Article({
       {lead?.length ? (
         <Reveal className="mt-10 space-y-5">
           {lead.map((paragraph) => (
-            <p key={paragraph.slice(0, 32)} className="text-lg leading-relaxed text-neutral-700">
+            <p key={paragraph.slice(0, 32)} className="break-words text-lg leading-relaxed text-neutral-700">
               {paragraph}
             </p>
           ))}
@@ -183,13 +183,43 @@ export function Article({
               )
             ) : null}
 
-            <div lang={section.lang}>
+            <div lang={section.lang} className="break-words">
             {section.body?.length ? (
               <div className={`space-y-4 ${section.title ? 'mt-4' : ''}`}>
                 {section.body.map((paragraph) => (
                   <p key={paragraph.slice(0, 32)} className="text-base leading-relaxed text-neutral-700">
                     {paragraph}
                   </p>
+                ))}
+              </div>
+            ) : null}
+
+            {section.figures?.length ? (
+              <div
+                className={
+                  section.figureStyle === 'logo'
+                    ? 'mt-6 flex flex-wrap gap-6'
+                    : 'mt-6 grid gap-4 sm:grid-cols-2'
+                }
+              >
+                {section.figures.map((f) => (
+                  <figure key={f.image.src} className={section.figureStyle === 'logo' ? 'w-28 text-center' : 'min-w-0'}>
+                    <Image
+                      src={f.image.src}
+                      alt={f.image.alt}
+                      width={f.image.width}
+                      height={f.image.height}
+                      sizes={section.figureStyle === 'logo' ? '112px' : '(min-width: 640px) 360px, 100vw'}
+                      className={
+                        section.figureStyle === 'logo'
+                          ? 'mx-auto size-20 rounded-(--radius-xl) object-contain'
+                          : 'aspect-[3/2] w-full rounded-(--radius-2xl) object-cover'
+                      }
+                    />
+                    {f.caption ? (
+                      <figcaption className="mt-2 text-sm font-semibold text-text">{f.caption}</figcaption>
+                    ) : null}
+                  </figure>
                 ))}
               </div>
             ) : null}

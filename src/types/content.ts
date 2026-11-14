@@ -926,6 +926,13 @@ export interface ArticleSection {
    * first column is the row heading.
    */
   table?: { head: string[]; rows: string[][] }
+  /**
+   * Images after the body: the hotel photos on /accommodation, the network
+   * logos on /india-phone-sim. Only images the live page itself showed.
+   * `logo` sets them small and uncropped, side by side.
+   */
+  figures?: { image: ImageAsset; caption?: string }[]
+  figureStyle?: 'photo' | 'logo'
   /** Paragraphs after the list (and table). */
   outro?: string[]
 }
